@@ -75,9 +75,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            if (project.hasProperty("RELEASE_STORE_FILE")) {
-                signingConfig signingConfigs.release
-            }
+            signingConfig signingConfigs.release
 
             externalNativeBuild {
                 ndkBuild {
@@ -131,4 +129,5 @@ dependencies {
     implementation 'com.appsflyer:af-android-sdk:6.16.2'
     implementation 'androidx.annotation:annotation-jvm:1.9.1'
 }
+
 
