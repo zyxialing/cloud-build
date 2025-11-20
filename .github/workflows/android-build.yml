@@ -29,19 +29,19 @@ jobs:
     - name: Decode keystore
       run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > project.jks
 
-    # 5. 把 keystore 移动到 Android 工程目录
+    # 5. 把 keystore 移动到正确目录 (proj.android-studio/)
     - name: Move keystore
-      run: mv project.jks jsb-default/frameworks/runtime-src/proj.android-studio/app/project.jks
+      run: mv project.jks jsb-default/frameworks/runtime-src/proj.android-studio/project.jks
 
     # -------------------------------
-    # 6. 生成 keystore.properties
+    # 6. 生成 keystore.properties (proj.android-studio/)
     # -------------------------------
     - name: Write keystore.properties
       run: |
-        echo "storeFile=project.jks" > jsb-default/frameworks/runtime-src/proj.android-studio/app/keystore.properties
-        echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> jsb-default/frameworks/runtime-src/proj.android-studio/app/keystore.properties
-        echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> jsb-default/frameworks/runtime-src/proj.android-studio/app/keystore.properties
-        echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> jsb-default/frameworks/runtime-src/proj.android-studio/app/keystore.properties
+        echo "storeFile=project.jks" > jsb-default/frameworks/runtime-src/proj.android-studio/keystore.properties
+        echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> jsb-default/frameworks/runtime-src/proj.android-studio/keystore.properties
+        echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> jsb-default/frameworks/runtime-src/proj.android-studio/keystore.properties
+        echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> jsb-default/frameworks/runtime-src/proj.android-studio/keystore.properties
 
     # -------------------------------
     # 7. 开始构建 AAB
