@@ -1,0 +1,46 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        // 本地仓库，优先加载
+        mavenLocal()
+
+        // Google 和 Maven Central 的镜像
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+
+        // 国内的 JCenter 和 Huawei 仓库
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://developer.huawei.com/repo/' }
+
+        // Gitee 作为备选
+        maven { url "https://gitee.com/afra55/afa55-junk-code/raw/master" }
+
+        // 官方仓库（最后加载，以防万一）
+        google()
+        mavenCentral()
+
+        // 本地的 libs 仓库
+        flatDir {
+            dirs 'libs'  // 本地库放在最后，优先查找远程仓库
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.6.1'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()  // 必须添加
+        mavenCentral()
+        google()
+        jcenter() {url 'https://maven.aliyun.com/repository/central'}
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

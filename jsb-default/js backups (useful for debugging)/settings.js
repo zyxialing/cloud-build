@@ -1,0 +1,1 @@
+window._CCSettings={platform:"android",groupList:["default","Collider"],collisionMatrix:[[true],[false,true]],hasResourcesBundle:true,hasStartSceneBundle:false,remoteBundles:[],subpackages:[],launchScene:"db://assets/SolitaireElimination/solitaireElimination.fire",orientation:"",server:"",jsList:["assets/scripts/framework/plugin/Extentions.js"]};
