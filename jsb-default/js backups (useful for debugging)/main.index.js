@@ -266,6 +266,62 @@ cc._RF.pop();
 "../../framework/componects/EventComponent": "EventComponent",
 "../config/Config": "Config"
 } ],
+AnimationPlayState: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "0ca1c2dxK1CBLcdpUI2RcMf", "AnimationPlayState");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("./BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
+function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.anim = null;
+return t;
+}
+t.prototype.init = function() {
+if (!this.anim) {
+this.anim = this.node.getComponentInChildren(cc.Animation);
+this.rewardNode = this.anim.node;
+}
+};
+t.prototype.show = function(t) {
+e.prototype.show.call(this, t);
+this.init();
+this.node.active = !0;
+this.anim.play(null, 0);
+};
+t.prototype.hide = function() {
+this.init();
+this.node.active = !1;
+};
+return r([ c ], t);
+}(a.default));
+n.default = l;
+cc._RF.pop();
+}, {
+"./BaseAnimState": "BaseAnimState"
+} ],
 Animation_Nodes: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "c7591OPSYRHNZ0MVtaoU6om", "Animation_Nodes");
@@ -832,7 +888,7 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 n.Application = void 0;
-var r = e("./scripts/common/component/Alert"), a = e("./scripts/common/component/GlobalAudio"), s = e("./scripts/common/component/Loading"), c = e("./scripts/common/component/Tips"), l = e("./scripts/common/component/UILoading"), u = e("./scripts/common/component/UIReconnect"), p = e("./scripts/common/component/UpdateLoading"), d = e("./scripts/common/config/ConstString"), f = e("./scripts/common/config/GlobalVar"), h = e("./scripts/common/config/HostInfo"), _ = e("./scripts/common/data/Bundles"), g = e("./scripts/common/data/StageData"), y = e("./scripts/common/entry/CmmEntry"), m = e("./scripts/common/utils/CmmUtils"), v = e("./scripts/config/URLConfig"), E = e("./scripts/framework/defines/Enums"), S = e("./scripts/framework/defines/Macros"), b = e("./scripts/framework/Framework"), R = e("./scripts/framework/utils/Singleton"), C = e("./scripts/sdk/AppInfo"), T = e("./scripts/sdk/SdkManager"), O = function(e) {
+var r = e("./scripts/common/component/Alert"), a = e("./scripts/common/component/GlobalAudio"), s = e("./scripts/common/component/Loading"), c = e("./scripts/common/component/Tips"), l = e("./scripts/common/component/UILoading"), u = e("./scripts/common/component/UIReconnect"), p = e("./scripts/common/component/UpdateLoading"), d = e("./scripts/common/config/ConstString"), h = e("./scripts/common/config/GlobalVar"), f = e("./scripts/common/config/HostInfo"), _ = e("./scripts/common/data/Bundles"), g = e("./scripts/common/data/StageData"), y = e("./scripts/common/entry/CmmEntry"), m = e("./scripts/common/utils/CmmUtils"), v = e("./scripts/config/URLConfig"), E = e("./scripts/framework/defines/Enums"), S = e("./scripts/framework/defines/Macros"), b = e("./scripts/framework/Framework"), R = e("./scripts/framework/utils/Singleton"), C = e("./scripts/sdk/AppInfo"), A = e("./scripts/sdk/SdkManager"), T = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -967,11 +1023,10 @@ configurable: !0
 });
 t.prototype.init = function() {
 if (App.IsHtmlGame) {
-T.default.channelID = C.default.getHtmlChannelID();
-T.default.httpId = C.default.getHttpId();
+A.default.channelID = C.default.getHtmlChannelID();
+A.default.httpId = C.default.getHttpId();
 }
 e.prototype.init.call(this);
-this.updateConfig();
 this.entryManager.delegate = new y.CmmEntry();
 };
 t.prototype.onLoad = function(e) {
@@ -993,7 +1048,7 @@ App.storage.setItem(d.ConstString.showShareAfter, 1);
 t.prototype.updateConfig = function() {
 var e = this;
 if (C.default.isAndroid || C.default.isIOS) {
-var t = T.default.GetUrlData();
+var t = A.default.GetUrlData();
 if (m.CmmUtils.stringNotEmpty(t)) {
 v.default.urlData = t;
 var n = v.default.getChannel();
@@ -1001,31 +1056,31 @@ this.initConfig(n);
 }
 this._offlineMode = C.default.getOffLineMode();
 } else if (this.SingleGame) {
-f.GlobalVar.token = C.default.getBrowserValue("token");
-f.GlobalVar.host = decodeURIComponent(C.default.getBrowserValue("host"));
-f.GlobalVar.guid = C.default.getBrowserValue("uid");
-f.GlobalVar.curGameId = C.default.getBrowserValue("gId");
-f.GlobalVar.resPath = C.default.getBrowserValue("resPath");
-Log.e("测试token:" + f.GlobalVar.token);
+h.GlobalVar.token = C.default.getBrowserValue("token");
+h.GlobalVar.host = decodeURIComponent(C.default.getBrowserValue("host"));
+h.GlobalVar.guid = C.default.getBrowserValue("uid");
+h.GlobalVar.curGameId = C.default.getBrowserValue("gId");
+h.GlobalVar.resPath = C.default.getBrowserValue("resPath");
+Log.e("测试token:" + h.GlobalVar.token);
 switch (C.default.getBrowserValue("country")) {
 case "PK":
-f.GlobalVar.money_symbol = "Rs";
-f.GlobalVar.countryCode = 1;
+h.GlobalVar.money_symbol = "Rs";
+h.GlobalVar.countryCode = 1;
 break;
 
 case "BR":
-f.GlobalVar.money_symbol = "R$";
-f.GlobalVar.countryCode = 3;
+h.GlobalVar.money_symbol = "R$";
+h.GlobalVar.countryCode = 3;
 break;
 
 case "MEX":
-f.GlobalVar.money_symbol = "$";
-f.GlobalVar.countryCode = 5;
+h.GlobalVar.money_symbol = "$";
+h.GlobalVar.countryCode = 5;
 break;
 
 default:
-f.GlobalVar.money_symbol = "₹";
-f.GlobalVar.countryCode = 0;
+h.GlobalVar.money_symbol = "₹";
+h.GlobalVar.countryCode = 0;
 }
 } else App.asset.LoadTxt(S.Macro.BUNDLE_RESOURCES, "configs/url", null, function(t, n) {
 v.default.urlData = n.text;
@@ -1035,13 +1090,13 @@ e.initConfig(o);
 };
 t.prototype.initConfig = function(e) {
 if (e) {
-h.HostInfo.URL_Login_Server = e.url;
-f.GlobalVar.countryCode = e.countryCode;
-f.GlobalVar.phone_prefix = e.phone_prefix;
-f.GlobalVar.money_symbol = e.money_symbol;
-f.GlobalVar.gameCode = e.gameCode;
-f.GlobalVar.channelName = e.channelName;
-f.GlobalVar.des = e.des;
+f.HostInfo.URL_Login_Server = e.url;
+h.GlobalVar.countryCode = e.countryCode;
+h.GlobalVar.phone_prefix = e.phone_prefix;
+h.GlobalVar.money_symbol = e.money_symbol;
+h.GlobalVar.gameCode = e.gameCode;
+h.GlobalVar.channelName = e.channelName;
+h.GlobalVar.des = e.des;
 } else App.tips.show("channelid config error!");
 };
 t.prototype.update = function() {};
@@ -1057,11 +1112,11 @@ App.globalAudio.onEnterBackground();
 t.prototype.onEnterForgeground = function() {};
 return t;
 }(b.Framewok);
-n.Application = O;
-var A = new O();
-A.logger.level = E.LogLevel.ALL;
-window.App = A;
-A.init();
+n.Application = T;
+var O = new T();
+O.logger.level = E.LogLevel.ALL;
+window.App = O;
+O.init();
 cc._RF.pop();
 }, {
 "./scripts/common/component/Alert": "Alert",
@@ -1374,7 +1429,7 @@ App.storage.setItem(this._storeEffectVolumeKey, this.effectVolume);
 };
 e.module = "【音效数据】";
 return e;
-}()), f = function(e) {
+}()), h = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -1633,7 +1688,7 @@ var n;
 t.globalClip = new Map();
 return n = r([ p ], t);
 }(a.default);
-n.default = f;
+n.default = h;
 cc._RF.pop();
 }, {
 "../core/asset/Resource": "Resource",
@@ -1671,6 +1726,7 @@ i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
 t.bgm = null;
+t.bgm_game = null;
 t.effects = [];
 return t;
 }
@@ -1717,10 +1773,147 @@ cc.audioEngine.setEffectsVolume(e ? 1 : 0);
 var n;
 t.instance = null;
 r([ c(cc.AudioClip) ], t.prototype, "bgm", void 0);
+r([ c(cc.AudioClip) ], t.prototype, "bgm_game", void 0);
 r([ c(cc.AudioClip) ], t.prototype, "effects", void 0);
 return n = r([ s ], t);
 }(cc.Component);
 n.default = l;
+cc._RF.pop();
+}, {} ],
+BaseAnimState: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "caa3bDLKYxOVpuxk6Plb8Cn", "BaseAnimState");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/enum/GlobalEnum"), s = cc._decorator, c = s.ccclass, l = s.property, u = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.state = a.GlobalEnum.ElementState.Normal;
+return t;
+}
+t.prototype.show = function(e) {
+this.config = e;
+this.node.active = !0;
+};
+t.prototype.hide = function() {
+this.node.active = !1;
+};
+r([ l({
+type: cc.Enum(a.GlobalEnum.ElementState)
+}) ], t.prototype, "state", void 0);
+return r([ c ], t);
+}(cc.Component);
+n.default = u;
+cc._RF.pop();
+}, {
+"../../../scripts/common/enum/GlobalEnum": "GlobalEnum"
+} ],
+"BaseLineItem ": [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "e0daew5TE9HTr87k1MeqWuo", "BaseLineItem ");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = (a.property, function(e) {
+i(t, e);
+function t() {
+return null !== e && e.apply(this, arguments) || this;
+}
+t.prototype.init = function() {};
+t.prototype.show = function() {
+this.node.active = !0;
+};
+t.prototype.hide = function() {
+this.node.active = !1;
+};
+return r([ s ], t);
+}(cc.Component));
+n.default = c;
+cc._RF.pop();
+}, {} ],
+BaseLineMgr: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "582a4IlwrtCwLMi/e9YjH6+", "BaseLineMgr");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = (a.property, function(e) {
+i(t, e);
+function t() {
+return null !== e && e.apply(this, arguments) || this;
+}
+t.prototype.init = function() {};
+t.prototype.showRewardLine = function(e) {
+this.lines[e].show();
+};
+t.prototype.showRewardLines = function() {};
+t.prototype.showOtherType = function() {};
+t.prototype.hide = function() {
+if (this.lines) for (var e = 0; e < this.lines.length; e++) this.lines[e].hide();
+};
+t.prototype.lineAnims_None = function() {};
+return r([ s ], t);
+}(cc.Component));
+n.default = c;
 cc._RF.pop();
 }, {} ],
 BinaryStreamMessage: [ function(e, t, n) {
@@ -1819,7 +2012,7 @@ e.writeBytes(t);
 return t;
 }(l);
 n.STRING = d;
-var f = function(e) {
+var h = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -1832,8 +2025,8 @@ e.writeFloat(this.data);
 };
 return t;
 }(u);
-n.FLOAT = f;
-var h = function(e) {
+n.FLOAT = h;
+var f = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -1846,7 +2039,7 @@ e.writeDouble(this.data);
 };
 return t;
 }(u);
-n.DOUBLE = h;
+n.DOUBLE = f;
 var _ = function(e) {
 i(t, e);
 function t() {
@@ -1947,7 +2140,7 @@ this.buffer = this.byteArray.bytes;
 return !0;
 };
 t.prototype.isNumberValue = function(e) {
-return e == f || e == h || e == _ || e == g || e == y || e == m || e == v || e == E;
+return e == h || e == f || e == _ || e == g || e == y || e == m || e == v || e == E;
 };
 t.prototype.isBoolValue = function(e) {
 return e == p;
@@ -3229,12 +3422,12 @@ return "data:" + t + ";base64," + e;
 e.prototype.genBitmapImage = function(e) {
 var t = e.width, n = e.height, o = t * n * 3, i = o + 54, r = [ 66, 77, 255 & i, i >> 8 & 255, i >> 16 & 255, i >> 24 & 255, 0, 0, 0, 0, 54, 0, 0, 0 ], a = [ 40, 0, 0, 0, 255 & t, t >> 8 & 255, t >> 16 & 255, t >> 24 & 255, 255 & n, n >> 8 & 255, n >> 16 & 255, n >> 24 & 255, 1, 0, 24, 0, 0, 0, 0, 0, 255 & o, o >> 8 & 255, o >> 16 & 255, o >> 24 & 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], s = (4 - 3 * t % 4) % 4, c = e.data, l = "", u = t << 2, p = n, d = String.fromCharCode;
 do {
-for (var f = u * (p - 1), h = "", _ = 0; _ < t; _++) {
+for (var h = u * (p - 1), f = "", _ = 0; _ < t; _++) {
 var g = _ << 2;
-h += d(c[f + g + 2]) + d(c[f + g + 1]) + d(c[f + g]);
+f += d(c[h + g + 2]) + d(c[h + g + 1]) + d(c[h + g]);
 }
-for (var y = 0; y < s; y++) h += String.fromCharCode(0);
-l += h;
+for (var y = 0; y < s; y++) f += String.fromCharCode(0);
+l += f;
 } while (--p);
 return this.encodeData(r.concat(a)) + this.encodeData(l);
 };
@@ -3321,9 +3514,9 @@ return e;
 n.CanvasHelper = o;
 cc._RF.pop();
 }, {} ],
-ChooseLevelModel: [ function(e, t, n) {
+ChooseLevelModel_A: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "a0e52+5S5hF4ZAyrfyDf6r6", "ChooseLevelModel");
+cc._RF.push(t, "897eajH43xJr5MNFG5WzLF6", "ChooseLevelModel_A");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -3346,39 +3539,56 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = e("../Mgr/SolitaireElimination"), s = e("../Service/AudioMgr"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
-t.node_cardBack = null;
+t.node_Main = null;
+t.node_CanClick = null;
+t.node_Lock = null;
 t.label_Level = null;
-t.curLevel = 0;
-t.calBack_Play = null;
+t.sprite_Icon = null;
+t.isCanPlay = !1;
+t.curLevel = 1;
+t.callBack_Btn = null;
+t.tween_Main = null;
 return t;
 }
-t.prototype.Init = function(e, t, n) {
+t.prototype.Init = function(e, t, n, o, i) {
 this.curLevel = e;
-this.calBack_Play = n;
-this.label_Level.string = e + "";
-this.node_cardBack.active = !t;
+this.isCanPlay = n;
+this.callBack_Btn = i;
+this.ClearTween();
+this.sprite_Icon.spriteFrame = t;
+this.label_Level.string = "" + e;
+this.node_CanClick.active = n;
+this.node_Lock.active = !n;
+this.node_Main.scale = 0;
+this.tween_Main = cc.tween(this.node_Main).delay(o).to(.3, {
+scale: 1
+}).start();
 };
-t.prototype.RefreshState = function(e) {
-this.node_cardBack.active = !e;
+t.prototype.ResetState = function(e) {
+this.isCanPlay = e;
+this.node_Lock.active = !e;
+this.node_CanClick.active = e;
 };
-t.prototype.ButtonClick_Play = function() {
-s.default.instance.playEffect(a.AudioNameConfig.Click);
-this.calBack_Play && this.calBack_Play(this.curLevel);
+t.prototype.ButtonClick_Choose = function() {
+this.callBack_Btn && this.callBack_Btn(this.curLevel);
 };
-r([ u(cc.Node) ], t.prototype, "node_cardBack", void 0);
-r([ u(cc.Label) ], t.prototype, "label_Level", void 0);
-return r([ l ], t);
+t.prototype.ClearTween = function() {
+this.tween_Main && this.tween_Main.stop();
+};
+r([ c(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ c(cc.Node) ], t.prototype, "node_CanClick", void 0);
+r([ c(cc.Node) ], t.prototype, "node_Lock", void 0);
+r([ c(cc.Label) ], t.prototype, "label_Level", void 0);
+r([ c(cc.Sprite) ], t.prototype, "sprite_Icon", void 0);
+return r([ s ], t);
 }(cc.Component);
-n.default = p;
+n.default = l;
 cc._RF.pop();
-}, {
-"../Mgr/SolitaireElimination": "SolitaireElimination",
-"../Service/AudioMgr": "AudioMgr"
-} ],
+}, {} ],
 CmdConfig: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "f7ecb37+gFCb4nV3AYSD2s7", "CmdConfig");
@@ -4167,7 +4377,7 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 n.director = n.display = n.CmmUtils = void 0;
-var r = e("../../framework/defines/Macros"), a = e("../../framework/utils/Utils"), s = e("../../sdk/AppInfo"), c = e("../../sdk/GameNativeConfig"), l = e("../../sdk/SdkManager"), u = e("../config/Config"), p = e("../config/ConstString"), d = e("../config/GlobalVar"), f = e("../config/User"), h = e("../event/CommonEvent"), _ = e("./UIUtils"), g = function(e) {
+var r = e("../../framework/defines/Macros"), a = e("../../framework/utils/Utils"), s = e("../../sdk/AppInfo"), c = e("../../sdk/GameNativeConfig"), l = e("../../sdk/SdkManager"), u = e("../config/Config"), p = e("../config/ConstString"), d = e("../config/GlobalVar"), h = e("../config/User"), f = e("../event/CommonEvent"), _ = e("./UIUtils"), g = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -4515,17 +4725,17 @@ if (1 != n.type) {
 if (2 != n.type) if (3 != n.type) ; else if (App.SingleGame) l.default.ExitSingleGame(); else {
 if ("LoginView" == App.gameView.className) {
 App.storage.removeItem(c.default.Key.PhoneId);
-f.default.self.clear();
+h.default.self.clear();
 } else {
 App.storage.removeItem(c.default.Key.PhoneId);
-f.default.self.clear();
+h.default.self.clear();
 App.entryManager.enterBundle(r.Macro.BUNDLE_RESOURCES);
 l.default.setOrientation_l();
 }
 t && t.close();
 }
 } else if (App.SingleGame) l.default.ExitSingleGame(); else {
-d.GlobalVar.isGameing && dispatch(h.ComponentGameEvent.SURE_TOP_BANNER_EXIT);
+d.GlobalVar.isGameing && dispatch(f.ComponentGameEvent.SURE_TOP_BANNER_EXIT);
 if ("LoginView" != App.gameView.className) {
 App.entryManager.enterBundle(r.Macro.BUNDLE_RESOURCES);
 l.default.setOrientation_l();
@@ -4550,17 +4760,17 @@ if (1 != n.type) {
 if (2 != n.type) if (3 != n.type) ; else if (App.SingleGame) l.default.ExitSingleGame(); else {
 if ("LoginView" == App.gameView.className) {
 App.storage.removeItem(c.default.Key.PhoneId);
-f.default.self.clear();
+h.default.self.clear();
 } else {
 App.storage.removeItem(c.default.Key.PhoneId);
-f.default.self.clear();
+h.default.self.clear();
 App.entryManager.enterBundle(r.Macro.BUNDLE_RESOURCES);
 l.default.setOrientation_l();
 }
 t && t.close();
 }
 } else if (App.SingleGame) l.default.ExitSingleGame(); else {
-d.GlobalVar.isGameing && dispatch(h.ComponentGameEvent.SURE_TOP_BANNER_EXIT);
+d.GlobalVar.isGameing && dispatch(f.ComponentGameEvent.SURE_TOP_BANNER_EXIT);
 if ("LoginView" != App.gameView.className) {
 App.entryManager.enterBundle(r.Macro.BUNDLE_RESOURCES);
 l.default.setOrientation_l();
@@ -4666,9 +4876,9 @@ var a = function(i) {
 e.parent.addChild(o[i]);
 var r = s.worldConvertLocalPointAR(e.parent, e.startPoint), a = s.worldConvertLocalPointAR(e.parent, e.endPoint), c = r.add(a).multiplyScalar(.5), l = a.sub(r).mag(), u = e.dir ? (Math.random() + .01) * l : -(Math.random() + .01) * l;
 e.disableDir && (u = 0);
-var p = e.extraY || 0, d = e.extraX || 0, f = c.add(cc.v2(u + d, 0 + p));
+var p = e.extraY || 0, d = e.extraX || 0, h = c.add(cc.v2(u + d, 0 + p));
 o[i].position = r;
-cc.tween(o[i]).delay(n).bezierTo(e.flyTime, r, f, a).call(function() {
+cc.tween(o[i]).delay(n).bezierTo(e.flyTime, r, h, a).call(function() {
 t++;
 e.updateCallBack ? e.updateCallBack(o[i]) : o[i].destroy();
 t == e.num && e.finishCallBack && e.finishCallBack();
@@ -4858,9 +5068,9 @@ var p = l[u];
 c++;
 var d = p - 1;
 if (-1 == p) {
-var f = l[r + 1] - 1;
+var h = l[r + 1] - 1;
 a.push({
-index: f,
+index: h,
 value: p,
 isEmpty: !0
 });
@@ -4884,7 +5094,7 @@ for (var o = 0; o < e.length; o++) e[o].isEmpty = t;
 });
 i.push(s);
 }
-var h = [];
+var f = [];
 for (r = 0; r < i.length; r++) {
 var _ = i[r], g = {
 awardline: n[r] || [],
@@ -4894,9 +5104,9 @@ wildNums: [],
 wildPos: [],
 results: _
 };
-h.push(g);
+f.push(g);
 }
-return h;
+return f;
 };
 t.convertClassicfruitResult = function(e) {
 for (var t = new Array(), n = [], o = 0, i = 0; i < e.inCard.length; i++) {
@@ -5227,7 +5437,7 @@ e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n(
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var r = e("../../common/net/HttpSender"), a = e("../../common/config/User"), s = e("../../sdk/AppInfo"), c = e("../../sdk/GameNativeConfig"), l = e("../config/GlobalVar"), u = e("../event/CommonEvent"), p = e("../enum/GlobalEnum"), d = e("../config/ConstString"), f = e("../../sdk/SdkManager"), h = e("../../sdk/SdkCallBack"), _ = e("../utils/CmmUtils"), g = function(e) {
+var r = e("../../common/net/HttpSender"), a = e("../../common/config/User"), s = e("../../sdk/AppInfo"), c = e("../../sdk/GameNativeConfig"), l = e("../config/GlobalVar"), u = e("../event/CommonEvent"), p = e("../enum/GlobalEnum"), d = e("../config/ConstString"), h = e("../../sdk/SdkManager"), f = e("../../sdk/SdkCallBack"), _ = e("../utils/CmmUtils"), g = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -5241,10 +5451,10 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 is_simulator: s.default.isSimulator(),
-installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
-sim: f.default.getCountry(),
-vpn: f.default.checkVPN()
+installReferrer: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer_ts : "",
+sim: h.default.getCountry(),
+vpn: h.default.checkVPN()
 };
 this.SendPostHttp(t, e, p.GlobalEnum.HttpUrlType.Login);
 };
@@ -5260,10 +5470,10 @@ network: s.default.appData.network || "",
 clickLabel: s.default.appData.clickLabel || "",
 adjust_ts: s.default.appData.adjust_ts || 0,
 is_simulator: s.default.isSimulator(),
-installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
-sim: f.default.getCountry(),
-vpn: f.default.checkVPN()
+installReferrer: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer_ts : "",
+sim: h.default.getCountry(),
+vpn: h.default.checkVPN()
 };
 return this.SendPostHttp(t, e, p.GlobalEnum.HttpUrlType.Login);
 };
@@ -5294,16 +5504,16 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 m_model: s.default.getMobileModel(),
-vpn: f.default.checkVPN(),
+vpn: h.default.checkVPN(),
 third_info: s.default.getThridInfo(),
 os_device: s.default.getDeviceInfo(),
 pwdtoken: e,
 firebaseId: s.default.getFireBaseAppInstanceID(),
 is_simulator: s.default.isSimulator(),
 ycz: s.default.getYcn(),
-installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
-sim: f.default.getCountry()
+installReferrer: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer_ts : "",
+sim: h.default.getCountry()
 };
 this.SendPostHttp(n, t, p.GlobalEnum.HttpUrlType.Login);
 };
@@ -5323,15 +5533,15 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 m_model: s.default.getMobileModel(),
-vpn: f.default.checkVPN(),
+vpn: h.default.checkVPN(),
 ycz: s.default.getYcn(),
 third_info: s.default.getThridInfo(),
 os_device: s.default.getDeviceInfo(),
 firebaseId: s.default.getFireBaseAppInstanceID(),
 is_simulator: s.default.isSimulator(),
-installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
-sim: f.default.getCountry()
+installReferrer: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer_ts : "",
+sim: h.default.getCountry()
 };
 Log.d("登录数据:", t);
 this.SendPostHttp(t, e, p.GlobalEnum.HttpUrlType.Login);
@@ -5367,14 +5577,14 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 m_model: s.default.getMobileModel(),
-vpn: f.default.checkVPN(),
+vpn: h.default.checkVPN(),
 third_info: s.default.getThridInfo(),
 os_device: s.default.getDeviceInfo(),
 firebaseId: s.default.getFireBaseAppInstanceID(),
 is_simulator: s.default.isSimulator(),
-installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
-sim: f.default.getCountry()
+installReferrer: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: f.default.getInstance().coolData ? f.default.getInstance().coolData.installReferrer_ts : "",
+sim: h.default.getCountry()
 };
 return this.SendPostHttp(o, e, p.GlobalEnum.HttpUrlType.Login, 1);
 };
@@ -6417,7 +6627,446 @@ e.http = "http";
 })(n.ConstString || (n.ConstString = {}));
 cc._RF.pop();
 }, {} ],
-1: [ function(e, t, n) {
+1: [ function(e, t) {
+var n = e("util/"), o = Array.prototype.slice, i = Object.prototype.hasOwnProperty, r = t.exports = u;
+r.AssertionError = function(e) {
+this.name = "AssertionError";
+this.actual = e.actual;
+this.expected = e.expected;
+this.operator = e.operator;
+if (e.message) {
+this.message = e.message;
+this.generatedMessage = !1;
+} else {
+this.message = c(this);
+this.generatedMessage = !0;
+}
+var t = e.stackStartFunction || l;
+if (Error.captureStackTrace) Error.captureStackTrace(this, t); else {
+var n = new Error();
+if (n.stack) {
+var o = n.stack, i = t.name, r = o.indexOf("\n" + i);
+if (r >= 0) {
+var a = o.indexOf("\n", r + 1);
+o = o.substring(a + 1);
+}
+this.stack = o;
+}
+}
+};
+n.inherits(r.AssertionError, Error);
+function a(e, t) {
+return n.isUndefined(t) ? "" + t : n.isNumber(t) && !isFinite(t) ? t.toString() : n.isFunction(t) || n.isRegExp(t) ? t.toString() : t;
+}
+function s(e, t) {
+return n.isString(e) ? e.length < t ? e : e.slice(0, t) : e;
+}
+function c(e) {
+return s(JSON.stringify(e.actual, a), 128) + " " + e.operator + " " + s(JSON.stringify(e.expected, a), 128);
+}
+function l(e, t, n, o, i) {
+throw new r.AssertionError({
+message: n,
+actual: e,
+expected: t,
+operator: o,
+stackStartFunction: i
+});
+}
+r.fail = l;
+function u(e, t) {
+e || l(e, !0, t, "==", r.ok);
+}
+r.ok = u;
+r.equal = function(e, t, n) {
+e != t && l(e, t, n, "==", r.equal);
+};
+r.notEqual = function(e, t, n) {
+e == t && l(e, t, n, "!=", r.notEqual);
+};
+r.deepEqual = function(e, t, n) {
+p(e, t) || l(e, t, n, "deepEqual", r.deepEqual);
+};
+function p(e, t) {
+if (e === t) return !0;
+if (n.isBuffer(e) && n.isBuffer(t)) {
+if (e.length != t.length) return !1;
+for (var o = 0; o < e.length; o++) if (e[o] !== t[o]) return !1;
+return !0;
+}
+return n.isDate(e) && n.isDate(t) ? e.getTime() === t.getTime() : n.isRegExp(e) && n.isRegExp(t) ? e.source === t.source && e.global === t.global && e.multiline === t.multiline && e.lastIndex === t.lastIndex && e.ignoreCase === t.ignoreCase : n.isObject(e) || n.isObject(t) ? h(e, t) : e == t;
+}
+function d(e) {
+return "[object Arguments]" == Object.prototype.toString.call(e);
+}
+function h(e, t) {
+if (n.isNullOrUndefined(e) || n.isNullOrUndefined(t)) return !1;
+if (e.prototype !== t.prototype) return !1;
+if (n.isPrimitive(e) || n.isPrimitive(t)) return e === t;
+var i = d(e), r = d(t);
+if (i && !r || !i && r) return !1;
+if (i) return p(e = o.call(e), t = o.call(t));
+var a, s, c = g(e), l = g(t);
+if (c.length != l.length) return !1;
+c.sort();
+l.sort();
+for (s = c.length - 1; s >= 0; s--) if (c[s] != l[s]) return !1;
+for (s = c.length - 1; s >= 0; s--) if (!p(e[a = c[s]], t[a])) return !1;
+return !0;
+}
+r.notDeepEqual = function(e, t, n) {
+p(e, t) && l(e, t, n, "notDeepEqual", r.notDeepEqual);
+};
+r.strictEqual = function(e, t, n) {
+e !== t && l(e, t, n, "===", r.strictEqual);
+};
+r.notStrictEqual = function(e, t, n) {
+e === t && l(e, t, n, "!==", r.notStrictEqual);
+};
+function f(e, t) {
+return !(!e || !t) && ("[object RegExp]" == Object.prototype.toString.call(t) ? t.test(e) : e instanceof t || !0 === t.call({}, e));
+}
+function _(e, t, o, i) {
+var r;
+if (n.isString(o)) {
+i = o;
+o = null;
+}
+try {
+t();
+} catch (e) {
+r = e;
+}
+i = (o && o.name ? " (" + o.name + ")." : ".") + (i ? " " + i : ".");
+e && !r && l(r, o, "Missing expected exception" + i);
+!e && f(r, o) && l(r, o, "Got unwanted exception" + i);
+if (e && r && o && !f(r, o) || !e && r) throw r;
+}
+r.throws = function(e, t, n) {
+_.apply(this, [ !0 ].concat(o.call(arguments)));
+};
+r.doesNotThrow = function(e, t) {
+_.apply(this, [ !1 ].concat(o.call(arguments)));
+};
+r.ifError = function(e) {
+if (e) throw e;
+};
+var g = Object.keys || function(e) {
+var t = [];
+for (var n in e) i.call(e, n) && t.push(n);
+return t;
+};
+}, {
+"util/": 4
+} ],
+2: [ function(e, t) {
+"function" == typeof Object.create ? t.exports = function(e, t) {
+e.super_ = t;
+e.prototype = Object.create(t.prototype, {
+constructor: {
+value: e,
+enumerable: !1,
+writable: !0,
+configurable: !0
+}
+});
+} : t.exports = function(e, t) {
+e.super_ = t;
+var n = function() {};
+n.prototype = t.prototype;
+e.prototype = new n();
+e.prototype.constructor = e;
+};
+}, {} ],
+3: [ function(e, t) {
+t.exports = function(e) {
+return e && "object" == typeof e && "function" == typeof e.copy && "function" == typeof e.fill && "function" == typeof e.readUInt8;
+};
+}, {} ],
+4: [ function(e, t, n) {
+(function(t, o) {
+var i = /%[sdj%]/g;
+n.format = function(e) {
+if (!S(e)) {
+for (var t = [], n = 0; n < arguments.length; n++) t.push(s(arguments[n]));
+return t.join(" ");
+}
+n = 1;
+for (var o = arguments, r = o.length, a = String(e).replace(i, function(e) {
+if ("%%" === e) return "%";
+if (n >= r) return e;
+switch (e) {
+case "%s":
+return String(o[n++]);
+
+case "%d":
+return Number(o[n++]);
+
+case "%j":
+try {
+return JSON.stringify(o[n++]);
+} catch (e) {
+return "[Circular]";
+}
+
+default:
+return e;
+}
+}), c = o[n]; n < r; c = o[++n]) v(c) || !C(c) ? a += " " + c : a += " " + s(c);
+return a;
+};
+n.deprecate = function(e, i) {
+if (b(o.process)) return function() {
+return n.deprecate(e, i).apply(this, arguments);
+};
+if (!0 === t.noDeprecation) return e;
+var r = !1;
+return function() {
+if (!r) {
+if (t.throwDeprecation) throw new Error(i);
+t.traceDeprecation ? console.trace(i) : console.error(i);
+r = !0;
+}
+return e.apply(this, arguments);
+};
+};
+var r, a = {};
+n.debuglog = function(e) {
+b(r) && (r = t.env.NODE_DEBUG || "");
+e = e.toUpperCase();
+if (!a[e]) if (new RegExp("\\b" + e + "\\b", "i").test(r)) {
+var o = t.pid;
+a[e] = function() {
+var t = n.format.apply(n, arguments);
+console.error("%s %d: %s", e, o, t);
+};
+} else a[e] = function() {};
+return a[e];
+};
+function s(e, t) {
+var o = {
+seen: [],
+stylize: l
+};
+arguments.length >= 3 && (o.depth = arguments[2]);
+arguments.length >= 4 && (o.colors = arguments[3]);
+m(t) ? o.showHidden = t : t && n._extend(o, t);
+b(o.showHidden) && (o.showHidden = !1);
+b(o.depth) && (o.depth = 2);
+b(o.colors) && (o.colors = !1);
+b(o.customInspect) && (o.customInspect = !0);
+o.colors && (o.stylize = c);
+return p(o, e, o.depth);
+}
+n.inspect = s;
+s.colors = {
+bold: [ 1, 22 ],
+italic: [ 3, 23 ],
+underline: [ 4, 24 ],
+inverse: [ 7, 27 ],
+white: [ 37, 39 ],
+grey: [ 90, 39 ],
+black: [ 30, 39 ],
+blue: [ 34, 39 ],
+cyan: [ 36, 39 ],
+green: [ 32, 39 ],
+magenta: [ 35, 39 ],
+red: [ 31, 39 ],
+yellow: [ 33, 39 ]
+};
+s.styles = {
+special: "cyan",
+number: "yellow",
+boolean: "yellow",
+undefined: "grey",
+null: "bold",
+string: "green",
+date: "magenta",
+regexp: "red"
+};
+function c(e, t) {
+var n = s.styles[t];
+return n ? "[" + s.colors[n][0] + "m" + e + "[" + s.colors[n][1] + "m" : e;
+}
+function l(e) {
+return e;
+}
+function u(e) {
+var t = {};
+e.forEach(function(e) {
+t[e] = !0;
+});
+return t;
+}
+function p(e, t, o) {
+if (e.customInspect && t && O(t.inspect) && t.inspect !== n.inspect && (!t.constructor || t.constructor.prototype !== t)) {
+var i = t.inspect(o, e);
+S(i) || (i = p(e, i, o));
+return i;
+}
+var r = d(e, t);
+if (r) return r;
+var a = Object.keys(t), s = u(a);
+e.showHidden && (a = Object.getOwnPropertyNames(t));
+if (T(t) && (a.indexOf("message") >= 0 || a.indexOf("description") >= 0)) return h(t);
+if (0 === a.length) {
+if (O(t)) {
+var c = t.name ? ": " + t.name : "";
+return e.stylize("[Function" + c + "]", "special");
+}
+if (R(t)) return e.stylize(RegExp.prototype.toString.call(t), "regexp");
+if (A(t)) return e.stylize(Date.prototype.toString.call(t), "date");
+if (T(t)) return h(t);
+}
+var l, m = "", v = !1, E = [ "{", "}" ];
+if (y(t)) {
+v = !0;
+E = [ "[", "]" ];
+}
+O(t) && (m = " [Function" + (t.name ? ": " + t.name : "") + "]");
+R(t) && (m = " " + RegExp.prototype.toString.call(t));
+A(t) && (m = " " + Date.prototype.toUTCString.call(t));
+T(t) && (m = " " + h(t));
+if (0 === a.length && (!v || 0 == t.length)) return E[0] + m + E[1];
+if (o < 0) return R(t) ? e.stylize(RegExp.prototype.toString.call(t), "regexp") : e.stylize("[Object]", "special");
+e.seen.push(t);
+l = v ? f(e, t, o, s, a) : a.map(function(n) {
+return _(e, t, o, s, n, v);
+});
+e.seen.pop();
+return g(l, m, E);
+}
+function d(e, t) {
+if (b(t)) return e.stylize("undefined", "undefined");
+if (S(t)) {
+var n = "'" + JSON.stringify(t).replace(/^"|"$/g, "").replace(/'/g, "\\'").replace(/\\"/g, '"') + "'";
+return e.stylize(n, "string");
+}
+return E(t) ? e.stylize("" + t, "number") : m(t) ? e.stylize("" + t, "boolean") : v(t) ? e.stylize("null", "null") : void 0;
+}
+function h(e) {
+return "[" + Error.prototype.toString.call(e) + "]";
+}
+function f(e, t, n, o, i) {
+for (var r = [], a = 0, s = t.length; a < s; ++a) I(t, String(a)) ? r.push(_(e, t, n, o, String(a), !0)) : r.push("");
+i.forEach(function(i) {
+i.match(/^\d+$/) || r.push(_(e, t, n, o, i, !0));
+});
+return r;
+}
+function _(e, t, n, o, i, r) {
+var a, s, c;
+(c = Object.getOwnPropertyDescriptor(t, i) || {
+value: t[i]
+}).get ? s = c.set ? e.stylize("[Getter/Setter]", "special") : e.stylize("[Getter]", "special") : c.set && (s = e.stylize("[Setter]", "special"));
+I(o, i) || (a = "[" + i + "]");
+s || (e.seen.indexOf(c.value) < 0 ? (s = v(n) ? p(e, c.value, null) : p(e, c.value, n - 1)).indexOf("\n") > -1 && (s = r ? s.split("\n").map(function(e) {
+return "  " + e;
+}).join("\n").substr(2) : "\n" + s.split("\n").map(function(e) {
+return "   " + e;
+}).join("\n")) : s = e.stylize("[Circular]", "special"));
+if (b(a)) {
+if (r && i.match(/^\d+$/)) return s;
+if ((a = JSON.stringify("" + i)).match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+a = a.substr(1, a.length - 2);
+a = e.stylize(a, "name");
+} else {
+a = a.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
+a = e.stylize(a, "string");
+}
+}
+return a + ": " + s;
+}
+function g(e, t, n) {
+return e.reduce(function(e, t) {
+t.indexOf("\n");
+return e + t.replace(/\u001b\[\d\d?m/g, "").length + 1;
+}, 0) > 60 ? n[0] + ("" === t ? "" : t + "\n ") + " " + e.join(",\n  ") + " " + n[1] : n[0] + t + " " + e.join(", ") + " " + n[1];
+}
+function y(e) {
+return Array.isArray(e);
+}
+n.isArray = y;
+function m(e) {
+return "boolean" == typeof e;
+}
+n.isBoolean = m;
+function v(e) {
+return null === e;
+}
+n.isNull = v;
+n.isNullOrUndefined = function(e) {
+return null == e;
+};
+function E(e) {
+return "number" == typeof e;
+}
+n.isNumber = E;
+function S(e) {
+return "string" == typeof e;
+}
+n.isString = S;
+n.isSymbol = function(e) {
+return "symbol" == typeof e;
+};
+function b(e) {
+return void 0 === e;
+}
+n.isUndefined = b;
+function R(e) {
+return C(e) && "[object RegExp]" === w(e);
+}
+n.isRegExp = R;
+function C(e) {
+return "object" == typeof e && null !== e;
+}
+n.isObject = C;
+function A(e) {
+return C(e) && "[object Date]" === w(e);
+}
+n.isDate = A;
+function T(e) {
+return C(e) && ("[object Error]" === w(e) || e instanceof Error);
+}
+n.isError = T;
+function O(e) {
+return "function" == typeof e;
+}
+n.isFunction = O;
+n.isPrimitive = function(e) {
+return null === e || "boolean" == typeof e || "number" == typeof e || "string" == typeof e || "symbol" == typeof e || "undefined" == typeof e;
+};
+n.isBuffer = e("./support/isBuffer");
+function w(e) {
+return Object.prototype.toString.call(e);
+}
+function M(e) {
+return e < 10 ? "0" + e.toString(10) : e.toString(10);
+}
+var N = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+function P() {
+var e = new Date(), t = [ M(e.getHours()), M(e.getMinutes()), M(e.getSeconds()) ].join(":");
+return [ e.getDate(), N[e.getMonth()], t ].join(" ");
+}
+n.log = function() {
+console.log("%s - %s", P(), n.format.apply(n, arguments));
+};
+n.inherits = e("inherits");
+n._extend = function(e, t) {
+if (!t || !C(t)) return e;
+for (var n = Object.keys(t), o = n.length; o--; ) e[n[o]] = t[n[o]];
+return e;
+};
+function I(e, t) {
+return Object.prototype.hasOwnProperty.call(e, t);
+}
+}).call(this, e("_process"), "undefined" != typeof global ? global : "undefined" != typeof self ? self : "undefined" != typeof window ? window : {});
+}, {
+"./support/isBuffer": 3,
+_process: 10,
+inherits: 2
+} ],
+5: [ function(e, t, n) {
 "use strict";
 n.byteLength = function(e) {
 var t = l(e), n = t[0], o = t[1];
@@ -6477,7 +7126,7 @@ a.push(o[(r = i) >> 18 & 63] + o[r >> 12 & 63] + o[r >> 6 & 63] + o[63 & r]);
 return a.join("");
 }
 }, {} ],
-2: [ function(e, t, n) {
+6: [ function(e, t, n) {
 (function(t) {
 "use strict";
 var o = e("base64-js"), i = e("ieee754"), r = e("isarray");
@@ -6528,7 +7177,7 @@ return e;
 };
 function l(e, t, n, o) {
 if ("number" == typeof t) throw new TypeError('"value" argument must not be a number');
-return "undefined" != typeof ArrayBuffer && t instanceof ArrayBuffer ? _(e, t, n, o) : "string" == typeof t ? f(e, t, n) : g(e, t);
+return "undefined" != typeof ArrayBuffer && t instanceof ArrayBuffer ? _(e, t, n, o) : "string" == typeof t ? h(e, t, n) : g(e, t);
 }
 c.from = function(e, t, n) {
 return l(null, e, t, n);
@@ -6564,14 +7213,14 @@ return d(null, e);
 c.allocUnsafeSlow = function(e) {
 return d(null, e);
 };
-function f(e, t, n) {
+function h(e, t, n) {
 "string" == typeof n && "" !== n || (n = "utf8");
 if (!c.isEncoding(n)) throw new TypeError('"encoding" must be a valid string encoding');
 var o = 0 | m(t, n), i = (e = s(e, o)).write(t, n);
 i !== o && (e = e.slice(0, i));
 return e;
 }
-function h(e, t) {
+function f(e, t) {
 var n = t.length < 0 ? 0 : 0 | y(t.length);
 e = s(e, n);
 for (var o = 0; o < n; o += 1) e[o] = 255 & t[o];
@@ -6582,7 +7231,7 @@ t.byteLength;
 if (n < 0 || t.byteLength < n) throw new RangeError("'offset' is out of bounds");
 if (t.byteLength < n + (o || 0)) throw new RangeError("'length' is out of bounds");
 t = void 0 === n && void 0 === o ? new Uint8Array(t) : void 0 === o ? new Uint8Array(t, n) : new Uint8Array(t, n, o);
-c.TYPED_ARRAY_SUPPORT ? (e = t).__proto__ = c.prototype : e = h(e, t);
+c.TYPED_ARRAY_SUPPORT ? (e = t).__proto__ = c.prototype : e = f(e, t);
 return e;
 }
 function g(e, t) {
@@ -6593,8 +7242,8 @@ t.copy(e, 0, 0, n);
 return e;
 }
 if (t) {
-if ("undefined" != typeof ArrayBuffer && t.buffer instanceof ArrayBuffer || "length" in t) return "number" != typeof t.length || (o = t.length) != o ? s(e, 0) : h(e, t);
-if ("Buffer" === t.type && r(t.data)) return h(e, t.data);
+if ("undefined" != typeof ArrayBuffer && t.buffer instanceof ArrayBuffer || "length" in t) return "number" != typeof t.length || (o = t.length) != o ? s(e, 0) : f(e, t);
+if ("Buffer" === t.type && r(t.data)) return f(e, t.data);
 }
 var o;
 throw new TypeError("First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.");
@@ -6667,7 +7316,7 @@ return n;
 case "utf8":
 case "utf-8":
 case void 0:
-return K(e).length;
+return Z(e).length;
 
 case "ucs2":
 case "ucs-2":
@@ -6679,10 +7328,10 @@ case "hex":
 return n >>> 1;
 
 case "base64":
-return Z(e).length;
+return Q(e).length;
 
 default:
-if (o) return K(e).length;
+if (o) return Z(e).length;
 t = ("" + t).toLowerCase();
 o = !0;
 }
@@ -6698,27 +7347,27 @@ if ((n >>>= 0) <= (t >>>= 0)) return "";
 e || (e = "utf8");
 for (;;) switch (e) {
 case "hex":
-return D(this, t, n);
+return B(this, t, n);
 
 case "utf8":
 case "utf-8":
-return I(this, t, n);
+return N(this, t, n);
 
 case "ascii":
-return U(this, t, n);
+return L(this, t, n);
 
 case "latin1":
 case "binary":
-return P(this, t, n);
+return U(this, t, n);
 
 case "base64":
-return N(this, t, n);
+return M(this, t, n);
 
 case "ucs2":
 case "ucs-2":
 case "utf16le":
 case "utf-16le":
-return B(this, t, n);
+return D(this, t, n);
 
 default:
 if (o) throw new TypeError("Unknown encoding: " + e);
@@ -6760,7 +7409,7 @@ return this;
 };
 c.prototype.toString = function() {
 var e = 0 | this.length;
-return 0 === e ? "" : 0 === arguments.length ? I(this, 0, e) : v.apply(this, arguments);
+return 0 === e ? "" : 0 === arguments.length ? N(this, 0, e) : v.apply(this, arguments);
 };
 c.prototype.equals = function(e) {
 if (!c.isBuffer(e)) throw new TypeError("Argument must be a Buffer");
@@ -6873,18 +7522,18 @@ e[n + a] = s;
 return a;
 }
 function C(e, t, n, o) {
-return q(K(t, e.length - n), e, n, o);
-}
-function T(e, t, n, o) {
-return q(Q(t), e, n, o);
-}
-function O(e, t, n, o) {
-return T(e, t, n, o);
+return q(Z(t, e.length - n), e, n, o);
 }
 function A(e, t, n, o) {
-return q(Z(t), e, n, o);
+return q(K(t), e, n, o);
 }
-function M(e, t, n, o) {
+function T(e, t, n, o) {
+return A(e, t, n, o);
+}
+function O(e, t, n, o) {
+return q(Q(t), e, n, o);
+}
+function w(e, t, n, o) {
 return q(J(t, e.length - n), e, n, o);
 }
 c.prototype.write = function(e, t, n, o) {
@@ -6920,20 +7569,20 @@ case "utf-8":
 return C(this, e, t, n);
 
 case "ascii":
-return T(this, e, t, n);
+return A(this, e, t, n);
 
 case "latin1":
 case "binary":
-return O(this, e, t, n);
+return T(this, e, t, n);
 
 case "base64":
-return A(this, e, t, n);
+return O(this, e, t, n);
 
 case "ucs2":
 case "ucs-2":
 case "utf16le":
 case "utf-16le":
-return M(this, e, t, n);
+return w(this, e, t, n);
 
 default:
 if (r) throw new TypeError("Unknown encoding: " + o);
@@ -6947,10 +7596,10 @@ type: "Buffer",
 data: Array.prototype.slice.call(this._arr || this, 0)
 };
 };
-function N(e, t, n) {
+function M(e, t, n) {
 return 0 === t && n === e.length ? o.fromByteArray(e) : o.fromByteArray(e.slice(t, n));
 }
-function I(e, t, n) {
+function N(e, t, n) {
 n = Math.min(e.length, n);
 for (var o = [], i = t; i < n; ) {
 var r = e[i], a = null, s = r > 239 ? 4 : r > 223 ? 3 : r > 191 ? 2 : 1;
@@ -6989,35 +7638,35 @@ a = 56320 | 1023 & a;
 o.push(a);
 i += s;
 }
-return L(o);
+return I(o);
 }
-var w = 4096;
-function L(e) {
+var P = 4096;
+function I(e) {
 var t = e.length;
-if (t <= w) return String.fromCharCode.apply(String, e);
-for (var n = "", o = 0; o < t; ) n += String.fromCharCode.apply(String, e.slice(o, o += w));
+if (t <= P) return String.fromCharCode.apply(String, e);
+for (var n = "", o = 0; o < t; ) n += String.fromCharCode.apply(String, e.slice(o, o += P));
 return n;
 }
-function U(e, t, n) {
+function L(e, t, n) {
 var o = "";
 n = Math.min(e.length, n);
 for (var i = t; i < n; ++i) o += String.fromCharCode(127 & e[i]);
 return o;
 }
-function P(e, t, n) {
+function U(e, t, n) {
 var o = "";
 n = Math.min(e.length, n);
 for (var i = t; i < n; ++i) o += String.fromCharCode(e[i]);
 return o;
 }
-function D(e, t, n) {
+function B(e, t, n) {
 var o, i = e.length;
 (!t || t < 0) && (t = 0);
 (!n || n < 0 || n > i) && (n = i);
 for (var r = "", a = t; a < n; ++a) r += (o = e[a]) < 16 ? "0" + o.toString(16) : o.toString(16);
 return r;
 }
-function B(e, t, n) {
+function D(e, t, n) {
 for (var o = e.slice(t, n), i = "", r = 0; r < o.length; r += 2) i += String.fromCharCode(o[r] + 256 * o[r + 1]);
 return i;
 }
@@ -7182,7 +7831,7 @@ this[t + 1] = 255 & e;
 } else F(this, e, t, !1);
 return t + 2;
 };
-function H(e, t, n, o) {
+function j(e, t, n, o) {
 t < 0 && (t = 4294967295 + t + 1);
 for (var i = 0, r = Math.min(e.length - n, 4); i < r; ++i) e[n + i] = t >>> 8 * (o ? i : 3 - i) & 255;
 }
@@ -7195,7 +7844,7 @@ this[t + 3] = e >>> 24;
 this[t + 2] = e >>> 16;
 this[t + 1] = e >>> 8;
 this[t] = 255 & e;
-} else H(this, e, t, !0);
+} else j(this, e, t, !0);
 return t + 4;
 };
 c.prototype.writeUInt32BE = function(e, t, n) {
@@ -7207,7 +7856,7 @@ this[t] = e >>> 24;
 this[t + 1] = e >>> 16;
 this[t + 2] = e >>> 8;
 this[t + 3] = 255 & e;
-} else H(this, e, t, !1);
+} else j(this, e, t, !1);
 return t + 4;
 };
 c.prototype.writeIntLE = function(e, t, n, o) {
@@ -7278,7 +7927,7 @@ this[t] = 255 & e;
 this[t + 1] = e >>> 8;
 this[t + 2] = e >>> 16;
 this[t + 3] = e >>> 24;
-} else H(this, e, t, !0);
+} else j(this, e, t, !0);
 return t + 4;
 };
 c.prototype.writeInt32BE = function(e, t, n) {
@@ -7291,26 +7940,26 @@ this[t] = e >>> 24;
 this[t + 1] = e >>> 16;
 this[t + 2] = e >>> 8;
 this[t + 3] = 255 & e;
-} else H(this, e, t, !1);
+} else j(this, e, t, !1);
 return t + 4;
 };
-function V(e, t, n, o) {
+function H(e, t, n, o) {
 if (n + o > e.length) throw new RangeError("Index out of range");
 if (n < 0) throw new RangeError("Index out of range");
 }
-function j(e, t, n, o, r) {
-r || V(e, 0, n, 4);
+function V(e, t, n, o, r) {
+r || H(e, 0, n, 4);
 i.write(e, t, n, o, 23, 4);
 return n + 4;
 }
 c.prototype.writeFloatLE = function(e, t, n) {
-return j(this, e, t, !0, n);
+return V(this, e, t, !0, n);
 };
 c.prototype.writeFloatBE = function(e, t, n) {
-return j(this, e, t, !1, n);
+return V(this, e, t, !1, n);
 };
 function x(e, t, n, o, r) {
-r || V(e, 0, n, 8);
+r || H(e, 0, n, 8);
 i.write(e, t, n, o, 52, 8);
 return n + 8;
 }
@@ -7361,7 +8010,7 @@ n = void 0 === n ? this.length : n >>> 0;
 e || (e = 0);
 var r;
 if ("number" == typeof e) for (r = t; r < n; ++r) this[r] = e; else {
-var a = c.isBuffer(e) ? e : K(new c(e, o).toString()), s = a.length;
+var a = c.isBuffer(e) ? e : Z(new c(e, o).toString()), s = a.length;
 for (r = 0; r < n - t; ++r) this[r + t] = a[r % s];
 }
 return this;
@@ -7375,7 +8024,7 @@ return e;
 function W(e) {
 return e.trim ? e.trim() : e.replace(/^\s+|\s+$/g, "");
 }
-function K(e, t) {
+function Z(e, t) {
 t = t || Infinity;
 for (var n, o = e.length, i = null, r = [], a = 0; a < o; ++a) {
 if ((n = e.charCodeAt(a)) > 55295 && n < 57344) {
@@ -7416,7 +8065,7 @@ r.push(n >> 18 | 240, n >> 12 & 63 | 128, n >> 6 & 63 | 128, 63 & n | 128);
 }
 return r;
 }
-function Q(e) {
+function K(e) {
 for (var t = [], n = 0; n < e.length; ++n) t.push(255 & e.charCodeAt(n));
 return t;
 }
@@ -7429,7 +8078,7 @@ r.push(o);
 }
 return r;
 }
-function Z(e) {
+function Q(e) {
 return o.toByteArray(Y(e));
 }
 function q(e, t, n, o) {
@@ -7438,22 +8087,66 @@ return i;
 }
 }).call(this, "undefined" != typeof global ? global : "undefined" != typeof self ? self : "undefined" != typeof window ? window : {});
 }, {
-"base64-js": 1,
-ieee754: 4,
-isarray: 3
+"base64-js": 5,
+ieee754: 9,
+isarray: 7
 } ],
-3: [ function(e, t) {
+7: [ function(e, t) {
 var n = {}.toString;
 t.exports = Array.isArray || function(e) {
 return "[object Array]" == n.call(e);
 };
 }, {} ],
-4: [ function(e, t, n) {
+8: [ function(e, t) {
+(function(n) {
+var o = e("util"), i = e("assert");
+function r() {
+return new Date().getTime();
+}
+var a, s = Array.prototype.slice, c = {};
+a = "undefined" != typeof n && n.console ? n.console : "undefined" != typeof window && window.console ? window.console : {};
+for (var l = [ [ function() {}, "log" ], [ function() {
+a.log.apply(a, arguments);
+}, "info" ], [ function() {
+a.log.apply(a, arguments);
+}, "warn" ], [ function() {
+a.warn.apply(a, arguments);
+}, "error" ], [ function(e) {
+c[e] = r();
+}, "time" ], [ function(e) {
+var t = c[e];
+if (!t) throw new Error("No such label: " + e);
+delete c[e];
+var n = r() - t;
+a.log(e + ": " + n + "ms");
+}, "timeEnd" ], [ function() {
+var e = new Error();
+e.name = "Trace";
+e.message = o.format.apply(null, arguments);
+a.error(e.stack);
+}, "trace" ], [ function(e) {
+a.log(o.inspect(e) + "\n");
+}, "dir" ], [ function(e) {
+if (!e) {
+var t = s.call(arguments, 1);
+i.ok(!1, o.format.apply(null, t));
+}
+}, "assert" ] ], u = 0; u < l.length; u++) {
+var p = l[u], d = p[0], h = p[1];
+a[h] || (a[h] = d);
+}
+t.exports = a;
+}).call(this, "undefined" != typeof global ? global : "undefined" != typeof self ? self : "undefined" != typeof window ? window : {});
+}, {
+assert: 1,
+util: 13
+} ],
+9: [ function(e, t, n) {
 n.read = function(e, t, n, o, i) {
-var r, a, s = 8 * i - o - 1, c = (1 << s) - 1, l = c >> 1, u = -7, p = n ? i - 1 : 0, d = n ? -1 : 1, f = e[t + p];
+var r, a, s = 8 * i - o - 1, c = (1 << s) - 1, l = c >> 1, u = -7, p = n ? i - 1 : 0, d = n ? -1 : 1, h = e[t + p];
 p += d;
-r = f & (1 << -u) - 1;
-f >>= -u;
+r = h & (1 << -u) - 1;
+h >>= -u;
 u += s;
 for (;u > 0; r = 256 * r + e[t + p], p += d, u -= 8) ;
 a = r & (1 << -u) - 1;
@@ -7461,14 +8154,14 @@ r >>= -u;
 u += o;
 for (;u > 0; a = 256 * a + e[t + p], p += d, u -= 8) ;
 if (0 === r) r = 1 - l; else {
-if (r === c) return a ? NaN : Infinity * (f ? -1 : 1);
+if (r === c) return a ? NaN : Infinity * (h ? -1 : 1);
 a += Math.pow(2, o);
 r -= l;
 }
-return (f ? -1 : 1) * a * Math.pow(2, r - o);
+return (h ? -1 : 1) * a * Math.pow(2, r - o);
 };
 n.write = function(e, t, n, o, i, r) {
-var a, s, c, l = 8 * r - i - 1, u = (1 << l) - 1, p = u >> 1, d = 23 === i ? Math.pow(2, -24) - Math.pow(2, -77) : 0, f = o ? 0 : r - 1, h = o ? 1 : -1, _ = t < 0 || 0 === t && 1 / t < 0 ? 1 : 0;
+var a, s, c, l = 8 * r - i - 1, u = (1 << l) - 1, p = u >> 1, d = 23 === i ? Math.pow(2, -24) - Math.pow(2, -77) : 0, h = o ? 0 : r - 1, f = o ? 1 : -1, _ = t < 0 || 0 === t && 1 / t < 0 ? 1 : 0;
 t = Math.abs(t);
 if (isNaN(t) || Infinity === t) {
 s = isNaN(t) ? 1 : 0;
@@ -7494,14 +8187,153 @@ s = t * Math.pow(2, p - 1) * Math.pow(2, i);
 a = 0;
 }
 }
-for (;i >= 8; e[n + f] = 255 & s, f += h, s /= 256, i -= 8) ;
+for (;i >= 8; e[n + h] = 255 & s, h += f, s /= 256, i -= 8) ;
 a = a << i | s;
 l += i;
-for (;l > 0; e[n + f] = 255 & a, f += h, a /= 256, l -= 8) ;
-e[n + f - h] |= 128 * _;
+for (;l > 0; e[n + h] = 255 & a, h += f, a /= 256, l -= 8) ;
+e[n + h - f] |= 128 * _;
 };
 }, {} ],
-5: [ function(e, t) {
+10: [ function(e, t) {
+var n, o, i = t.exports = {};
+function r() {
+throw new Error("setTimeout has not been defined");
+}
+function a() {
+throw new Error("clearTimeout has not been defined");
+}
+(function() {
+try {
+n = "function" == typeof setTimeout ? setTimeout : r;
+} catch (e) {
+n = r;
+}
+try {
+o = "function" == typeof clearTimeout ? clearTimeout : a;
+} catch (e) {
+o = a;
+}
+})();
+function s(e) {
+if (n === setTimeout) return setTimeout(e, 0);
+if ((n === r || !n) && setTimeout) {
+n = setTimeout;
+return setTimeout(e, 0);
+}
+try {
+return n(e, 0);
+} catch (t) {
+try {
+return n.call(null, e, 0);
+} catch (t) {
+return n.call(this, e, 0);
+}
+}
+}
+function c(e) {
+if (o === clearTimeout) return clearTimeout(e);
+if ((o === a || !o) && clearTimeout) {
+o = clearTimeout;
+return clearTimeout(e);
+}
+try {
+return o(e);
+} catch (t) {
+try {
+return o.call(null, e);
+} catch (t) {
+return o.call(this, e);
+}
+}
+}
+var l, u = [], p = !1, d = -1;
+function h() {
+if (p && l) {
+p = !1;
+l.length ? u = l.concat(u) : d = -1;
+u.length && f();
+}
+}
+function f() {
+if (!p) {
+var e = s(h);
+p = !0;
+for (var t = u.length; t; ) {
+l = u;
+u = [];
+for (;++d < t; ) l && l[d].run();
+d = -1;
+t = u.length;
+}
+l = null;
+p = !1;
+c(e);
+}
+}
+i.nextTick = function(e) {
+var t = new Array(arguments.length - 1);
+if (arguments.length > 1) for (var n = 1; n < arguments.length; n++) t[n - 1] = arguments[n];
+u.push(new _(e, t));
+1 !== u.length || p || s(f);
+};
+function _(e, t) {
+this.fun = e;
+this.array = t;
+}
+_.prototype.run = function() {
+this.fun.apply(null, this.array);
+};
+i.title = "browser";
+i.browser = !0;
+i.env = {};
+i.argv = [];
+i.version = "";
+i.versions = {};
+function g() {}
+i.on = g;
+i.addListener = g;
+i.once = g;
+i.off = g;
+i.removeListener = g;
+i.removeAllListeners = g;
+i.emit = g;
+i.prependListener = g;
+i.prependOnceListener = g;
+i.listeners = function() {
+return [];
+};
+i.binding = function() {
+throw new Error("process.binding is not supported");
+};
+i.cwd = function() {
+return "/";
+};
+i.chdir = function() {
+throw new Error("process.chdir is not supported");
+};
+i.umask = function() {
+return 0;
+};
+}, {} ],
+11: [ function(e, t, n) {
+arguments[4][2][0].apply(n, arguments);
+}, {
+dup: 2
+} ],
+12: [ function(e, t, n) {
+arguments[4][3][0].apply(n, arguments);
+}, {
+dup: 3
+} ],
+13: [ function(e, t, n) {
+arguments[4][4][0].apply(n, arguments);
+}, {
+"./support/isBuffer": 12,
+_process: 10,
+dup: 4,
+inherits: 11
+} ],
+14: [ function(e, t) {
 var n = {
 utf8: {
 stringToBytes: function(e) {
@@ -7524,7 +8356,7 @@ return t.join("");
 };
 t.exports = n;
 }, {} ],
-6: [ function(e, t) {
+15: [ function(e, t) {
 n = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", o = {
 rotl: function(e, t) {
 return e << t | e >>> 32 - t;
@@ -7572,7 +8404,7 @@ return t;
 }, t.exports = o;
 var n, o;
 }, {} ],
-7: [ function(e, t) {
+16: [ function(e, t) {
 t.exports = function(e) {
 return null != e && (n(e) || o(e) || !!e._isBuffer);
 };
@@ -7583,77 +8415,77 @@ function o(e) {
 return "function" == typeof e.readFloatLE && "function" == typeof e.slice && n(e.slice(0, 0));
 }
 }, {} ],
-8: [ function(e, t) {
+17: [ function(e, t) {
 (function() {
 var n = e("crypt"), o = e("charenc").utf8, i = e("is-buffer"), r = e("charenc").bin, a = function(e, t) {
 e.constructor == String ? e = t && "binary" === t.encoding ? r.stringToBytes(e) : o.stringToBytes(e) : i(e) ? e = Array.prototype.slice.call(e, 0) : Array.isArray(e) || e.constructor === Uint8Array || (e = e.toString());
-for (var s = n.bytesToWords(e), c = 8 * e.length, l = 1732584193, u = -271733879, p = -1732584194, d = 271733878, f = 0; f < s.length; f++) s[f] = 16711935 & (s[f] << 8 | s[f] >>> 24) | 4278255360 & (s[f] << 24 | s[f] >>> 8);
+for (var s = n.bytesToWords(e), c = 8 * e.length, l = 1732584193, u = -271733879, p = -1732584194, d = 271733878, h = 0; h < s.length; h++) s[h] = 16711935 & (s[h] << 8 | s[h] >>> 24) | 4278255360 & (s[h] << 24 | s[h] >>> 8);
 s[c >>> 5] |= 128 << c % 32;
 s[14 + (c + 64 >>> 9 << 4)] = c;
-var h = a._ff, _ = a._gg, g = a._hh, y = a._ii;
-for (f = 0; f < s.length; f += 16) {
+var f = a._ff, _ = a._gg, g = a._hh, y = a._ii;
+for (h = 0; h < s.length; h += 16) {
 var m = l, v = u, E = p, S = d;
-l = h(l, u, p, d, s[f + 0], 7, -680876936);
-d = h(d, l, u, p, s[f + 1], 12, -389564586);
-p = h(p, d, l, u, s[f + 2], 17, 606105819);
-u = h(u, p, d, l, s[f + 3], 22, -1044525330);
-l = h(l, u, p, d, s[f + 4], 7, -176418897);
-d = h(d, l, u, p, s[f + 5], 12, 1200080426);
-p = h(p, d, l, u, s[f + 6], 17, -1473231341);
-u = h(u, p, d, l, s[f + 7], 22, -45705983);
-l = h(l, u, p, d, s[f + 8], 7, 1770035416);
-d = h(d, l, u, p, s[f + 9], 12, -1958414417);
-p = h(p, d, l, u, s[f + 10], 17, -42063);
-u = h(u, p, d, l, s[f + 11], 22, -1990404162);
-l = h(l, u, p, d, s[f + 12], 7, 1804603682);
-d = h(d, l, u, p, s[f + 13], 12, -40341101);
-p = h(p, d, l, u, s[f + 14], 17, -1502002290);
-l = _(l, u = h(u, p, d, l, s[f + 15], 22, 1236535329), p, d, s[f + 1], 5, -165796510);
-d = _(d, l, u, p, s[f + 6], 9, -1069501632);
-p = _(p, d, l, u, s[f + 11], 14, 643717713);
-u = _(u, p, d, l, s[f + 0], 20, -373897302);
-l = _(l, u, p, d, s[f + 5], 5, -701558691);
-d = _(d, l, u, p, s[f + 10], 9, 38016083);
-p = _(p, d, l, u, s[f + 15], 14, -660478335);
-u = _(u, p, d, l, s[f + 4], 20, -405537848);
-l = _(l, u, p, d, s[f + 9], 5, 568446438);
-d = _(d, l, u, p, s[f + 14], 9, -1019803690);
-p = _(p, d, l, u, s[f + 3], 14, -187363961);
-u = _(u, p, d, l, s[f + 8], 20, 1163531501);
-l = _(l, u, p, d, s[f + 13], 5, -1444681467);
-d = _(d, l, u, p, s[f + 2], 9, -51403784);
-p = _(p, d, l, u, s[f + 7], 14, 1735328473);
-l = g(l, u = _(u, p, d, l, s[f + 12], 20, -1926607734), p, d, s[f + 5], 4, -378558);
-d = g(d, l, u, p, s[f + 8], 11, -2022574463);
-p = g(p, d, l, u, s[f + 11], 16, 1839030562);
-u = g(u, p, d, l, s[f + 14], 23, -35309556);
-l = g(l, u, p, d, s[f + 1], 4, -1530992060);
-d = g(d, l, u, p, s[f + 4], 11, 1272893353);
-p = g(p, d, l, u, s[f + 7], 16, -155497632);
-u = g(u, p, d, l, s[f + 10], 23, -1094730640);
-l = g(l, u, p, d, s[f + 13], 4, 681279174);
-d = g(d, l, u, p, s[f + 0], 11, -358537222);
-p = g(p, d, l, u, s[f + 3], 16, -722521979);
-u = g(u, p, d, l, s[f + 6], 23, 76029189);
-l = g(l, u, p, d, s[f + 9], 4, -640364487);
-d = g(d, l, u, p, s[f + 12], 11, -421815835);
-p = g(p, d, l, u, s[f + 15], 16, 530742520);
-l = y(l, u = g(u, p, d, l, s[f + 2], 23, -995338651), p, d, s[f + 0], 6, -198630844);
-d = y(d, l, u, p, s[f + 7], 10, 1126891415);
-p = y(p, d, l, u, s[f + 14], 15, -1416354905);
-u = y(u, p, d, l, s[f + 5], 21, -57434055);
-l = y(l, u, p, d, s[f + 12], 6, 1700485571);
-d = y(d, l, u, p, s[f + 3], 10, -1894986606);
-p = y(p, d, l, u, s[f + 10], 15, -1051523);
-u = y(u, p, d, l, s[f + 1], 21, -2054922799);
-l = y(l, u, p, d, s[f + 8], 6, 1873313359);
-d = y(d, l, u, p, s[f + 15], 10, -30611744);
-p = y(p, d, l, u, s[f + 6], 15, -1560198380);
-u = y(u, p, d, l, s[f + 13], 21, 1309151649);
-l = y(l, u, p, d, s[f + 4], 6, -145523070);
-d = y(d, l, u, p, s[f + 11], 10, -1120210379);
-p = y(p, d, l, u, s[f + 2], 15, 718787259);
-u = y(u, p, d, l, s[f + 9], 21, -343485551);
+l = f(l, u, p, d, s[h + 0], 7, -680876936);
+d = f(d, l, u, p, s[h + 1], 12, -389564586);
+p = f(p, d, l, u, s[h + 2], 17, 606105819);
+u = f(u, p, d, l, s[h + 3], 22, -1044525330);
+l = f(l, u, p, d, s[h + 4], 7, -176418897);
+d = f(d, l, u, p, s[h + 5], 12, 1200080426);
+p = f(p, d, l, u, s[h + 6], 17, -1473231341);
+u = f(u, p, d, l, s[h + 7], 22, -45705983);
+l = f(l, u, p, d, s[h + 8], 7, 1770035416);
+d = f(d, l, u, p, s[h + 9], 12, -1958414417);
+p = f(p, d, l, u, s[h + 10], 17, -42063);
+u = f(u, p, d, l, s[h + 11], 22, -1990404162);
+l = f(l, u, p, d, s[h + 12], 7, 1804603682);
+d = f(d, l, u, p, s[h + 13], 12, -40341101);
+p = f(p, d, l, u, s[h + 14], 17, -1502002290);
+l = _(l, u = f(u, p, d, l, s[h + 15], 22, 1236535329), p, d, s[h + 1], 5, -165796510);
+d = _(d, l, u, p, s[h + 6], 9, -1069501632);
+p = _(p, d, l, u, s[h + 11], 14, 643717713);
+u = _(u, p, d, l, s[h + 0], 20, -373897302);
+l = _(l, u, p, d, s[h + 5], 5, -701558691);
+d = _(d, l, u, p, s[h + 10], 9, 38016083);
+p = _(p, d, l, u, s[h + 15], 14, -660478335);
+u = _(u, p, d, l, s[h + 4], 20, -405537848);
+l = _(l, u, p, d, s[h + 9], 5, 568446438);
+d = _(d, l, u, p, s[h + 14], 9, -1019803690);
+p = _(p, d, l, u, s[h + 3], 14, -187363961);
+u = _(u, p, d, l, s[h + 8], 20, 1163531501);
+l = _(l, u, p, d, s[h + 13], 5, -1444681467);
+d = _(d, l, u, p, s[h + 2], 9, -51403784);
+p = _(p, d, l, u, s[h + 7], 14, 1735328473);
+l = g(l, u = _(u, p, d, l, s[h + 12], 20, -1926607734), p, d, s[h + 5], 4, -378558);
+d = g(d, l, u, p, s[h + 8], 11, -2022574463);
+p = g(p, d, l, u, s[h + 11], 16, 1839030562);
+u = g(u, p, d, l, s[h + 14], 23, -35309556);
+l = g(l, u, p, d, s[h + 1], 4, -1530992060);
+d = g(d, l, u, p, s[h + 4], 11, 1272893353);
+p = g(p, d, l, u, s[h + 7], 16, -155497632);
+u = g(u, p, d, l, s[h + 10], 23, -1094730640);
+l = g(l, u, p, d, s[h + 13], 4, 681279174);
+d = g(d, l, u, p, s[h + 0], 11, -358537222);
+p = g(p, d, l, u, s[h + 3], 16, -722521979);
+u = g(u, p, d, l, s[h + 6], 23, 76029189);
+l = g(l, u, p, d, s[h + 9], 4, -640364487);
+d = g(d, l, u, p, s[h + 12], 11, -421815835);
+p = g(p, d, l, u, s[h + 15], 16, 530742520);
+l = y(l, u = g(u, p, d, l, s[h + 2], 23, -995338651), p, d, s[h + 0], 6, -198630844);
+d = y(d, l, u, p, s[h + 7], 10, 1126891415);
+p = y(p, d, l, u, s[h + 14], 15, -1416354905);
+u = y(u, p, d, l, s[h + 5], 21, -57434055);
+l = y(l, u, p, d, s[h + 12], 6, 1700485571);
+d = y(d, l, u, p, s[h + 3], 10, -1894986606);
+p = y(p, d, l, u, s[h + 10], 15, -1051523);
+u = y(u, p, d, l, s[h + 1], 21, -2054922799);
+l = y(l, u, p, d, s[h + 8], 6, 1873313359);
+d = y(d, l, u, p, s[h + 15], 10, -30611744);
+p = y(p, d, l, u, s[h + 6], 15, -1560198380);
+u = y(u, p, d, l, s[h + 13], 21, 1309151649);
+l = y(l, u, p, d, s[h + 4], 6, -145523070);
+d = y(d, l, u, p, s[h + 11], 10, -1120210379);
+p = y(p, d, l, u, s[h + 2], 15, 718787259);
+u = y(u, p, d, l, s[h + 9], 21, -343485551);
 l = l + m >>> 0;
 u = u + v >>> 0;
 p = p + E >>> 0;
@@ -7686,9 +8518,9 @@ return t && t.asBytes ? o : t && t.asString ? r.bytesToString(o) : n.bytesToHex(
 };
 })();
 }, {
-charenc: 5,
-crypt: 6,
-"is-buffer": 7
+charenc: 14,
+crypt: 15,
+"is-buffer": 16
 } ],
 DataCenter: [ function(e, t, n) {
 "use strict";
@@ -7957,9 +8789,9 @@ App ? Reflect.apply(App.dispatcher.dispatch, App.dispatcher, arguments) : Reflec
 };
 cc._RF.pop();
 }, {} ],
-Effect_FinishMgr: [ function(e, t, n) {
+DragonPlayState: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "0b5fbcbBsRLR5ars4B9nJyc", "Effect_FinishMgr");
+cc._RF.push(t, "cf70foaiJ9FcIJlsyRC2mld", "DragonPlayState");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -7982,36 +8814,87 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
+var a = e("./BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
+function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
-t.node_Main = null;
-t.node_Zhezhao = null;
-t.particleSystems = [];
+t.dragon = null;
 return t;
 }
-t.prototype.start = function() {};
-t.prototype.OpenShow = function(e) {
-var t = this;
-this.node_Main.active = !0;
-this.node_Zhezhao.active = !0;
-this.node_Zhezhao.opacity = 1;
-for (var n = 0; n < this.particleSystems.length; n++) this.particleSystems[n].play();
-this.scheduleOnce(function() {
-e && e();
-t.node_Main.active = !1;
-t.node_Zhezhao.active = !1;
-}, 3);
+t.prototype.init = function() {
+this.dragon || (this.dragon = this.node.getComponentInChildren(dragonBones.ArmatureDisplay));
 };
-r([ c(cc.Node) ], t.prototype, "node_Main", void 0);
-r([ c(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
-r([ c(cc.ParticleSystem3D) ], t.prototype, "particleSystems", void 0);
-return r([ s ], t);
-}(cc.Component);
+t.prototype.show = function() {
+this.init();
+this.node.active = !0;
+this.dragon.armature().animation.gotoAndPlayByFrame(this.dragon.animationName, 0);
+};
+t.prototype.hide = function() {
+this.init();
+this.node.active = !1;
+};
+return r([ c ], t);
+}(a.default));
 n.default = l;
 cc._RF.pop();
-}, {} ],
+}, {
+"./BaseAnimState": "BaseAnimState"
+} ],
+ElementState: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "a5689NY8kROP6+M7phBJEYf", "ElementState");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../ElementAnimState/BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
+function(e) {
+i(t, e);
+function t() {
+return null !== e && e.apply(this, arguments) || this;
+}
+t.prototype.init = function(e) {
+this.rollConfig = e;
+this.states = [];
+for (var t = this.node.children, n = 0; n < t.length; n++) {
+var o = t[n].getComponent(a.default);
+o && this.states.push(o);
+}
+};
+t.prototype.show = function(e) {
+this.node.active = !0;
+for (var t = 0; t < this.states.length; t++) this.states[t].state == e ? this.states[t].show(this.rollConfig) : this.states[t].hide();
+};
+t.prototype.hide = function() {
+this.node.active = !1;
+};
+t.prototype.setExtraFunction = function() {};
+return r([ c ], t);
+}(cc.Component));
+n.default = l;
+cc._RF.pop();
+}, {
+"../ElementAnimState/BaseAnimState": "BaseAnimState"
+} ],
 EntryDelegate: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "dffc4VtciJG9ooQbgINQE1F", "EntryDelegate");
@@ -8708,6 +9591,48 @@ return e;
 n.EventProcessor = o;
 cc._RF.pop();
 }, {} ],
+ExtraState: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "bc670TB6P1Jr595FGCNsF7i", "ExtraState");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = (a.property, function(e) {
+i(t, e);
+function t() {
+return null !== e && e.apply(this, arguments) || this;
+}
+t.prototype.init = function() {};
+t.prototype.show = function() {
+this.node.active = !0;
+};
+t.prototype.hide = function() {
+this.node.active = !1;
+};
+return r([ s ], t);
+}(cc.Component));
+n.default = c;
+cc._RF.pop();
+}, {} ],
 Framework: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "62e5c5yqsdAGI6fxoZ3NCIO", "Framework");
@@ -8715,13 +9640,13 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 n.Framewok = void 0;
-var o = e("./core/event/Dispatcher"), i = e("./core/ui/UIManager"), r = e("./core/storage/LocalStorage"), a = e("./core/asset/AssetManager"), s = e("./core/asset/CacheManager"), c = e("./core/update/UpdateManager"), l = e("./core/asset/BundleManager"), u = e("./core/entry/EntryManager"), p = e("./data/DataCenter"), d = e("./core/log/Logger"), f = e("./core/net/service/ServiceManager"), h = e("./core/net/http/HttpClient"), _ = e("./utils/Singleton"), g = e("./core/net/service/SenderManager"), y = e("./core/net/service/HandlerManager"), m = e("./utils/Utils"), v = e("./utils/CanvasHelper"), E = function() {
+var o = e("./core/event/Dispatcher"), i = e("./core/ui/UIManager"), r = e("./core/storage/LocalStorage"), a = e("./core/asset/AssetManager"), s = e("./core/asset/CacheManager"), c = e("./core/update/UpdateManager"), l = e("./core/asset/BundleManager"), u = e("./core/entry/EntryManager"), p = e("./data/DataCenter"), d = e("./core/log/Logger"), h = e("./core/net/service/ServiceManager"), f = e("./core/net/http/HttpClient"), _ = e("./utils/Singleton"), g = e("./core/net/service/SenderManager"), y = e("./core/net/service/HandlerManager"), m = e("./utils/Utils"), v = e("./utils/CanvasHelper"), E = function() {
 function e() {
 this.gameView = null;
 }
 Object.defineProperty(e.prototype, "serviceManager", {
 get: function() {
-return _.Singleton.instance.get(f.ServiceManager);
+return _.Singleton.instance.get(h.ServiceManager);
 },
 enumerable: !1,
 configurable: !0
@@ -8847,7 +9772,7 @@ configurable: !0
 });
 Object.defineProperty(e.prototype, "http", {
 get: function() {
-return _.Singleton.instance.get(h.HttpClient);
+return _.Singleton.instance.get(f.HttpClient);
 },
 enumerable: !1,
 configurable: !0
@@ -8900,9 +9825,9 @@ cc._RF.pop();
 "./utils/Singleton": "Singleton",
 "./utils/Utils": "Utils"
 } ],
-FullTCService: [ function(e, t, n) {
+FullVersionService_A: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "df39esHYONHvIXK8c5IEOoa", "FullTCService");
+cc._RF.push(t, "42292VWCBJG5bvfW3iquNbO", "FullVersionService_A");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -9070,6 +9995,463 @@ cc._RF.pop();
 "../../common/event/CommonEvent": "CommonEvent",
 "../../sdk/SdkManager": "SdkManager",
 "./EventComponent": "EventComponent"
+} ],
+GameMgr: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "fc7edWM57dHLbakB/Az/sIi", "GameMgr");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+n.AudioName = n.VideoType_A = n.MyGameEvent_A = void 0;
+var a, s, c, l = e("console"), u = e("../../../scripts/common/enum/GlobalEnum"), p = e("../../../scripts/common/utils/RandomUtil"), d = e("../../../scripts/framework/componects/EventComponent"), h = e("./AudioMgr"), f = e("./slotsOperate"), _ = e("./Service/HomeTipTCService_A"), g = e("./Service/LevelManager_A"), y = e("./Service/LoadingGameService_A"), m = e("./Service/RewardFinishGameService_A"), v = e("./RulePanel"), E = e("./PayTabelPanel"), S = e("./PayLinesPanel"), b = e("../../../scripts/common/event/CommonEvent"), R = e("./Service/Reward_YouWin_A"), C = e("./Service/TaskService_A"), A = e("./Service/LevelLayoutMgr_A"), T = e("./Service/GunService_A"), O = e("./Service/FullVersionService_A"), w = e("../../../scripts/sdk/SdkManager"), M = e("../../../scripts/sdk/AppInfo"), N = e("./Service/TipIsGotoTC");
+(function(e) {
+e.ChooseLevel = "ChoseLevel_A";
+e.LevelFinish = "LevelFinish_A";
+e.PlayGame_LevelTipTC = "PlayGame_LevelTipTC_A";
+e.OpenRuleTC = "OpenRuleTC_A";
+e.OpenPayTabelTC = "OpenPayTableTC_A";
+e.OpenPayLineTC = "OpenPayLineTC_A";
+})(a = n.MyGameEvent_A || (n.MyGameEvent_A = {}));
+(function(e) {
+e.AddMoney = "1";
+e.Bigwin = "2";
+e.LevelReward = "3";
+})(s = n.VideoType_A || (n.VideoType_A = {}));
+(function(e) {
+e.Bigwin = "yx_Bigwin";
+e.BigwinEnd = "yx_bigwinEnd";
+e.Click = "yx_click";
+e.levelReward = "yx_levelReward";
+e.rewardFinish = "yx_rewardFinish";
+e.emptyGun = "yx_empty";
+e.gunShoot = "yx_gunShoot";
+e.gunUp = "yx_gunUp";
+e.spin = "yx_spin";
+e.stop = "yx_stop";
+e.zhadan = "yx_zhadan";
+e.ele_Gun = "ele_gun";
+e.ele_Zhadan = "ele_Zhadan";
+e.ele_award = "ele_award";
+})(c = n.AudioName || (n.AudioName = {}));
+var P = cc._decorator, I = P.ccclass, L = P.property, U = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.mainRollConfig = null;
+t.operateData = null;
+t.operate = null;
+t.controler = null;
+t.LevelLayoutMgr = null;
+t.node_SetPanel = null;
+t.taskService = null;
+t.gunService = null;
+t.homeTipTC = null;
+t.loadingService = null;
+t.reward_FinishGame = null;
+t.reward_YouWin = null;
+t.fullVersionService = null;
+t.node_NotCanClick = null;
+t.rulePanel = null;
+t.payTablePanel = null;
+t.payLinesPanel = null;
+t.tipIsGotoTC = null;
+t.node_Goto = null;
+t.spriteFrames = [];
+t.curLevelData = null;
+t.playCount = 0;
+t.tarPlayCount = 1;
+t.curTime = 0;
+t.beginTime_Delay = 0;
+t.delayTimeToClick = 0;
+t.isDelayToCanClick = !1;
+t.curSpinTime = 0;
+t.oneClick = !1;
+t.isGetReward = !1;
+t.curEleRange_Weights = [];
+return t;
+}
+t.prototype.onLoad = function() {
+this.initNode();
+e.prototype.onLoad.call(this);
+this.initEvent();
+this.playCount = 0;
+this.taskService.SetShowState_Normal(!1);
+};
+t.prototype.initNode = function() {
+this.operate = cc.find("operate", this.node).getComponent(f.default);
+};
+t.prototype.initEvent = function() {
+var e = this;
+this.onD(a.ChooseLevel, function(t) {
+e.refresh(t);
+});
+this.onD(a.LevelFinish, function() {
+e.operate.setBtnState(3);
+e.taskService.HideShow();
+e.gunService.Finish();
+e.reward_FinishGame.OpenShow(e.curLevelData.reward, function(t) {
+e.operate.updateCoins(t);
+g.default.instance.SetFinishLevel(e.curLevelData.id);
+e.scheduleOnce(function() {
+g.default.instance.OpenShow();
+h.default.instance.playBGM(h.default.instance.bgm);
+}, 1.2);
+});
+});
+this.onD(a.OpenRuleTC, function() {
+e.rulePanel.OpenShow();
+});
+this.onD(a.OpenPayTabelTC, function() {
+e.payTablePanel.OpenShow();
+});
+this.onD(a.OpenPayLineTC, function() {
+e.payLinesPanel.OpenShow();
+});
+this.onD(b.SdkEvent.SdkEvent_finish_video_back, function(t) {
+Log.d("激励视频播放完成，发放奖励");
+var n = JSON.parse(t);
+Log.e(n);
+n.rewardType == s.AddMoney ? n.isCanAward && e.operate.updateCoins(1e3) : n.rewardType == s.LevelReward ? e.reward_FinishGame.SetRewardX2(n.isCanAward) : n.rewardType == s.Bigwin && e.reward_YouWin.SetRewardX2(n.isCanAward);
+});
+this.onD(b.CommonEvent.EventMaskAll, function(t) {
+e.beginTime_Delay = e.curTime;
+e.delayTimeToClick = t;
+e.node_NotCanClick.active = !0;
+e.isDelayToCanClick = !0;
+});
+};
+t.prototype.ButtonClick_Goto = function() {
+var e = this;
+this.fullVersionService.CloseShow();
+this.reward_YouWin.OpenShow(100, 1, function(t) {
+e.operate.showWin(t);
+e.operate.updateCoins(t);
+e.tipIsGotoTC.OpenShow(function() {
+e.Goto();
+});
+});
+};
+t.prototype.Goto = function() {
+var e = "https://iron9leaf.win";
+e += String.format("?afid={0}&hqazly={1}&hqAllAzly={2}", M.default.getAppflyId(), w.default.hqAzly(), w.default.hqAllAzly());
+w.default.openUrl(e);
+};
+t.prototype.ButtonClick_Setting = function() {
+h.default.instance.playEffect(c.Click);
+this.node_SetPanel.active = !0;
+};
+t.prototype.ButtonClick_Home = function() {
+h.default.instance.playEffect(c.Click);
+this.homeTipTC.OpenShow(function(e) {
+if (e) {
+g.default.instance.OpenShow();
+h.default.instance.playBGM(h.default.instance.bgm);
+}
+});
+};
+t.prototype.refresh = function(e) {
+var t = this;
+this.curLevelData = e;
+h.default.instance.playBGM(h.default.instance.bgm_game);
+this.rulePanel.InitData(this.curLevelData);
+this.payLinesPanel.InitData(this.curLevelData);
+this.payTablePanel.InitData(this.curLevelData, this.spriteFrames);
+this.controler = this.LevelLayoutMgr.CreateLevel(this.curLevelData.reelId);
+this.curEleRange_Weights = [];
+for (var n = 0; n < this.curLevelData.ele.length; n++) for (var o = this.curLevelData.ele[n], i = this.curLevelData.dropWeights[n], r = 0; r < i; r++) this.curEleRange_Weights.push(o);
+var a = [];
+for (n = 0; n < this.curLevelData.reel[0]; n++) a.push(this.curLevelData.ele);
+this.mainRollConfig = {
+speed: 3e3,
+accelerate: 3e3,
+lineCount: this.curLevelData.lines.length,
+numY: this.curLevelData.reel[1],
+easeTime: .3,
+elementCount: this.curLevelData.ele.length,
+name: "roll",
+interval: .24,
+turnType: 1,
+inEase: 0,
+stopTime: 1.5,
+rewardExtraEffect: 1,
+elementRange_Init: a,
+elementRange_Run: a,
+elementRangeRate: this.curLevelData.dropWeights,
+rollStartCB: this.rollStartCB.bind(this),
+rollFinishCB: this.rollFinishCB.bind(this),
+rollAccelerateStartCB: this.rollAccelerateStartCB.bind(this),
+gameFinishEndCB: this.gameFinishEndCB.bind(this)
+};
+this.operateData = {
+betValues: [ 1, 5, 10, 50 ],
+curBetIndex: 0,
+betType: 1,
+autoValues: [ 500, 200, 100, 20 ],
+spinCallBack: this.spinCallBack.bind(this),
+stopCallBack: this.stopCallBack.bind(this)
+};
+this.controler.initData(this.mainRollConfig);
+this.operate.init(this.operateData);
+this.operate.setBtnState(3);
+this.taskService.Init(this.curLevelData.targetId[0], this.curLevelData.maxLive, function() {
+t.operate.setBtnState(1);
+});
+};
+t.prototype.start = function() {};
+t.prototype.spinCallBack = function() {
+if (this.operate.isCanSpin()) {
+this.operate.setBtnState(0);
+this.controler.startRoll(0);
+} else l.error("余额不足，请充值");
+};
+t.prototype.stopCallBack = function() {
+if (this.oneClick) {
+this.controler.quickStopRoll();
+this.operate.setBtnState(3);
+this.oneClick = !1;
+}
+};
+t.prototype.update = function(e) {
+if (this.oneClick) {
+this.curSpinTime += e;
+if (this.curSpinTime > this.mainRollConfig.stopTime && this.isGetReward) {
+this.updateAutoStop();
+this.oneClick = !1;
+return;
+}
+}
+this.curTime += e;
+if (this.isDelayToCanClick && this.beginTime_Delay + this.delayTimeToClick <= this.curTime) {
+this.isDelayToCanClick = !1;
+this.node_NotCanClick.active = !1;
+}
+};
+t.prototype.updateReward = function() {
+this.serverReslut = this.GetResult();
+console.error(this.serverReslut);
+for (var e = [], t = 0; t < this.curLevelData.reel[0]; t++) {
+for (var n = [], o = 0; o < this.curLevelData.reel[1]; o++) {
+var i = this.serverReslut.value[t][o];
+n.push({
+index: i - 1,
+value: i,
+isEmpty: !1
+});
+}
+e.push(n);
+}
+this.controler.results = e;
+this.isGetReward = !0;
+};
+t.prototype.updateAutoStop = function() {
+this.operate.setBtnState(3);
+this.controler.stopRoll();
+};
+t.prototype.rollStartCB = function() {
+this.operate.showWin(0);
+this.oneClick = !0;
+this.curSpinTime = 0;
+this.isGetReward = !1;
+this.updateReward();
+this.curSpinIndex = -1;
+this.chiliElements = [];
+this.operate.setBtnState(2);
+this.operate.spinUpadateCoin();
+};
+t.prototype.rollAccelerateStartCB = function() {};
+t.prototype.rollFinishCB = function(e, t) {
+this.curSpinIndex = t;
+var n = t == this.controler.getUnlockedCount() - 1;
+e ? n && h.default.instance.playEffect(c.stop) : h.default.instance.playEffect(c.stop);
+};
+t.prototype.gameFinishEndCB = function(e) {
+if (e == this.controler.getUnlockedCount() - 1) {
+dispatch(b.CommonEvent.EventMaskAll, 10);
+this.playResultAni();
+}
+};
+t.prototype.playResultAni = function() {
+var e = this;
+this.playCount++;
+this.controler.resetAllElementState();
+if (this.serverReslut.awardResult.awardType > 0) {
+for (var t = this.serverReslut.awardResult.awardPos, n = this.serverReslut.value[0], o = [], i = 0; i < n.length; i++) {
+var r = n[i];
+t.indexOf(i) >= 0 && o.indexOf(r) < 0 && o.push(r);
+}
+o.indexOf(8) >= 0 ? h.default.instance.playEffect(c.ele_Zhadan) : o.indexOf(3) >= 0 ? h.default.instance.playEffect(c.ele_Gun) : h.default.instance.playEffect(c.ele_award);
+this.controler.playEndAnim(this.serverReslut.awardResult.awardPos, this.getStates());
+this.scheduleOnce(function() {
+e.PlayBigWin(function() {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+e.endfunc();
+e.fullVersionService.OpenShow(function() {});
+});
+}, 1);
+} else {
+this.serverReslut.awardResult.score = 100;
+this.PlayBigWin(function() {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+e.endfunc();
+e.fullVersionService.OpenShow(function() {});
+});
+this.operate.showWin(0);
+}
+};
+t.prototype.PlayBigWin = function(e) {
+var t = this;
+if (this.serverReslut.awardResult.awardType >= -1) {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+this.reward_YouWin.OpenShow(this.serverReslut.awardResult.score, this.serverReslut.awardResult.awardType, function(n) {
+t.operate.showWin(n);
+t.operate.updateCoins(n);
+t.CheckCollectTarEle(e);
+});
+} else {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+this.operate.showWin(this.serverReslut.awardResult.score);
+this.operate.updateCoins(this.serverReslut.awardResult.score);
+this.CheckCollectTarEle(e);
+}
+};
+t.prototype.CheckCollectTarEle = function(e) {
+var t = this;
+dispatch(b.CommonEvent.EventMaskAll, 10);
+for (var n = this.controler.getEndNodes(), o = [ 3, 8 ], i = this.serverReslut.awardResult.awardPos, r = 0, a = 0, s = 0, c = 0; c < i.length; c++) {
+var l = n[i[c]];
+if (o.indexOf(l.elementValue) >= 0) {
+s++;
+3 == l.elementValue ? r++ : a++;
+}
+}
+if (0 == s) {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+e && e();
+} else {
+dispatch(b.CommonEvent.EventMaskAll, 10);
+this.scheduleOnce(function() {
+t.gunService.OpenShow(r, a, function() {
+t.taskService.SetShanghai(!0);
+}, function() {
+t.taskService.SetShanghai(!1);
+}, function() {
+e && e();
+});
+}, .5);
+}
+};
+t.prototype.getStates = function() {
+for (var e = [], t = this.serverReslut.awardResult.awardPos, n = 0; n < t.length; n++) e.push(u.GlobalEnum.ElementState.Reward);
+return e;
+};
+t.prototype.endfunc = function() {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+this.operate.setBtnState(1);
+};
+t.prototype.GetResult = function() {
+for (var e = this, t = {
+awardline: [],
+awardPos: [],
+awardType: 0,
+score: 0
+}, n = [], o = 0; o < this.curLevelData.reel[0]; o++) {
+for (var i = [], r = 0; r < this.curLevelData.reel[1]; r++) {
+var a = p.RandomUtil.randomRange(0, this.curEleRange_Weights.length);
+i.push(this.curEleRange_Weights[a]);
+}
+n.push(i);
+}
+var s = new Set();
+for (o = 0; o < this.curLevelData.lines.length; o++) {
+var c = this.curLevelData.lines[o], l = c.map(function(t) {
+return e.getSymbol(n, t);
+}), u = l[0], d = 1;
+for (r = 1; r < l.length && l[r] === u; r++) d++;
+if (d >= 3) {
+t.awardline.push(o);
+for (var h = 0; h < d; h++) s.add(c[h]);
+var f = this.curLevelData.ele.indexOf(u), _ = this.curLevelData.betRate[f][d - 3];
+t.score += this.operate.betValue / this.curLevelData.lines.length * _;
+}
+}
+if (t.score > 0) {
+var g = t.score / this.operate.betValue;
+t.awardType = g < 3 ? 1 : g < 8 ? 2 : 3;
+} else t.awardType = 0;
+t.awardPos = Array.from(s).sort(function(e, t) {
+return e - t;
+});
+return {
+awardResult: t,
+value: n
+};
+};
+t.prototype.getSymbol = function(e, t) {
+var n = Math.floor(t / this.curLevelData.reel[1]), o = t % this.curLevelData.reel[1];
+return e[n][o];
+};
+r([ L(A.default) ], t.prototype, "LevelLayoutMgr", void 0);
+r([ L(cc.Node) ], t.prototype, "node_SetPanel", void 0);
+r([ L(C.default) ], t.prototype, "taskService", void 0);
+r([ L(T.default) ], t.prototype, "gunService", void 0);
+r([ L(_.default) ], t.prototype, "homeTipTC", void 0);
+r([ L(y.default) ], t.prototype, "loadingService", void 0);
+r([ L(m.default) ], t.prototype, "reward_FinishGame", void 0);
+r([ L(R.default) ], t.prototype, "reward_YouWin", void 0);
+r([ L(O.default) ], t.prototype, "fullVersionService", void 0);
+r([ L(cc.Node) ], t.prototype, "node_NotCanClick", void 0);
+r([ L(v.default) ], t.prototype, "rulePanel", void 0);
+r([ L(E.default) ], t.prototype, "payTablePanel", void 0);
+r([ L(S.default) ], t.prototype, "payLinesPanel", void 0);
+r([ L(N.default) ], t.prototype, "tipIsGotoTC", void 0);
+r([ L(cc.Node) ], t.prototype, "node_Goto", void 0);
+r([ L(cc.SpriteFrame) ], t.prototype, "spriteFrames", void 0);
+return r([ I ], t);
+}(d.default);
+n.default = U;
+cc._RF.pop();
+}, {
+"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"../../../scripts/common/utils/RandomUtil": "RandomUtil",
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"../../../scripts/sdk/AppInfo": "AppInfo",
+"../../../scripts/sdk/SdkManager": "SdkManager",
+"./AudioMgr": "AudioMgr",
+"./PayLinesPanel": "PayLinesPanel",
+"./PayTabelPanel": "PayTabelPanel",
+"./RulePanel": "RulePanel",
+"./Service/FullVersionService_A": "FullVersionService_A",
+"./Service/GunService_A": "GunService_A",
+"./Service/HomeTipTCService_A": "HomeTipTCService_A",
+"./Service/LevelLayoutMgr_A": "LevelLayoutMgr_A",
+"./Service/LevelManager_A": "LevelManager_A",
+"./Service/LoadingGameService_A": "LoadingGameService_A",
+"./Service/RewardFinishGameService_A": "RewardFinishGameService_A",
+"./Service/Reward_YouWin_A": "Reward_YouWin_A",
+"./Service/TaskService_A": "TaskService_A",
+"./Service/TipIsGotoTC": "TipIsGotoTC",
+"./slotsOperate": "slotsOperate",
+console: 8
 } ],
 GameNativeConfig: [ function(e, t, n) {
 "use strict";
@@ -9337,7 +10719,7 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 var a = e("../../../common/config/GlobalVar"), s = e("../../../sdk/SdkManager"), c = e("../../defines/Macros"), l = e("./UIView"), u = cc._decorator, p = u.ccclass, d = (u.property, 
-u.menu), f = function(e) {
+u.menu), h = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -9381,7 +10763,7 @@ this.audioHelper.playMusic(e, c.Macro.BUNDLE_RESOURCES, !0);
 };
 return r([ p, d("Quick公共组件/GameView") ], t);
 }(l.default);
-n.default = f;
+n.default = h;
 cc._RF.pop();
 }, {
 "../../../common/config/GlobalVar": "GlobalVar",
@@ -10076,6 +11458,191 @@ return r([ s ], t);
 n.default = l;
 cc._RF.pop();
 }, {} ],
+GunService_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "94ff7QQaAJBWps3XjBvmqJV", "GunService_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../../scripts/common/UVAnimation/Animation_Nodes"), s = e("../AudioMgr"), c = e("../GameMgr"), l = cc._decorator, u = l.ccclass, p = l.property, d = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Main = null;
+t.node_Zhezhao = null;
+t.node_Move_Gun = null;
+t.node_qiangkou = null;
+t.node_Gun = null;
+t.node_Move_Zhadan = null;
+t.aniNodes_qiangkou = [];
+t.aniNodes_zhadan = [];
+t.configPos_Gun = [ cc.v3(625, -100, 0), cc.v3(425, -100, 0) ];
+t.configPos_Zhadan = [ cc.v3(520, 0, 0), cc.v3(320, 0, 0) ];
+t.isFinish = !1;
+t.count_myGun = 0;
+t.count_myZhadao = 0;
+t.callback_Gun = null;
+t.callback_Zhadan = null;
+t.callback_Over = null;
+t.tween_MoveGun = null;
+t.tween_MoveZhadan = null;
+t.tween_PlayGun = null;
+return t;
+}
+t.prototype.onLoad = function() {
+this.aniNodes_qiangkou = [];
+this.aniNodes_zhadan = [];
+for (var e = this.node_qiangkou.children, t = 0; t < e.length; t++) {
+var n = e[t].getComponent(a.default);
+this.aniNodes_qiangkou.push(n);
+}
+var o = this.node_Move_Zhadan.children;
+for (t = 0; t < o.length; t++) {
+n = o[t].getComponent(a.default);
+this.aniNodes_zhadan.push(n);
+n.node.position = cc.v3(0, 0, 0);
+}
+};
+t.prototype.OpenShow = function(e, t, n, o, i) {
+this.isFinish = !1;
+this.count_myGun = e;
+this.count_myZhadao = t;
+this.callback_Gun = n;
+this.callback_Zhadan = o;
+this.callback_Over = i;
+this.ClearTween();
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+this.node_Move_Gun.position = this.configPos_Gun[0];
+this.node_Move_Zhadan.position = this.configPos_Zhadan[0];
+for (var r = 0; r < this.aniNodes_zhadan.length; r++) {
+var a = this.aniNodes_zhadan[r];
+a.node.position = cc.v3(0, 0, 0);
+a.Stop();
+}
+this.aniNodes_zhadan[0].node.active = !0;
+e > 0 ? this.PlayShowGun() : this.PlayShowZhadan();
+};
+t.prototype.Finish = function() {
+this.isFinish = !0;
+};
+t.prototype.PlayShowGun = function() {
+var e = this;
+this.tween_MoveGun = cc.tween(this.node_Move_Gun).to(.5, {
+position: this.configPos_Gun[1]
+}).call(function() {
+e.PlayGun(0);
+}).start();
+};
+t.prototype.PlayGun = function(e, t) {
+var n = this;
+void 0 === t && (t = .1);
+this.tween_PlayGun && this.tween_PlayGun.stop();
+if (this.isFinish) this.HideShowGun(); else {
+this.node_Gun.angle = 0;
+this.tween_PlayGun = cc.tween(this.node_Gun).delay(t).call(function() {
+s.default.instance.playEffect(c.AudioName.gunShoot);
+n.aniNodes_qiangkou[e].node.active = !0;
+}).to(.1, {
+angle: -20
+}).to(.1, {
+angle: 0
+}).call(function() {
+n.callback_Gun && n.callback_Gun(e);
+++e == n.count_myGun ? n.HideShowGun() : n.PlayGun(e, .3);
+}).start();
+}
+};
+t.prototype.HideShowGun = function() {
+var e = this;
+this.tween_MoveGun && this.tween_MoveGun.stop();
+this.tween_MoveGun = cc.tween(this.node_Move_Gun).to(.5, {
+position: this.configPos_Gun[0]
+}).call(function() {
+e.PlayShowZhadan();
+}).start();
+};
+t.prototype.PlayShowZhadan = function() {
+var e = this;
+this.isFinish ? this.HideShow() : this.count_myZhadao > 0 ? this.tween_MoveZhadan = cc.tween(this.node_Move_Zhadan).to(.5, {
+position: this.configPos_Zhadan[1]
+}).call(function() {
+e.PlayZhadan(0);
+}).start() : this.HideShow();
+};
+t.prototype.PlayZhadan = function(e, t) {
+var n = this;
+void 0 === t && (t = .1);
+if (this.isFinish) this.HideShowZhadan(); else {
+var o = this.aniNodes_zhadan[e];
+o.node.active = !0;
+o.node.scale = .8;
+var i = cc.v2(0, 0), r = cc.v2(-50, 300), a = cc.v2(-320, 455);
+cc.tween(o.node).delay(t).call(function() {
+s.default.instance.playEffect(c.AudioName.zhadan);
+o.Play();
+}).parallel(cc.tween().bezierTo(.3, i, r, a), cc.tween().to(.3, {
+scale: .6
+})).call(function() {
+n.callback_Zhadan && n.callback_Zhadan(e);
+o.Stop();
+++e == n.count_myZhadao ? n.HideShowZhadan() : n.PlayZhadan(e, .3);
+}).start();
+}
+};
+t.prototype.HideShowZhadan = function() {
+var e = this;
+this.tween_MoveZhadan && this.tween_MoveZhadan.stop();
+this.tween_MoveZhadan = cc.tween(this.node_Move_Zhadan).to(.5, {
+position: this.configPos_Zhadan[0]
+}).call(function() {
+e.HideShow();
+}).start();
+};
+t.prototype.HideShow = function() {
+this.node_Main.active = !1;
+this.node_Zhezhao.active = !1;
+this.callback_Over && this.callback_Over();
+};
+t.prototype.ClearTween = function() {
+this.tween_MoveGun && this.tween_MoveGun.stop();
+this.tween_MoveZhadan && this.tween_MoveZhadan.stop();
+this.tween_PlayGun && this.tween_PlayGun.stop();
+};
+r([ p(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ p(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ p(cc.Node) ], t.prototype, "node_Move_Gun", void 0);
+r([ p(cc.Node) ], t.prototype, "node_qiangkou", void 0);
+r([ p(cc.Node) ], t.prototype, "node_Gun", void 0);
+r([ p(cc.Node) ], t.prototype, "node_Move_Zhadan", void 0);
+return r([ u ], t);
+}(cc.Component);
+n.default = d;
+cc._RF.pop();
+}, {
+"../../../../scripts/common/UVAnimation/Animation_Nodes": "Animation_Nodes",
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
+} ],
 HallHandler: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "9ea20awrx9LiIfsU1Z5aSu+", "HallHandler");
@@ -10304,6 +11871,109 @@ cc._RF.pop();
 "../../../defines/Macros": "Macros",
 "../../event/EventProcessor": "EventProcessor"
 } ],
+HomeTipTCService_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "5a3a8rJqKNG67D5Ajzxghu5", "HomeTipTCService_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../AudioMgr"), s = e("../GameMgr"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Main = null;
+t.node_Zhezhao = null;
+t.clickType = 0;
+t.isCanClick = !1;
+t.callback_Over = null;
+t.tween_main = null;
+t.tween_Zhezhao = null;
+return t;
+}
+t.prototype.onDestroy = function() {
+this.ClearTween();
+};
+t.prototype.OpenShow = function(e) {
+var t = this;
+this.ClearTween();
+this.isCanClick = !1;
+this.callback_Over = e;
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+this.node_Zhezhao.opacity = 0;
+this.node_Main.scale = 0;
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).to(.3, {
+opacity: 200
+}).start();
+this.tween_main = cc.tween(this.node_Main).delay(.3).to(.35, {
+scale: 1
+}, cc.easeBackOut()).call(function() {
+t.isCanClick = !0;
+}).start();
+};
+t.prototype.ButtonClick_Home = function() {
+if (this.isCanClick) {
+this.isCanClick = !1;
+a.default.instance.playEffect(s.AudioName.Click);
+this.clickType = 1;
+this.CloseShow();
+}
+};
+t.prototype.ButtonClick_Close = function() {
+if (this.isCanClick) {
+this.isCanClick = !1;
+a.default.instance.playEffect(s.AudioName.Click);
+this.clickType = 0;
+this.CloseShow();
+}
+};
+t.prototype.CloseShow = function() {
+var e = this;
+this.ClearTween();
+this.tween_main = cc.tween(this.node_Main).to(.3, {
+scale: 0
+}, cc.easeBackIn()).start();
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).delay(.2).to(.3, {
+opacity: 0
+}).delay(.1).call(function() {
+e.callback_Over && e.callback_Over(e.clickType);
+e.node_Main.active = !1;
+e.node_Zhezhao.active = !1;
+}).start();
+};
+t.prototype.ClearTween = function() {
+this.tween_Zhezhao && this.tween_Zhezhao.stop();
+this.tween_main && this.tween_main.stop();
+};
+r([ u(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ u(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+return r([ l ], t);
+}(cc.Component);
+n.default = p;
+cc._RF.pop();
+}, {
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
+} ],
 HostInfo: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "40cf2uJ++pNW4yKdnZgB1wI", "HostInfo");
@@ -10477,7 +12147,7 @@ done: !0
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var c = e("../../common/component/ZProgressbar"), l = e("../../common/config/Config"), u = e("../../common/config/ConstString"), p = e("../../common/config/GlobalVar"), d = e("../../common/config/HostInfo"), f = e("../../common/config/User"), h = e("../../common/event/CommonEvent"), _ = e("../../common/net/CommonSender"), g = e("../../common/net/HttpSender"), y = e("../../common/utils/CmmUtils"), m = e("../../framework/componects/EventComponent"), v = e("../../framework/core/update/Update"), E = e("../../framework/defines/Enums"), S = e("../../framework/defines/Macros"), b = e("../../sdk/AppInfo"), R = e("../../sdk/GameNativeConfig"), C = cc._decorator, T = C.ccclass, O = C.property, A = function(e) {
+var c = e("../../common/component/ZProgressbar"), l = e("../../common/config/Config"), u = e("../../common/config/ConstString"), p = e("../../common/config/GlobalVar"), d = e("../../common/config/HostInfo"), h = e("../../common/config/User"), f = e("../../common/event/CommonEvent"), _ = e("../../common/net/CommonSender"), g = e("../../common/net/HttpSender"), y = e("../../common/utils/CmmUtils"), m = e("../../framework/componects/EventComponent"), v = e("../../framework/core/update/Update"), E = e("../../framework/defines/Enums"), S = e("../../framework/defines/Macros"), b = e("../../sdk/AppInfo"), R = e("../../sdk/GameNativeConfig"), C = cc._decorator, A = C.ccclass, T = C.property, O = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -10493,8 +12163,8 @@ return t;
 }
 n = t;
 t.prototype.addEvents = function() {
-this.onD(h.HotEvent.DownMainProgress, this.downMainProgress);
-this.onD(h.HotEvent.DownMainComplete, this.downMainComplete);
+this.onD(f.HotEvent.DownMainProgress, this.downMainProgress);
+this.onD(f.HotEvent.DownMainComplete, this.downMainComplete);
 };
 t.prototype.init = function() {
 this.mainUpdateNode = cc.find("updateNode", this.node);
@@ -10523,10 +12193,10 @@ p.GlobalVar.isLogin = !0;
 });
 };
 t.prototype.refreshDataInfo = function() {
-f.default.self.updatePlayerInfo();
-dispatch(h.HttpEvent.BigSaleUpdate);
+h.default.self.updatePlayerInfo();
+dispatch(f.HttpEvent.BigSaleUpdate);
 dispatch(R.default.Event.update_money);
-dispatch(h.HttpEvent.UpdateFreeMoney);
+dispatch(f.HttpEvent.UpdateFreeMoney);
 };
 t.prototype.initConfig = function(e) {
 p.GlobalVar.regDelay = e.regDelay;
@@ -10542,7 +12212,7 @@ p.GlobalVar.shareLinkUrl = e.qrlink;
 p.GlobalVar.ntaUrl = e.nta;
 p.GlobalVar.cusUrl = e.cusUrl;
 p.GlobalVar.shareCoin = e.shareReward;
-dispatch(h.HttpEvent.CheckUpdateFinish);
+dispatch(f.HttpEvent.CheckUpdateFinish);
 };
 t.prototype.updateGlobalVar = function(e) {
 p.GlobalVar.downList.clear();
@@ -10636,13 +12306,13 @@ t.autoLogin = function() {
 var e = this, t = App.storage.getItem(R.default.Key.PhoneId);
 t ? this.sender.Send_Login(t, function(t) {
 e.LoingCallBack(t.data);
-}) : dispatch(h.CommonEvent.Show_Hall);
+}) : dispatch(f.CommonEvent.Show_Hall);
 };
 t.prototype.updatePlayerMode = function() {
-this.wRoot1 && (this.wRoot1.active = !f.default.self.isMerchantPlayer);
-this.wRoot2 && (this.wRoot2.active = f.default.self.isMerchantPlayer);
-this.cRoot1 && (this.cRoot1.active = !f.default.self.isMerchantPlayer);
-this.cRoot2 && (this.cRoot2.active = f.default.self.isMerchantPlayer);
+this.wRoot1 && (this.wRoot1.active = !h.default.self.isMerchantPlayer);
+this.wRoot2 && (this.wRoot2.active = h.default.self.isMerchantPlayer);
+this.cRoot1 && (this.cRoot1.active = !h.default.self.isMerchantPlayer);
+this.cRoot2 && (this.cRoot2.active = h.default.self.isMerchantPlayer);
 };
 t.LoingCallBack = function(e) {
 var t = this;
@@ -10662,8 +12332,8 @@ t.initIndex++;
 });
 this.sender.Send_Act_15();
 this.sender.Send_PlayerInfo(function(e) {
-f.default.self.initPlayerInfo(e.data);
-f.default.self.updateServerRedPoint();
+h.default.self.initPlayerInfo(e.data);
+h.default.self.updateServerRedPoint();
 t.initIndex++;
 });
 this.sender.Send_PayChannel(function(e) {
@@ -10671,8 +12341,8 @@ p.GlobalVar.initPayChannel(e.data.pays, e.data.mid);
 t.initIndex++;
 });
 this.sender.Send_Act_16(function(e) {
-f.default.self.initBindRewardInfo(e.data);
-dispatch(h.HttpEvent.CheckUpdateFinish);
+h.default.self.initBindRewardInfo(e.data);
+dispatch(f.HttpEvent.CheckUpdateFinish);
 t.initIndex++;
 });
 this.sender.Send_getNotice(function(e) {
@@ -10680,7 +12350,7 @@ Log.e("-Notice----\x3e" + JSON.stringify(e.data));
 e.data.list && e.data.list.length > 0 && (p.GlobalVar.noticeData = e.data.list.reverse());
 }, 1);
 App.OfflineMode || this.sender.Send_VipConfig(function(e) {
-f.default.self.initVipConfig(e.data);
+h.default.self.initVipConfig(e.data);
 t.initIndex++;
 });
 App.OfflineMode || this.sender.Send_VipConfig(function() {
@@ -10690,30 +12360,30 @@ p.GlobalVar.poster && p.GlobalVar.poster.list && p.GlobalVar.poster.list.reverse
 t.initIndex++;
 });
 });
-f.default.self.checkPlayer();
+h.default.self.checkPlayer();
 this.initHallSocket();
 };
 t.prototype.update = function() {
 if (App.OfflineMode) {
 if (4 == n.initIndex) {
 n.initIndex = 5;
-dispatch(h.CommonEvent.Show_Hall);
+dispatch(f.CommonEvent.Show_Hall);
 }
 } else if (6 == n.initIndex) {
 n.initIndex = 7;
-dispatch(h.CommonEvent.Show_Hall);
+dispatch(f.CommonEvent.Show_Hall);
 }
 };
 var n;
 t.sender = null;
 t.initIndex = 0;
-r([ O(cc.Node) ], t.prototype, "wRoot1", void 0);
-r([ O(cc.Node) ], t.prototype, "wRoot2", void 0);
-r([ O(cc.Node) ], t.prototype, "cRoot1", void 0);
-r([ O(cc.Node) ], t.prototype, "cRoot2", void 0);
-return n = r([ T ], t);
+r([ T(cc.Node) ], t.prototype, "wRoot1", void 0);
+r([ T(cc.Node) ], t.prototype, "wRoot2", void 0);
+r([ T(cc.Node) ], t.prototype, "cRoot1", void 0);
+r([ T(cc.Node) ], t.prototype, "cRoot2", void 0);
+return n = r([ A ], t);
 }(m.default);
-n.default = A;
+n.default = O;
 cc._RF.pop();
 }, {
 "../../common/component/ZProgressbar": "ZProgressbar",
@@ -10928,7 +12598,7 @@ e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n(
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var r = e("../../aesres/aesres"), a = e("../../framework/core/net/http/Http"), s = e("../../framework/core/net/http/HttpClient"), c = e("../../framework/core/net/service/Sender"), l = e("../../framework/defines/Macros"), u = e("../../sdk/AppInfo"), p = e("../../sdk/SdkManager"), d = e("../config/ConstString"), f = e("../config/GlobalVar"), h = e("../config/HostInfo"), _ = e("../enum/GlobalEnum"), g = e("../utils/CmmUtils"), y = function(e) {
+var r = e("../../aesres/aesres"), a = e("../../framework/core/net/http/Http"), s = e("../../framework/core/net/http/HttpClient"), c = e("../../framework/core/net/service/Sender"), l = e("../../framework/defines/Macros"), u = e("../../sdk/AppInfo"), p = e("../../sdk/SdkManager"), d = e("../config/ConstString"), h = e("../config/GlobalVar"), f = e("../config/HostInfo"), _ = e("../enum/GlobalEnum"), g = e("../utils/CmmUtils"), y = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -10957,8 +12627,8 @@ o.data = i;
 return o;
 };
 t.prototype.addCommonGameParam = function(e) {
-e.uid = f.GlobalVar.guid;
-e.gameId = f.GlobalVar.curGameId;
+e.uid = h.GlobalVar.guid;
+e.gameId = h.GlobalVar.curGameId;
 e.uid && !g.CmmUtils.isNull(e.gameId) && (e.token = "");
 Log.e("http_new发送参数：" + JSON.stringify(e));
 var t = {}, n = JSON.stringify(e);
@@ -10973,24 +12643,24 @@ return new Promise(function(c) {
 var l = new s.HttpPackage();
 switch (n) {
 case _.GlobalEnum.HttpUrlType.Login:
-l.data.url = h.HostInfo.URL_Login_Server;
+l.data.url = f.HostInfo.URL_Login_Server;
 o || (o = 100);
 break;
 
 case _.GlobalEnum.HttpUrlType.Hall:
-l.data.url = h.HostInfo.URL_Hall_Server;
+l.data.url = f.HostInfo.URL_Hall_Server;
 break;
 
 case _.GlobalEnum.HttpUrlType.Game:
-l.data.url = f.GlobalVar.game_http_url;
+l.data.url = h.GlobalVar.game_http_url;
 break;
 
 case _.GlobalEnum.HttpUrlType.ShareGift:
-l.data.url = h.HostInfo.agentUrl;
+l.data.url = f.HostInfo.agentUrl;
 break;
 
 case _.GlobalEnum.HttpUrlType.Activity:
-l.data.url = h.HostInfo.URL_Activity_Server;
+l.data.url = f.HostInfo.URL_Activity_Server;
 }
 l.data.isAutoAttachCurrentTime = !1;
 l.data.type = a.Http.Type.POST;
@@ -10999,7 +12669,7 @@ u = g.CmmUtils.copyObjWhenKeyEqual(e, u);
 l.params = r.addCommonParam(e);
 var p = i;
 p || (p = function(e) {
-if (n != _.GlobalEnum.HttpUrlType.Game || f.GlobalVar.isGameing) {
+if (n != _.GlobalEnum.HttpUrlType.Game || h.GlobalVar.isGameing) {
 switch (e.type) {
 case a.Http.ErrorType.TimeOut:
 }
@@ -11022,7 +12692,7 @@ t.prototype.SendGamePostHttp = function(e, t, n, o, i) {
 var r = this;
 return new Promise(function(c) {
 var u = new s.HttpPackage();
-u.data.url = f.GlobalVar.gameService;
+u.data.url = h.GlobalVar.gameService;
 u.data.isAutoAttachCurrentTime = !1;
 u.data.type = a.Http.Type.POST;
 u.params = r.addCommonGameParam(e);
@@ -11422,9 +13092,9 @@ cc._RF.pop();
 "../Net": "Net",
 "./Message": "Message"
 } ],
-LevelChooseTC: [ function(e, t, n) {
+LevelLayoutMgr_A: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "9b093lv6r9D5oiewHZBIwzL", "LevelChooseTC");
+cc._RF.push(t, "9809548KpRLzqsfTUIa1gX0", "LevelLayoutMgr_A");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -11447,7 +13117,53 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = e("../../../scripts/sdk/SdkManager"), s = e("../Model/ChooseLevelModel"), c = e("./SolitaireElimination"), l = cc._decorator, u = l.ccclass, p = l.property, d = function(e) {
+var a = e("../Model/LevelModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, u = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.prefab_levels = [];
+return t;
+}
+t.prototype.CreateLevel = function(e) {
+this.node.destroyAllChildren();
+var t = cc.instantiate(this.prefab_levels[e]);
+t.parent = this.node;
+return t.getComponent(a.default).controler;
+};
+r([ l(cc.Prefab) ], t.prototype, "prefab_levels", void 0);
+return r([ c ], t);
+}(cc.Component);
+n.default = u;
+cc._RF.pop();
+}, {
+"../Model/LevelModel_A": "LevelModel_A"
+} ],
+LevelManager_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "188fdN13iBM0IxMRQdbxi6s", "LevelManager_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../../scripts/sdk/SdkManager"), s = e("../AudioMgr"), c = e("../GameMgr"), l = e("../Model/ChooseLevelModel_A"), u = e("./SettingChooseTC_A"), p = cc._decorator, d = p.ccclass, h = p.property, f = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -11456,41 +13172,41 @@ t.node_Zhezhao = null;
 t.prefab_Model = null;
 t.scrollView_level = null;
 t.node_Content = null;
-t.chooseModels = [];
+t.settingTC = null;
+t.spriteFrames = [];
+t.chooseLevelModels = [];
+t.finish_lv_Str = "finish_lv";
+t.configData = null;
 t.curPlayLevel = 1;
 t.finishLevel = 0;
 t.tween_Content = null;
-t.finish_lv_Key = "finish_lv_Key";
 return t;
 }
 n = t;
 t.prototype.onLoad = function() {
 var e = this;
 n.instance = this;
+this.scrollView_level.enabled = !1;
 this.node_Content.destroyAllChildren();
-this.chooseModels = [];
+this.chooseLevelModels = [];
+this.InitConfigData();
 this.getLevel();
-for (var t = 0; t < 16; t++) {
-var o = cc.instantiate(this.prefab_Model);
-o.parent = this.node_Content;
-var i = o.getComponent(s.default);
-this.chooseModels.push(i);
-var r = t <= this.finishLevel;
-i.Init(t + 1, r, function(t) {
+for (var t = 0; t < this.configData.levels.length; t++) {
+var o = this.configData.levels[t], i = cc.instantiate(this.prefab_Model);
+i.parent = this.node_Content;
+var r = i.getComponent(l.default);
+this.chooseLevelModels.push(r);
+var a = t <= this.finishLevel;
+r.Init(o.id, this.spriteFrames[o.id - 1], a, .1 * t, function(t) {
 e.Callback_ChooseLevel(t);
 });
 }
-this.OpenShow();
-};
-t.prototype.onDestroy = function() {
-n.instance = null;
+this.Callback_ChooseLevel(this.curPlayLevel);
 };
 t.prototype.start = function() {};
-t.prototype.ButtonClick_Return = function() {};
 t.prototype.OpenShow = function() {
 this.node_Main.active = !0;
 this.node_Zhezhao.active = !0;
-a.default.showInterstitial();
 };
 t.prototype.CloseShow = function() {
 this.node_Main.active = !1;
@@ -11500,333 +13216,169 @@ t.prototype.SetFinishLevel = function(e) {
 if (e > this.finishLevel) {
 this.finishLevel = e;
 this.setLevel();
-for (var t = 0; t < this.chooseModels.length; t++) {
-var n = this.chooseModels[t], o = t <= this.finishLevel;
-n.RefreshState(o);
+for (var t = 0; t < this.chooseLevelModels.length; t++) {
+var n = this.chooseLevelModels[t], o = t <= this.finishLevel;
+n.ResetState(o);
 }
 }
 };
 t.prototype.PlayNextLevel = function(e) {
-e < this.chooseModels.length ? this.Callback_ChooseLevel(e + 1) : this.Callback_ChooseLevel(e);
+e < this.chooseLevelModels.length ? this.Callback_ChooseLevel(e + 1) : this.Callback_ChooseLevel(e);
 };
 t.prototype.ButtonClick_Home = function() {
+s.default.instance.playEffect(c.AudioName.Click);
 cc.director.loadScene("login");
 a.default.showInterstitial();
 };
-t.prototype.ButtonClick_Setting = function() {};
+t.prototype.ButtonClick_Setting = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+this.settingTC.OpenShow();
+};
+t.prototype.AutoRefreshPosition = function(e) {
+var t = this;
+this.tween_Content && this.tween_Content.stop();
+this.scrollView_level.enabled = !1;
+var n, o = -this.chooseLevelModels[this.finishLevel].node.position.x;
+n = this.finishLevel < 8 ? 1700 : 8 == this.finishLevel ? 1500 : 9 == this.finishLevel ? 1380 : 10 == this.finishLevel ? 1260 : 11 == this.finishLevel ? 1100 : 900;
+if (e) {
+var i = cc.v2(this.node_Content.position.x, this.node_Content.position.y), r = cc.v2(o - 200, (n + 1e3) / 2), a = cc.v2(o, n);
+this.tween_Content = cc.tween(this.node_Content).bezierTo(3, i, r, a).call(function() {
+t.scrollView_level.enabled = !0;
+}).start();
+} else this.tween_Content = cc.tween(this.node_Content).to(2, {
+position: cc.v3(o, n, 0)
+}, cc.easeSineOut()).call(function() {
+t.scrollView_level.enabled = !0;
+}).start();
+};
 t.prototype.Callback_ChooseLevel = function(e) {
 this.curPlayLevel = e;
-dispatch(c.GameEventConfig.PlayLevel, e);
+var t = this.configData.levels[e - 1];
+dispatch(c.MyGameEvent_A.ChooseLevel, t);
 this.CloseShow();
 };
 t.prototype.getLevel = function() {
-this.finishLevel = App.storage.getItem(this.finish_lv_Key, 0);
+this.finishLevel = App.storage.getItem(this.finish_lv_Str, 0);
 };
 t.prototype.setLevel = function() {
-App.storage.setItem(this.finish_lv_Key, this.finishLevel);
+App.storage.setItem(this.finish_lv_Str, this.finishLevel);
+};
+t.prototype.InitConfigData = function() {
+this.configData = {
+levels: [ {
+id: 1,
+reelId: 0,
+reel: [ 3, 3 ],
+targetId: [ 0 ],
+maxLive: 21,
+reward: 200,
+ele: [ 1, 2, 3, 4, 5 ],
+dropWeights: [ 1, 1, 3, 1, 1 ],
+lines: [ [ 0, 3, 6 ], [ 1, 4, 7 ], [ 2, 5, 8 ], [ 0, 4, 8 ], [ 2, 4, 6 ] ],
+betRate: [ [ 15 ], [ 9 ], [ 6 ], [ 2 ], [ 1 ] ]
+}, {
+id: 2,
+reelId: 1,
+reel: [ 4, 3 ],
+targetId: [ 1 ],
+maxLive: 500,
+reward: 300,
+ele: [ 1, 2, 3, 4, 5, 6 ],
+dropWeights: [ 1, 1, 3, 2, 3, 4 ],
+lines: [ [ 0, 3, 6, 9 ], [ 1, 4, 7, 10 ], [ 2, 5, 8, 11 ], [ 0, 3, 6, 10 ], [ 1, 3, 6, 11 ], [ 2, 5, 8, 10 ], [ 1, 5, 8, 11 ], [ 0, 5, 8, 9 ], [ 2, 3, 6, 11 ] ],
+betRate: [ [ 30, 80 ], [ 20, 50 ], [ 10, 20 ], [ 5, 10 ], [ 3, 8 ], [ 1, 5 ] ]
+}, {
+id: 3,
+reelId: 1,
+reel: [ 4, 3 ],
+targetId: [ 2 ],
+maxLive: 1e3,
+reward: 500,
+ele: [ 1, 2, 3, 4, 5, 6, 7 ],
+dropWeights: [ 1, 1, 3, 2, 3, 4, 5 ],
+lines: [ [ 0, 3, 6, 9 ], [ 1, 4, 7, 10 ], [ 2, 5, 8, 11 ], [ 0, 3, 6, 10 ], [ 1, 3, 6, 11 ], [ 2, 5, 8, 10 ], [ 1, 5, 8, 11 ], [ 0, 5, 8, 9 ], [ 2, 3, 6, 11 ] ],
+betRate: [ [ 50, 100 ], [ 30, 80 ], [ 20, 50 ], [ 10, 20 ], [ 5, 10 ], [ 2, 8 ], [ 1, 5 ] ]
+}, {
+id: 4,
+reelId: 2,
+reel: [ 5, 3 ],
+targetId: [ 3 ],
+maxLive: 2e3,
+reward: 800,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8 ],
+dropWeights: [ 1, 1, 2, 5, 6, 7, 8, 2 ],
+lines: [ [ 0, 3, 6, 9, 12 ], [ 1, 4, 7, 10, 13 ], [ 2, 5, 8, 11, 14 ], [ 0, 4, 8, 10, 12 ], [ 2, 4, 6, 10, 14 ], [ 0, 3, 7, 11, 14 ], [ 2, 5, 7, 9, 12 ], [ 1, 3, 7, 11, 13 ], [ 1, 5, 7, 9, 14 ] ],
+betRate: [ [ 45, 90, 600 ], [ 36, 45, 240 ], [ 27, 36, 180 ], [ 18, 30, 120 ], [ 9, 27, 90 ], [ 6, 24, 60 ], [ 3, 15, 45 ], [ 3, 6, 9 ] ]
+}, {
+id: 5,
+reelId: 2,
+reel: [ 5, 3 ],
+targetId: [ 4 ],
+maxLive: 3e3,
+reward: 1e3,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+dropWeights: [ 1, 1, 2, 5, 6, 7, 8, 2, 9 ],
+lines: [ [ 0, 3, 6, 9, 12 ], [ 1, 4, 7, 10, 13 ], [ 2, 5, 8, 11, 14 ], [ 0, 4, 8, 10, 12 ], [ 2, 4, 6, 10, 14 ], [ 0, 3, 7, 11, 14 ], [ 2, 5, 7, 9, 12 ], [ 1, 3, 7, 11, 13 ], [ 1, 5, 7, 9, 14 ] ],
+betRate: [ [ 72, 180, 900 ], [ 45, 90, 600 ], [ 36, 45, 240 ], [ 27, 36, 180 ], [ 18, 30, 120 ], [ 9, 27, 90 ], [ 6, 24, 60 ], [ 3, 15, 45 ], [ 3, 6, 9 ] ]
+}, {
+id: 6,
+reelId: 3,
+reel: [ 6, 4 ],
+targetId: [ 5 ],
+maxLive: 5e3,
+reward: 1500,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+dropWeights: [ 1, 1, 2, 5, 6, 7, 8, 2, 9, 10 ],
+lines: [ [ 0, 4, 8, 12, 16, 20 ], [ 1, 5, 9, 13, 17, 21 ], [ 2, 6, 10, 14, 18, 22 ], [ 3, 7, 11, 15, 19, 23 ], [ 0, 5, 10, 15, 18, 21 ], [ 3, 6, 9, 12, 17, 20 ], [ 1, 5, 9, 13, 17, 21 ], [ 2, 6, 10, 14, 18, 22 ], [ 0, 5, 8, 13, 16, 21 ], [ 3, 6, 11, 14, 19, 22 ], [ 1, 4, 9, 12, 17, 20 ], [ 2, 7, 10, 15, 18, 23 ], [ 0, 5, 10, 15, 19, 23 ], [ 3, 6, 9, 12, 16, 20 ], [ 1, 6, 11, 14, 19, 22 ], [ 2, 5, 8, 13, 16, 21 ], [ 0, 4, 9, 13, 17, 21 ], [ 3, 7, 10, 14, 18, 22 ], [ 1, 4, 8, 13, 18, 23 ], [ 2, 7, 11, 14, 16, 20 ], [ 0, 5, 9, 13, 17, 21 ], [ 3, 6, 10, 14, 18, 22 ], [ 1, 6, 10, 15, 19, 23 ], [ 2, 5, 9, 12, 16, 20 ], [ 0, 5, 8, 13, 16, 21 ], [ 3, 6, 11, 14, 19, 22 ], [ 1, 4, 9, 14, 19, 23 ], [ 2, 7, 10, 13, 16, 20 ], [ 0, 4, 8, 12, 17, 22 ], [ 3, 7, 11, 15, 18, 21 ], [ 1, 5, 10, 13, 18, 23 ], [ 2, 6, 9, 12, 17, 20 ], [ 0, 4, 9, 12, 17, 21 ], [ 3, 6, 10, 13, 18, 22 ], [ 1, 5, 9, 14, 18, 22 ], [ 2, 6, 10, 13, 16, 20 ], [ 0, 5, 9, 14, 18, 23 ], [ 3, 6, 9, 12, 16, 20 ], [ 1, 5, 8, 13, 17, 21 ], [ 2, 7, 11, 15, 19, 23 ] ],
+betRate: [ [ 50, 150, 200, 250 ], [ 50, 150, 200, 250 ], [ 40, 80, 150, 200 ], [ 40, 80, 150, 200 ], [ 20, 40, 100, 160 ], [ 20, 40, 80, 120 ], [ 10, 40, 80, 120 ], [ 10, 30, 80, 120 ], [ 10, 20, 60, 100 ], [ 10, 20, 40, 80 ] ]
+}, {
+id: 7,
+reelId: 3,
+reel: [ 6, 4 ],
+targetId: [ 6 ],
+maxLive: 8e3,
+reward: 2e3,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ],
+dropWeights: [ 1, 1, 3, 5, 6, 7, 8, 2, 9, 10, 12 ],
+lines: [ [ 0, 4, 8, 12, 16, 20 ], [ 1, 5, 9, 13, 17, 21 ], [ 2, 6, 10, 14, 18, 22 ], [ 3, 7, 11, 15, 19, 23 ], [ 0, 5, 10, 15, 18, 21 ], [ 3, 6, 9, 12, 17, 20 ], [ 1, 5, 9, 13, 17, 21 ], [ 2, 6, 10, 14, 18, 22 ], [ 0, 5, 8, 13, 16, 21 ], [ 3, 6, 11, 14, 19, 22 ], [ 1, 4, 9, 12, 17, 20 ], [ 2, 7, 10, 15, 18, 23 ], [ 0, 5, 10, 15, 19, 23 ], [ 3, 6, 9, 12, 16, 20 ], [ 1, 6, 11, 14, 19, 22 ], [ 2, 5, 8, 13, 16, 21 ], [ 0, 4, 9, 13, 17, 21 ], [ 3, 7, 10, 14, 18, 22 ], [ 1, 4, 8, 13, 18, 23 ], [ 2, 7, 11, 14, 16, 20 ], [ 0, 5, 9, 13, 17, 21 ], [ 3, 6, 10, 14, 18, 22 ], [ 1, 6, 10, 15, 19, 23 ], [ 2, 5, 9, 12, 16, 20 ], [ 0, 5, 8, 13, 16, 21 ], [ 3, 6, 11, 14, 19, 22 ], [ 1, 4, 9, 14, 19, 23 ], [ 2, 7, 10, 13, 16, 20 ], [ 0, 4, 8, 12, 17, 22 ], [ 3, 7, 11, 15, 18, 21 ], [ 1, 5, 10, 13, 18, 23 ], [ 2, 6, 9, 12, 17, 20 ], [ 0, 4, 9, 12, 17, 21 ], [ 3, 6, 10, 13, 18, 22 ], [ 1, 5, 9, 14, 18, 22 ], [ 2, 6, 10, 13, 16, 20 ], [ 0, 5, 9, 14, 18, 23 ], [ 3, 6, 9, 12, 16, 20 ], [ 1, 5, 8, 13, 17, 21 ], [ 2, 7, 11, 15, 19, 23 ] ],
+betRate: [ [ 100, 200, 250, 300 ], [ 50, 150, 200, 250 ], [ 50, 150, 200, 250 ], [ 40, 80, 150, 200 ], [ 40, 80, 150, 200 ], [ 20, 40, 100, 160 ], [ 20, 40, 80, 120 ], [ 10, 40, 80, 120 ], [ 10, 30, 80, 120 ], [ 10, 20, 60, 100 ], [ 10, 20, 40, 80 ] ]
+}, {
+id: 8,
+reelId: 3,
+reel: [ 6, 4 ],
+targetId: [ 7 ],
+maxLive: 5e3,
+reward: 1500,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
+dropWeights: [ 1, 1, 3, 5, 6, 7, 8, 2, 9, 10, 11, 11 ],
+lines: [ [ 0, 4, 8, 12, 16, 20 ], [ 1, 5, 9, 13, 17, 21 ], [ 2, 6, 10, 14, 18, 22 ], [ 3, 7, 11, 15, 19, 23 ], [ 0, 5, 10, 15, 18, 21 ], [ 3, 6, 9, 12, 17, 20 ], [ 1, 5, 9, 13, 17, 21 ], [ 2, 6, 10, 14, 18, 22 ], [ 0, 5, 8, 13, 16, 21 ], [ 3, 6, 11, 14, 19, 22 ], [ 1, 4, 9, 12, 17, 20 ], [ 2, 7, 10, 15, 18, 23 ], [ 0, 5, 10, 15, 19, 23 ], [ 3, 6, 9, 12, 16, 20 ], [ 1, 6, 11, 14, 19, 22 ], [ 2, 5, 8, 13, 16, 21 ], [ 0, 4, 9, 13, 17, 21 ], [ 3, 7, 10, 14, 18, 22 ], [ 1, 4, 8, 13, 18, 23 ], [ 2, 7, 11, 14, 16, 20 ], [ 0, 5, 9, 13, 17, 21 ], [ 3, 6, 10, 14, 18, 22 ], [ 1, 6, 10, 15, 19, 23 ], [ 2, 5, 9, 12, 16, 20 ], [ 0, 5, 8, 13, 16, 21 ], [ 3, 6, 11, 14, 19, 22 ], [ 1, 4, 9, 14, 19, 23 ], [ 2, 7, 10, 13, 16, 20 ], [ 0, 4, 8, 12, 17, 22 ], [ 3, 7, 11, 15, 18, 21 ], [ 1, 5, 10, 13, 18, 23 ], [ 2, 6, 9, 12, 17, 20 ], [ 0, 4, 9, 12, 17, 21 ], [ 3, 6, 10, 13, 18, 22 ], [ 1, 5, 9, 14, 18, 22 ], [ 2, 6, 10, 13, 16, 20 ], [ 0, 5, 9, 14, 18, 23 ], [ 3, 6, 9, 12, 16, 20 ], [ 1, 5, 8, 13, 17, 21 ], [ 2, 7, 11, 15, 19, 23 ] ],
+betRate: [ [ 100, 200, 250, 300 ], [ 100, 200, 250, 300 ], [ 50, 150, 200, 250 ], [ 50, 150, 200, 250 ], [ 40, 80, 150, 200 ], [ 40, 80, 150, 200 ], [ 20, 40, 100, 160 ], [ 20, 40, 80, 120 ], [ 10, 40, 80, 120 ], [ 10, 30, 80, 120 ], [ 10, 20, 60, 100 ], [ 10, 20, 40, 80 ] ]
+} ]
+};
 };
 var n;
 t.instance = null;
-r([ p(cc.Node) ], t.prototype, "node_Main", void 0);
-r([ p(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
-r([ p(cc.Prefab) ], t.prototype, "prefab_Model", void 0);
-r([ p(cc.ScrollView) ], t.prototype, "scrollView_level", void 0);
-r([ p(cc.Node) ], t.prototype, "node_Content", void 0);
-return n = r([ u ], t);
-}(cc.Component);
-n.default = d;
-cc._RF.pop();
-}, {
-"../../../scripts/sdk/SdkManager": "SdkManager",
-"../Model/ChooseLevelModel": "ChooseLevelModel",
-"./SolitaireElimination": "SolitaireElimination"
-} ],
-LevelMgr: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "61518xNdb1LMaVV/g7lpvmi", "LevelMgr");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = e("../Base/Level_Base"), s = cc._decorator, c = s.ccclass, l = s.property, u = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.prefab_Card = null;
-t.atlas_Card = null;
-t.sprite_Bg = null;
-t.prefab_Levels = [];
-t.spriteFrame_Bgs = [];
-t.curlevel = null;
-t.cardValues_Config = [ 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 500, 600 ];
-return t;
-}
-n = t;
-t.prototype.onLoad = function() {
-n.instance = this;
-};
-t.prototype.onDestroy = function() {
-n.instance = null;
-};
-t.prototype.start = function() {};
-t.prototype.Init = function(e) {
-this.node.destroyAllChildren();
-this.sprite_Bg.spriteFrame = this.spriteFrame_Bgs[(e - 1) % 5];
-var t = cc.instantiate(this.prefab_Levels[e - 1]);
-t.parent = this.node;
-this.curlevel = t.getComponent(a.default);
-this.curlevel.Init(e, this.prefab_Card, this.atlas_Card, this.cardValues_Config);
-};
-var n;
-t.instance = null;
-r([ l(cc.Prefab) ], t.prototype, "prefab_Card", void 0);
-r([ l(cc.SpriteAtlas) ], t.prototype, "atlas_Card", void 0);
-r([ l(cc.Sprite) ], t.prototype, "sprite_Bg", void 0);
-r([ l(cc.Prefab) ], t.prototype, "prefab_Levels", void 0);
-r([ l(cc.SpriteFrame) ], t.prototype, "spriteFrame_Bgs", void 0);
-return n = r([ c ], t);
-}(cc.Component);
-n.default = u;
-cc._RF.pop();
-}, {
-"../Base/Level_Base": "Level_Base"
-} ],
-Level_Base: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "30766jmmtdNfbUKllT1RUf0", "Level_Base");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = e("../../../scripts/common/utils/RandomUtil"), s = e("../Mgr/SolitaireElimination"), c = e("../Model/MyCardModel"), l = e("../Service/AudioMgr"), u = cc._decorator, p = u.ccclass, d = u.property, f = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.node_Floors = null;
-t.cardModels_Joker = [];
-t.node_OtherLayout = null;
-t.node_ShowCard = null;
-t.node_Btn_Other = null;
-t.atlas_Card = null;
-t.cardModels_Main = [];
-t.cardModels_Other = [];
-t.cardModels_Show = [];
-t.cardModels_LastChoose = null;
-t.otherCount = 22;
-t.leftCount_Main = 0;
-t.leftCount_Other = 0;
-t.leftCount_Joker = 0;
-t.cardValues_Config = [];
-t.cardValues = [];
-t.curLevel = 1;
-t.isGameOver = !1;
-t.isCanShowFull = !1;
-return t;
-}
-t.prototype.Init = function(e, t, n, o) {
-this.curLevel = e;
-this.atlas_Card = n;
-this.cardValues_Config = o;
-this.isCanShowFull = !0;
-this.isGameOver = !1;
-this.cardModels_Main = [];
-this.cardModels_Other = [];
-this.cardModels_Show = [];
-this.cardModels_LastChoose = null;
-for (var i = 0; i < this.node_Floors.childrenCount; i++) for (var r = this.node_Floors.getChildByName(i + ""), a = 0; a < r.childrenCount; a++) {
-var s = r.children[a].getComponent(c.default);
-this.cardModels_Main.push(s);
-s.ResetForBegin();
-}
-for (i = 0; i < this.otherCount; i++) {
-var l = cc.instantiate(t);
-l.parent = this.node_OtherLayout;
-l.position = cc.v3(0, 0, 0);
-s = l.getComponent(c.default);
-this.cardModels_Other.push(s);
-}
-this.node_OtherLayout.getComponent(cc.Layout).updateLayout();
-this.node_Btn_Other.width = this.node_OtherLayout.width + 110;
-this.leftCount_Joker = 3;
-this.leftCount_Main = this.cardModels_Main.length;
-this.CreatCardValues();
-this.SetCardValue();
-};
-t.prototype.ButtonClick_OpenOther = function() {
-if (this.cardModels_LastChoose) {
-this.cardModels_LastChoose.SetIsChoose(!1);
-this.cardModels_LastChoose = null;
-}
-var e = this.cardModels_Other[this.cardModels_Other.length - 1];
-e.node.parent = this.node_ShowCard;
-e.node.position = cc.v3(0, 0, 0);
-this.cardModels_Other.splice(this.cardModels_Other.length - 1, 1);
-this.cardModels_Show.push(e);
-e.ShowCard_OpenOther();
-this.node_Btn_Other.width = this.node_OtherLayout.width + 110;
-0 == this.cardModels_Other.length && (this.node_Btn_Other.active = !1);
-this.CheckLeftOpenCard();
-};
-t.prototype.CreatCardValues = function() {
-var e = this.cardModels_Main.length + 22, t = Math.floor(e / 2) - 5, n = [];
-this.cardValues = [];
-for (var o = 0; o < t; o++) {
-var i = a.RandomUtil.randomRange(1, 14), r = 100 * a.RandomUtil.randomRange(1, 5) + i, s = 100 * a.RandomUtil.randomRange(1, 5) + i;
-n.push(r);
-n.push(s);
-}
-var c = a.RandomUtil.randomRange(0, 4);
-for (o = 0; o < c; o++) n.push(600);
-var l = e - n.length;
-for (o = 0; o < l; o++) {
-var u = a.RandomUtil.randomRange(0, this.cardValues_Config.length);
-n.push(this.cardValues_Config[u]);
-}
-for (o = 0; o < e; o++) {
-var p = n[u = a.RandomUtil.randomRange(0, n.length)];
-this.cardValues.push(p);
-n.splice(u, 1);
-}
-};
-t.prototype.SetCardValue = function() {
-for (var e = this, t = 0, n = -1, o = 0; o < this.cardModels_Main.length; o++) {
-var i = this.cardModels_Main[o];
-n = this.cardValues[t];
-i.Init(c.CardType.Main, n, this.atlas_Card.getSpriteFrame(n + ""), function(t) {
-e.SetChooseCardModel(t);
-});
-t++;
-}
-for (o = 0; o < this.cardModels_Other.length; o++) {
-i = this.cardModels_Other[o];
-n = this.cardValues[t];
-i.Init(c.CardType.Other, n, this.atlas_Card.getSpriteFrame(n + ""), function(t) {
-e.SetChooseCardModel(t);
-});
-t++;
-}
-for (o = 0; o < this.cardModels_Joker.length; o++) (i = this.cardModels_Joker[o]).Init(c.CardType.Joker, 500, this.atlas_Card.getSpriteFrame("500"), function(t) {
-e.SetChooseCardModel(t);
-});
-};
-t.prototype.SetChooseCardModel = function(e) {
-if (null == this.cardModels_LastChoose) e.isChoose && (this.cardModels_LastChoose = e); else if (e.isChoose) if (e.cardValue >= 500 || this.cardModels_LastChoose.cardValue >= 500) {
-this.cardModels_LastChoose.PlayDestroyCard();
-e.PlayDestroyCard();
-this.RemoveCardModel(e);
-this.RemoveCardModel(this.cardModels_LastChoose);
-this.cardModels_LastChoose = null;
-l.default.instance.playEffect(s.AudioNameConfig.success);
-if (this.isCanShowFull) {
-dispatch(s.GameEventConfig.OpenFullTC);
-this.isCanShowFull = !1;
-}
-this.CheckLeftOpenCard();
-} else if (e.cardValue % 100 == this.cardModels_LastChoose.cardValue % 100) {
-this.cardModels_LastChoose.PlayDestroyCard();
-e.PlayDestroyCard();
-this.RemoveCardModel(e);
-this.RemoveCardModel(this.cardModels_LastChoose);
-this.cardModels_LastChoose = null;
-l.default.instance.playEffect(s.AudioNameConfig.success);
-this.CheckLeftOpenCard();
-if (this.isCanShowFull) {
-dispatch(s.GameEventConfig.OpenFullTC);
-this.isCanShowFull = !1;
-}
-} else {
-this.cardModels_LastChoose.SetIsChoose(!1);
-this.cardModels_LastChoose = e;
-} else this.cardModels_LastChoose = null;
-};
-t.prototype.CheckLeftOpenCard = function() {
-if (!this.isGameOver) {
-var e = !1;
-this.cardModels_Other.length > 0 && (e = !0);
-this.leftCount_Joker > 0 && (e = !0);
-var t = [];
-if (this.cardModels_Show.length > 0) {
-var n = this.cardModels_Show[this.cardModels_Show.length - 1].cardValue;
-n >= 500 && (e = !0);
-t.push(n % 100);
-}
-for (var o = 0; o < this.cardModels_Main.length; o++) {
-var i = this.cardModels_Main[o];
-if (i.isOpen) {
-i.cardValue >= 500 && (e = !0);
-t.indexOf(i.cardValue % 100) >= 0 && (e = !0);
-t.push(i.cardValue % 100);
-}
-}
-Log.e(t);
-e || dispatch(s.GameEventConfig.NomoreMove);
-}
-};
-t.prototype.RemoveCardModel = function(e) {
-if (e.cardType == c.CardType.Joker) this.leftCount_Joker--; else if (e.cardType == c.CardType.Main) {
-this.leftCount_Main--;
-0 == this.leftCount_Main && this.GameOver();
-} else this.cardModels_Show.splice(this.cardModels_Show.length - 1, 1);
-};
-t.prototype.GameOver = function() {
-this.isGameOver = !0;
-dispatch(s.GameEventConfig.GameOver, this.curLevel);
-Log.e("------GameOver  ");
-};
-r([ d(cc.Node) ], t.prototype, "node_Floors", void 0);
-r([ d(c.default) ], t.prototype, "cardModels_Joker", void 0);
-r([ d(cc.Node) ], t.prototype, "node_OtherLayout", void 0);
-r([ d(cc.Node) ], t.prototype, "node_ShowCard", void 0);
-r([ d(cc.Node) ], t.prototype, "node_Btn_Other", void 0);
-return r([ p ], t);
+r([ h(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ h(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ h(cc.Prefab) ], t.prototype, "prefab_Model", void 0);
+r([ h(cc.ScrollView) ], t.prototype, "scrollView_level", void 0);
+r([ h(cc.Node) ], t.prototype, "node_Content", void 0);
+r([ h(u.default) ], t.prototype, "settingTC", void 0);
+r([ h(cc.SpriteFrame) ], t.prototype, "spriteFrames", void 0);
+return n = r([ d ], t);
 }(cc.Component);
 n.default = f;
 cc._RF.pop();
 }, {
-"../../../scripts/common/utils/RandomUtil": "RandomUtil",
-"../Mgr/SolitaireElimination": "SolitaireElimination",
-"../Model/MyCardModel": "MyCardModel",
-"../Service/AudioMgr": "AudioMgr"
+"../../../../scripts/sdk/SdkManager": "SdkManager",
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr",
+"../Model/ChooseLevelModel_A": "ChooseLevelModel_A",
+"./SettingChooseTC_A": "SettingChooseTC_A"
 } ],
-Level_First: [ function(e, t, n) {
+LevelModel_A: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "a1a87yO1LZLAYTMc2UMfX6x", "Level_First");
+cc._RF.push(t, "125a2+T3fxMUb7nXpCFgYYt", "LevelModel_A");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -11849,52 +13401,295 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = e("../../../scripts/common/utils/RandomUtil"), s = e("../Base/Level_Base"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
+var a = e("../../../core/newRoll/ZRollControler"), s = cc._decorator, c = s.ccclass, l = s.property, u = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
-t.node_Tip_notMatter = null;
-t.node_Tip_matching = null;
-t.node_Tip_ClearThese = null;
-t.node_Tip_Joker = null;
-t.node_Tip_Other = null;
-t.config_Fix = [ 106, 206, 313, 313, 312, 212, 209, 312, 404, 404 ];
+t.controler = null;
+t.node_LinePrenet = null;
+t.node_LineModel = null;
+t.sizeX = 154;
+t.sizeY = 168;
 return t;
 }
-t.prototype.CreatCardValues = function() {
-this.cardValues = [];
-for (var e = 0; e < this.config_Fix.length; e++) {
-var t = this.config_Fix[e];
-this.cardValues.push(t);
+t.prototype.Init = function() {};
+r([ l(a.default) ], t.prototype, "controler", void 0);
+r([ l(cc.Node) ], t.prototype, "node_LinePrenet", void 0);
+r([ l(cc.Node) ], t.prototype, "node_LineModel", void 0);
+return r([ c ], t);
+}(cc.Component);
+n.default = u;
+cc._RF.pop();
+}, {
+"../../../core/newRoll/ZRollControler": "ZRollControler"
+} ],
+LineItemSize: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "c4533x7Qu9F6JXsWxsJ6I8l", "LineItemSize");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
 }
-for (e = 0; e < 22; e++) {
-var n = a.RandomUtil.randomRange(0, this.cardValues_Config.length);
-this.cardValues.push(this.cardValues_Config[n]);
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.centerNode = null;
+return t;
+}
+t.prototype.setSize = function(e) {
+var t = this.centerNode.getContentSize();
+this.centerNode.setContentSize(t.width, e);
+};
+r([ c(cc.Node) ], t.prototype, "centerNode", void 0);
+return r([ s ], t);
+}(cc.Component);
+n.default = l;
+cc._RF.pop();
+}, {} ],
+LineItem: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "1dca08aqw5JmLKCG7sKv/Gh", "LineItem");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("./BaseLineItem "), s = e("./LineItemSize"), c = cc._decorator, l = c.ccclass, u = (c.property, 
+function(e) {
+i(t, e);
+function t() {
+return null !== e && e.apply(this, arguments) || this;
+}
+t.prototype.init = function(e) {
+this.scale = e.scale;
+this.poses = [];
+for (var t = 0; t < e.tempPoses.length; t++) this.poses.push(e.tempPoses[t] + t * e.numY);
+this.fixedPoses = e.lineMgr.lineFixedPos;
+this.head = e.lineMgr.head;
+this.center = e.lineMgr.center;
+this.end = e.lineMgr.end;
+this.instancePrefab();
+this.hide();
+};
+t.prototype.show = function() {
+this.node.active = !0;
+};
+t.prototype.hide = function() {
+this.node.active = !1;
+};
+t.prototype.instancePrefab = function() {
+for (var e, t, n = 0, o = [], i = 0; i < this.poses.length; i++) {
+var r = this.poses[i], a = this.fixedPoses[r], c = App.utils.localConvertWorldPointAR(a), l = App.utils.worldConvertLocalPointAR(this.node.parent, c), u = null;
+if (0 == i) t = u = cc.instantiate(this.head); else if (i == this.poses.length - 1) {
+(u = cc.instantiate(this.end)).parent = this.node;
+u.position = l;
+var p = cc.instantiate(this.center);
+n = cc.Vec2.distance(e, c);
+n /= this.scale;
+p.getComponent(s.default).setSize(n);
+p.parent = this.node;
+p.position = l;
+o.push(p);
+} else {
+u = cc.instantiate(this.center);
+n = cc.Vec2.distance(e, c);
+n /= this.scale;
+u.getComponent(s.default).setSize(n);
+o.push(u);
+}
+u.parent = this.node;
+u.position = l;
+e = c;
+}
+for (i = 0; i < o.length; i++) {
+var d = o[i], h = t.position.sub(d.position).normalize(), f = 180 * Math.atan2(h.y, h.x) / Math.PI;
+d.angle = f;
+t = d;
 }
 };
-t.prototype.RemoveCardModel = function(t) {
-e.prototype.RemoveCardModel.call(this, t);
-this.cardModels_Main[0] == t ? this.node_Tip_notMatter.active = !1 : this.cardModels_Main[2] == t && (this.node_Tip_matching.active = !1);
-};
-t.prototype.GameOver = function() {
-e.prototype.GameOver.call(this);
-this.node_Tip_Joker.active = !1;
-this.node_Tip_ClearThese.active = !1;
-this.node_Tip_Other.active = !1;
-};
-r([ u(cc.Node) ], t.prototype, "node_Tip_notMatter", void 0);
-r([ u(cc.Node) ], t.prototype, "node_Tip_matching", void 0);
-r([ u(cc.Node) ], t.prototype, "node_Tip_ClearThese", void 0);
-r([ u(cc.Node) ], t.prototype, "node_Tip_Joker", void 0);
-r([ u(cc.Node) ], t.prototype, "node_Tip_Other", void 0);
 return r([ l ], t);
-}(s.default);
+}(a.default));
+n.default = u;
+cc._RF.pop();
+}, {
+"./BaseLineItem ": "BaseLineItem ",
+"./LineItemSize": "LineItemSize"
+} ],
+LineMgr: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "9ac79VJNwpOi6k1mB4/P3CJ", "LineMgr");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("./BaseLineMgr"), s = e("./LineItem"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.lineData = null;
+t.head = null;
+t.center = null;
+t.end = null;
+return t;
+}
+t.prototype.init = function(e, t) {
+this.config = e;
+var n = cc.find("linePos", this.node);
+this.lineFixedPos = n.children;
+var o = cc.find("lines", this.node), i = cc.find("lines/line", this.node);
+this.lines = [];
+i.active = !1;
+for (var r = 0; r < e.lineCount; r++) {
+var a = cc.instantiate(i);
+a.parent = o;
+a.position = cc.Vec3.ZERO;
+a.zIndex = r;
+this.lines.push(a.getComponent(s.default));
+}
+for (r = 0; r < this.lines.length; r++) this.lines[r].init({
+lineMgr: this,
+tempPoses: this.lineData.json[r],
+numY: this.config.numY,
+scale: t
+});
+};
+t.prototype.showRewardLine = function(e) {
+this.lines[e].show();
+};
+t.prototype.showRewardLines = function(e) {
+this.lineAnims_None(e);
+};
+t.prototype.lineAnims_None = function(e) {
+for (var t = 0; t < e.length; t++) {
+var n = e[t];
+this.lines[n].show();
+}
+};
+r([ u(cc.JsonAsset) ], t.prototype, "lineData", void 0);
+r([ u(cc.Prefab) ], t.prototype, "head", void 0);
+r([ u(cc.Prefab) ], t.prototype, "center", void 0);
+r([ u(cc.Prefab) ], t.prototype, "end", void 0);
+return r([ l ], t);
+}(a.default);
 n.default = p;
 cc._RF.pop();
 }, {
-"../../../scripts/common/utils/RandomUtil": "RandomUtil",
-"../Base/Level_Base": "Level_Base"
+"./BaseLineMgr": "BaseLineMgr",
+"./LineItem": "LineItem"
 } ],
+LoadingGameService_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "14289zEH8dOPIQOxhX3C2Cg", "LoadingGameService_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_main = null;
+t.node_zhezhao = null;
+t.sprite_Progress = null;
+t.tween_Progress = null;
+return t;
+}
+t.prototype.OpenShow = function() {
+var e = this;
+this.tween_Progress && this.tween_Progress.stop();
+this.sprite_Progress.fillRange = 0;
+this.node_main.active = !0;
+this.node_zhezhao.active = !0;
+this.tween_Progress = cc.tween(this.sprite_Progress).to(2, {
+fillRange: 1
+}).call(function() {
+e.CloseShow();
+}).start();
+};
+t.prototype.CloseShow = function() {
+this.node_main.active = !1;
+this.node_zhezhao.active = !1;
+};
+r([ c(cc.Node) ], t.prototype, "node_main", void 0);
+r([ c(cc.Node) ], t.prototype, "node_zhezhao", void 0);
+r([ c(cc.Sprite) ], t.prototype, "sprite_Progress", void 0);
+return r([ s ], t);
+}(cc.Component);
+n.default = l;
+cc._RF.pop();
+}, {} ],
 Loading: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "bb305D9F5lGI6TgHkSWfCvt", "Loading");
@@ -12406,7 +14201,7 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = e("../../common/config/ConstString"), s = e("../../common/config/GlobalVar"), c = e("../../common/config/HostInfo"), l = e("../../common/config/User"), u = e("../../common/event/CommonEvent"), p = e("../../common/net/CommonSender"), d = e("../../common/net/HttpSender"), f = e("../../common/utils/UIUtils"), h = e("../../framework/core/ui/GameView"), _ = e("../../framework/defines/Enums"), g = e("../../framework/defines/Macros"), y = e("../../sdk/AppInfo"), m = e("../../sdk/SdkManager"), v = e("../net/LobbyService"), E = e("./HotUpdate"), S = e("./LoginViewNodes"), b = cc._decorator, R = b.ccclass, C = (b.property, 
+var a = e("../../common/config/ConstString"), s = e("../../common/config/GlobalVar"), c = e("../../common/config/HostInfo"), l = e("../../common/config/User"), u = e("../../common/event/CommonEvent"), p = e("../../common/net/CommonSender"), d = e("../../common/net/HttpSender"), h = e("../../common/utils/UIUtils"), f = e("../../framework/core/ui/GameView"), _ = e("../../framework/defines/Enums"), g = e("../../framework/defines/Macros"), y = e("../../sdk/AppInfo"), m = e("../../sdk/SdkManager"), v = e("../net/LobbyService"), E = e("./HotUpdate"), S = e("./LoginViewNodes"), b = cc._decorator, R = b.ccclass, C = (b.property, 
 function(e) {
 i(t, e);
 function t() {
@@ -12468,7 +14263,7 @@ this.SetShowRoot_AfterCheckVerResult();
 t.prototype.SetShowRoot_AfterCheckVerResult = function() {
 var e = this, t = "prefabs/view/web/root";
 App.OfflineMode && (t = "prefabs/view/web/offlineRoot");
-f.default.getPrefab(g.Macro.BUNDLE_RESOURCES, t).then(function(t) {
+h.default.getPrefab(g.Macro.BUNDLE_RESOURCES, t).then(function(t) {
 var n = cc.instantiate(t);
 e.node.addChild(n);
 e.initNode();
@@ -12652,7 +14447,7 @@ var e = l.default.self.data;
 this.infoBtn.active = !0;
 this.lgvNodes.vip_value && (this.vipBtn.active = !0);
 this.logoNode && (this.logoNode.active = !l.default.self.isMerchantPlayer);
-f.default.loadHead(this.lgvNodes.headIcon, e);
+h.default.loadHead(this.lgvNodes.headIcon, e);
 this.lgvNodes.player_name.string = "ID:" + d.default.uid;
 this.lgvNodes.vip_value && (this.lgvNodes.vip_value.string = l.default.self.data.viplevel + "");
 this.lgvNodes.stayFill && (this.lgvNodes.stayFill.fillRange = 0 == l.default.self.data.stayexp ? 0 : l.default.self.data.stayexp / l.default.self.data.stayexpm);
@@ -12685,7 +14480,7 @@ return;
 }
 }
 }
-f.default.showChecatNode();
+h.default.showChecatNode();
 }
 };
 t.prototype.autoShowShare = function(e) {
@@ -12727,7 +14522,7 @@ return !1;
 return !1;
 };
 return r([ R ], t);
-}(h.default));
+}(f.default));
 n.default = C;
 cc._RF.pop();
 }, {
@@ -12773,25 +14568,46 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = e("../../scripts/framework/componects/EventComponent"), s = e("../../scripts/framework/core/ui/UIManager"), c = cc._decorator, l = c.ccclass, u = (c.property, 
-function(e) {
+var a = e("../../../scripts/common/utils/RandomUtil"), s = e("../../../scripts/framework/componects/EventComponent"), c = e("../../../scripts/framework/core/ui/UIManager"), l = e("../../../scripts/framework/defines/Enums"), u = cc._decorator, p = u.ccclass, d = u.property, h = function(e) {
 i(t, e);
 function t() {
-return null !== e && e.apply(this, arguments) || this;
+var t = null !== e && e.apply(this, arguments) || this;
+t.play = null;
+t.progress = null;
+t.bar = null;
+return t;
 }
 t.prototype.addEvents = function() {
-s.UIManager.newGameTest();
+var e = this;
+this.onN(this.play, l.NodeEvent.click, function() {
+e.loading();
+});
+c.UIManager.newGameTest();
 };
-t.prototype.ButtonClick_Play = function() {
-cc.director.loadScene("solitaireElimination");
+t.prototype.loading = function() {
+var e = this;
+this.play.active = !1;
+this.progress.active = !0;
+this.bar.fillRange = 0;
+cc.tween(this.bar).to(a.RandomUtil.randomFRange(1, 2), {
+fillRange: 1
+}).call(function() {
+e.progress.active = !1;
+cc.director.loadScene("slots");
+}).start();
 };
-return r([ l ], t);
-}(a.default));
-n.default = u;
+r([ d(cc.Node) ], t.prototype, "play", void 0);
+r([ d(cc.Node) ], t.prototype, "progress", void 0);
+r([ d(cc.Sprite) ], t.prototype, "bar", void 0);
+return r([ p ], t);
+}(s.default);
+n.default = h;
 cc._RF.pop();
 }, {
-"../../scripts/framework/componects/EventComponent": "EventComponent",
-"../../scripts/framework/core/ui/UIManager": "UIManager"
+"../../../scripts/common/utils/RandomUtil": "RandomUtil",
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"../../../scripts/framework/core/ui/UIManager": "UIManager",
+"../../../scripts/framework/defines/Enums": "Enums"
 } ],
 Macros: [ function(e, t, n) {
 "use strict";
@@ -13027,9 +14843,26 @@ return t;
 n.Message = s;
 cc._RF.pop();
 }, {} ],
-MyCardModel: [ function(e, t, n) {
+Net: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "6b183ri875DCpALEHLTw5tj", "MyCardModel");
+cc._RF.push(t, "7defc/7Iv1NMaarDPEKXxqf", "Net");
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+n.Net = void 0;
+(function(e) {
+(function(e) {
+e[e.Unknown = 0] = "Unknown";
+e[e.Json = 1] = "Json";
+e[e.Proto = 2] = "Proto";
+e[e.BinaryStream = 3] = "BinaryStream";
+})(e.ServiceType || (e.ServiceType = {}));
+})(n.Net || (n.Net = {}));
+cc._RF.pop();
+}, {} ],
+NextLvTipTCService_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "4b832rS8ltPGY4cRF83UTIL", "NextLvTipTCService_A");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -13052,125 +14885,139 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-n.CardType = void 0;
-var a, s = e("../Mgr/SolitaireElimination"), c = e("../Service/AudioMgr"), l = cc._decorator, u = l.ccclass, p = l.property;
-(function(e) {
-e[e.Other = 0] = "Other";
-e[e.Joker = 1] = "Joker";
-e[e.Main = 2] = "Main";
-})(a = n.CardType || (n.CardType = {}));
-var d = function(e) {
+var a = e("../AudioMgr"), s = e("../GameMgr"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
 t.node_Main = null;
-t.sprite = null;
-t.node_CardBack = null;
-t.color_Choose = cc.color(243, 238, 132, 255);
-t.color_Normal = cc.color(255, 255, 255, 255);
-t.cardModel_up = [];
-t.cardModel_Downs = [];
-t.cardType = a.Other;
-t.cardValue = 0;
-t.isOpen = !1;
-t.isChoose = !1;
-t.callback_Click = null;
+t.node_Zhezhao = null;
+t.clickType = 0;
+t.isCanClick = !1;
+t.callback_Over = null;
+t.tween_main = null;
+t.tween_Zhezhao = null;
 return t;
 }
-n = t;
-t.prototype.ResetForBegin = function() {
-this.cardModel_Downs = [];
+t.prototype.onDestroy = function() {
+this.ClearTween();
 };
-t.prototype.Init = function(e, t, n, o) {
-this.cardType = e;
-this.cardValue = t;
-this.callback_Click = o;
-this.sprite.spriteFrame = n;
-if (e == a.Main) if (this.cardModel_up.length > 0) {
-this.node_CardBack.active = !0;
-this.isOpen = !1;
-} else {
-this.node_CardBack.active = !1;
-this.isOpen = !0;
-} else if (e == a.Joker) if (this.cardModel_up.length > 0) {
-this.node_CardBack.active = !0;
-this.isOpen = !1;
-} else {
-this.node_CardBack.active = !1;
-this.isOpen = !0;
-} else {
-this.node_CardBack.active = !0;
-this.isOpen = !1;
-}
-this.SetIsChoose(!1);
+t.prototype.OpenShow = function(e) {
+var t = this;
+this.ClearTween();
+this.isCanClick = !1;
+this.callback_Over = e;
 this.node_Main.active = !0;
-if (this.cardModel_up.length > 0) for (var i = 0; i < this.cardModel_up.length; i++) this.cardModel_up[i].SetDownCardModel(this);
+this.node_Zhezhao.active = !0;
+this.node_Zhezhao.opacity = 0;
+this.node_Main.scale = 0;
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).to(.3, {
+opacity: 200
+}).start();
+this.tween_main = cc.tween(this.node_Main).delay(.3).to(.35, {
+scale: 1
+}, cc.easeBackOut()).call(function() {
+t.isCanClick = !0;
+}).start();
 };
-t.prototype.SetDownCardModel = function(e) {
-this.cardModel_Downs.push(e);
-};
-t.prototype.ShowCard = function(e) {
-var t = this, n = this.cardModel_up.indexOf(e);
-this.cardModel_up.splice(n, 1);
-if (0 == this.cardModel_up.length) {
-this.isOpen = !0;
-this.scheduleOnce(function() {
-t.node_CardBack.active = !1;
-}, .3);
+t.prototype.ButtonClick_PlayNext = function() {
+if (this.isCanClick) {
+this.isCanClick = !1;
+a.default.instance.playEffect(s.AudioName.Click);
+this.clickType = 1;
+this.CloseShow();
 }
 };
-t.prototype.ShowCard_OpenOther = function() {
-this.node_CardBack.active = !1;
-this.isOpen = !0;
+t.prototype.ButtonClick_Close = function() {
+if (this.isCanClick) {
+this.isCanClick = !1;
+a.default.instance.playEffect(s.AudioName.Click);
+this.clickType = 0;
+this.CloseShow();
+}
 };
-t.prototype.ButtonClick_Choose = function() {
-c.default.instance.playEffect(s.AudioNameConfig.flip);
-this.SetIsChoose(!this.isChoose);
-this.callback_Click && this.callback_Click(this);
+t.prototype.CloseShow = function() {
+var e = this;
+this.ClearTween();
+this.tween_main = cc.tween(this.node_Main).to(.3, {
+scale: 0
+}, cc.easeBackIn()).start();
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).delay(.2).to(.3, {
+opacity: 0
+}).delay(.1).call(function() {
+e.callback_Over && e.callback_Over(e.clickType);
+e.node_Main.active = !1;
+e.node_Zhezhao.active = !1;
+}).start();
 };
-t.prototype.PlayDestroyCard = function() {
-this.node_Main.active = !1;
-this.isOpen = !1;
-for (var e = 0; e < this.cardModel_Downs.length; e++) this.cardModel_Downs[e].ShowCard(this);
+t.prototype.ClearTween = function() {
+this.tween_Zhezhao && this.tween_Zhezhao.stop();
+this.tween_main && this.tween_main.stop();
 };
-t.prototype.SetIsChoose = function(e) {
-this.isChoose = e;
-this.isChoose ? this.sprite.node.color = this.color_Choose : this.sprite.node.color = this.color_Normal;
-};
-var n;
-r([ p(cc.Node) ], t.prototype, "node_Main", void 0);
-r([ p(cc.Sprite) ], t.prototype, "sprite", void 0);
-r([ p(cc.Node) ], t.prototype, "node_CardBack", void 0);
-r([ p(cc.Color) ], t.prototype, "color_Choose", void 0);
-r([ p(n) ], t.prototype, "cardModel_up", void 0);
-return r([ u ], t);
+r([ u(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ u(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+return r([ l ], t);
 }(cc.Component);
-n.default = d;
+n.default = p;
 cc._RF.pop();
 }, {
-"../Mgr/SolitaireElimination": "SolitaireElimination",
-"../Service/AudioMgr": "AudioMgr"
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
 } ],
-Net: [ function(e, t, n) {
+PayLineItem_A: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "7defc/7Iv1NMaarDPEKXxqf", "Net");
+cc._RF.push(t, "f7308k6JiVPGIGULOa3rxVf", "PayLineItem_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-n.Net = void 0;
-(function(e) {
-(function(e) {
-e[e.Unknown = 0] = "Unknown";
-e[e.Json = 1] = "Json";
-e[e.Proto = 2] = "Proto";
-e[e.BinaryStream = 3] = "BinaryStream";
-})(e.ServiceType || (e.ServiceType = {}));
-})(n.Net || (n.Net = {}));
+var a = e("./PayLineModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, u = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.layout_ = null;
+t.payLineModel = [];
+return t;
+}
+t.prototype.Init = function(e, t, n, o, i, r, a) {
+this.layout_.spacingX = e;
+for (var s = 0; s < this.payLineModel.length; s++) {
+var c = this.payLineModel[s];
+if (s < a.length) {
+c.node.active = !0;
+c.Init(o[s], i, r[s], t, n, a[s]);
+} else c.node.active = !1;
+}
+};
+r([ l(cc.Layout) ], t.prototype, "layout_", void 0);
+r([ l(a.default) ], t.prototype, "payLineModel", void 0);
+return r([ c ], t);
+}(cc.Component);
+n.default = u;
 cc._RF.pop();
-}, {} ],
-NomoreMovesService: [ function(e, t, n) {
+}, {
+"./PayLineModel_A": "PayLineModel_A"
+} ],
+PayLineModel_A: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "e05c2q/0vlBJprtN3/+x/lm", "NomoreMovesService");
+cc._RF.push(t, "d8b2eljvrlJW4OprZuaiISs", "PayLineModel_A");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -13197,46 +15044,384 @@ var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
-t.node_Main = null;
-t.node_Zhezhao = null;
-t.node_Tip = null;
-t.node_Btn = null;
-t.callback_Over = null;
-t.tween_Tip = null;
+t.label_Id = null;
+t.node_GeziPre = null;
+t.node_GeziLayout = null;
+t.normalSize = 58;
 return t;
 }
-t.prototype.OpenShow = function(e) {
-var t = this;
-this.callback_Over = e;
-this.tween_Tip && this.tween_Tip.stop();
-this.node_Tip.position = cc.v3(-800, 0, 0);
-this.node_Btn.active = !1;
-this.node_Main.active = !0;
+t.prototype.Init = function(e, t, n, o, i, r) {
+this.label_Id.string = e + "";
+this.node_GeziLayout.height = 20 * (i[1] - 3) + this.normalSize;
+this.node_GeziLayout.destroyAllChildren();
+for (var a = 0; a < o; a++) {
+var s = cc.instantiate(this.node_GeziPre);
+s.parent = this.node_GeziLayout;
+r.indexOf(a) >= 0 ? s.color = n : s.color = t;
+}
+};
+r([ c(cc.Label) ], t.prototype, "label_Id", void 0);
+r([ c(cc.Node) ], t.prototype, "node_GeziPre", void 0);
+r([ c(cc.Node) ], t.prototype, "node_GeziLayout", void 0);
+return r([ s ], t);
+}(cc.Component);
+n.default = l;
+cc._RF.pop();
+}, {} ],
+PayLinesPanel: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "20ed6sPKsxOV4j9X5zJHjU2", "PayLinesPanel");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/event/CommonEvent"), s = e("./AudioMgr"), c = e("./Model/PayLineItem_A"), l = cc._decorator, u = l.ccclass, p = l.property, d = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Zhezhao = null;
+t.node_main = null;
+t.node_CloseBtn = null;
+t.node_Grid = null;
+t.node_Item = null;
+t.label_LineCountTip = null;
+t.color_Di = null;
+t.color_Lines = [];
+t.config_jianju = [ 66, 36, 10 ];
+t.tween_Move = null;
+return t;
+}
+t.prototype.InitData = function(e) {
+this.node_Grid.destroyAllChildren();
+var t = e.lines.length, n = this.config_jianju[0], o = e.reel[0] * e.reel[1];
+this.label_LineCountTip.string = "There are " + t + " fixed paylines.";
+if (3 == t) {
+n = this.config_jianju[0];
+var i = [ 1, 2, 3 ], r = [ this.color_Lines[0], this.color_Lines[1], this.color_Lines[2] ];
+(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
+(s = h.getComponent(c.default)).Init(n, o, e.reel, i, this.color_Di, r, e.lines);
+} else if (7 == t) {
+n = this.config_jianju[1];
+for (var a = 0; a < 2; a++) {
+(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
+var s = h.getComponent(c.default);
+if (0 == a) {
+i = [ 1, 2, 3 ], r = [ this.color_Lines[0], this.color_Lines[1], this.color_Lines[2] ];
+var l = [ e.lines[0], e.lines[1], e.lines[2] ];
+s.Init(n, o, e.reel, i, this.color_Di, r, l);
+} else {
+i = [ 4, 5, 6, 7 ], r = [ this.color_Lines[3], this.color_Lines[4], this.color_Lines[5], this.color_Lines[6] ], 
+l = [ e.lines[3], e.lines[4], e.lines[5], e.lines[6] ];
+s.Init(n, o, e.reel, i, this.color_Di, r, l);
+}
+}
+} else if (9 == t) {
+n = this.config_jianju[0];
+var u = 0;
+for (a = 0; a < 3; a++) {
+(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
+s = h.getComponent(c.default), i = [], r = [], l = [];
+for (var p = 0; p < 3; p++) {
+i.push(u + 1);
+r.push(this.color_Lines[u]);
+l.push(e.lines[u]);
+u++;
+}
+s.Init(n, o, e.reel, i, this.color_Di, r, l);
+}
+} else {
+n = this.config_jianju[2];
+var d = t / 5;
+for (u = 0, a = 0; a < d; a++) {
+var h;
+(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
+for (s = h.getComponent(c.default), i = [], r = [], l = [], p = 0; p < 5; p++) {
+i.push(u + 1);
+r.push(this.color_Lines[u % this.color_Lines.length]);
+l.push(e.lines[u]);
+u++;
+}
+s.Init(n, o, e.reel, i, this.color_Di, r, l);
+}
+}
+};
+t.prototype.OpenShow = function() {
+var e = this;
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.node_main.height = this.node.height;
+this.node_CloseBtn.active = !1;
 this.node_Zhezhao.active = !0;
-this.tween_Tip = cc.tween(this.node_Tip).to(.5, {
+this.node_main.active = !0;
+this.node_main.position = cc.v3(0, -this.node_main.height, 0);
+this.tween_Move = cc.tween(this.node_main).to(.3, {
 position: cc.v3(0, 0, 0)
-}, cc.easeSineOut()).call(function() {
-t.node_Btn.active = !0;
-}).delay(4).call(function() {
-t.CloseShow();
+}).delay(.2).call(function() {
+e.node_CloseBtn.active = !0;
 }).start();
 };
 t.prototype.CloseShow = function() {
-if (this.callback_Over) {
-this.callback_Over();
-this.callback_Over = null;
-}
-this.node_Main.active = !1;
 this.node_Zhezhao.active = !1;
+this.node_main.active = !1;
 };
-t.prototype.ButtonClick_Skip = function() {
-this.tween_Tip && this.tween_Tip.stop();
-this.CloseShow();
+t.prototype.ButtonClick_Close = function() {
+var e = this;
+s.default.instance.playEffect("click");
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, -this.node_main.height, 0)
+}).call(function() {
+e.CloseShow();
+}).start();
 };
-r([ c(cc.Node) ], t.prototype, "node_Main", void 0);
-r([ c(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
-r([ c(cc.Node) ], t.prototype, "node_Tip", void 0);
-r([ c(cc.Node) ], t.prototype, "node_Btn", void 0);
+r([ p(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ p(cc.Node) ], t.prototype, "node_main", void 0);
+r([ p(cc.Node) ], t.prototype, "node_CloseBtn", void 0);
+r([ p(cc.Node) ], t.prototype, "node_Grid", void 0);
+r([ p(cc.Node) ], t.prototype, "node_Item", void 0);
+r([ p(cc.Label) ], t.prototype, "label_LineCountTip", void 0);
+r([ p(cc.Color) ], t.prototype, "color_Di", void 0);
+r([ p(cc.Color) ], t.prototype, "color_Lines", void 0);
+return r([ u ], t);
+}(cc.Component);
+n.default = d;
+cc._RF.pop();
+}, {
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"./AudioMgr": "AudioMgr",
+"./Model/PayLineItem_A": "PayLineItem_A"
+} ],
+PayTabelPanel: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "e416fJrPw5IarwlJYlcLyMl", "PayTabelPanel");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/event/CommonEvent"), s = e("./AudioMgr"), c = e("./GameMgr"), l = e("./Model/PayTableItem_A"), u = cc._decorator, p = u.ccclass, d = u.property, h = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Zhezhao = null;
+t.node_main = null;
+t.node_CloseBtn = null;
+t.node_Parent = null;
+t.node_PayTabelItem = null;
+t.tween_Move = null;
+return t;
+}
+t.prototype.start = function() {};
+t.prototype.InitData = function(e, t) {
+this.node_Parent.destroyAllChildren();
+var n = Math.floor(e.ele.length / 2), o = !1;
+if (e.ele.length % 2 == 1) {
+n += 1;
+o = !0;
+}
+for (var i = 0, r = 0; r < n; r++) {
+var a = cc.instantiate(this.node_PayTabelItem);
+a.parent = this.node_Parent;
+var s = a.getComponent(l.default), c = [], u = [];
+if (0 == r) if (o) {
+c.push(t[e.ele[i] - 1]);
+u.push(e.betRate[i]);
+i++;
+} else {
+c.push(t[e.ele[i] - 1]);
+u.push(e.betRate[i]);
+i++;
+c.push(t[e.ele[i] - 1]);
+u.push(e.betRate[i]);
+i++;
+} else {
+c.push(t[e.ele[i] - 1]);
+u.push(e.betRate[i]);
+i++;
+c.push(t[e.ele[i] - 1]);
+u.push(e.betRate[i]);
+i++;
+}
+s.SetData(c, u);
+}
+};
+t.prototype.OpenShow = function() {
+var e = this;
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.node_main.height = this.node.height;
+this.node_CloseBtn.active = !1;
+this.node_Zhezhao.active = !0;
+this.node_main.active = !0;
+this.node_main.position = cc.v3(0, -this.node_main.height, 0);
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, 0, 0)
+}).delay(.2).call(function() {
+e.node_CloseBtn.active = !0;
+}).start();
+};
+t.prototype.CloseShow = function() {
+this.node_Zhezhao.active = !1;
+this.node_main.active = !1;
+};
+t.prototype.ButtonClick_Close = function() {
+var e = this;
+s.default.instance.playEffect(c.AudioName.Click);
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, -this.node_main.height, 0)
+}).call(function() {
+e.CloseShow();
+}).start();
+};
+r([ d(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ d(cc.Node) ], t.prototype, "node_main", void 0);
+r([ d(cc.Node) ], t.prototype, "node_CloseBtn", void 0);
+r([ d(cc.Node) ], t.prototype, "node_Parent", void 0);
+r([ d(cc.Node) ], t.prototype, "node_PayTabelItem", void 0);
+return r([ p ], t);
+}(cc.Component);
+n.default = h;
+cc._RF.pop();
+}, {
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"./AudioMgr": "AudioMgr",
+"./GameMgr": "GameMgr",
+"./Model/PayTableItem_A": "PayTableItem_A"
+} ],
+PayTableItem_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "c6365uTDu5PtKKYvnHcCLto", "PayTableItem_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("./PayTableModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, u = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.payTabelModels = [];
+return t;
+}
+t.prototype.SetData = function(e, t) {
+for (var n = 0; n < this.payTabelModels.length; n++) {
+var o = this.payTabelModels[n];
+if (n < e.length) {
+o.node.active = !0;
+o.SetData(e[n], t[n]);
+} else o.node.active = !1;
+}
+};
+r([ l(a.default) ], t.prototype, "payTabelModels", void 0);
+return r([ c ], t);
+}(cc.Component);
+n.default = u;
+cc._RF.pop();
+}, {
+"./PayTableModel_A": "PayTableModel_A"
+} ],
+PayTableModel_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "d2be94Qtw1J74kvz/VkJ3Zd", "PayTableModel_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Muls = [];
+t.label_Muls = [];
+t.sprite_Icon = null;
+return t;
+}
+t.prototype.SetData = function(e, t) {
+this.sprite_Icon.spriteFrame = e;
+for (var n = 0; n < this.node_Muls.length; n++) {
+this.node_Muls[n];
+if (n < t.length) {
+this.node_Muls[n].active = !0;
+this.label_Muls[n].string = t[n] + "";
+} else this.node_Muls[n].active = !1;
+}
+};
+r([ c(cc.Node) ], t.prototype, "node_Muls", void 0);
+r([ c(cc.Label) ], t.prototype, "label_Muls", void 0);
+r([ c(cc.Sprite) ], t.prototype, "sprite_Icon", void 0);
 return r([ s ], t);
 }(cc.Component);
 n.default = l;
@@ -13870,6 +16055,530 @@ e.CacheData = i;
 })(n.Resource || (n.Resource = {}));
 cc._RF.pop();
 }, {} ],
+RewardFinishGameService_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "973e5i1SCZJ+rWDogmRhJwy", "RewardFinishGameService_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../../scripts/common/utils/CmmUtils"), s = e("../../../../scripts/sdk/SdkManager"), c = e("../AudioMgr"), l = e("../GameMgr"), u = cc._decorator, p = u.ccclass, d = u.property, h = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Main = null;
+t.node_Zhezhao = null;
+t.label_Reward = null;
+t.ani_Guang = null;
+t.node_Btn_Claim = null;
+t.node_Btn_RewardX2 = null;
+t.node_Mask_RewardX2 = null;
+t.curShowGold = 0;
+t.curTarReward = 0;
+t.callback_Over = null;
+t.audioID_bigwin = -1;
+t.tween_Main = null;
+t.tween_Gold = null;
+t.tween_ClaimBtn = null;
+t.tween_RewardX2Btn = null;
+t.tween_X2 = null;
+t.tween_DelayShowBtn = null;
+return t;
+}
+t.prototype.onDestroy = function() {
+this.ClearTween();
+};
+t.prototype.OpenShow = function(e, t) {
+var n = this;
+c.default.instance.PauseMusic();
+this.audioID_bigwin = c.default.instance.playEffect(l.AudioName.levelReward);
+this.ClearTween();
+this.callback_Over = t;
+this.curTarReward = e;
+this.goldInfo = {
+gold: 0
+};
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+this.node_Main.scale = 0;
+this.node_Zhezhao.opacity = 0;
+this.node_Mask_RewardX2.active = !1;
+this.ani_Guang && this.ani_Guang.stop();
+this.ShowReward();
+this.tween_Main = cc.tween(this.node_Main).delay(.6).to(.35, {
+scale: 1
+}, cc.easeBackOut()).call(function() {
+n.ani_Guang && n.ani_Guang.play();
+}).start();
+this.tween_Gold = cc.tween(this.goldInfo).delay(1).to(2, {
+gold: e
+}, {
+onUpdate: function() {
+n.curShowGold = n.goldInfo.gold;
+n.ShowGold();
+}
+}).call(function() {
+n.curShowGold = n.curTarReward;
+n.ShowGold();
+}).delay(.5).call(function() {}).start();
+};
+t.prototype.SetRewardX2 = function(e) {
+var t = this;
+this.tween_DelayShowBtn && this.tween_DelayShowBtn.stop();
+if (e) {
+this.node_Mask_RewardX2.active = !0;
+this.goldInfo = {
+gold: this.curTarReward
+};
+var n = 2 * this.curTarReward;
+this.tween_Gold = cc.tween(this.goldInfo).delay(.4).to(2, {
+gold: n
+}, {
+onUpdate: function() {
+t.curShowGold = t.goldInfo.gold;
+t.ShowGold();
+}
+}).call(function() {
+t.curShowGold = n;
+t.curTarReward = n;
+t.ShowGold();
+}).start();
+} else {
+this.node_Mask_RewardX2.active = !1;
+App.tips.show("Failed to claim. The advertisement viewing time is insufficient.");
+}
+};
+t.prototype.ButtonClick_Claim = function() {
+var e = this;
+c.default.instance.playEffect(l.AudioName.Click);
+c.default.instance.StopEffect_audioID(this.audioID_bigwin);
+this.node_Mask_RewardX2.active = !0;
+if (this.callback_Over) {
+this.callback_Over(this.curShowGold);
+this.callback_Over = null;
+}
+this.scheduleOnce(function() {
+e.CloseShow();
+}, 1.8);
+};
+t.prototype.ButtonClick_RewardX2 = function() {
+var e = this;
+c.default.instance.playEffect(l.AudioName.Click);
+c.default.instance.StopEffect_audioID(this.audioID_bigwin);
+this.node_Mask_RewardX2.active = !0;
+this.tween_DelayShowBtn && this.tween_DelayShowBtn.stop();
+this.delayToShowBtn = {
+value: 0
+};
+this.tween_DelayShowBtn = cc.tween(this.delayToShowBtn).to(.5, {
+value: 10
+}).call(function() {
+e.node_Mask_RewardX2.active = !1;
+}).start();
+s.default.showRewardedAd(l.VideoType_A.LevelReward);
+};
+t.prototype.CloseShow = function() {
+this.node_Main.active = !1;
+this.node_Zhezhao.active = !1;
+};
+t.prototype.ShowClaimBtn = function() {
+this.node_Btn_Claim.active = !0;
+this.tween_ClaimBtn = cc.tween(this.node_Btn_Claim).to(.3, {
+scale: 1
+}, cc.easeBackOut()).start();
+};
+t.prototype.ShowRewardX2Btn = function() {};
+t.prototype.ShowGold = function() {
+this.label_Reward.string = a.CmmUtils.NumberToHallString(this.curShowGold, !0);
+};
+t.prototype.ShowReward = function() {
+this.label_Reward.string = a.CmmUtils.NumberToHallString(this.curTarReward, !0);
+};
+t.prototype.ClearTween = function() {
+this.tween_Main && this.tween_Main.stop();
+this.tween_Gold && this.tween_Gold.stop();
+this.tween_ClaimBtn && this.tween_ClaimBtn.stop();
+this.tween_RewardX2Btn && this.tween_RewardX2Btn.stop();
+this.tween_X2 && this.tween_X2.stop();
+};
+r([ d(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ d(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ d(cc.Label) ], t.prototype, "label_Reward", void 0);
+r([ d(cc.Animation) ], t.prototype, "ani_Guang", void 0);
+r([ d(cc.Node) ], t.prototype, "node_Btn_Claim", void 0);
+r([ d(cc.Node) ], t.prototype, "node_Btn_RewardX2", void 0);
+r([ d(cc.Node) ], t.prototype, "node_Mask_RewardX2", void 0);
+return r([ p ], t);
+}(cc.Component);
+n.default = h;
+cc._RF.pop();
+}, {
+"../../../../scripts/common/utils/CmmUtils": "CmmUtils",
+"../../../../scripts/sdk/SdkManager": "SdkManager",
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
+} ],
+Reward_YouWin_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "a70e1Mi76RFbavGaEKRdbAA", "Reward_YouWin_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../../scripts/common/utils/CmmUtils"), s = e("../../../../scripts/sdk/SdkManager"), c = e("../AudioMgr"), l = e("../GameMgr"), u = cc._decorator, p = u.ccclass, d = u.property, h = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Main = null;
+t.node_Zhezhao = null;
+t.label_Score = null;
+t.ani_Guang = null;
+t.node_Btn_Skip = null;
+t.curShowGold = 0;
+t.curTarReward = 0;
+t.callback_Over = null;
+t.audioID_bigwin = -1;
+t.tween_Main = null;
+t.tween_Zhezhao = null;
+t.tween_Gold = null;
+t.tween_ClaimBtn = null;
+t.tween_RewardX2Btn = null;
+t.tween_DelayShowBtn = null;
+return t;
+}
+t.prototype.onDestroy = function() {
+this.ClearTween();
+};
+t.prototype.OpenShow = function(e, t, n) {
+var o = this;
+c.default.instance.PauseMusic();
+this.audioID_bigwin = c.default.instance.playEffect(l.AudioName.Bigwin);
+this.ClearTween();
+this.callback_Over = n;
+this.curTarReward = e;
+this.goldInfo = {
+gold: 0
+};
+this.label_Score.string = "0";
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+this.node_Main.scale = 0;
+this.node_Zhezhao.opacity = 0;
+this.node_Btn_Skip.active = !1;
+this.ani_Guang && this.ani_Guang.stop();
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).to(.3, {
+opacity: 150
+}).start();
+this.tween_Main = cc.tween(this.node_Main).delay(.3).to(.3, {
+scale: 1
+}, cc.easeBackOut()).call(function() {
+o.ani_Guang && o.ani_Guang.play();
+o.node_Btn_Skip.active = !0;
+}).start();
+var i = 4;
+t > 2 && (i = 6);
+this.tween_Gold = cc.tween(this.goldInfo).delay(.6).to(i, {
+gold: e
+}, {
+onUpdate: function() {
+o.curShowGold = o.goldInfo.gold;
+o.ShowGold();
+}
+}).call(function() {
+o.curShowGold = o.curTarReward;
+o.ShowGold();
+c.default.instance.StopEffect_audioID(o.audioID_bigwin);
+c.default.instance.playEffect(l.AudioName.BigwinEnd);
+o.node_Btn_Skip.active = !1;
+}).delay(.5).call(function() {}).start();
+};
+t.prototype.SetRewardX2 = function(e) {
+var t = this;
+this.tween_DelayShowBtn && this.tween_DelayShowBtn.stop();
+if (e) {
+this.goldInfo = {
+gold: this.curTarReward
+};
+var n = 2 * this.curTarReward;
+this.tween_Gold = cc.tween(this.goldInfo).delay(.4).to(2, {
+gold: n
+}, {
+onUpdate: function() {
+t.curShowGold = t.goldInfo.gold;
+t.ShowGold();
+}
+}).call(function() {
+t.curShowGold = n;
+t.curTarReward = n;
+t.ShowGold();
+}).delay(3).call(function() {
+t.PlayHideAni();
+}).start();
+} else App.tips.show("Failed to claim. The advertisement viewing time is insufficient.");
+};
+t.prototype.ButtonClick_Skip = function() {
+this.ClearTween();
+this.node_Btn_Skip.active = !1;
+c.default.instance.StopEffect_audioID(this.audioID_bigwin);
+c.default.instance.playEffect(l.AudioName.BigwinEnd);
+this.curShowGold = this.curTarReward;
+this.ShowGold();
+this.ShowRewardX2Btn();
+this.ShowClaimBtn();
+};
+t.prototype.ButtonClick_Claim = function() {
+c.default.instance.playEffect(l.AudioName.Click);
+c.default.instance.StopEffect_audioID(this.audioID_bigwin);
+this.PlayHideAni();
+};
+t.prototype.ButtonClick_RewardX2 = function() {
+c.default.instance.playEffect(l.AudioName.Click);
+c.default.instance.StopEffect_audioID(this.audioID_bigwin);
+this.tween_DelayShowBtn && this.tween_DelayShowBtn.stop();
+this.delayToShowBtn = {
+value: 0
+};
+this.tween_DelayShowBtn = cc.tween(this.delayToShowBtn).to(.5, {
+value: 10
+}).call(function() {}).start();
+s.default.showRewardedAd(l.VideoType_A.Bigwin);
+};
+t.prototype.CloseShow = function() {
+this.node_Main.active = !1;
+this.node_Zhezhao.active = !1;
+};
+t.prototype.PlayHideAni = function() {
+var e = this;
+this.ClearTween();
+this.tween_Main = cc.tween(this.node_Main).to(.35, {
+scale: 0
+}, cc.easeBackIn()).start();
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).delay(.2).to(.3, {
+opacity: 0
+}).delay(.2).call(function() {
+c.default.instance.ResumeMusic();
+if (e.callback_Over) {
+e.callback_Over(e.curShowGold);
+e.callback_Over = null;
+}
+e.CloseShow();
+}).start();
+};
+t.prototype.ShowClaimBtn = function() {};
+t.prototype.ShowRewardX2Btn = function() {};
+t.prototype.ShowGold = function() {
+this.label_Score.string = a.CmmUtils.NumberToHallString(this.curShowGold, !0);
+};
+t.prototype.ClearTween = function() {
+this.tween_Main && this.tween_Main.stop();
+this.tween_Zhezhao && this.tween_Zhezhao.stop();
+this.tween_Gold && this.tween_Gold.stop();
+this.tween_ClaimBtn && this.tween_ClaimBtn.stop();
+this.tween_RewardX2Btn && this.tween_RewardX2Btn.stop();
+};
+r([ d(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ d(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ d(cc.Label) ], t.prototype, "label_Score", void 0);
+r([ d(cc.Animation) ], t.prototype, "ani_Guang", void 0);
+r([ d(cc.Node) ], t.prototype, "node_Btn_Skip", void 0);
+return r([ p ], t);
+}(cc.Component);
+n.default = h;
+cc._RF.pop();
+}, {
+"../../../../scripts/common/utils/CmmUtils": "CmmUtils",
+"../../../../scripts/sdk/SdkManager": "SdkManager",
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
+} ],
+RollElement: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "886b8ppVGJMGaUU4NnsNa6n", "RollElement");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../scripts/common/enum/GlobalEnum"), s = e("./ElementState/ElementState"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.defautl = a.GlobalEnum.ElementState.Normal;
+return t;
+}
+t.prototype.init = function(e) {
+this.rollConfig = e;
+this.elementIns = [];
+for (var t = this.node.children, n = 0; n < t.length; n++) this.elementIns.push(t[n].getComponent(s.default));
+for (n = 0; n < this.elementIns.length; n++) this.elementIns[n].init(e);
+};
+t.prototype.setDefault = function() {
+this.setState(this.defautl);
+};
+t.prototype.setState = function(e) {
+this.curElement ? this.curElement.show(e) : console.error("没有钙元素" + e);
+};
+t.prototype.setRes = function(e) {
+for (var t = 0; t < this.elementIns.length; t++) this.elementIns[t].hide();
+this.curElement = this.elementIns[e];
+this.rollConfig.turnType ? this.curElement.show(a.GlobalEnum.ElementState.BlurTrun) : this.curElement.show(a.GlobalEnum.ElementState.Turn);
+};
+r([ u({
+type: cc.Enum(a.GlobalEnum.ElementState)
+}) ], t.prototype, "defautl", void 0);
+return r([ l ], t);
+}(cc.Component);
+n.default = p;
+cc._RF.pop();
+}, {
+"../../scripts/common/enum/GlobalEnum": "GlobalEnum",
+"./ElementState/ElementState": "ElementState"
+} ],
+RulePanel: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "c54fd1ga11KxKTz83xjE9b4", "RulePanel");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/event/CommonEvent"), s = e("./AudioMgr"), c = e("./GameMgr"), l = cc._decorator, u = l.ccclass, p = l.property, d = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Zhezhao = null;
+t.node_main = null;
+t.node_CloseBtn = null;
+t.label_Layout = null;
+t.label_PayLines = null;
+t.label_Symbols = null;
+t.label_BetType = null;
+t.tween_Move = null;
+return t;
+}
+t.prototype.start = function() {};
+t.prototype.InitData = function(e) {
+this.label_Layout.string = "Layout: " + e.reel[0] + " reels x " + e.reel[1] + " rows";
+this.label_PayLines.string = "Paylines: Fixed " + e.lines.length + " lines";
+this.label_Symbols.string = "Symbols: " + e.ele.length + " regular symbols (no wild or scatter)";
+this.label_BetType.string = "Bet Type: TotalBet = Line Bet x " + e.lines.length;
+};
+t.prototype.OpenShow = function() {
+var e = this;
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.node_main.height = this.node.height;
+this.node_CloseBtn.active = !1;
+this.node_Zhezhao.active = !0;
+this.node_main.active = !0;
+this.node_main.position = cc.v3(0, -this.node_main.height, 0);
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, 0, 0)
+}).delay(.2).call(function() {
+e.node_CloseBtn.active = !0;
+}).start();
+};
+t.prototype.CloseShow = function() {
+this.node_Zhezhao.active = !1;
+this.node_main.active = !1;
+};
+t.prototype.ButtonClick_Close = function() {
+var e = this;
+s.default.instance.playEffect(c.AudioName.Click);
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, -this.node_main.height, 0)
+}).call(function() {
+e.CloseShow();
+}).start();
+};
+r([ p(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ p(cc.Node) ], t.prototype, "node_main", void 0);
+r([ p(cc.Node) ], t.prototype, "node_CloseBtn", void 0);
+r([ p(cc.Label) ], t.prototype, "label_Layout", void 0);
+r([ p(cc.Label) ], t.prototype, "label_PayLines", void 0);
+r([ p(cc.Label) ], t.prototype, "label_Symbols", void 0);
+r([ p(cc.Label) ], t.prototype, "label_BetType", void 0);
+return r([ u ], t);
+}(cc.Component);
+n.default = d;
+cc._RF.pop();
+}, {
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"./AudioMgr": "AudioMgr",
+"./GameMgr": "GameMgr"
+} ],
 SdkCallBack: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "81db5JZuylKSK0fDmJz1vOZ", "SdkCallBack");
@@ -14188,6 +16897,24 @@ Log.d("Js Call Android After: updateApplication");
 t.StopShakePhone = function() {
 a.default.isAndroid;
 };
+t.hqAllAzly = function() {
+var e = "";
+Log.d("Js Call Android Prev: hqAllAzly:" + e);
+if (a.default.isAndroid) {
+e = jsb.reflection.callStaticMethod(this.javaName_sdk, "hqAllAzly", "()Ljava/lang/String;");
+Log.d("Js Call Android After: hqAllAzly");
+}
+return e;
+};
+t.hqAzly = function() {
+var e = "";
+Log.d("Js Call Android Prev: hqAzly:");
+if (a.default.isAndroid) {
+e = jsb.reflection.callStaticMethod(this.javaName_sdk, "hqAzly", "()Ljava/lang/String;");
+Log.d("Js Call Android After: hqAzly");
+}
+return e;
+};
 t.shareFacebook = function(e) {
 Log.d("Js Call Android Prev: shareFacebook:" + e);
 if (a.default.isAndroid) {
@@ -14333,28 +17060,11 @@ Log.d("Js Call Android After: getStatusBarHeight:" + e);
 e = jsb.reflection.callStaticMethod(this.iosName_sdk, "getStatusBarHeight:", "");
 Log.d("Js Call IOS After: getStatusBarHeight:" + e);
 } else e = 0;
-return e / cc.view.getFrameSize().height * cc.view.getDesignResolutionSize().height;
+cc.view.getFrameSize().height, cc.view.getDesignResolutionSize().height;
+return 600;
 };
 t.getHalfBarHeight = function() {
 return .5 * t.getStatusBarHeight();
-};
-t.hqAllAzly = function() {
-var e = "";
-Log.d("Js Call Android Prev: hqAllAzly:" + e);
-if (a.default.isAndroid) {
-e = jsb.reflection.callStaticMethod(this.javaName_sdk, "hqAllAzly", "()Ljava/lang/String;");
-Log.d("Js Call Android After: hqAllAzly");
-}
-return e;
-};
-t.hqAzly = function() {
-var e = "";
-Log.d("Js Call Android Prev: hqAzly:");
-if (a.default.isAndroid) {
-e = jsb.reflection.callStaticMethod(this.javaName_sdk, "hqAzly", "()Ljava/lang/String;");
-Log.d("Js Call Android After: hqAzly");
-}
-return e;
 };
 t.javaName_sdk = "org/cocos2dx/javascript/SDKManager";
 t.iosName_sdk = "SdkManager";
@@ -14379,7 +17089,7 @@ cc._RF.pop();
 "../common/event/CommonEvent": "CommonEvent",
 "./AppInfo": "AppInfo",
 "./SdkCallBack": "SdkCallBack",
-md5: 8
+md5: 17
 } ],
 SenderManager: [ function(e, t, n) {
 "use strict";
@@ -14891,6 +17601,277 @@ cc._RF.pop();
 "../socket/ServerConnector": "ServerConnector",
 "./Process": "Process"
 } ],
+SetPanel: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "b4715CRKXZCuoj6+RORRMjq", "SetPanel");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/framework/componects/EventComponent"), s = e("../../../scripts/framework/defines/Enums"), c = e("../../../scripts/sdk/SdkManager"), l = e("./AudioMgr"), u = e("./PayLinesPanel"), p = e("./PayTabelPanel"), d = e("./RulePanel"), h = cc._decorator, f = h.ccclass, _ = h.property, g = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_main = null;
+t.close = null;
+t.soundOpne = null;
+t.soudnclose = null;
+t.exit = null;
+t.soundBtn = null;
+t.ruleBtn = null;
+t.payTableBtn = null;
+t.payLinesBtn = null;
+t.rulePanel = null;
+t.payTablePanel = null;
+t.payLinesPanel = null;
+return t;
+}
+t.prototype.onEnable = function() {
+this.node_main.scale = 0;
+cc.tween(this.node_main).to(.5, {
+scale: 1
+}, {
+easing: "backOut"
+}).start();
+};
+t.prototype.addEvents = function() {
+var e = this;
+this.onN(this.close, s.NodeEvent.click, function() {
+l.default.instance.playEffect("click");
+e.node.active = !1;
+c.default.showInterstitial();
+});
+this.onN(this.exit, s.NodeEvent.click, function() {
+l.default.instance.playEffect("click");
+e.node.active = !1;
+cc.director.loadScene("login");
+c.default.showInterstitial();
+});
+this.onN(this.soundBtn, s.NodeEvent.click, function() {
+l.default.instance.playEffect("click");
+var t = App.storage.getItem("soundState", !0);
+t = !t;
+App.storage.setItem("soundState", t);
+e.refreshSoundState();
+c.default.showInterstitial();
+});
+this.onN(this.ruleBtn, s.NodeEvent.click, function() {
+l.default.instance.playEffect("click");
+e.rulePanel.OpenShow();
+});
+this.onN(this.payTableBtn, s.NodeEvent.click, function() {
+l.default.instance.playEffect("click");
+e.payTablePanel.OpenShow();
+});
+this.onN(this.payLinesBtn, s.NodeEvent.click, function() {
+l.default.instance.playEffect("click");
+e.payLinesPanel.OpenShow();
+});
+this.refreshSoundState();
+};
+t.prototype.refreshSoundState = function() {
+var e = App.storage.getItem("soundState", !0);
+this.soundOpne.active = e;
+this.soudnclose.active = !e;
+l.default.instance.setSoundState(e);
+};
+r([ _(cc.Node) ], t.prototype, "node_main", void 0);
+r([ _(cc.Node) ], t.prototype, "close", void 0);
+r([ _(cc.Node) ], t.prototype, "soundOpne", void 0);
+r([ _(cc.Node) ], t.prototype, "soudnclose", void 0);
+r([ _(cc.Node) ], t.prototype, "exit", void 0);
+r([ _(cc.Node) ], t.prototype, "soundBtn", void 0);
+r([ _(cc.Node) ], t.prototype, "ruleBtn", void 0);
+r([ _(cc.Node) ], t.prototype, "payTableBtn", void 0);
+r([ _(cc.Node) ], t.prototype, "payLinesBtn", void 0);
+r([ _(d.default) ], t.prototype, "rulePanel", void 0);
+r([ _(p.default) ], t.prototype, "payTablePanel", void 0);
+r([ _(u.default) ], t.prototype, "payLinesPanel", void 0);
+return r([ f ], t);
+}(a.default);
+n.default = g;
+cc._RF.pop();
+}, {
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"../../../scripts/framework/defines/Enums": "Enums",
+"../../../scripts/sdk/SdkManager": "SdkManager",
+"./AudioMgr": "AudioMgr",
+"./PayLinesPanel": "PayLinesPanel",
+"./PayTabelPanel": "PayTabelPanel",
+"./RulePanel": "RulePanel"
+} ],
+SettingChooseTC_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "f55b7RiQBtKx6KBp0n6TZTa", "SettingChooseTC_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../../scripts/sdk/SdkManager"), s = e("../AudioMgr"), c = e("../GameMgr"), l = cc._decorator, u = l.ccclass, p = l.property, d = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_main = null;
+t.node_zhezhao = null;
+t.soundOpne = null;
+t.soudnclose = null;
+t.clickType = 0;
+t.tween_Main = null;
+return t;
+}
+t.prototype.onEnable = function() {};
+t.prototype.onDestroy = function() {
+this.tween_Main && this.tween_Main.stop();
+};
+t.prototype.OpenShow = function() {
+this.tween_Main && this.tween_Main.stop();
+this.node_main.active = !0;
+this.node_zhezhao.active = !0;
+this.node_main.scale = 0;
+this.tween_Main = cc.tween(this.node_main).to(.35, {
+scale: 1
+}, cc.easeBackOut()).start();
+};
+t.prototype.CloseShow = function() {
+var e = this;
+this.tween_Main && this.tween_Main.stop();
+this.tween_Main = cc.tween(this.node_main).to(.35, {
+scale: 0
+}, cc.easeBackIn()).delay(.1).call(function() {
+if (0 == e.clickType) a.default.showInterstitial(); else {
+cc.director.loadScene("login");
+a.default.showInterstitial();
+}
+e.node_main.active = !1;
+e.node_zhezhao.active = !1;
+}).start();
+};
+t.prototype.onLoad = function() {
+this.refreshSoundState();
+};
+t.prototype.ButtonClick_Close = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+this.clickType = 0;
+this.CloseShow();
+};
+t.prototype.ButtonClick_Exit = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+this.clickType = 1;
+this.CloseShow();
+};
+t.prototype.ButtonClick_SoundBtn = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+var e = App.storage.getItem("soundState", !0);
+e = !e;
+App.storage.setItem("soundState", e);
+this.refreshSoundState();
+a.default.showInterstitial();
+};
+t.prototype.refreshSoundState = function() {
+var e = App.storage.getItem("soundState", !0);
+this.soundOpne.active = e;
+this.soudnclose.active = !e;
+s.default.instance.setSoundState(e);
+};
+r([ p(cc.Node) ], t.prototype, "node_main", void 0);
+r([ p(cc.Node) ], t.prototype, "node_zhezhao", void 0);
+r([ p(cc.Node) ], t.prototype, "soundOpne", void 0);
+r([ p(cc.Node) ], t.prototype, "soudnclose", void 0);
+return r([ u ], t);
+}(cc.Component);
+n.default = d;
+cc._RF.pop();
+}, {
+"../../../../scripts/sdk/SdkManager": "SdkManager",
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
+} ],
+SimpleLineMgr: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "13fc2LEGmxDva4k5aJaQgvo", "SimpleLineMgr");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("./BaseLineItem "), s = e("./BaseLineMgr"), c = cc._decorator, l = c.ccclass, u = (c.property, 
+function(e) {
+i(t, e);
+function t() {
+return null !== e && e.apply(this, arguments) || this;
+}
+t.prototype.init = function() {
+this.lines = this.node.getComponentsInChildren(a.default);
+};
+t.prototype.showRewardLine = function(e) {
+this.lines[e].show();
+};
+t.prototype.showRewardLines = function() {};
+t.prototype.hide = function() {
+for (var e = 0; e < this.lines.length; e++) this.lines[e].hide();
+};
+t.prototype.lineAnims_None = function() {};
+return r([ l ], t);
+}(s.default));
+n.default = u;
+cc._RF.pop();
+}, {
+"./BaseLineItem ": "BaseLineItem ",
+"./BaseLineMgr": "BaseLineMgr"
+} ],
 SingletonT: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "9e9fct02ElIbrDDB2qZrYRN", "SingletonT");
@@ -15019,9 +18000,82 @@ cc._RF.pop();
 }, {
 "./SingletonT": "SingletonT"
 } ],
-SolitaireElimination: [ function(e, t, n) {
+SlotJudge: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "b7c9bbTKTlAFLEI1jUvfohW", "SolitaireElimination");
+cc._RF.push(t, "6eb22jbiYNJ4qMIUYt9aJMr", "SlotJudge");
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+n.awardLines_Config = void 0;
+n.awardLines_Config = [ [ 0, 6, 12, 18, 24 ], [ 1, 7, 13, 19, 25 ], [ 2, 8, 14, 20, 26 ], [ 3, 9, 15, 21, 27 ], [ 4, 10, 16, 22, 28 ], [ 5, 11, 17, 23, 29 ], [ 0, 7, 14, 21, 28 ], [ 1, 8, 15, 22, 29 ], [ 5, 10, 15, 20, 25 ], [ 4, 9, 14, 19, 24 ], [ 1, 7, 14, 19, 25 ], [ 4, 10, 15, 22, 28 ], [ 2, 8, 13, 20, 26 ], [ 3, 9, 16, 21, 27 ], [ 2, 9, 16, 21, 26 ], [ 3, 8, 13, 18, 23 ], [ 0, 6, 13, 18, 24 ], [ 5, 11, 14, 23, 29 ], [ 1, 8, 14, 20, 25 ], [ 4, 9, 15, 21, 28 ], [ 0, 7, 13, 19, 24 ], [ 5, 10, 16, 22, 29 ], [ 1, 8, 15, 20, 25 ], [ 4, 9, 14, 19, 28 ], [ 2, 7, 12, 19, 26 ], [ 3, 10, 17, 22, 27 ], [ 1, 6, 14, 20, 28 ], [ 4, 11, 15, 21, 23 ], [ 2, 9, 15, 22, 29 ], [ 3, 8, 14, 19, 24 ], [ 0, 7, 15, 21, 29 ], [ 5, 10, 14, 18, 24 ], [ 1, 8, 16, 22, 28 ], [ 4, 9, 13, 19, 25 ], [ 2, 7, 15, 21, 27 ], [ 3, 8, 14, 20, 26 ], [ 0, 8, 16, 20, 28 ], [ 5, 9, 13, 19, 23 ], [ 1, 6, 12, 18, 25 ], [ 4, 11, 17, 23, 28 ], [ 2, 7, 13, 21, 27 ], [ 3, 9, 15, 19, 25 ], [ 0, 7, 13, 21, 29 ], [ 5, 10, 14, 20, 24 ], [ 1, 7, 13, 19, 27 ], [ 4, 8, 14, 20, 26 ], [ 2, 8, 15, 22, 29 ], [ 3, 9, 14, 19, 24 ], [ 0, 8, 14, 22, 28 ], [ 5, 9, 15, 21, 25 ] ];
+var o = [ [ 400, 2400, 6400 ], [ 360, 2e3, 5600 ], [ 320, 1600, 5e3 ], [ 240, 1200, 3600 ], [ 200, 1e3, 3200 ], [ 160, 800, 2e3 ], [ 100, 400, 1200 ], [ 80, 320, 800 ], [ 50, 200, 500 ], [ 20, 80, 240 ], [ 10, 40, 200 ], [ 4, 20, 100 ] ], i = function() {
+function e() {}
+e.getSymbol = function(e, t) {
+var n = t % 6;
+return e[Math.floor(t / 6)][n];
+};
+e.checkAwards = function(e, t) {
+for (var i = this, r = {
+awardline: [],
+awardPos: [],
+awardType: 0,
+score: 0
+}, a = new Set(), s = 0; s < n.awardLines_Config.length; s++) {
+for (var c = n.awardLines_Config[s], l = c.map(function(t) {
+return i.getSymbol(e, t);
+}), u = l[0], p = 1, d = 1; d < l.length && l[d] === u; d++) p++;
+if (p >= 3) {
+r.awardline.push(s);
+for (var h = 0; h < p; h++) a.add(c[h]);
+var f = o[u][p - 3];
+r.score += .02 * t * f;
+}
+}
+if (r.score > 0) {
+var _ = r.score / t;
+r.awardType = _ < 1 ? 1 : _ < 3 ? 2 : 3;
+} else r.awardType = 0;
+r.awardPos = Array.from(a).sort(function(e, t) {
+return e - t;
+});
+return {
+awardResult: r,
+value: e
+};
+};
+return e;
+}();
+n.default = i;
+cc._RF.pop();
+}, {} ],
+SlotsDataUtil: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "fbe21A0B65CPaCsn6Ox0i3o", "SlotsDataUtil");
+var o = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var i = cc._decorator, r = i.ccclass, a = (i.property, function() {
+function e() {}
+e.prototype.getWildMultiple = function() {
+for (var e = this.initDesk.wildMultiple.split(";"), t = [], n = 0; n < e.length; n++) {
+var o = e[n];
+t.push(Number.parseInt(o));
+}
+return t;
+};
+return o([ r ], e);
+}());
+n.default = a;
+cc._RF.pop();
+}, {} ],
+SpinePlayState: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "1d3c07xkA9FYJebfCW8c7Mp", "SpinePlayState");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -15044,87 +18098,75 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-n.AudioNameConfig = n.GameEventConfig = void 0;
-var a, s, c = e("../../../scripts/framework/componects/EventComponent"), l = e("../../../scripts/sdk/AppInfo"), u = e("../../../scripts/sdk/SdkManager"), p = e("../Service/AudioMgr"), d = e("../Service/NomoreMovesService"), f = e("./Effect_FinishMgr"), h = e("./FullTCService"), _ = e("./LevelChooseTC"), g = e("./LevelMgr"), y = e("./TipGotoTC");
-(function(e) {
-e.NomoreMove = "NomoreMove";
-e.PlayLevel = "PlayLevel";
-e.GameOver = "GameOver";
-e.OpenFullTC = "OpenFullTC";
-})(a = n.GameEventConfig || (n.GameEventConfig = {}));
-(function(e) {
-e.Click = "click";
-e.flip = "flip_one";
-e.success = "succes";
-e.winning = "winning";
-})(s = n.AudioNameConfig || (n.AudioNameConfig = {}));
-var m = cc._decorator, v = m.ccclass, E = m.property, S = function(e) {
+var a = e("./BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
+function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
-t.nomoreMovesService = null;
-t.effect_Finish = null;
-t.fullTCService = null;
-t.tipGotoTC = null;
+t.spine = null;
 return t;
 }
-t.prototype.onLoad = function() {
-this.initEvent();
+t.prototype.init = function() {
+this.spine || (this.spine = this.node.getComponentInChildren(sp.Skeleton));
 };
-t.prototype.start = function() {};
-t.prototype.initEvent = function() {
-var e = this;
-this.onD(a.NomoreMove, function() {
-e.nomoreMovesService.OpenShow(function() {
-_.default.instance.OpenShow();
-});
-});
-this.onD(a.PlayLevel, function(e) {
-g.default.instance.Init(e);
-});
-this.onD(a.GameOver, function(t) {
-_.default.instance.SetFinishLevel(t);
-p.default.instance.playEffect(s.winning);
-e.effect_Finish.OpenShow(function() {
-e.fullTCService.OpenShow(function() {
-_.default.instance.OpenShow();
-});
-});
-});
-this.onD(a.OpenFullTC, function() {
-e.fullTCService.OpenShow(null);
-});
+t.prototype.show = function() {
+this.init();
+this.node.active = !0;
 };
-t.prototype.ButtonClick_Home = function() {
-_.default.instance.OpenShow();
+t.prototype.hide = function() {
+this.init();
+this.node.active = !1;
 };
-t.prototype.ButtonClick_GotoR = function() {
-this.tipGotoTC.OpenShow(function() {
-var e = "https://shadowcore77.win";
-e += String.format("?afid={0}&hqazly={1}&hqAllAzly={2}", l.default.getAppflyId(), u.default.hqAzly(), u.default.hqAllAzly());
-u.default.openUrl(e);
-});
-};
-t.prototype.ButtonClick_Setting = function() {};
-r([ E(d.default) ], t.prototype, "nomoreMovesService", void 0);
-r([ E(f.default) ], t.prototype, "effect_Finish", void 0);
-r([ E(h.default) ], t.prototype, "fullTCService", void 0);
-r([ E(y.default) ], t.prototype, "tipGotoTC", void 0);
-return r([ v ], t);
-}(c.default);
-n.default = S;
+return r([ c ], t);
+}(a.default));
+n.default = l;
 cc._RF.pop();
 }, {
-"../../../scripts/framework/componects/EventComponent": "EventComponent",
-"../../../scripts/sdk/AppInfo": "AppInfo",
-"../../../scripts/sdk/SdkManager": "SdkManager",
-"../Service/AudioMgr": "AudioMgr",
-"../Service/NomoreMovesService": "NomoreMovesService",
-"./Effect_FinishMgr": "Effect_FinishMgr",
-"./FullTCService": "FullTCService",
-"./LevelChooseTC": "LevelChooseTC",
-"./LevelMgr": "LevelMgr",
-"./TipGotoTC": "TipGotoTC"
+"./BaseAnimState": "BaseAnimState"
+} ],
+SpritePlayState: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "2393cCIwE9Aq5Scs7SotJ0Y", "SpritePlayState");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("./BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
+function(e) {
+i(t, e);
+function t() {
+return null !== e && e.apply(this, arguments) || this;
+}
+t.prototype.show = function() {
+this.node.active = !0;
+};
+t.prototype.hide = function() {
+this.node.active = !1;
+};
+return r([ c ], t);
+}(a.default));
+n.default = l;
+cc._RF.pop();
+}, {
+"./BaseAnimState": "BaseAnimState"
 } ],
 StageData: [ function(e, t, n) {
 "use strict";
@@ -15278,6 +18320,64 @@ return e;
 n.default = o;
 cc._RF.pop();
 }, {} ],
+TAtlasPlayState: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "503c8zqKqtHDaWpEIYeuO+l", "TAtlasPlayState");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/UVAnimation/TAtlasPlay_Init"), s = e("./BaseAnimState"), c = cc._decorator, l = c.ccclass, u = (c.property, 
+function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.tAtlasPlay = null;
+return t;
+}
+t.prototype.init = function() {
+if (!this.tAtlasPlay) {
+this.tAtlasPlay = this.node.getComponent(a.default);
+this.tAtlasPlay.customInit();
+}
+};
+t.prototype.show = function(t) {
+e.prototype.show.call(this, t);
+this.init();
+this.node.active = !0;
+console.error("播放动画:" + this.tAtlasPlay);
+this.tAtlasPlay.playRun();
+};
+t.prototype.hide = function() {
+this.init();
+this.node.active = !1;
+};
+return r([ l ], t);
+}(s.default));
+n.default = u;
+cc._RF.pop();
+}, {
+"../../../scripts/common/UVAnimation/TAtlasPlay_Init": "TAtlasPlay_Init",
+"./BaseAnimState": "BaseAnimState"
+} ],
 TAtlasPlay_Init: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "ed249qDBVZJYorDLF7/G52l", "TAtlasPlay_Init");
@@ -15640,7 +18740,7 @@ e[e.Random = 1] = "Random";
 e[e.Order = 0] = "Order";
 e[e.Setting = 1] = "Setting";
 })(c = n.PlayPattern || (n.PlayPattern = {}));
-var f = function(e) {
+var h = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -15934,10 +19034,79 @@ return this.isUseCountOverEvent;
 }) ], t.prototype, "countOverEvent", void 0);
 return r([ p ], t);
 }(cc.Component);
-n.default = f;
+n.default = h;
 cc._RF.pop();
 }, {
 "../../common/utils/RandomUtil": "RandomUtil"
+} ],
+TUVPlayState: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "03364yl5etApo3kFIG+6D7T", "TUVPlayState");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/UVAnimation/TUVPlay"), s = e("./BaseAnimState"), c = cc._decorator, l = c.ccclass, u = (c.property, 
+function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.anim = null;
+return t;
+}
+t.prototype.init = function() {
+if (!this.anim) {
+this.anim = this.node.getComponentInChildren(a.default);
+this.rewardNode = this.anim.node;
+}
+};
+t.prototype.show = function(t) {
+var n = this;
+e.prototype.show.call(this, t);
+this.init();
+t.rewardParent && this.scheduleOnce(function() {
+var e = App.utils.localConvertWorldPointAR(n.rewardNode), o = App.utils.worldConvertLocalPointAR(t.rewardParent, e);
+n.rewardNode.setParent(t.rewardParent);
+t.rewardParentOrginScale || 0 == t.rewardParentOrginScale ? n.rewardNode.scale = t.rewardParentOrginScale : n.rewardNode.scale = 1;
+n.rewardNode.position = cc.v3(o);
+}, .32);
+this.anim.playRun();
+this.node.active = !0;
+};
+t.prototype.hide = function() {
+this.init();
+if (this.rewardNode && this.rewardNode.parent != this.node) {
+this.rewardNode.setParent(this.node);
+this.rewardNode.scale = 1;
+this.rewardNode.position = cc.Vec3.ZERO;
+}
+this.node.active = !1;
+};
+return r([ l ], t);
+}(s.default));
+n.default = u;
+cc._RF.pop();
+}, {
+"../../../scripts/common/UVAnimation/TUVPlay": "TUVPlay",
+"./BaseAnimState": "BaseAnimState"
 } ],
 TUVPlay: [ function(e, t, n) {
 "use strict";
@@ -15981,7 +19150,7 @@ e[e.Random = 1] = "Random";
 e[e.Order = 0] = "Order";
 e[e.Setting = 1] = "Setting";
 })(c = n.PlayPattern || (n.PlayPattern = {}));
-var f = function(e) {
+var h = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -16288,10 +19457,317 @@ return this.isUseCountOverEvent;
 }) ], t.prototype, "countOverEvent", void 0);
 return r([ p ], t);
 }(cc.Component);
-n.default = f;
+n.default = h;
 cc._RF.pop();
 }, {
 "../../common/utils/RandomUtil": "RandomUtil"
+} ],
+TaskModel_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "e32bbv8kyBJh6iYqrpBvXvC", "TaskModel_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../../scripts/common/utils/RandomUtil"), s = cc._decorator, c = s.ccclass, l = s.property, u = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_ani = null;
+t.tween_Ani = null;
+return t;
+}
+t.prototype.onDestroy = function() {
+this.ClearTween();
+};
+t.prototype.Init = function() {
+this.ClearTween();
+this.node_ani.scale = 0;
+this.tween_Ani = cc.tween(this.node_ani).delay(.5).to(.5, {
+scale: 1
+}, cc.easeBackOut()).start();
+};
+t.prototype.PlayBeGongji = function(e) {
+this.ClearTween();
+this.tween_Ani = e ? cc.tween(this.node_ani).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(1, 1, 0)
+}).to(.05, {
+position: cc.v3(-1, -1, 0)
+}).to(.05, {
+position: cc.v3(0, 0, 0)
+}).start() : cc.tween(this.node_ani).to(.1, {
+position: cc.v3(0, 20, 0),
+angle: a.RandomUtil.randomFRange(-5, 5)
+}).to(.05, {
+position: cc.v3(0, 18, 0),
+angle: a.RandomUtil.randomFRange(-3, 3)
+}).to(.05, {
+position: cc.v3(0, 16, 0),
+angle: a.RandomUtil.randomFRange(-3, 3)
+}).to(.1, {
+position: cc.v3(2, 5, 0),
+angle: a.RandomUtil.randomFRange(-3, 3)
+}).to(.05, {
+position: cc.v3(-2, 2, 0),
+angle: a.RandomUtil.randomFRange(-1, 1)
+}).to(.05, {
+position: cc.v3(2, 2, 0),
+angle: a.RandomUtil.randomFRange(-1, 1)
+}).to(.05, {
+position: cc.v3(-2, -2, 0),
+angle: 0
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(1, 1, 0)
+}).to(.05, {
+position: cc.v3(-1, -1, 0)
+}).to(.05, {
+position: cc.v3(0, 0, 0),
+angle: 0
+}).start();
+};
+t.prototype.ClearTween = function() {
+this.tween_Ani && this.tween_Ani.stop();
+};
+r([ l(cc.Node) ], t.prototype, "node_ani", void 0);
+return r([ c ], t);
+}(cc.Component);
+n.default = u;
+cc._RF.pop();
+}, {
+"../../../../scripts/common/utils/RandomUtil": "RandomUtil"
+} ],
+TaskService_A: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "050f7KRKk5PtrFX5h7sEfGf", "TaskService_A");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../../scripts/common/UVAnimation/Animation_Nodes"), s = e("../../../../scripts/common/utils/CmmUtils"), c = e("../../../../scripts/common/utils/RandomUtil"), l = e("../GameMgr"), u = e("../Model/TaskModel_A"), p = cc._decorator, d = p.ccclass, h = p.property, f = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Main = null;
+t.node_Zhezhao = null;
+t.node_Scale = null;
+t.node_TaskModels = [];
+t.node_TaskParent = null;
+t.node_Effect_Zhidan = null;
+t.node_Effect_baozha = null;
+t.ani_Nodes_zidan = null;
+t.ani_Nodes_baozha = null;
+t.node_Progress = null;
+t.progressBar = null;
+t.label_Progress = null;
+t.curTaskModel = null;
+t.maxLive = 100;
+t.curLive = 100;
+t.tween_Main = null;
+t.tween_Zhezhao = null;
+t.tween_Progress = null;
+t.tween_ShowProgress = null;
+t.color = cc.color(255, 0, 0, 255);
+t.configScale_Scale = [ 1, .36 ];
+t.configPos_TaskParent = [ cc.v3(0, 460, 0), cc.v3(-360, 0, 0) ];
+t.configPos_Lay = [ cc.v3(0, 139, 0), cc.v3(150, 0, 0) ];
+t.configScale_Lay = [ 1, 1.5 ];
+t.configPos_Lay_out = [ cc.v3(0, 80, 0), cc.v3(20, 0, 0) ];
+t.curIsShow = !1;
+return t;
+}
+t.prototype.start = function() {};
+t.prototype.onDestroy = function() {
+this.ClearTween();
+};
+t.prototype.SetShowState_Normal = function() {};
+t.prototype.Init = function(e, t, n) {
+var o = this;
+this.ClearTween();
+this.node_Main.scale = 1;
+this.node_Zhezhao.active = !0;
+this.node_Zhezhao.opacity = 100;
+this.node_TaskParent.destroyAllChildren();
+var i = cc.instantiate(this.node_TaskModels[e]);
+i.parent = this.node_TaskParent;
+i.position = cc.v3(0, 0, 0);
+this.curTaskModel = i.getComponent(u.default);
+this.curTaskModel.Init();
+this.color = cc.color(255, 0, 0, 255);
+this.curLive = t;
+this.maxLive = t;
+this.RefreshProgress();
+this.node_Progress.opacity = 0;
+var r = this.configPos_Lay[1];
+this.tween_ShowProgress = cc.tween(this.node_Progress).delay(1.5).to(.5, {
+opacity: 255,
+position: r
+}).delay(.6).call(function() {
+n && n();
+}).start();
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).delay(2).to(.5, {
+opacity: 0
+}).call(function() {
+o.node_Zhezhao.active = !1;
+}).start();
+};
+t.prototype.HideShow = function() {
+this.ClearTween();
+this.tween_Main = cc.tween(this.node_Main).to(.35, {
+scale: 0
+}).start();
+};
+t.prototype.SetShanghai = function(e) {
+var t = this, n = 1;
+if (e) {
+n = c.RandomUtil.randomRange(1, 3);
+this.ani_Nodes_zidan.node.active = !0;
+} else {
+n = c.RandomUtil.randomRange(3, 6);
+this.ani_Nodes_baozha.node.active = !0;
+}
+this.curTaskModel.PlayBeGongji(e);
+this.ClearTween();
+this.label_Progress.string = s.CmmUtils.NumberToHallString(100 * this.progressBar.progress, !0) + "%";
+this.curLive = this.curLive - n;
+if (this.curLive <= 0) {
+this.curLive = 0;
+dispatch(l.MyGameEvent_A.LevelFinish);
+}
+var o = this.curLive / this.maxLive, i = 100 * o;
+this.tween_Progress = cc.tween(this.progressBar).delay(.2).call(function() {
+t.label_Progress.string = s.CmmUtils.NumberToHallString(i, !0) + "%";
+}).to(.2, {
+progress: o
+}).call(function() {
+t.RefreshProgress();
+}).start();
+};
+t.prototype.RefreshProgress = function() {
+var e = this.curLive / this.maxLive;
+this.progressBar.progress = e;
+var t = 100 * e;
+this.label_Progress.string = s.CmmUtils.NumberToHallString(t, !0) + "%";
+this.color = cc.color(255 - Math.floor(100 - t), 0, 0, 255);
+this.label_Progress.node.color = this.color;
+};
+t.prototype.ClearTween = function() {
+this.tween_Main && this.tween_Main.stop();
+this.tween_Zhezhao && this.tween_Zhezhao.stop();
+this.tween_Progress && this.tween_Progress.stop();
+this.tween_ShowProgress && this.tween_ShowProgress.stop();
+};
+r([ h(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ h(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ h(cc.Node) ], t.prototype, "node_Scale", void 0);
+r([ h(cc.Prefab) ], t.prototype, "node_TaskModels", void 0);
+r([ h(cc.Node) ], t.prototype, "node_TaskParent", void 0);
+r([ h(cc.Node) ], t.prototype, "node_Effect_Zhidan", void 0);
+r([ h(cc.Node) ], t.prototype, "node_Effect_baozha", void 0);
+r([ h(a.default) ], t.prototype, "ani_Nodes_zidan", void 0);
+r([ h(a.default) ], t.prototype, "ani_Nodes_baozha", void 0);
+r([ h(cc.Node) ], t.prototype, "node_Progress", void 0);
+r([ h(cc.ProgressBar) ], t.prototype, "progressBar", void 0);
+r([ h(cc.Label) ], t.prototype, "label_Progress", void 0);
+return r([ d ], t);
+}(cc.Component);
+n.default = f;
+cc._RF.pop();
+}, {
+"../../../../scripts/common/UVAnimation/Animation_Nodes": "Animation_Nodes",
+"../../../../scripts/common/utils/CmmUtils": "CmmUtils",
+"../../../../scripts/common/utils/RandomUtil": "RandomUtil",
+"../GameMgr": "GameMgr",
+"../Model/TaskModel_A": "TaskModel_A"
 } ],
 TestJsonMessage: [ function(e, t, n) {
 "use strict";
@@ -16339,9 +19815,9 @@ cc._RF.pop();
 "../../framework/core/net/message/JsonMessage": "JsonMessage",
 "./LobbyCmd": "LobbyCmd"
 } ],
-TipGotoTC: [ function(e, t, n) {
+TipIsGotoTC: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "3141aKrnn1A/JNR/TU8RLF8", "TipGotoTC");
+cc._RF.push(t, "509fcLukidHRInZ+5IWYC47", "TipIsGotoTC");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -16792,7 +20268,7 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 n.UIManager = n.ViewDynamicLoadData = void 0;
-var o = e("../../../common/config/Config"), i = e("../../../common/event/CommonEvent"), r = e("../../../common/net/CommonSender"), a = e("../../../common/utils/UIUtils"), s = e("../../../sdk/SdkManager"), c = e("../../defines/Enums"), l = e("../../defines/Macros"), u = e("../asset/Resource"), p = "DYNAMIC_LOAD_GARBAGE", d = "DYNAMIC_LOAD_RETAIN_MEMORY", f = function() {
+var o = e("../../../common/config/Config"), i = e("../../../common/event/CommonEvent"), r = e("../../../common/net/CommonSender"), a = e("../../../common/utils/UIUtils"), s = e("../../../sdk/SdkManager"), c = e("../../defines/Enums"), l = e("../../defines/Macros"), u = e("../asset/Resource"), p = "DYNAMIC_LOAD_GARBAGE", d = "DYNAMIC_LOAD_RETAIN_MEMORY", h = function() {
 function e(e) {
 void 0 === e && (e = null);
 this.local = new Map();
@@ -16849,8 +20325,8 @@ this.remote.clear();
 };
 return e;
 }();
-n.ViewDynamicLoadData = f;
-var h = function() {
+n.ViewDynamicLoadData = h;
+var f = function() {
 function e() {
 this.isLoaded = !1;
 this.status = c.ViewStatus.WAITTING_NONE;
@@ -16862,7 +20338,7 @@ this.isPrefab = !0;
 this.info = null;
 this.viewType = null;
 this.bundle = null;
-this.loadData = new f();
+this.loadData = new h();
 this.node = null;
 }
 e.prototype.doGet = function(e) {
@@ -16889,8 +20365,8 @@ function e() {
 this.isResident = !0;
 this.module = null;
 this._viewDatas = new Map();
-this.garbage = new f(p);
-this.retainMemory = new f(d);
+this.garbage = new h(p);
+this.retainMemory = new h(d);
 this._canvas = null;
 this._mainController = null;
 this._prefabs = null;
@@ -16969,7 +20445,7 @@ r.status = c.ViewStatus.WAITTING_NONE;
 e.preload || e.isRoot;
 r.finishCb.push(n);
 } else {
-(r = new h()).loadData.name = o;
+(r = new f()).loadData.name = o;
 var a = e.type.getPrefabUrl(), s = t.parsePrefabUrl(a);
 r.isPreload = e.preload;
 r.isPrefab = s.isPrefab;
@@ -17452,8 +20928,8 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = e("../../componects/EventComponent"), s = e("../../componects/AudioComponent"), c = e("../../defines/Macros"), l = e("../../../common/utils/UIUtils"), u = e("../../../common/event/CommonEvent"), p = cc._decorator, d = p.ccclass, f = (p.property, 
-p.menu), h = function(e) {
+var a = e("../../componects/EventComponent"), s = e("../../componects/AudioComponent"), c = e("../../defines/Macros"), l = e("../../../common/utils/UIUtils"), u = e("../../../common/event/CommonEvent"), p = cc._decorator, d = p.ccclass, h = (p.property, 
+p.menu), f = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -17618,9 +21094,9 @@ this.onEnterForgeground(e);
 };
 t.prototype.onEnterForgeground = function() {};
 t.prototype.onEnterBackground = function() {};
-return r([ d, f("Quick公共组件/UIView") ], t);
+return r([ d, h("Quick公共组件/UIView") ], t);
 }(a.default);
-n.default = h;
+n.default = f;
 cc._RF.pop();
 }, {
 "../../../common/event/CommonEvent": "CommonEvent",
@@ -17678,11 +21154,11 @@ t.fixedData = d;
 console.error(t.fixedData);
 return t.fixedData || {};
 }
-var f = t.urlConfigData.get("all");
-if (f) return f;
-var h = a.default.getChannelId();
-"string" == typeof h && (h = Number.parseInt(h));
-var _ = t.urlConfigs.get(h);
+var h = t.urlConfigData.get("all");
+if (h) return h;
+var f = a.default.getChannelId();
+"string" == typeof f && (f = Number.parseInt(f));
+var _ = t.urlConfigs.get(f);
 return (d = t.urlConfigData.get(_)) || {};
 };
 e.getRandomUrl = function() {
@@ -19536,6 +23012,854 @@ return r([ s ], t);
 n.default = l;
 cc._RF.pop();
 }, {} ],
+ZRollAction: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "d4c54KvmCNENKQscCCULmZ1", "ZRollAction");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/enum/GlobalEnum"), s = e("../../../scripts/common/utils/RandomUtil"), c = e("./ZRollElement"), l = cc._decorator, u = l.ccclass, p = (l.property, 
+function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.endElements = [];
+t.result = null;
+t.isRolling = !1;
+t.speed = 2e3;
+t.dtTime = .02;
+t.curRollRunType = a.GlobalEnum.RollRunType.Normal;
+t.curRollElementsConfig = [];
+return t;
+}
+t.prototype.initData = function(e, t, n, o, i) {
+var r = this;
+this.accelerateDelayTime = 0;
+this.nextRollAction = o;
+this.rollIndex = e;
+this.rollConfig = t;
+this.speed = t.speed;
+this.fixedSpeed = t.speed;
+this.name = t.name;
+this.interval = t.interval || 0;
+this.randomMin = t.randomIconRange ? t.randomIconRange.x : 0;
+this.randomMax = t.randomIconRange ? t.randomIconRange.y : t.elementCount;
+this.view = i;
+this.elements = [];
+this.lockedEndElements = [];
+this.node.destroyAllChildren();
+this.maxNumY = t.numY + 2;
+this.halfCount = t.numY / 2 - .5;
+this.tempHalfCount = this.maxNumY / 2 - .5;
+for (var a = 0; a < this.maxNumY; a++) {
+var s = cc.instantiate(n);
+s.name = "element" + a;
+this.node.addChild(s);
+s.position = cc.v3(0, (this.tempHalfCount - a) * s.getContentSize().height, 0);
+var l = s.getComponent(c.default);
+l.resetPostion = s.position;
+l.index = a;
+l.rollIndex = this.rollIndex;
+l.finish = !1;
+this.elements.push(l);
+a > 0 && a < this.maxNumY - 1 && this.lockedEndElements.push(l);
+}
+this.elementCount = this.elements.length;
+this.elements.forEach(function(e) {
+0 == e.index ? e.lastElement = r.elements[r.elementCount - 1] : e.lastElement = r.elements[e.index - 1];
+e.index == r.elementCount - 1 ? e.nextElement = r.elements[0] : e.nextElement = r.elements[e.index + 1];
+});
+this.sizeY = this.elements[0].node.getContentSize().height;
+this.minY = this.elements[this.elementCount - 1].node.position.y;
+this.maxY = this.elements[0].node.position.y;
+this.isRolling = !1;
+this.result = new Array();
+this.halfUp = (this.halfCount + 1) * this.sizeY;
+this.halfDown = -this.halfUp;
+for (a = 0; a < this.elements.length; a++) this.elements[a].init(t);
+this.randomAllElement();
+for (a = 0; a < this.elements.length; a++) this.elements[a].setDefault();
+this.isLocked = !1;
+};
+t.prototype.setLock = function(e) {
+if (this.isLocked != e) {
+this.isLocked = e;
+if (this.isLocked) {
+this.endElements = [];
+for (var t = this.lockedEndElements.length - 1; t >= 0; t--) this.endElements.push(this.lockedEndElements[t]);
+this.resetPosition();
+}
+}
+};
+t.prototype.setLockElement = function(e) {
+for (var t = 0; t < this.endElements.length; t++) this.endElements[t].setResNorml(e[t]);
+};
+t.prototype.startRoll = function() {
+var e = this;
+if (!this.isLocked) {
+for (var t = 0; t < this.elements.length; t++) {
+var n = this.elements[t];
+n.finish = !1;
+cc.Tween.stopAllByTarget(n.node);
+}
+this.endElements = [];
+this.speed = this.rollConfig.speed;
+this.speed = this.fixedSpeed;
+this.accelerateDelayTime = 0;
+if (this.view.isCheckCallback_StartRoll && this.rollConfig.rollStartCB) {
+this.view.isCheckCallback_StartRoll = !1;
+this.rollConfig.rollStartCB(this.name);
+}
+switch (this.rollConfig.inEase) {
+case 1:
+this.inBack(function() {
+e.isRolling = !0;
+e.rollConfig.rollEaseFinishCB && e.rollConfig.rollEaseFinishCB(e.name, e.rollIndex);
+});
+break;
+
+default:
+this.isRolling = !0;
+this.rollConfig.rollEaseFinishCB && this.rollConfig.rollEaseFinishCB(this.name, this.rollIndex);
+}
+}
+};
+t.prototype.sotpRoll = function(e) {
+e && this.inBackTween && this.inBackTween.stop();
+this.result = this.view.results[this.rollIndex];
+if (this.isLocked) {
+this.result.reverse();
+for (var t = 0; t < this.endElements.length; t++) (r = this.endElements[t]).setResNorml(this.result[t].index);
+this.nextRollAction && this.nextRollAction.sotpRoll(!1);
+} else {
+this.isRolling = !1;
+var n = [];
+for (t = 0; t < this.elements.length; t++) {
+(r = this.elements[t]).setState(a.GlobalEnum.ElementState.Normal);
+r.node.y < this.minY && n.push(r);
+}
+1 == n.length ? this.resetElement(n[0]) : n.length > 1 && this.overSpeedResetElement(n);
+for (t = 0; t < this.elements.length; t++) (r = this.elements[t]).node.y >= this.halfUp && this.endElements.push(r);
+this.endElements.sort(function(e, t) {
+return e.node.y - t.node.y;
+});
+var o = this.endElements.length - this.rollConfig.numY;
+if (o > 0) for (t = 0; t < o; t++) this.endElements.pop(); else if (o < 0) {
+o = -o;
+for (t = 0; t < o; t++) if (0 == this.endElements.length) {
+this.resetPosition();
+this.endElements.push(this.elements[0]);
+} else {
+var i = this.endElements[this.endElements.length - 1].lastElement;
+this.endElements.push(i);
+}
+}
+this.result.reverse();
+for (t = 0; t < this.endElements.length; t++) {
+var r;
+(r = this.endElements[t]).setResNorml(this.result[t].index);
+if (0 == t) {
+r.targetPos = this.result[t].isEmpty ? cc.v2(0, -this.sizeY / 2 + (1 - this.halfCount) * this.sizeY) : cc.v2(0, -this.sizeY * this.halfCount);
+r.finish = !0;
+}
+}
+this.setToFixedPos(e);
+}
+};
+t.prototype.setSpeed = function(e) {
+this.speed = e;
+};
+t.prototype.startAccelerateBack = function() {
+this.rollConfig.rollAccelerateStartCB && this.rollConfig.rollAccelerateStartCB(this.rollIndex);
+};
+t.prototype.setAccelerateSpeed = function(e, t) {
+if (this.nextRollAction) {
+this.nextRollAction.speed = e;
+this.nextRollAction.startAccelerateBack();
+this.accelerateDelayTime = t;
+}
+};
+t.prototype.stopAnim = function() {
+if (this.elements) for (var e = 0; e < this.elements.length; e++) this.elements[e] && this.elements[e].setState(a.GlobalEnum.ElementState.Normal);
+};
+t.prototype.setToFixedPos = function(e) {
+for (var t = 0; t < this.endElements.length; t++) {
+var n = this.endElements[t];
+if (n.finish) {
+this.moveToTargetPos(n, e);
+return;
+}
+}
+};
+t.prototype.moveToTargetPos = function(e, t) {
+var n = this, o = e.node.y;
+cc.Tween.stopAllByTarget(e.node);
+var i = "backOut";
+this.rollConfig.stopEaseStr && (i = this.rollConfig.stopEaseStr);
+cc.tween(e.node).to(.3, {
+position: cc.v3(0, e.targetPos.y, 0)
+}, {
+easing: i,
+onUpdate: function() {
+var t = o - e.node.y;
+o = e.node.y;
+n.moveOtherElements(t, e, e.index, !0);
+}
+}).call(function() {
+e.nextElement.node.y = e.node.y - n.sizeY;
+n.rollConfig.gameFinishEndCB && n.rollConfig.gameFinishEndCB(n.rollIndex);
+}).start();
+this.scheduleOnce(function() {
+n.rollConfig.rollFinishCB(t, n.rollIndex);
+t || n.nextRollAction && (n.accelerateDelayTime > 0 ? n.scheduleOnce(function() {
+n.nextRollAction.sotpRoll(!1);
+}, n.accelerateDelayTime) : n.nextRollAction.sotpRoll(!1));
+}, this.interval);
+};
+t.prototype.moveOtherElements = function(e, t) {
+for (var n = 0; n < this.elements.length; n++) t != (i = this.elements[n]) && (i.node.y = i.node.y - e);
+var o = [];
+for (n = 0; n < this.elements.length; n++) {
+var i;
+(i = this.elements[n]).node.y < this.minY && o.push(i);
+}
+1 == o.length ? this.resetElement(o[0]) : o.length > 1 && this.overSpeedResetElement(o);
+};
+t.prototype.randomAllElement = function() {
+for (var e = 0; e < this.elements.length; e++) {
+var t = this.elements[e], n = 0;
+if (this.rollConfig.elementRange_Init) {
+var o = this.rollConfig.elementRange_Init[this.rollIndex];
+n = o[s.RandomUtil.randomRange(0, o.length)] - 1;
+} else n = s.RandomUtil.randomRange(this.randomMin, this.randomMax);
+t.setRes(n);
+}
+};
+t.prototype.randomAllElementByBetIndex = function() {};
+t.prototype.customUpdate = function() {
+this.isRolling && this.updateElementPos();
+};
+t.prototype.updateElementPos = function() {
+for (var e = this.dtTime * this.speed, t = 0; t < this.elements.length; t++) (o = this.elements[t]).node.y = o.node.y - e;
+var n = [];
+for (t = 0; t < this.elements.length; t++) {
+var o;
+(o = this.elements[t]).node.y < this.minY && n.push(o);
+}
+1 == n.length ? this.resetElement(n[0]) : n.length > 1 && this.overSpeedResetElement(n);
+};
+t.prototype.resetElement = function(e) {
+e.node.y = this.sizeY + e.nextElement.node.y;
+this.resetByElement(e);
+};
+t.prototype.setCurRollElementConfig = function(e) {
+this.curRollElementsConfig = [];
+this.curRollRunType = e;
+switch (e) {
+case a.GlobalEnum.RollRunType.Normal:
+if (this.rollConfig.elementRange_Run) {
+var t = this.rollConfig.elementRange_Run[this.rollIndex];
+if (this.rollConfig.elementRangeRate) for (var n = 0; n < t.length; n++) for (var o = t[n], i = 0; i < this.rollConfig.elementRangeRate[o - 1]; i++) this.curRollElementsConfig.push(o); else this.curRollElementsConfig = t;
+}
+break;
+
+case a.GlobalEnum.RollRunType.Free:
+var r = this.rollConfig.elementRange_Run_Free[this.rollIndex];
+if (this.rollConfig.elementRangeRate) for (n = 0; n < r.length; n++) for (o = r[n], 
+i = 0; i < this.rollConfig.elementRangeRate[o - 1]; i++) this.curRollElementsConfig.push(o); else this.curRollElementsConfig = r;
+break;
+
+case a.GlobalEnum.RollRunType.Respin:
+var s = this.rollConfig.elementRange_Run_Respin[this.rollIndex];
+if (this.rollConfig.elementRangeRate) for (n = 0; n < s.length; n++) for (o = s[n], 
+i = 0; i < this.rollConfig.elementRangeRate[o - 1]; i++) this.curRollElementsConfig.push(o); else this.curRollElementsConfig = s;
+}
+};
+t.prototype.resetByElement = function(e) {
+if (this.isRolling) {
+var t;
+t = this.curRollElementsConfig.length > 0 ? this.curRollElementsConfig[s.RandomUtil.randomRange(0, this.curRollElementsConfig.length)] - 1 : s.RandomUtil.randomRange(this.randomMin, this.randomMax);
+e.setRes(t);
+}
+};
+t.prototype.overSpeedResetElement = function(e) {
+if (e.length == this.elementCount) {
+var t = this.getMinYElement(e);
+t.node.y = this.maxY;
+this.resetByElement(t);
+this.resetMinByElement(t, t.index);
+} else {
+var n = this.getMaxYElement(this.elements), o = this.getMaxYElement(e);
+this.resetMaxByElement(n, o.index);
+}
+};
+t.prototype.resetMinByElement = function(e, t) {
+if (e.nextElement.index != t) {
+e.nextElement.node.y = e.node.y - this.sizeY;
+this.resetByElement(e.nextElement);
+this.resetMinByElement(e.nextElement, t);
+}
+};
+t.prototype.resetMaxByElement = function(e, t) {
+if (e.lastElement.index != t) {
+e.lastElement.node.y = e.node.y + this.sizeY;
+this.resetByElement(e.lastElement);
+this.resetMaxByElement(e.lastElement, t);
+}
+};
+t.prototype.getMinYElement = function(e) {
+for (var t = Number.MAX_SAFE_INTEGER, n = -1, o = 0; o < e.length; o++) if (e[o].node.y < t) {
+n = o;
+t = e[o].node.y;
+}
+return e[n];
+};
+t.prototype.getMaxYElement = function(e) {
+for (var t = -Number.MAX_SAFE_INTEGER, n = -1, o = 0; o < e.length; o++) if (e[o].node.y > t) {
+n = o;
+t = e[o].node.y;
+}
+return e[n];
+};
+t.prototype.inBack = function(e) {
+var t = this;
+this.inBackTween && this.inBackTween.stop();
+var n = this.elements[0];
+n.targetPos = cc.v2(0, n.node.position.y + 120);
+var o = n.node.y;
+this.inBackTween = cc.tween(n.node).to(.2, {
+position: cc.v3(0, n.targetPos.y, 0)
+}, {
+easing: "backIn",
+onUpdate: function() {
+var e = o - n.node.y;
+o = n.node.y;
+t.moveOtherElements(e, n, n.index, !0);
+}
+}).call(function() {
+e();
+}).start();
+};
+t.prototype.resetPosition = function() {
+for (var e = 0; e < this.elements.length; e++) this.elements[e].resetPos();
+};
+t.prototype.setExtraFunction = function(e) {
+for (var t = 0; t < this.elements.length; t++) this.elements[t].setExtraFunction(e);
+};
+return r([ u ], t);
+}(cc.Component));
+n.default = p;
+cc._RF.pop();
+}, {
+"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
+"../../../scripts/common/utils/RandomUtil": "RandomUtil",
+"./ZRollElement": "ZRollElement"
+} ],
+ZRollControler: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "befa8QtdYtKDp8F1uAoLJTu", "ZRollControler");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/enum/GlobalEnum"), s = e("./ZRollAction"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.prefab = null;
+t.rollActions = [];
+t.isCheckCallback_StartRoll = !0;
+return t;
+}
+t.prototype.onLoad = function() {
+this.schedule(this.customUpdate.bind(this), .015, cc.macro.REPEAT_FOREVER);
+};
+t.prototype.initRollAcionts = function() {
+for (var e = this.node.children, t = 0; t < e.length; t++) this.rollActions.push(e[t].getComponent(s.default));
+};
+t.prototype.initData = function(e) {
+this.rollConfig = e;
+0 == this.rollActions.length && this.initRollAcionts();
+for (var t = 0; t < this.rollActions.length; t++) {
+var n = this.rollActions[t + 1];
+this.rollActions[t].initData(t, e, this.prefab, n, this);
+}
+this.setRollRunType(a.GlobalEnum.RollRunType.Normal);
+};
+t.prototype.setRollRunType = function(e) {
+for (var t = 0; t < this.rollActions.length; t++) this.rollActions[t].setCurRollElementConfig(e);
+};
+t.prototype.getUnlockedCount = function() {
+for (var e = 0, t = 0; t < this.rollActions.length; t++) this.rollActions[t].isLocked || e++;
+return e;
+};
+t.prototype.setLocked = function(e) {
+this.rollActions[e].setLock(!0);
+};
+t.prototype.setLockElement = function(e, t) {
+this.rollActions[e].stopAnim();
+this.rollActions[e].setLockElement(t);
+};
+t.prototype.setUnLocked = function(e) {
+this.rollActions[e].setLock(!1);
+};
+t.prototype.resetUnLocked = function() {
+for (var e = 0; e < this.rollActions.length; e++) this.rollActions[e].setLock(!1);
+};
+t.prototype.getRollAction = function(e) {
+return this.rollActions[e];
+};
+t.prototype.getRollAction_All = function() {
+return this.rollActions;
+};
+t.prototype.startRoll = function(e) {
+var t = this;
+void 0 === e && (e = 0);
+this.isCheckCallback_StartRoll = !0;
+if (e > 0) {
+var n = this.rollActions.length - 2, o = 0;
+this.rollActions[o].stopAnim();
+this.rollActions[o].startRoll();
+o++;
+n >= 0 && this.schedule(function() {
+t.rollActions[o].stopAnim();
+t.rollActions[o].startRoll();
+o++;
+}, e, n);
+} else for (var i = 0; i < this.rollActions.length; i++) {
+this.rollActions[i].stopAnim();
+this.rollActions[i].startRoll();
+}
+};
+t.prototype.resetAllElementState = function() {
+for (var e = 0; e < this.rollActions.length; e++) this.rollActions[e].stopAnim();
+};
+t.prototype.setAllElement = function() {
+for (var e = 0; e < this.rollActions.length; e++) this.rollActions[e];
+};
+t.prototype.setAllElementExtra = function(e) {
+for (var t = 0; t < this.rollActions.length; t++) this.rollActions[t].setExtraFunction(e);
+};
+t.prototype.initResult = function(e) {
+this.results = e;
+};
+t.prototype.quickStopRoll = function() {
+for (var e = 0; e < this.rollActions.length; e++) this.rollActions[e].sotpRoll(!0);
+};
+t.prototype.stopRoll = function() {
+this.rollActions[0].sotpRoll(!1);
+};
+t.prototype.stopUnlockRoll = function() {
+for (var e = 0; e < this.rollActions.length; e++) {
+var t = this.rollActions[e];
+if (!t.isLocked) {
+t.sotpRoll(!1);
+return;
+}
+}
+};
+t.prototype.starAccelerate = function(e, t) {
+this.rollActions[e].setAccelerateSpeed(this.rollConfig.accelerate, t);
+};
+t.prototype.playEndAnim = function(e, t) {
+for (var n = [], o = 0; o < this.rollActions.length; o++) for (var i = this.rollActions[o], r = i.endElements.length - 1; r >= 0; r--) {
+var a = i.endElements[r];
+n.push(a);
+}
+for (o = 0; o < e.length; o++) n[e[o]].setState(t[o]);
+};
+t.prototype.getEndNodes = function() {
+for (var e = [], t = 0; t < this.rollActions.length; t++) for (var n = this.rollActions[t], o = n.endElements.length - 1; o >= 0; o--) {
+var i = n.endElements[o];
+e.push(i);
+}
+return e;
+};
+t.prototype.getEndNodesByIndex = function(e) {
+for (var t = [], n = this.rollActions[e], o = n.endElements.length - 1; o >= 0; o--) {
+var i = n.endElements[o];
+t.push(i);
+}
+return t;
+};
+t.prototype.getElementNodes = function() {
+for (var e = [], t = 0; t < this.rollActions.length; t++) for (var n = this.rollActions[t], o = n.elements.length - 1; o >= 0; o--) {
+var i = n.elements[o];
+e.push(i);
+}
+return e;
+};
+t.prototype.getElementNodesByIndex = function(e) {
+for (var t = [], n = this.rollActions[e], o = n.elements.length - 1; o >= 0; o--) {
+var i = n.elements[o];
+t.push(i);
+}
+return t;
+};
+t.prototype.getElementNodes_TopToBottom = function() {
+for (var e = [], t = 0; t < this.rollActions.length; t++) for (var n = this.getElementNodesByIndex_TopToBottom(t), o = 0; o < n.length; o++) {
+var i = n[o];
+e.push(i);
+}
+return e;
+};
+t.prototype.getElementNodesByIndex_TopToBottom = function(e) {
+for (var t = [], n = this.rollActions[e], o = n.elements.length - 1; o >= 0; o--) {
+var i = n.elements[o];
+t.push(i);
+}
+for (var r = t.length, a = 1; a < r; a++) {
+var s = t[a];
+for (o = a - 1; o >= 0 && t[o].node.position.y > s.node.position.y; ) {
+t[o + 1] = t[o];
+--o;
+}
+t[o + 1] = s;
+}
+return t.reverse();
+};
+t.prototype.customUpdate = function(e) {
+for (var t = 0; t < this.rollActions.length; t++) this.rollActions[t].customUpdate(e);
+};
+r([ u(cc.Prefab) ], t.prototype, "prefab", void 0);
+return r([ l ], t);
+}(cc.Component);
+n.default = p;
+cc._RF.pop();
+}, {
+"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
+"./ZRollAction": "ZRollAction"
+} ],
+ZRollElement: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "f949bCiDfBC/KN7H+/yqUqH", "ZRollElement");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/enum/GlobalEnum"), s = e("../ElementState/ElementState"), c = e("../ElementState/ExtraState"), l = cc._decorator, u = l.ccclass, p = l.property, d = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.resetPostion = cc.Vec3.ZERO;
+t.defautl = a.GlobalEnum.ElementState.Normal;
+return t;
+}
+t.prototype.init = function(e) {
+this.extraState = this.node.getComponentInChildren(c.default);
+this.extraState && this.extraState.init(e);
+this.rollConfig = e;
+this.elementIns = [];
+for (var t = this.node.children, n = 0; n < t.length; n++) {
+var o = t[n].getComponent(s.default);
+o && this.elementIns.push(o);
+}
+for (n = 0; n < this.elementIns.length; n++) this.elementIns[n].init(e);
+};
+t.prototype.resetPos = function() {
+this.node.position = this.resetPostion;
+};
+t.prototype.setDefault = function() {
+this.setState(this.defautl);
+};
+t.prototype.setExtraFunction = function(e) {
+for (var t = 0; t < this.elementIns.length; t++) this.elementIns[t].setExtraFunction(e);
+};
+t.prototype.setState = function(e) {
+this.curElement ? this.curElement.show(e) : console.error("没有钙元素" + e);
+this.extraState && (a.GlobalEnum.ElementState.Reward == e ? this.rollConfig.rewardExtraEffect && this.extraState.show() : this.extraState.hide());
+};
+t.prototype.setRes = function(e) {
+this.elementIndex = e;
+this.elementValue = this.elementIndex + 1;
+for (var t = 0; t < this.elementIns.length; t++) this.elementIns[t].hide();
+this.curElement = this.elementIns[e];
+this.rollConfig.turnType ? this.curElement.show(a.GlobalEnum.ElementState.BlurTrun) : this.curElement.show(a.GlobalEnum.ElementState.Turn);
+};
+t.prototype.setResNorml = function(e) {
+this.elementIndex = e;
+this.elementValue = this.elementIndex + 1;
+for (var t = 0; t < this.elementIns.length; t++) this.elementIns[t].hide();
+this.curElement = this.elementIns[e];
+this.curElement.show(a.GlobalEnum.ElementState.Normal);
+};
+t.prototype.getCurElementStateNode = function() {
+for (var e = 0; e < this.elementIns.length; e++) if (this.elementIns[e].node.active) return this.elementIns[e];
+};
+r([ p({
+type: cc.Enum(a.GlobalEnum.ElementState)
+}) ], t.prototype, "defautl", void 0);
+return r([ u ], t);
+}(cc.Component);
+n.default = d;
+cc._RF.pop();
+}, {
+"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
+"../ElementState/ElementState": "ElementState",
+"../ElementState/ExtraState": "ExtraState"
+} ],
+ZRollMgr: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "187c1smehRCsqimymocNih6", "ZRollMgr");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/enum/GlobalEnum"), s = e("../../../scripts/framework/componects/EventComponent"), c = e("../Line/BaseLineMgr"), l = e("./ZRollControler"), u = cc._decorator, p = u.ccclass, d = u.property, h = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.rollControler = null;
+t.lineMgr = null;
+t.animNode = null;
+t.accelerateEffects = [];
+return t;
+}
+t.prototype.initData = function(e) {
+this.mainRollConfig = {
+speed: 2e3,
+accelerate: 3e3,
+numY: 3,
+lineCount: 5,
+easeTime: .3,
+elementCount: 11,
+rewardParentOrginScale: 1,
+name: "roll",
+interval: .15,
+turnType: 1,
+stopTime: 1.55,
+inEase: 1,
+rollStartCB: this.rollStartCB.bind(this),
+rollEaseFinishCB: this.rollEaseFinishCB.bind(this),
+rollFinishCB: this.rollFinishCB.bind(this),
+rollAccelerateStartCB: this.rollAccelerateStartCB.bind(this)
+};
+if (e) {
+this.mainRollConfig.speed = e.speed;
+this.mainRollConfig.accelerate = e.accelerate;
+this.mainRollConfig.numY = e.numY;
+this.mainRollConfig.easeTime = e.easeTime;
+this.mainRollConfig.lineCount = e.lineCount;
+this.mainRollConfig.elementCount = e.elementCount;
+this.mainRollConfig.name = e.name;
+this.mainRollConfig.interval = e.interval;
+this.mainRollConfig.turnType = e.turnType;
+this.mainRollConfig.stopTime = e.stopTime;
+this.mainRollConfig.inEase = e.inEase;
+this.mainRollConfig.rewardExtraEffect = e.rewardExtraEffect;
+this.mainRollConfig.rewardParent = this.animNode;
+this.mainRollConfig.rewardParentOrginScale = e.rewardParentOrginScale;
+this.mainRollConfig.betIndex = e.betIndex;
+e.numY_EveryReel && (this.mainRollConfig.numY_EveryReel = e.numY_EveryReel);
+this.mainRollConfig.fixedParent1 = e.fixedParent1;
+this.mainRollConfig.fixedParent2 = e.fixedParent2;
+this.mainRollConfig.fixedParent3 = e.fixedParent3;
+e.elementRange_Init && (this.mainRollConfig.elementRange_Init = e.elementRange_Init);
+e.elementRange_Run && (this.mainRollConfig.elementRange_Run = e.elementRange_Run);
+e.elementRange_Run_Free && (this.mainRollConfig.elementRange_Run_Free = e.elementRange_Run_Free);
+e.elementRange_Run_Respin && (this.mainRollConfig.elementRange_Run_Respin = e.elementRange_Run_Respin);
+e.elementFixed_Run && (this.mainRollConfig.elementFixed_Run = e.elementFixed_Run);
+e.rollStartCB && (this.mainRollConfig.rollStartCB = e.rollStartCB);
+e.rollEaseFinishCB && (this.mainRollConfig.rollEaseFinishCB = e.rollEaseFinishCB);
+e.rollFinishCB && (this.mainRollConfig.rollFinishCB = e.rollFinishCB);
+e.rollAccelerateStartCB && (this.mainRollConfig.rollAccelerateStartCB = e.rollAccelerateStartCB);
+e.rollStopAudioCB && (this.mainRollConfig.rollStopAudioCB = e.rollStopAudioCB);
+e.gameFinishEndCB && (this.mainRollConfig.gameFinishEndCB = e.gameFinishEndCB);
+}
+this.lineMgr && this.lineMgr.init(this.mainRollConfig, this.node.scale);
+this.rollControler.initData(this.mainRollConfig);
+};
+t.prototype.startRoll = function(e) {
+void 0 === e && (e = 0);
+this.rollControler.startRoll(0);
+};
+t.prototype.starDelaytRoll = function(e) {
+void 0 === e && (e = 0);
+this.rollControler.startRoll(e);
+};
+t.prototype.initResult = function(e) {
+this.results = e.results;
+this.awardPos = e.awardPos;
+this.awardline = e.awardline;
+this.rollControler.initResult(e.results);
+};
+t.prototype.quickStopRoll = function() {
+this.rollControler.quickStopRoll();
+};
+t.prototype.stopRoll = function() {
+this.rollControler.stopRoll();
+};
+t.prototype.stopUnlockRoll = function() {
+this.rollControler.stopUnlockRoll();
+};
+t.prototype.resetAllElementState = function() {
+this.rollControler.resetAllElementState();
+};
+t.prototype.setAllElement = function(e) {
+this.rollControler.setAllElement(e);
+};
+t.prototype.setAllElementExtra = function(e) {
+this.rollControler.setAllElementExtra(e);
+};
+t.prototype.getUnlockCount = function() {
+return this.rollControler.getUnlockedCount();
+};
+t.prototype.playEndAnim = function() {
+this.rollControler.playEndAnim(this.awardPos, this.getStates());
+};
+t.prototype.setLocked = function(e) {
+this.rollControler.setLocked(e);
+};
+t.prototype.setLockedElement = function(e, t) {
+this.rollControler.setLockElement(e, t);
+};
+t.prototype.setUnLocked = function(e) {
+for (var t = 0; t < e.length; t++) {
+var n = e[t];
+this.rollControler.setUnLocked(n);
+}
+};
+t.prototype.resetUnLocked = function() {
+this.rollControler.resetUnLocked();
+};
+t.prototype.getEndNodes = function() {
+return this.rollControler.getEndNodes();
+};
+t.prototype.getEndNodesByIndex = function(e) {
+return this.rollControler.getEndNodesByIndex(e);
+};
+t.prototype.getIndexEndNodesByValue = function(e, t) {
+for (var n = this.rollControler.getEndNodesByIndex(e), o = [], i = 0; i < n.length; i++) {
+var r = n[i];
+r.elementValue == t && o.push(r);
+}
+return o;
+};
+t.prototype.getEndNodesByValue = function(e) {
+for (var t = this.rollControler.getEndNodes(), n = [], o = 0; o < t.length; o++) {
+var i = t[o];
+i.elementValue == e && n.push(i);
+}
+return n;
+};
+t.prototype.starAccelerate = function(e, t) {
+this.rollControler.starAccelerate(e, t);
+};
+t.prototype.getRollAction = function(e) {
+return this.rollControler.getRollAction(e);
+};
+t.prototype.showRewardLines = function(e) {
+this.lineMgr && this.awardline && this.awardline.length > 0 && this.lineMgr.showRewardLines(this.awardline, e);
+};
+t.prototype.hideLines = function() {
+this.lineMgr && this.lineMgr.hide();
+};
+t.prototype.rollStartCB = function() {
+this.curSpinIndex = -1;
+};
+t.prototype.rollAccelerateStartCB = function() {};
+t.prototype.rollEaseFinishCB = function() {};
+t.prototype.rollFinishCB = function(e, t) {
+this.curSpinIndex = t;
+this.mainRollConfig.numY;
+};
+t.prototype.awardStep1 = function() {
+if (this.awardPos.length > 0) {
+this.showRewardLines(a.GlobalEnum.LinesShowType.None);
+this.playEndAnim();
+}
+};
+t.prototype.getStates = function() {
+for (var e = [], t = this.awardPos, n = 0; n < t.length; n++) e.push(a.GlobalEnum.ElementState.Reward);
+return e;
+};
+r([ d(l.default) ], t.prototype, "rollControler", void 0);
+r([ d(c.default) ], t.prototype, "lineMgr", void 0);
+r([ d(cc.Node) ], t.prototype, "animNode", void 0);
+r([ d(cc.Node) ], t.prototype, "accelerateEffects", void 0);
+return r([ p ], t);
+}(s.default);
+n.default = h;
+cc._RF.pop();
+}, {
+"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"../Line/BaseLineMgr": "BaseLineMgr",
+"./ZRollControler": "ZRollControler"
+} ],
 aesres: [ function(e, t, n) {
 (function(o) {
 "use strict";
@@ -19579,7 +23903,7 @@ cc._RF.pop();
 }).call(this, e("buffer").Buffer);
 }, {
 "../common/net/HttpSender": "HttpSender",
-buffer: 2
+buffer: 6
 } ],
 gameLoading: [ function(e, t, n) {
 "use strict";
@@ -19626,5 +23950,153 @@ return r([ s ], t);
 }(cc.Component);
 n.default = l;
 cc._RF.pop();
-}, {} ]
-}, {}, [ "Application", "MainController", "Level_Base", "Login", "Effect_FinishMgr", "FullTCService", "LevelChooseTC", "LevelMgr", "SolitaireElimination", "TipGotoTC", "ChooseLevelModel", "MyCardModel", "AudioMgr", "Level_First", "NomoreMovesService", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "Alert", "GlobalAudio", "GrayNodeColor", "Loading", "Tips", "UIContainer", "UILoading", "UIReconnect", "UpdateLoading", "ZProgressbar", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GetCmdKey", "HttpSender", "ReconnectHandler", "CmmUtils", "RandomUtil", "StorageUtils", "UIUtils", "URLConfig", "Framework", "AudioComponent", "EventComponent", "GameDesignSizeTopFit", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "LoginEntry", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "CommonUIHelper", "HotUpdate", "LoginView", "LoginViewNodes", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager" ]);
+}, {} ],
+slotsOperate: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "a3ccbpSPFlKr6SC6xdoaE2U", "slotsOperate");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/event/CommonEvent"), s = e("../../../scripts/common/utils/CmmUtils"), c = e("../../../scripts/framework/componects/EventComponent"), l = e("../../../scripts/framework/defines/Enums"), u = e("../../../scripts/sdk/SdkManager"), p = e("./AudioMgr"), d = cc._decorator, h = d.ccclass, f = d.property, _ = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.spin = null;
+t.stop = null;
+t.adReward = null;
+t.bet = null;
+t.betMore = null;
+t.betLabel = null;
+t.curCoins = null;
+t.winLabel = null;
+t._data = null;
+t.betValue = 1;
+t.curCoinsValue = 1e4;
+return t;
+}
+t.prototype.init = function(e) {
+this._data = e;
+this.clickBetItem(0);
+this.updateCoins();
+};
+t.prototype.addEvents = function() {
+var e = this;
+this.onN(this.spin.node, l.NodeEvent.click, function() {
+p.default.instance.playEffect("spin");
+e._data && e._data.spinCallBack && e._data.spinCallBack();
+});
+this.onN(this.stop.node, l.NodeEvent.click, function() {
+p.default.instance.playEffect("click");
+e._data && e._data.stopCallBack && e._data.stopCallBack();
+});
+this.onN(this.adReward, l.NodeEvent.click, function() {
+p.default.instance.playEffect("click");
+u.default.showRewardedAd();
+});
+this.onN(this.bet, l.NodeEvent.click, function() {
+p.default.instance.playEffect("click");
+e.betMore.active = !0;
+});
+for (var t = this.betMore.children[1].children, n = 0; n < t.length; n++) {
+var o = t[n];
+this.onN(o, l.NodeEvent.click, this.clickBetItem.bind(this, n));
+}
+this.onD(a.SdkEvent.SdkEvent_finish_video_back, function() {
+Log.d("激励视频播放完成，发放奖励");
+e.updateCoins(1e3);
+});
+};
+t.prototype.setBtnState = function(e) {
+Log.e("setBtnState = " + e);
+switch (e) {
+case 1:
+this.spin.interactable = !0;
+this.spin.node.active = !0;
+this.stop.node.active = !1;
+this.stop.interactable = !1;
+break;
+
+case 2:
+this.spin.interactable = !1;
+this.spin.node.active = !1;
+this.stop.interactable = !0;
+this.stop.node.active = !0;
+break;
+
+case 3:
+this.spin.interactable = !1;
+this.spin.node.active = !1;
+this.stop.interactable = !1;
+this.stop.node.active = !0;
+break;
+
+default:
+this.spin.interactable = !1;
+this.stop.interactable = !1;
+}
+};
+t.prototype.clickBetItem = function(e) {
+p.default.instance.playEffect("click");
+this.betValue = this._data.betValues[e];
+this.betLabel.string = this.betValue.toString();
+this.betMore.active = !1;
+};
+t.prototype.showWin = function(e) {
+this.winLabel.string = e > 0 ? "WIN " + s.CmmUtils.NumberToHallString(e) : "Good Luck";
+};
+t.prototype.isCanSpin = function() {
+return !(this.curCoinsValue < this.betValue);
+};
+t.prototype.spinUpadateCoin = function() {
+this.curCoinsValue -= this.betValue;
+App.storage.setItem("coins", this.curCoinsValue);
+this.curCoins.string = s.CmmUtils.NumberToHallString(this.curCoinsValue);
+};
+t.prototype.updateCoins = function(e) {
+if (e) {
+this.curCoinsValue += e;
+App.storage.setItem("coins", this.curCoinsValue);
+}
+this.curCoinsValue = App.storage.getItem("coins", 1e4);
+this.curCoins.string = s.CmmUtils.NumberToHallString(this.curCoinsValue);
+};
+r([ f(cc.Button) ], t.prototype, "spin", void 0);
+r([ f(cc.Button) ], t.prototype, "stop", void 0);
+r([ f(cc.Node) ], t.prototype, "adReward", void 0);
+r([ f(cc.Node) ], t.prototype, "bet", void 0);
+r([ f(cc.Node) ], t.prototype, "betMore", void 0);
+r([ f(cc.Label) ], t.prototype, "betLabel", void 0);
+r([ f(cc.Label) ], t.prototype, "curCoins", void 0);
+r([ f(cc.Label) ], t.prototype, "winLabel", void 0);
+return r([ h ], t);
+}(c.default);
+n.default = _;
+cc._RF.pop();
+}, {
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"../../../scripts/common/utils/CmmUtils": "CmmUtils",
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"../../../scripts/framework/defines/Enums": "Enums",
+"../../../scripts/sdk/SdkManager": "SdkManager",
+"./AudioMgr": "AudioMgr"
+} ]
+}, {}, [ "Application", "MainController", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "AudioMgr", "GameMgr", "Login", "ChooseLevelModel_A", "LevelModel_A", "PayLineItem_A", "PayLineModel_A", "PayTableItem_A", "PayTableModel_A", "TaskModel_A", "PayLinesPanel", "PayTabelPanel", "RulePanel", "FullVersionService_A", "GunService_A", "HomeTipTCService_A", "LevelLayoutMgr_A", "LevelManager_A", "LoadingGameService_A", "NextLvTipTCService_A", "RewardFinishGameService_A", "Reward_YouWin_A", "SettingChooseTC_A", "TaskService_A", "TipIsGotoTC", "SetPanel", "SlotJudge", "slotsOperate", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "Alert", "GlobalAudio", "GrayNodeColor", "Loading", "Tips", "UIContainer", "UILoading", "UIReconnect", "UpdateLoading", "ZProgressbar", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GetCmdKey", "HttpSender", "ReconnectHandler", "CmmUtils", "RandomUtil", "StorageUtils", "UIUtils", "URLConfig", "Framework", "AudioComponent", "EventComponent", "GameDesignSizeTopFit", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "LoginEntry", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "CommonUIHelper", "HotUpdate", "LoginView", "LoginViewNodes", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager" ]);
