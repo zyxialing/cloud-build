@@ -38,7 +38,7 @@ jobs:
     # -------------------------------
     - name: Write keystore.properties
       run: |
-        echo "storeFile=project.jks" > jsb-default/frameworks/runtime-src/proj.android-studio/keystore.properties
+        echo "storeFile=../project.jks" > jsb-default/frameworks/runtime-src/proj.android-studio/keystore.properties
         echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> jsb-default/frameworks/runtime-src/proj.android-studio/keystore.properties
         echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> jsb-default/frameworks/runtime-src/proj.android-studio/keystore.properties
         echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> jsb-default/frameworks/runtime-src/proj.android-studio/keystore.properties
