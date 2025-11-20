@@ -57,14 +57,13 @@ android {
     }
 
     signingConfigs {
-
-       release {
-            if (project.hasProperty("RELEASE_STORE_FILE")) {
-                storeFile file(RELEASE_STORE_FILE)
-                storePassword RELEASE_STORE_PASSWORD
-                keyAlias RELEASE_KEY_ALIAS
-                keyPassword RELEASE_KEY_PASSWORD
-            }
+        release {
+            Properties props = new Properties()
+            props.load(new FileInputStream(file("../keystore.properties")))
+            storeFile file(props['storeFile'])
+            storePassword props['storePassword']
+            keyAlias props['keyAlias']
+            keyPassword props['keyPassword']
         }
     }
 
@@ -132,3 +131,4 @@ dependencies {
     implementation 'com.appsflyer:af-android-sdk:6.16.2'
     implementation 'androidx.annotation:annotation-jvm:1.9.1'
 }
+
