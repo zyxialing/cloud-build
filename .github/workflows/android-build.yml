@@ -22,25 +22,32 @@ jobs:
 
     # 解码 keystore
     - name: Decode keystore
-      run: |
-        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > project.jks
-
-    # 写入 keystore.properties
-    - name: Create keystore.properties
+      run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > project.jks
+      
+    # 写 keystore.properties
+    - name: Write keystore.properties
       run: |
         echo "storeFile=project.jks" > keystore.properties
         echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> keystore.properties
         echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> keystore.properties
         echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
 
-    - name: Make gradlew executable
-      run: chmod +x ./gradlew
+    # ⭐ 切换到正确的 Android 工程目录
+    - name: Go to Android project
+      run: |
+        cd jsb-default/frameworks/runtime-src/proj.android-studio
+      shell: bash
 
+    # ⭐ 正式构建 AAB
     - name: Build AAB
-      run: ./gradlew bundleRelease
+      working-directory: jsb-default/frameworks/runtime-src/proj.android-studio
+      run: |
+        chmod +x gradlew
+        ./gradlew bundleRelease
 
+    # ⭐ 上传 AAB
     - name: Upload AAB
       uses: actions/upload-artifact@v4
       with:
         name: app-release
-        path: app/build/outputs/bundle/release/*.aab
+        path: jsb-default/frameworks/runtime-src/proj.android-studio/app/build/outputs/bundle/release/*.aab
