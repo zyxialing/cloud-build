@@ -1,5 +1,6 @@
 {
     "afkey": "BmPiUKNgDqLUAZYP2fKoGd",
     "package":"com.hotfire.game94056",
-    "appname": "HotFireX"
+    "appname": "HotFireX",
+    "main":"unity/game/ui/MainActivity"
 }
