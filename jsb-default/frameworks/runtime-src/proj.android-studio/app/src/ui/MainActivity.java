@@ -47,7 +47,7 @@ public class MainActivity extends Cocos2dxActivity {
     public static String filePath;
 
     private void InitConfig(){
-        AppsFlyerManager.AF_DEV_KEY = "f3fTP9QHZezY79uFT2o4y9";
+        AppsFlyerManager.AF_DEV_KEY = "JnUF6226zF7KKYcZ46fxqm";
     }
     // 方法：检查键盘是否显示
     private boolean isKeyboardVisible() {
