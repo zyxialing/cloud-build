@@ -91,6 +91,22 @@ def replace_icon():
         shutil.copy(src_icon, dst_icon)
         print("→ 图标替换成功")
 
+def remove_empty_dirs(path):
+    """递归删除空文件夹"""
+    if not os.path.isdir(path):
+        return
+
+    # 先删除子目录
+    for sub in os.listdir(path):
+        full = os.path.join(path, sub)
+        if os.path.isdir(full):
+            remove_empty_dirs(full)
+
+    # 子目录删完后，如果当前目录空了，就删掉
+    if not os.listdir(path):
+        os.rmdir(path)
+        print("→ 删除空目录：", path)
+
 # -------------------------
 # 5. 主入口类重命名（含 package 修复）
 # -------------------------
@@ -98,10 +114,16 @@ def rename_main_activity(old_path, new_path, new_pkg):
     old_java = os.path.join(MAIN_JAVA_ROOT, old_path + ".java")
     new_java = os.path.join(MAIN_JAVA_ROOT, new_path + ".java")
 
-    if not os.path.exists(old_java):
-        print("⚠ 找不到旧入口类：", old_java)
+    # 防止重复执行：新类存在则跳过
+    if os.path.exists(new_java):
+        print("→ 新入口类已存在，跳过重命名：", new_java)
         return
 
+    if not os.path.exists(old_java):
+        print("⚠ 找不到旧入口类（可能已移动过）：", old_java)
+        return
+
+    # 创建新目录
     new_dir = os.path.dirname(new_java)
     os.makedirs(new_dir, exist_ok=True)
 
@@ -112,15 +134,20 @@ def rename_main_activity(old_path, new_path, new_pkg):
     # 替换类名
     content = content.replace(old_class, new_class)
 
-    # 只使用 new_path 的目录作为 Java 包名（绝不拼主包名）
-    pkg_path = os.path.dirname(new_path).replace("/", ".")
+    # 仅使用 new_path 作为包名
+    pkg_path = new_path.replace("/", ".")
     content = re.sub(r'package\s+[^;]+;', f'package {pkg_path};', content)
 
     write(new_java, content)
     print("→ 新入口类生成：", new_java)
 
+    # 删除旧文件
     os.remove(old_java)
-    print("→ 旧入口类删除")
+    print("→ 旧入口类删除成功")
+
+    # 删除旧目录空文件夹（递归）
+    old_dir = os.path.dirname(old_java)
+    remove_empty_dirs(old_dir)
 
 # -------------------------
 # 6. Manifest 中的入口类替换（只改 <activity android:name="...">）
@@ -130,17 +157,23 @@ def replace_manifest_launcher(new_path):
     if not os.path.exists(manifest):
         return
 
+    # new_path:  unity/game/ui/AppActivity
+    # → 转成 Java 全限定类: unity.game.ui.AppActivity
+    java_class = new_path.replace("/", ".")
+
     content = read(manifest)
 
-    # 只替换 activity 的 android:name=...(严格匹配)
+    # 只替换 <activity android:name="..."> 的入口类
     content = re.sub(
         r'(<activity[^>]+android:name=")[^"]+(")',
-        rf'\1{new_path}\2',
-        content
+        rf'\1{java_class}\2',
+        content,
+        count=1   # ⭐⭐ 只替换 1 个
     )
 
     write(manifest, content)
-    print("→ Manifest 入口类替换成功")
+    print("→ Manifest 入口类替换成功：", java_class)
+
 
 # -------------------------
 # 7. AF_DEV_KEY 替换
