@@ -1,6 +1,6 @@
 {
-    "afkey": "BmPiUKNgDqLUAZYP2fKoGd",
-    "package":"com.hotfire.game94056",
+    "afkey": "tFtUM6zdodC22gmiRPMpjW",
+    "package":"com.iron9leaf.arcadia",
     "appname": "HotFireX",
-    "main":"ui.AppActivity"
+    "main":"ui/AppActivity"
 }

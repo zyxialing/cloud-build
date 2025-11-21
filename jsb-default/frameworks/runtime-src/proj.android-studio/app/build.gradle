@@ -3,12 +3,12 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.blazewing6.legendary"   // 👈 这里加
+    namespace "com.iron9leaf.arcadia"   // 👈 这里加
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion PROP_BUILD_TOOLS_VERSION
     ndkVersion = PROP_BUILD_ndk
     defaultConfig {
-        applicationId "com.blazewing6.legendary"
+        applicationId "com.iron9leaf.arcadia"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
