@@ -1,0 +1,118 @@
+
+huajiantou.png
+size: 512,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jiantou
+  rotate: false
+  xy: 0, 30
+  size: 152, 34
+  orig: 155, 37
+  offset: 3, 3
+  index: -1
+jiantou_g01
+  rotate: true
+  xy: 229, 5
+  size: 30, 19
+  orig: 35, 24
+  offset: 3, 3
+  index: -1
+jiantou_g02
+  rotate: false
+  xy: 155, 13
+  size: 33, 18
+  orig: 38, 22
+  offset: 3, 3
+  index: -1
+jiantou_g03
+  rotate: false
+  xy: 118, 11
+  size: 35, 17
+  orig: 41, 21
+  offset: 4, 3
+  index: -1
+jiantou_g04
+  rotate: false
+  xy: 154, 48
+  size: 37, 16
+  orig: 41, 19
+  offset: 3, 2
+  index: -1
+jiantou_g05
+  rotate: false
+  xy: 193, 50
+  size: 37, 14
+  orig: 42, 17
+  offset: 3, 2
+  index: -1
+jiantou_g06
+  rotate: false
+  xy: 190, 18
+  size: 37, 13
+  orig: 41, 14
+  offset: 3, 1
+  index: -1
+jiantou_g07
+  rotate: false
+  xy: 199, 37
+  size: 38, 11
+  orig: 42, 13
+  offset: 3, 2
+  index: -1
+jiantou_g08
+  rotate: false
+  xy: 232, 55
+  size: 39, 9
+  orig: 43, 10
+  offset: 3, 1
+  index: -1
+jiantou_g09
+  rotate: false
+  xy: 118, 0
+  size: 41, 9
+  orig: 45, 10
+  offset: 2, 1
+  index: -1
+jiantou_g10
+  rotate: false
+  xy: 161, 0
+  size: 41, 11
+  orig: 45, 12
+  offset: 2, 1
+  index: -1
+jiantou_g11
+  rotate: false
+  xy: 154, 33
+  size: 43, 13
+  orig: 49, 15
+  offset: 1, 1
+  index: -1
+jiantou_g12
+  rotate: false
+  xy: 0, 5
+  size: 43, 23
+  orig: 46, 24
+  offset: 2, 1
+  index: -1
+jiantou_g13
+  rotate: false
+  xy: 45, 5
+  size: 40, 23
+  orig: 43, 24
+  offset: 2, 1
+  index: -1
+jiantou_g14
+  rotate: false
+  xy: 87, 6
+  size: 29, 22
+  orig: 31, 24
+  offset: 2, 1
+  index: -1
+shou
+  rotate: false
+  xy: 250, 0
+  size: 48, 53
+  orig: 50, 55
+  offset: 1, 1
+  index: -1
