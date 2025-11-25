@@ -12,7 +12,7 @@
   <sourceProviders>
     <sourceProvider
         manifests="AndroidManifest.xml"
-        javaDirectories="src\main\java;D:\androidwork\game2024_onlyaf_noHot_cloud_build\jsb-default\frameworks\cocos2d-x\cocos\platform\android\java\src;src\release\java;src\main\kotlin;src\release\kotlin"
+        javaDirectories="src\main\java;D:\androidwork\game2024_onlyaf_cloud_build\jsb-default\frameworks\cocos2d-x\cocos\platform\android\java\src;src\release\java;src\main\kotlin;src\release\kotlin"
         resDirectories="src\main\res;src\release\res"
         assetsDirectories="src\main\assets;src\release\assets"/>
   </sourceProviders>
