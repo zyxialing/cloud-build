@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-
 import androidx.annotation.NonNull;
 
 import com.appsflyer.AppsFlyerConversionListener;
@@ -71,7 +70,6 @@ public class AppsFlyerManager {
                         Log.d("MyDebug", "af_status: " + SDKManager.installStatus);
                     }
                 }
-
             }
 
             @Override
@@ -82,7 +80,6 @@ public class AppsFlyerManager {
 
             @Override
             public void onAppOpenAttribution(Map<String, String> conversionData) {
-                //测试时此回调一直没有数据
 
             }
 

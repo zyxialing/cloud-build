@@ -1,7 +1,7 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 android {
-    namespace "com.iron9leaf.arcadia"   // 👈 这里加
+    namespace "com.shadowcore77.adventure"   // 👈 这里加
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion PROP_BUILD_TOOLS_VERSION
     ndkVersion = PROP_BUILD_ndk
@@ -54,13 +54,14 @@ android {
     }
 
     signingConfigs {
+
         release {
-            Properties props = new Properties()
-            props.load(new FileInputStream(file("../keystore.properties")))
-            storeFile file(props['storeFile'])
-            storePassword props['storePassword']
-            keyAlias props['keyAlias']
-            keyPassword props['keyPassword']
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                storeFile file(RELEASE_STORE_FILE)
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
         }
     }
 
@@ -72,7 +73,9 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                signingConfig signingConfigs.release
+            }
 
             externalNativeBuild {
                 ndkBuild {
