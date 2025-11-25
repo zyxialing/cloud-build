@@ -4,20 +4,6 @@ buildscript {
     repositories {
         // 本地仓库，优先加载
         mavenLocal()
-
-        // Google 和 Maven Central 的镜像
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-
-        // 国内的 JCenter 和 Huawei 仓库
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url 'https://developer.huawei.com/repo/' }
-
-        // Gitee 作为备选
-        maven { url "https://gitee.com/afra55/afa55-junk-code/raw/master" }
-
         // 官方仓库（最后加载，以防万一）
         google()
         mavenCentral()
