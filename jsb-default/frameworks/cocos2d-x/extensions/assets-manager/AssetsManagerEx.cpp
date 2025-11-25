@@ -504,16 +504,16 @@ void AssetsManagerEx::removeTempDirectory() {
 
 bool AssetsManagerEx::isNeedDownLoadZip(float download, float total) {
 	//下载总数占比
-	// auto percent = download / total;
-	// if (percent >= 1.0000f) {
-	// 	return true;
-	// }
-	// if (percent <= 0.0000f) {
-	// 	return false;
-	// }
-	// if (percent > _downloadAagin) {
-	// 	return true;
-	// }
+	auto percent = download / total;
+	if (percent >= 1.0000f) {
+		return true;
+	}
+	if (percent <= 0.0000f) {
+		return false;
+	}
+	if (percent > _downloadAagin) {
+		return true;
+	}
 	return false;
 }
 
@@ -1021,57 +1021,45 @@ void AssetsManagerEx::prepareUpdate()
         // in this case, it equals remote manifest.
         _tempManifest = _remoteManifest;
 
-        // Check difference between local manifest and remote manifest
-		if (_localManifest->getMd5() == MD5_UNKNOWN) {
-			// 如果第一次未下载 ，直接下载zip包进行解压
-			toDownloadZip();
-		}
-		else {
-			std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
-			if (diff_map.size() == 0)
-			{
-				updateSucceed();
-				return;
-			}
-			else
-			{
-				if (this->isNeedDownLoadZip(diff_map.size(), _remoteManifest->getAssets().size())) {
-					toDownloadZip();
-				}
-				else {
-					// Generate download units for all assets that need to be updated or added
-					std::string packageUrl = _remoteManifest->getPackageUrl();
-					// Preprocessing local files in previous version and creating download folders
-					for (auto it = diff_map.begin(); it != diff_map.end(); ++it)
-					{
-						Manifest::AssetDiff diff = it->second;
-						if (diff.type != Manifest::DiffType::DELETED)
-						{
-							std::string path = diff.asset.path;
-							DownloadUnit unit;
-							unit.customId = it->first;
-							unit.srcUrl = packageUrl + path + "?md5=" + diff.asset.md5;
-							unit.storagePath = _tempStoragePath + path;
-							unit.size = diff.asset.size;
-							unit.compressed = diff.asset.compressed;
-							_downloadUnits.emplace(unit.customId, unit);
-							_tempManifest->setAssetDownloadState(it->first, Manifest::DownloadState::UNSTARTED);
-							_totalSize += unit.size;
-						}
-					}
-					// Start updating the temp manifest
-					_tempManifest->setUpdating(true);
-					// Save current download manifest information for resuming
-					auto dir = basename(_tempManifestPath);
-					if (!_fileUtils->isDirectoryExist(dir)) {
-						_fileUtils->createDirectory(dir);
-					}
-					_tempManifest->saveToFile(_tempManifestPath);
+        std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
+        if (diff_map.size() == 0)
+        {
+            updateSucceed();
+            return;
+        }
+        else
+        {
+        // Generate download units for all assets that need to be updated or added
+            std::string packageUrl = _remoteManifest->getPackageUrl();
+            // Preprocessing local files in previous version and creating download folders
+            for (auto it = diff_map.begin(); it != diff_map.end(); ++it)
+            {
+                Manifest::AssetDiff diff = it->second;
+                if (diff.type != Manifest::DiffType::DELETED)
+                {
+                    std::string path = diff.asset.path;
+                    DownloadUnit unit;
+                    unit.customId = it->first;
+                    unit.srcUrl = packageUrl + path + "?md5=" + diff.asset.md5;
+                    unit.storagePath = _tempStoragePath + path;
+                    unit.size = diff.asset.size;
+                    unit.compressed = diff.asset.compressed;
+                    _downloadUnits.emplace(unit.customId, unit);
+                    _tempManifest->setAssetDownloadState(it->first, Manifest::DownloadState::UNSTARTED);
+                    _totalSize += unit.size;
+                }
+            }
+            // Start updating the temp manifest
+            _tempManifest->setUpdating(true);
+            // Save current download manifest information for resuming
+            auto dir = basename(_tempManifestPath);
+            if (!_fileUtils->isDirectoryExist(dir)) {
+                _fileUtils->createDirectory(dir);
+            }
+            _tempManifest->saveToFile(_tempManifestPath);
 
-					_totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-				}
-			}
-		}
+            _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
+        }
     }
     _updateState = State::READY_TO_UPDATE;
 }
@@ -1629,30 +1617,7 @@ void AssetsManagerEx::onSuccess(const std::string &/*srcUrl*/, const std::string
 
         if (ok)
         {
-			auto isCompressed = [&]( )->bool{
-				if (assetIt != assets.end()) {
-					return assetIt->second.compressed;
-				}
-				else {
-					auto unitIt = _downloadUnits.find(customId);
-					if (unitIt != _downloadUnits.end()){
-						return unitIt->second.compressed;
-					}
-				}
-				return false;
-			};
-			bool compressed = isCompressed();//assetIt != assets.end() ? assetIt->second.compressed : false;
-            if (compressed)
-            {
-				_tempManifest->setAssetDownloadState(customId, Manifest::UNZIP);
-				_tempManifest->saveToFile(_tempManifestPath);
-                decompressDownloadedZip(customId, storagePath);
-            }
-            else
-            {
-				
-                fileSuccess(customId, storagePath);
-            }
+            fileSuccess(customId, storagePath);
         }
         else
         {

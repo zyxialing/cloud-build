@@ -371,13 +371,8 @@ void Manifest::genResumeAssetsList(DownloadUnits *units , bool& unzip) const
         {
             DownloadUnit unit;
             unit.customId = it->first;
-			if (asset.compressed) {
-				
-				unit.srcUrl = getPackageUrl() + "zips/" + asset.path;
-			}
-			else {
-				unit.srcUrl = getPackageUrl() + asset.path + "?md5=" + asset.md5;
-			}
+            // 禁止 zip 模式，强制走增量更新
+            unit.srcUrl = getPackageUrl() + asset.path + "?md5=" + asset.md5;
             
             unit.storagePath = _manifestRoot + asset.path;
             unit.size = asset.size;
@@ -521,33 +516,7 @@ void Manifest::setAssetDownloadState(const std::string &key, const Manifest::Dow
 }
 
 void Manifest::updateToZipAsset(const DownloadUnit& unit) {
-	Asset asset;
-	asset.compressed = unit.compressed;
-	asset.md5 = _md5;
-	asset.path = _bundle + "_" + _md5 + ".zip";
-	asset.size = unit.size;
-	// Update json object
-	if (_json.IsObject()) {
-		if (_json.HasMember(KEY_ASSETS)) {
-			rapidjson::Value &assets = _json[KEY_ASSETS];
-			if (assets.IsObject()) {
-				auto key = unit.customId.data();
-				if (!assets.HasMember(key)) {
-					rapidjson::Value value(rapidjson::Type::kObjectType);
-					value.SetObject();
-					rapidjson::Value name(rapidjson::Type::kStringType);
-					name.SetString(key, unit.customId.size(), _json.GetAllocator());
-					assets.AddMember(name, value, _json.GetAllocator());
-					
-					rapidjson::Value &entry = assets[unit.customId.c_str()];
-					entry.AddMember<bool>(KEY_COMPRESSED, (int)asset.compressed, _json.GetAllocator());
-				
-                    entry.AddMember<int>(KEY_SIZE, (int)asset.size, _json.GetAllocator());
-                }
-			}
-		}
-	}
-	_assets.emplace(unit.customId, asset);
+
 }
 
 void Manifest::clear()
@@ -589,7 +558,7 @@ Manifest::Asset Manifest::parseAsset(const std::string &path, const rapidjson::V
     
     if ( json.HasMember(KEY_COMPRESSED) && json[KEY_COMPRESSED].IsBool() )
     {
-        asset.compressed = json[KEY_COMPRESSED].GetBool();
+        asset.compressed = false;
     }
     else asset.compressed = false;
     

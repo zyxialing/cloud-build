@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="D:\androidwork\game2024_onlyaf_noHot_cloud_build\jsb-default\frameworks\cocos2d-x\cocos\platform\android\libcocos2dx"
+    name=":libcocos2dx"
+    type="LIBRARY"
+    maven="proj.android-studio:libcocos2dx:unspecified"
+    agpVersion="8.6.1"
+    buildFolder="build"
+    bootClassPath="D:\SDK\platforms\android-34\android.jar;D:\SDK\build-tools\35.0.0\core-lambda-stubs.jar"
+    javaSourceLevel="1.8"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>
