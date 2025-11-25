@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package ui;
+package real;
 
 import org.cocos2dx.javascript.Constants;
 import org.cocos2dx.javascript.SDKConfig;
@@ -34,7 +34,6 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -48,18 +47,16 @@ import android.view.inputmethod.InputMethodManager;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Date;
 
 import kotlin.text.Charsets;
-import utils.DialogUtil;
 import utils.MusicPicker;
 import utils.PhotoAgent;
 
-public class AlGameActivity extends Cocos2dxActivity {
+public class VoidrealmActivity extends Cocos2dxActivity {
 
     public static Context context = null;
     public static String filePath;
@@ -135,24 +132,13 @@ public class AlGameActivity extends Cocos2dxActivity {
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
 
-        context = AlGameActivity.this;
+        context = VoidrealmActivity.this;
 
         Date now = new Date();
         long time = now.getTime();
         SDKManager.getSDKManager().InitSDKManager(this,time);
         //不休眠，需要添加权限WAKE_LOCK
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        try {
-
-            filePath = DialogUtil.getSDPath() + "/Android/data/"
-                    + context.getPackageName() + "/files/";
-            File f = new File(filePath);
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            Log.v("tishi", e.getMessage());
-        }
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); //就可以显示出状态栏了
     }
 
@@ -264,8 +250,8 @@ public class AlGameActivity extends Cocos2dxActivity {
         super.onStart();
     }
 
-    public static AlGameActivity ctx(){
-        return (AlGameActivity) SDKWrapper.getInstance().getContext();
+    public static VoidrealmActivity ctx(){
+        return (VoidrealmActivity) SDKWrapper.getInstance().getContext();
     }
 
     @Override

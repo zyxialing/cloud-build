@@ -56,7 +56,7 @@ public class SDKManager {
     public static  String channel = "";
     public static  String urlData = "";
 
-    public static final String gameVersion = "5.0.0";
+    public static final String gameVersion = "6.0.0";
     public static final String defaultCountryCode = "D";
     public static final int FILECHOOSER_RESULT_CODE = 10000;
     public static ValueCallback<Uri[]> mUploadMessage;
