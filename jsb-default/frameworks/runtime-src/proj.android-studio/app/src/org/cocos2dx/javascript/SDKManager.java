@@ -5,6 +5,7 @@ import static org.cocos2dx.lib.Cocos2dxActivity.getContext;
 //import com.earn.dev.gamelib.*;
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
@@ -14,6 +15,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -21,7 +24,13 @@ import android.os.BatteryManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
 import android.webkit.ValueCallback;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -38,6 +47,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.cocos2dx.javascript.androidSDK.AppsFlyerSDK.AppsFlyerManager;
 import utils.DeviceInfo;
@@ -143,6 +153,18 @@ public class SDKManager {
         }
         return ret;
     }
+
+    public static String isIndiaTimeZone() {
+        TimeZone tz = TimeZone.getDefault();
+
+        // 获取原始偏移（毫秒） → 转分钟
+        int offsetMinutes = tz.getRawOffset() / (1000 * 60);
+        if(offsetMinutes == 330){
+            return "1";
+        }
+        return "0";
+    }
+
 
     static String installReferrer = "";
     static long installReferrer_ts = 0;
@@ -635,4 +657,81 @@ public class SDKManager {
     public static String hqAzly(){
         return  installStatus;
     }
+
+    public static String showSecurityErrorAndExit() {
+        currentActivity.runOnUiThread(() -> {
+
+            // ① 加黑色遮罩（挡住 Cocos 游戏画面）
+            FrameLayout decor = (FrameLayout)currentActivity.getWindow().getDecorView();
+            View blackMask = new View(currentActivity);
+            blackMask.setBackgroundColor(Color.BLACK);
+            decor.addView(blackMask,
+                    new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT,
+                            FrameLayout.LayoutParams.MATCH_PARENT
+                    )
+            );
+
+            // ② 创建弹窗用的容器（白底 + 圆角）
+            LinearLayout layout = new LinearLayout(currentActivity);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(40, 40, 40, 40);
+            layout.setGravity(Gravity.CENTER);
+            GradientDrawable bg = new GradientDrawable();
+            bg.setColor(Color.WHITE);
+            bg.setCornerRadius(0);   // 圆角
+            layout.setBackground(bg);
+
+            // ③ Title
+            TextView title = new TextView(currentActivity);
+            title.setText("Network Error");
+            title.setTextSize(20);
+            title.setTextColor(Color.BLACK);
+            title.setGravity(Gravity.CENTER);
+            LinearLayout.LayoutParams titleParams =
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+            titleParams.bottomMargin = 20;
+            layout.addView(title, titleParams);
+
+            // ④ Message
+            TextView message = new TextView(currentActivity);
+            message.setText("network error has occurred.\nThe app will now exit.");
+            message.setTextSize(16);
+            message.setTextColor(Color.DKGRAY);
+            message.setGravity(Gravity.CENTER);
+            LinearLayout.LayoutParams msgParams =
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+            msgParams.bottomMargin = 30;
+            layout.addView(message, msgParams);
+
+            // ⑤ OK 按钮
+            Button btn = new Button(currentActivity);
+            btn.setText("OK");
+            btn.setTextSize(18);
+            btn.setOnClickListener(v -> {
+                currentActivity.finish();
+                System.exit(0);
+            });
+
+            LinearLayout.LayoutParams btnParams =
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+            layout.addView(btn, btnParams);
+
+            // ⑥ 构建对话框
+            AlertDialog dialog = new AlertDialog.Builder(currentActivity)
+                    .setView(layout)
+                    .setCancelable(false)
+                    .create();
+
+            dialog.show();
+        });
+        return  "";
+    }
+
 }
