@@ -35,7 +35,6 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
-import com.snail.antifake.deviceid.AndroidDeviceIMEIUtil;
 import com.android.installreferrer.api.InstallReferrerClient;
 import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
@@ -247,14 +246,7 @@ public class SDKManager {
     public static String simulatorResult = "";
     public void getIsSimulator()
     {
-        boolean b = AndroidDeviceIMEIUtil.isRunOnEmulator(currentActivity);
-        if (b){
-            Log.e("A", "emulator" );
-            simulatorResult = "1";
-        }else {
-            Log.e("A", "phone" );
-            simulatorResult = "0";
-        }
+        simulatorResult = "0";
     }
 
     public static String checkSimulator()

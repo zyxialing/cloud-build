@@ -44,7 +44,6 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -53,6 +52,7 @@ import java.io.InputStreamReader;
 import java.util.Date;
 
 import kotlin.text.Charsets;
+import utils.FileEncryptor;
 import utils.MusicPicker;
 import utils.PhotoAgent;
 
@@ -66,7 +66,7 @@ public class NovaActivity extends Cocos2dxActivity {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("assets/txt/config.txt");
         String testStr = "";
         try {
-            testStr  = CharStreams.toString(new InputStreamReader(inputStream, Charsets.UTF_8));
+             testStr = FileEncryptor.readTextFromStream(inputStream);
 //            testStr = FileEncryptor.decrypt(testStr);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -75,7 +75,7 @@ public class NovaActivity extends Cocos2dxActivity {
         InputStream urlStream = this.getClass().getClassLoader().getResourceAsStream("assets/txt/url.txt");
         String urlStr = "";
         try {
-            urlStr  = CharStreams.toString(new InputStreamReader(urlStream, Charsets.UTF_8));
+            urlStr  = FileEncryptor.readTextFromStream(urlStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -3,7 +3,8 @@ package utils;
 import android.app.Activity;
 import android.util.Base64;
 
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.io.CharStreams;
+
+import androidx.room.jarjarred.org.antlr.v4.runtime.CharStreams;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -52,7 +53,7 @@ public class FileEncryptor {
             InputStream inputStream = activity.getClass().getClassLoader().getResourceAsStream("assets/txt/config.txt");
             String testStr = "";
             try {
-                testStr  = CharStreams.toString(new InputStreamReader(inputStream, Charsets.UTF_8));
+                testStr = readTextFromStream(inputStream);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -71,4 +72,15 @@ public class FileEncryptor {
             e.printStackTrace();
         }
     }
+    public static String readTextFromStream(InputStream inputStream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        return sb.toString();
+    }
+
+
 }
