@@ -35,9 +35,6 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
-import com.android.installreferrer.api.InstallReferrerClient;
-import com.android.installreferrer.api.InstallReferrerStateListener;
-import com.android.installreferrer.api.ReferrerDetails;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -102,7 +99,6 @@ public class SDKManager {
         Log.d("Android Studio Log:","InitSdkManager");
 
         Date date = new Date();
-        initGooglePlayInstallReferrer(currentActivity.getApplication(),date);
         //getGameConfig();
 //        Log.d("screen+StatusBar:",getStatusBarHeight()+"");
 //        Log.d("screen+Navigation:",getNavigationBarHeight()+"");
@@ -111,35 +107,6 @@ public class SDKManager {
 //        Log.d("screen+UsableScreenw:",getRealScreenWitdh()+"");
     }
 
-    private void initGooglePlayInstallReferrer(Application ctx, Date now){
-        InstallReferrerClient referrerClient = InstallReferrerClient.newBuilder(ctx).build();
-        referrerClient.startConnection(new InstallReferrerStateListener() {
-            @Override
-            public void onInstallReferrerSetupFinished(int responseCode) {
-                switch (responseCode) {
-                    case InstallReferrerClient.InstallReferrerResponse.OK:
-                        // Connection established.
-                        handleInstallReferrer(ctx, referrerClient, now);
-                        break;
-                    case InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
-                        // API not available on the current Play Store app.
-                        Log.e("", "FEATURE_NOT_SUPPORTED");
-                        break;
-                    case InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
-                        // Connection couldn't be established.
-                        Log.e("", "SERVICE_UNAVAILABLE");
-                        break;
-                }
-            }
-
-            @Override
-            public void onInstallReferrerServiceDisconnected() {
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
-                Log.d("", "onInstallReferrerServiceDisconnected!");
-            }
-        });
-    }
 
     public static String checkVPN() {
         //don't know why always returns null:
@@ -167,35 +134,6 @@ public class SDKManager {
 
     static String installReferrer = "";
     static long installReferrer_ts = 0;
-    private static void handleInstallReferrer(Application ctx, InstallReferrerClient client, Date now){
-        long temp = activeTime - now.getTime();
-
-        try {
-            ReferrerDetails response = client.getInstallReferrer();
-            String referrer = response.getInstallReferrer();
-            installReferrer = referrer;
-            installReferrer_ts = temp;
-            Log.i("", "安装来源值: referrer=" + referrer + "; 耗时=" + temp + "ms");
-
-            if (TextUtils.isEmpty(referrer)) {
-                Log.e("", "安装来源值为空!");
-            } else {
-                JSONObject jsonObj = new JSONObject();
-                try {
-                    jsonObj.put("installReferrer", referrer);
-                    jsonObj.put("installReferrer_ts", temp);
-                    Log.d("referrer----->",jsonObj.toString());
-                    Constants.CallUnityFunction(jsonObj.toString(), Constants.CallUnityInstallReferrerCallBack);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            client.endConnection();
-        } catch (Exception ex) {
-            Log.e("InstallReferrerHelper", ex.toString());
-        }
-    }
 
     public static String getGoogleId()
     {
