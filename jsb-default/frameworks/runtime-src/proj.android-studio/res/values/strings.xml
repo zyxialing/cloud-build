@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Match Cards</string>
+    <string name="app_name" translatable="false">Math Challenge</string>
     <string name="deepLinkScheme" translatable="false">hkslots</string>
     <string name="deepLinkHost" translatable="false">megaslots9201012</string>
 </resources>
