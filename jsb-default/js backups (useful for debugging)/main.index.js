@@ -266,6 +266,134 @@ cc._RF.pop();
 "../../framework/componects/EventComponent": "EventComponent",
 "../config/Config": "Config"
 } ],
+Animation_Nodes: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "c7591OPSYRHNZ0MVtaoU6om", "Animation_Nodes");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+n.Animation_PlayType = void 0;
+var a, s = cc._decorator, c = s.ccclass, l = s.property;
+(function(e) {
+e[e.Once = 0] = "Once";
+e[e.Loop = 1] = "Loop";
+})(a = n.Animation_PlayType || (n.Animation_PlayType = {}));
+var u = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.isPlayOnEnable = !0;
+t.playType = a.Once;
+t.speed = .05;
+t.isStop_LastFrameOfOnce = !1;
+t.beginShowId = 0;
+t.delayTimeToSecond = 0;
+t.needPlayCount = 1;
+t.hadPlayCount = 0;
+t.node_children = [];
+t.callback_OverOnce = null;
+t.curShowId = 0;
+t.time = 0;
+t.lastTime = 0;
+t.isRun = !1;
+return t;
+}
+t.prototype.onLoad = function() {
+this.node_children = [];
+for (var e = this.node.children, t = 0; t < e.length; t++) {
+var n = e[t];
+n.active = !1;
+this.node_children.push(n);
+}
+};
+t.prototype.onEnable = function() {
+0 != this.node_children.length && this.isPlayOnEnable && this.Play();
+};
+t.prototype.Play = function() {
+this.hadPlayCount = 0;
+this.curShowId = this.beginShowId;
+this.beginShowId >= 0 && this.ShowCurNode();
+this.lastTime = this.time + this.delayTimeToSecond;
+this.isRun = !0;
+};
+t.prototype.Stop = function() {
+this.node.active = !1;
+this.isRun = !1;
+for (var e = 0; e < this.node_children.length; e++) this.node_children[e].active = !1;
+};
+t.prototype.SetCallback_OnceOver = function(e) {
+this.callback_OverOnce = e;
+};
+t.prototype.SetNeedPlayCount = function(e) {
+this.needPlayCount = e;
+};
+t.prototype.ShowCurNode = function() {
+this.node_children[this.curShowId].active = !0;
+};
+t.prototype.update = function(e) {
+this.time += e;
+if (this.isRun && this.lastTime + this.speed <= this.time) {
+this.lastTime = this.time;
+this.playType == a.Loop ? this.CheckNextShow_Loop() : this.CheckNextShow_Once();
+}
+};
+t.prototype.CheckNextShow_Once = function() {
+this.curShowId >= 0 && (this.node_children[this.curShowId].active = !1);
+if (this.curShowId == this.node_children.length - 1) {
+this.hadPlayCount++;
+if (this.hadPlayCount < this.needPlayCount) {
+this.curShowId = (this.curShowId + 1) % this.node_children.length;
+this.ShowCurNode();
+return;
+}
+if (this.callback_OverOnce) {
+this.callback_OverOnce();
+this.callback_OverOnce = null;
+}
+this.isRun = !1;
+this.isStop_LastFrameOfOnce ? this.node_children[this.curShowId].active = !0 : this.Stop();
+} else {
+this.curShowId = (this.curShowId + 1) % this.node_children.length;
+this.ShowCurNode();
+}
+};
+t.prototype.CheckNextShow_Loop = function() {
+this.curShowId >= 0 && (this.node_children[this.curShowId].active = !1);
+this.curShowId = (this.curShowId + 1) % this.node_children.length;
+this.ShowCurNode();
+};
+r([ l ], t.prototype, "isPlayOnEnable", void 0);
+r([ l({
+type: cc.Enum(a)
+}) ], t.prototype, "playType", void 0);
+r([ l ], t.prototype, "speed", void 0);
+r([ l ], t.prototype, "isStop_LastFrameOfOnce", void 0);
+r([ l ], t.prototype, "beginShowId", void 0);
+r([ l ], t.prototype, "delayTimeToSecond", void 0);
+return r([ c ], t);
+}(cc.Component);
+n.default = u;
+cc._RF.pop();
+}, {} ],
 AppInfo: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "fd091hr2g1Ekp9f7yM7fDrc", "AppInfo");
@@ -704,7 +832,7 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 n.Application = void 0;
-var r = e("./scripts/common/component/Alert"), a = e("./scripts/common/component/GlobalAudio"), s = e("./scripts/common/component/Loading"), c = e("./scripts/common/component/Tips"), l = e("./scripts/common/component/UILoading"), u = e("./scripts/common/component/UIReconnect"), p = e("./scripts/common/component/UpdateLoading"), d = e("./scripts/common/config/ConstString"), f = e("./scripts/common/config/GlobalVar"), h = e("./scripts/common/config/HostInfo"), _ = e("./scripts/common/data/Bundles"), g = e("./scripts/common/data/StageData"), y = e("./scripts/common/entry/CmmEntry"), m = e("./scripts/common/utils/CmmUtils"), E = e("./scripts/config/URLConfig"), S = e("./scripts/framework/defines/Enums"), b = e("./scripts/framework/defines/Macros"), v = e("./scripts/framework/Framework"), R = e("./scripts/framework/utils/Singleton"), C = e("./scripts/sdk/AppInfo"), T = e("./scripts/sdk/SdkManager"), A = function(e) {
+var r = e("./scripts/common/component/Alert"), a = e("./scripts/common/component/GlobalAudio"), s = e("./scripts/common/component/Loading"), c = e("./scripts/common/component/Tips"), l = e("./scripts/common/component/UILoading"), u = e("./scripts/common/component/UIReconnect"), p = e("./scripts/common/component/UpdateLoading"), d = e("./scripts/common/config/ConstString"), f = e("./scripts/common/config/GlobalVar"), h = e("./scripts/common/config/HostInfo"), _ = e("./scripts/common/data/Bundles"), g = e("./scripts/common/data/StageData"), y = e("./scripts/common/entry/CmmEntry"), m = e("./scripts/common/utils/CmmUtils"), v = e("./scripts/config/URLConfig"), E = e("./scripts/framework/defines/Enums"), S = e("./scripts/framework/defines/Macros"), b = e("./scripts/framework/Framework"), R = e("./scripts/framework/utils/Singleton"), C = e("./scripts/sdk/AppInfo"), T = e("./scripts/sdk/SdkManager"), O = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -867,8 +995,8 @@ var e = this;
 if (C.default.isAndroid || C.default.isIOS) {
 var t = T.default.GetUrlData();
 if (m.CmmUtils.stringNotEmpty(t)) {
-E.default.urlData = t;
-var n = E.default.getChannel();
+v.default.urlData = t;
+var n = v.default.getChannel();
 this.initConfig(n);
 }
 this._offlineMode = C.default.getOffLineMode();
@@ -899,15 +1027,14 @@ default:
 f.GlobalVar.money_symbol = "₹";
 f.GlobalVar.countryCode = 0;
 }
-} else App.asset.LoadTxt(b.Macro.BUNDLE_RESOURCES, "configs/url", null, function(t, n) {
-E.default.urlData = n.text;
-var o = E.default.getChannel();
+} else App.asset.LoadTxt(S.Macro.BUNDLE_RESOURCES, "configs/url", null, function(t, n) {
+v.default.urlData = n.text;
+var o = v.default.getChannel();
 e.initConfig(o);
 });
 };
 t.prototype.initConfig = function(e) {
 if (e) {
-T.default.verCode = e.version;
 h.HostInfo.URL_Login_Server = e.url;
 f.GlobalVar.countryCode = e.countryCode;
 f.GlobalVar.phone_prefix = e.phone_prefix;
@@ -929,12 +1056,12 @@ App.globalAudio.onEnterBackground();
 };
 t.prototype.onEnterForgeground = function() {};
 return t;
-}(v.Framewok);
-n.Application = A;
-var N = new A();
-N.logger.level = S.LogLevel.ALL;
-window.App = N;
-N.init();
+}(b.Framewok);
+n.Application = O;
+var A = new O();
+A.logger.level = E.LogLevel.ALL;
+window.App = A;
+A.init();
 cc._RF.pop();
 }, {
 "./scripts/common/component/Alert": "Alert",
@@ -1514,6 +1641,88 @@ cc._RF.pop();
 "../utils/Singleton": "Singleton",
 "./EventComponent": "EventComponent"
 } ],
+AudioMgr: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "bfb4fhT6L1HzLi8umIX5SbW", "AudioMgr");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.bgm = null;
+t.effects = [];
+return t;
+}
+n = t;
+t.prototype.onLoad = function() {
+n.instance = this;
+var e = App.storage.getItem("soundState", !0);
+this.setSoundState(e);
+this.playBGM(this.bgm);
+};
+t.prototype.onDestroy = function() {
+this.stopBGM();
+n.instance = null;
+};
+t.prototype.playEffect = function(e) {
+for (var t = -1, n = 0; n < this.effects.length; n++) {
+var o = this.effects[n];
+if (o.name == e) {
+t = cc.audioEngine.playEffect(o, !1);
+break;
+}
+}
+return t;
+};
+t.prototype.PauseMusic = function() {
+this.bgm && cc.audioEngine.pauseMusic();
+};
+t.prototype.ResumeMusic = function() {
+this.bgm && cc.audioEngine.resumeMusic();
+};
+t.prototype.playBGM = function(e) {
+e ? cc.audioEngine.playMusic(e, !0) : cc.audioEngine.playMusic(this.bgm, !0);
+};
+t.prototype.stopBGM = function() {
+cc.audioEngine.stopMusic();
+};
+t.prototype.StopEffect_audioID = function(e) {
+cc.audioEngine.stopEffect(e);
+};
+t.prototype.setSoundState = function(e) {
+cc.audioEngine.setMusicVolume(e ? 1 : 0);
+cc.audioEngine.setEffectsVolume(e ? 1 : 0);
+};
+var n;
+t.instance = null;
+r([ c(cc.AudioClip) ], t.prototype, "bgm", void 0);
+r([ c(cc.AudioClip) ], t.prototype, "effects", void 0);
+return n = r([ s ], t);
+}(cc.Component);
+n.default = l;
+cc._RF.pop();
+}, {} ],
 BinaryStreamMessage: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "0b706caWmdEULamHl7PndHE", "BinaryStreamMessage");
@@ -1694,7 +1903,7 @@ e.writeByte(this.data);
 return t;
 }(u);
 n.UBYTE = m;
-var E = function(e) {
+var v = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -1707,8 +1916,8 @@ e.writeUnsignedShort(this.data);
 };
 return t;
 }(u);
-n.USHORT = E;
-var S = function(e) {
+n.USHORT = v;
+var E = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -1721,8 +1930,8 @@ e.writeUnsignedInt(this.data);
 };
 return t;
 }(u);
-n.UINT = S;
-var b = function(e) {
+n.UINT = E;
+var S = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -1738,7 +1947,7 @@ this.buffer = this.byteArray.bytes;
 return !0;
 };
 t.prototype.isNumberValue = function(e) {
-return e == f || e == h || e == _ || e == g || e == y || e == m || e == E || e == S;
+return e == f || e == h || e == _ || e == g || e == y || e == m || e == v || e == E;
 };
 t.prototype.isBoolValue = function(e) {
 return e == p;
@@ -1862,16 +2071,16 @@ this._deserializeArray(this[e], e, t, n, o, i);
 };
 return t;
 }(c.Message);
-n.BinaryStream = b;
-var v = function(e) {
+n.BinaryStream = S;
+var b = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
 }
 t.type = s.Net.ServiceType.BinaryStream;
 return t;
-}(b);
-n.BinaryStreamHeartbeat = v;
+}(S);
+n.BinaryStreamHeartbeat = b;
 cc._RF.pop();
 }, {
 "../../../defines/Macros": "Macros",
@@ -3112,6 +3321,64 @@ return e;
 n.CanvasHelper = o;
 cc._RF.pop();
 }, {} ],
+ChooseLevelModel: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "a0e52+5S5hF4ZAyrfyDf6r6", "ChooseLevelModel");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../Mgr/SolitaireElimination"), s = e("../Service/AudioMgr"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_cardBack = null;
+t.label_Level = null;
+t.curLevel = 0;
+t.calBack_Play = null;
+return t;
+}
+t.prototype.Init = function(e, t, n) {
+this.curLevel = e;
+this.calBack_Play = n;
+this.label_Level.string = e + "";
+this.node_cardBack.active = !t;
+};
+t.prototype.RefreshState = function(e) {
+this.node_cardBack.active = !e;
+};
+t.prototype.ButtonClick_Play = function() {
+s.default.instance.playEffect(a.AudioNameConfig.Click);
+this.calBack_Play && this.calBack_Play(this.curLevel);
+};
+r([ u(cc.Node) ], t.prototype, "node_cardBack", void 0);
+r([ u(cc.Label) ], t.prototype, "label_Level", void 0);
+return r([ l ], t);
+}(cc.Component);
+n.default = p;
+cc._RF.pop();
+}, {
+"../Mgr/SolitaireElimination": "SolitaireElimination",
+"../Service/AudioMgr": "AudioMgr"
+} ],
 CmdConfig: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "f7ecb37+gFCb4nV3AYSD2s7", "CmdConfig");
@@ -4565,6 +4832,21 @@ awardPos: o,
 results: r
 };
 };
+t.awaitTime = function(e, t) {
+return new Promise(function(n, o) {
+if (t && t.aborted) o(null); else {
+var i = setTimeout(function() {
+n(null);
+}, e);
+t && (t.abort = function() {
+clearTimeout(i);
+o(null);
+t.abort = null;
+t.aborted = !0;
+});
+}
+});
+};
 t.convertResults = function(e, t) {
 var n = [];
 e.awardResult && e.awardResult.awardline && (n = e.awardResult.awardline);
@@ -4784,6 +5066,7 @@ e.PenetratingClickEvent = "PenetratingClickEvent";
 e.PenetratingClickSwitchEvent = "PenetratingClickSwitchEvent";
 e.AllLayoutUpdate = "AllLayoutUpdate";
 e.ChangeDir = "ChangeDir";
+e.TopBlackNode = "TopBlackNode";
 })(n.CommonEvent || (n.CommonEvent = {}));
 (function(e) {
 e[e.All = 0] = "All";
@@ -4982,7 +5265,7 @@ installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().c
 sim: f.default.getCountry(),
 vpn: f.default.checkVPN()
 };
-this.SendPostHttp(t, e, p.GlobalEnum.HttpUrlType.Login);
+return this.SendPostHttp(t, e, p.GlobalEnum.HttpUrlType.Login);
 };
 t.prototype.Send_GameUrl = function(e) {
 var t = {
@@ -6088,6 +6371,7 @@ value: !0
 });
 n.ConstString = void 0;
 (function(e) {
+e.localBgmPath = "__localBgmPath";
 e.abBG = "__abBG";
 e.agameData = "__agameData";
 e.enableAutoLogin = "__enableAutoLogin";
@@ -6383,7 +6667,7 @@ return n;
 case "utf8":
 case "utf-8":
 case void 0:
-return Q(e).length;
+return K(e).length;
 
 case "ucs2":
 case "ucs-2":
@@ -6398,13 +6682,13 @@ case "base64":
 return Z(e).length;
 
 default:
-if (o) return Q(e).length;
+if (o) return K(e).length;
 t = ("" + t).toLowerCase();
 o = !0;
 }
 }
 c.byteLength = m;
-function E(e, t, n) {
+function v(e, t, n) {
 var o = !1;
 (void 0 === t || t < 0) && (t = 0);
 if (t > this.length) return "";
@@ -6434,7 +6718,7 @@ case "ucs2":
 case "ucs-2":
 case "utf16le":
 case "utf-16le":
-return G(this, t, n);
+return B(this, t, n);
 
 default:
 if (o) throw new TypeError("Unknown encoding: " + e);
@@ -6443,7 +6727,7 @@ o = !0;
 }
 }
 c.prototype._isBuffer = !0;
-function S(e, t, n) {
+function E(e, t, n) {
 var o = e[t];
 e[t] = e[n];
 e[n] = o;
@@ -6451,15 +6735,15 @@ e[n] = o;
 c.prototype.swap16 = function() {
 var e = this.length;
 if (e % 2 != 0) throw new RangeError("Buffer size must be a multiple of 16-bits");
-for (var t = 0; t < e; t += 2) S(this, t, t + 1);
+for (var t = 0; t < e; t += 2) E(this, t, t + 1);
 return this;
 };
 c.prototype.swap32 = function() {
 var e = this.length;
 if (e % 4 != 0) throw new RangeError("Buffer size must be a multiple of 32-bits");
 for (var t = 0; t < e; t += 4) {
-S(this, t, t + 3);
-S(this, t + 1, t + 2);
+E(this, t, t + 3);
+E(this, t + 1, t + 2);
 }
 return this;
 };
@@ -6467,16 +6751,16 @@ c.prototype.swap64 = function() {
 var e = this.length;
 if (e % 8 != 0) throw new RangeError("Buffer size must be a multiple of 64-bits");
 for (var t = 0; t < e; t += 8) {
-S(this, t, t + 7);
-S(this, t + 1, t + 6);
-S(this, t + 2, t + 5);
-S(this, t + 3, t + 4);
+E(this, t, t + 7);
+E(this, t + 1, t + 6);
+E(this, t + 2, t + 5);
+E(this, t + 3, t + 4);
 }
 return this;
 };
 c.prototype.toString = function() {
 var e = 0 | this.length;
-return 0 === e ? "" : 0 === arguments.length ? I(this, 0, e) : E.apply(this, arguments);
+return 0 === e ? "" : 0 === arguments.length ? I(this, 0, e) : v.apply(this, arguments);
 };
 c.prototype.equals = function(e) {
 if (!c.isBuffer(e)) throw new TypeError("Argument must be a Buffer");
@@ -6508,7 +6792,7 @@ break;
 }
 return r < a ? -1 : a < r ? 1 : 0;
 };
-function b(e, t, n, o, i) {
+function S(e, t, n, o, i) {
 if (0 === e.length) return -1;
 if ("string" == typeof n) {
 o = n;
@@ -6525,14 +6809,14 @@ if (!i) return -1;
 n = 0;
 }
 "string" == typeof t && (t = c.from(t, o));
-if (c.isBuffer(t)) return 0 === t.length ? -1 : v(e, t, n, o, i);
+if (c.isBuffer(t)) return 0 === t.length ? -1 : b(e, t, n, o, i);
 if ("number" == typeof t) {
 t &= 255;
-return c.TYPED_ARRAY_SUPPORT && "function" == typeof Uint8Array.prototype.indexOf ? i ? Uint8Array.prototype.indexOf.call(e, t, n) : Uint8Array.prototype.lastIndexOf.call(e, t, n) : v(e, [ t ], n, o, i);
+return c.TYPED_ARRAY_SUPPORT && "function" == typeof Uint8Array.prototype.indexOf ? i ? Uint8Array.prototype.indexOf.call(e, t, n) : Uint8Array.prototype.lastIndexOf.call(e, t, n) : b(e, [ t ], n, o, i);
 }
 throw new TypeError("val must be string, number or Buffer");
 }
-function v(e, t, n, o, i) {
+function b(e, t, n, o, i) {
 var r, a = 1, s = e.length, c = t.length;
 if (void 0 !== o && ("ucs2" === (o = String(o).toLowerCase()) || "ucs-2" === o || "utf16le" === o || "utf-16le" === o)) {
 if (e.length < 2 || t.length < 2) return -1;
@@ -6569,10 +6853,10 @@ c.prototype.includes = function(e, t, n) {
 return -1 !== this.indexOf(e, t, n);
 };
 c.prototype.indexOf = function(e, t, n) {
-return b(this, e, t, n, !0);
+return S(this, e, t, n, !0);
 };
 c.prototype.lastIndexOf = function(e, t, n) {
-return b(this, e, t, n, !1);
+return S(this, e, t, n, !1);
 };
 function R(e, t, n, o) {
 n = Number(n) || 0;
@@ -6589,18 +6873,18 @@ e[n + a] = s;
 return a;
 }
 function C(e, t, n, o) {
-return q(Q(t, e.length - n), e, n, o);
+return q(K(t, e.length - n), e, n, o);
 }
 function T(e, t, n, o) {
-return q(K(t), e, n, o);
-}
-function A(e, t, n, o) {
-return T(e, t, n, o);
-}
-function N(e, t, n, o) {
-return q(Z(t), e, n, o);
+return q(Q(t), e, n, o);
 }
 function O(e, t, n, o) {
+return T(e, t, n, o);
+}
+function A(e, t, n, o) {
+return q(Z(t), e, n, o);
+}
+function N(e, t, n, o) {
 return q(J(t, e.length - n), e, n, o);
 }
 c.prototype.write = function(e, t, n, o) {
@@ -6640,16 +6924,16 @@ return T(this, e, t, n);
 
 case "latin1":
 case "binary":
-return A(this, e, t, n);
+return O(this, e, t, n);
 
 case "base64":
-return N(this, e, t, n);
+return A(this, e, t, n);
 
 case "ucs2":
 case "ucs-2":
 case "utf16le":
 case "utf-16le":
-return O(this, e, t, n);
+return N(this, e, t, n);
 
 default:
 if (r) throw new TypeError("Unknown encoding: " + o);
@@ -6705,13 +6989,13 @@ a = 56320 | 1023 & a;
 o.push(a);
 i += s;
 }
-return L(o);
+return U(o);
 }
-var U = 4096;
-function L(e) {
+var L = 4096;
+function U(e) {
 var t = e.length;
-if (t <= U) return String.fromCharCode.apply(String, e);
-for (var n = "", o = 0; o < t; ) n += String.fromCharCode.apply(String, e.slice(o, o += U));
+if (t <= L) return String.fromCharCode.apply(String, e);
+for (var n = "", o = 0; o < t; ) n += String.fromCharCode.apply(String, e.slice(o, o += L));
 return n;
 }
 function w(e, t, n) {
@@ -6733,7 +7017,7 @@ var o, i = e.length;
 for (var r = "", a = t; a < n; ++a) r += (o = e[a]) < 16 ? "0" + o.toString(16) : o.toString(16);
 return r;
 }
-function G(e, t, n) {
+function B(e, t, n) {
 for (var o = e.slice(t, n), i = "", r = 0; r < o.length; r += 2) i += String.fromCharCode(o[r] + 256 * o[r + 1]);
 return i;
 }
@@ -6749,48 +7033,48 @@ for (var r = 0; r < i; ++r) n[r] = this[r + e];
 }
 return n;
 };
-function B(e, t, n) {
+function G(e, t, n) {
 if (e % 1 != 0 || e < 0) throw new RangeError("offset is not uint");
 if (e + t > n) throw new RangeError("Trying to access beyond buffer length");
 }
 c.prototype.readUIntLE = function(e, t, n) {
 e |= 0;
 t |= 0;
-n || B(e, t, this.length);
+n || G(e, t, this.length);
 for (var o = this[e], i = 1, r = 0; ++r < t && (i *= 256); ) o += this[e + r] * i;
 return o;
 };
 c.prototype.readUIntBE = function(e, t, n) {
 e |= 0;
 t |= 0;
-n || B(e, t, this.length);
+n || G(e, t, this.length);
 for (var o = this[e + --t], i = 1; t > 0 && (i *= 256); ) o += this[e + --t] * i;
 return o;
 };
 c.prototype.readUInt8 = function(e, t) {
-t || B(e, 1, this.length);
+t || G(e, 1, this.length);
 return this[e];
 };
 c.prototype.readUInt16LE = function(e, t) {
-t || B(e, 2, this.length);
+t || G(e, 2, this.length);
 return this[e] | this[e + 1] << 8;
 };
 c.prototype.readUInt16BE = function(e, t) {
-t || B(e, 2, this.length);
+t || G(e, 2, this.length);
 return this[e] << 8 | this[e + 1];
 };
 c.prototype.readUInt32LE = function(e, t) {
-t || B(e, 4, this.length);
+t || G(e, 4, this.length);
 return (this[e] | this[e + 1] << 8 | this[e + 2] << 16) + 16777216 * this[e + 3];
 };
 c.prototype.readUInt32BE = function(e, t) {
-t || B(e, 4, this.length);
+t || G(e, 4, this.length);
 return 16777216 * this[e] + (this[e + 1] << 16 | this[e + 2] << 8 | this[e + 3]);
 };
 c.prototype.readIntLE = function(e, t, n) {
 e |= 0;
 t |= 0;
-n || B(e, t, this.length);
+n || G(e, t, this.length);
 for (var o = this[e], i = 1, r = 0; ++r < t && (i *= 256); ) o += this[e + r] * i;
 o >= (i *= 128) && (o -= Math.pow(2, 8 * t));
 return o;
@@ -6798,50 +7082,50 @@ return o;
 c.prototype.readIntBE = function(e, t, n) {
 e |= 0;
 t |= 0;
-n || B(e, t, this.length);
+n || G(e, t, this.length);
 for (var o = t, i = 1, r = this[e + --o]; o > 0 && (i *= 256); ) r += this[e + --o] * i;
 r >= (i *= 128) && (r -= Math.pow(2, 8 * t));
 return r;
 };
 c.prototype.readInt8 = function(e, t) {
-t || B(e, 1, this.length);
+t || G(e, 1, this.length);
 return 128 & this[e] ? -1 * (255 - this[e] + 1) : this[e];
 };
 c.prototype.readInt16LE = function(e, t) {
-t || B(e, 2, this.length);
+t || G(e, 2, this.length);
 var n = this[e] | this[e + 1] << 8;
 return 32768 & n ? 4294901760 | n : n;
 };
 c.prototype.readInt16BE = function(e, t) {
-t || B(e, 2, this.length);
+t || G(e, 2, this.length);
 var n = this[e + 1] | this[e] << 8;
 return 32768 & n ? 4294901760 | n : n;
 };
 c.prototype.readInt32LE = function(e, t) {
-t || B(e, 4, this.length);
+t || G(e, 4, this.length);
 return this[e] | this[e + 1] << 8 | this[e + 2] << 16 | this[e + 3] << 24;
 };
 c.prototype.readInt32BE = function(e, t) {
-t || B(e, 4, this.length);
+t || G(e, 4, this.length);
 return this[e] << 24 | this[e + 1] << 16 | this[e + 2] << 8 | this[e + 3];
 };
 c.prototype.readFloatLE = function(e, t) {
-t || B(e, 4, this.length);
+t || G(e, 4, this.length);
 return i.read(this, e, !0, 23, 4);
 };
 c.prototype.readFloatBE = function(e, t) {
-t || B(e, 4, this.length);
+t || G(e, 4, this.length);
 return i.read(this, e, !1, 23, 4);
 };
 c.prototype.readDoubleLE = function(e, t) {
-t || B(e, 8, this.length);
+t || G(e, 8, this.length);
 return i.read(this, e, !0, 52, 8);
 };
 c.prototype.readDoubleBE = function(e, t) {
-t || B(e, 8, this.length);
+t || G(e, 8, this.length);
 return i.read(this, e, !1, 52, 8);
 };
-function k(e, t, n, o, i, r) {
+function F(e, t, n, o, i, r) {
 if (!c.isBuffer(e)) throw new TypeError('"buffer" argument must be a Buffer instance');
 if (t > i || t < r) throw new RangeError('"value" argument is out of bounds');
 if (n + o > e.length) throw new RangeError("Index out of range");
@@ -6850,7 +7134,7 @@ c.prototype.writeUIntLE = function(e, t, n, o) {
 e = +e;
 t |= 0;
 n |= 0;
-o || k(this, e, t, n, Math.pow(2, 8 * n) - 1, 0);
+o || F(this, e, t, n, Math.pow(2, 8 * n) - 1, 0);
 var i = 1, r = 0;
 this[t] = 255 & e;
 for (;++r < n && (i *= 256); ) this[t + r] = e / i & 255;
@@ -6860,7 +7144,7 @@ c.prototype.writeUIntBE = function(e, t, n, o) {
 e = +e;
 t |= 0;
 n |= 0;
-o || k(this, e, t, n, Math.pow(2, 8 * n) - 1, 0);
+o || F(this, e, t, n, Math.pow(2, 8 * n) - 1, 0);
 var i = n - 1, r = 1;
 this[t + i] = 255 & e;
 for (;--i >= 0 && (r *= 256); ) this[t + i] = e / r & 255;
@@ -6869,33 +7153,33 @@ return t + n;
 c.prototype.writeUInt8 = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 1, 255, 0);
+n || F(this, e, t, 1, 255, 0);
 c.TYPED_ARRAY_SUPPORT || (e = Math.floor(e));
 this[t] = 255 & e;
 return t + 1;
 };
-function F(e, t, n, o) {
+function k(e, t, n, o) {
 t < 0 && (t = 65535 + t + 1);
 for (var i = 0, r = Math.min(e.length - n, 2); i < r; ++i) e[n + i] = (t & 255 << 8 * (o ? i : 1 - i)) >>> 8 * (o ? i : 1 - i);
 }
 c.prototype.writeUInt16LE = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 2, 65535, 0);
+n || F(this, e, t, 2, 65535, 0);
 if (c.TYPED_ARRAY_SUPPORT) {
 this[t] = 255 & e;
 this[t + 1] = e >>> 8;
-} else F(this, e, t, !0);
+} else k(this, e, t, !0);
 return t + 2;
 };
 c.prototype.writeUInt16BE = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 2, 65535, 0);
+n || F(this, e, t, 2, 65535, 0);
 if (c.TYPED_ARRAY_SUPPORT) {
 this[t] = e >>> 8;
 this[t + 1] = 255 & e;
-} else F(this, e, t, !1);
+} else k(this, e, t, !1);
 return t + 2;
 };
 function H(e, t, n, o) {
@@ -6905,7 +7189,7 @@ for (var i = 0, r = Math.min(e.length - n, 4); i < r; ++i) e[n + i] = t >>> 8 * 
 c.prototype.writeUInt32LE = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 4, 4294967295, 0);
+n || F(this, e, t, 4, 4294967295, 0);
 if (c.TYPED_ARRAY_SUPPORT) {
 this[t + 3] = e >>> 24;
 this[t + 2] = e >>> 16;
@@ -6917,7 +7201,7 @@ return t + 4;
 c.prototype.writeUInt32BE = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 4, 4294967295, 0);
+n || F(this, e, t, 4, 4294967295, 0);
 if (c.TYPED_ARRAY_SUPPORT) {
 this[t] = e >>> 24;
 this[t + 1] = e >>> 16;
@@ -6931,7 +7215,7 @@ e = +e;
 t |= 0;
 if (!o) {
 var i = Math.pow(2, 8 * n - 1);
-k(this, e, t, n, i - 1, -i);
+F(this, e, t, n, i - 1, -i);
 }
 var r = 0, a = 1, s = 0;
 this[t] = 255 & e;
@@ -6946,7 +7230,7 @@ e = +e;
 t |= 0;
 if (!o) {
 var i = Math.pow(2, 8 * n - 1);
-k(this, e, t, n, i - 1, -i);
+F(this, e, t, n, i - 1, -i);
 }
 var r = n - 1, a = 1, s = 0;
 this[t + r] = 255 & e;
@@ -6959,7 +7243,7 @@ return t + n;
 c.prototype.writeInt8 = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 1, 127, -128);
+n || F(this, e, t, 1, 127, -128);
 c.TYPED_ARRAY_SUPPORT || (e = Math.floor(e));
 e < 0 && (e = 255 + e + 1);
 this[t] = 255 & e;
@@ -6968,27 +7252,27 @@ return t + 1;
 c.prototype.writeInt16LE = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 2, 32767, -32768);
+n || F(this, e, t, 2, 32767, -32768);
 if (c.TYPED_ARRAY_SUPPORT) {
 this[t] = 255 & e;
 this[t + 1] = e >>> 8;
-} else F(this, e, t, !0);
+} else k(this, e, t, !0);
 return t + 2;
 };
 c.prototype.writeInt16BE = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 2, 32767, -32768);
+n || F(this, e, t, 2, 32767, -32768);
 if (c.TYPED_ARRAY_SUPPORT) {
 this[t] = e >>> 8;
 this[t + 1] = 255 & e;
-} else F(this, e, t, !1);
+} else k(this, e, t, !1);
 return t + 2;
 };
 c.prototype.writeInt32LE = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 4, 2147483647, -2147483648);
+n || F(this, e, t, 4, 2147483647, -2147483648);
 if (c.TYPED_ARRAY_SUPPORT) {
 this[t] = 255 & e;
 this[t + 1] = e >>> 8;
@@ -7000,7 +7284,7 @@ return t + 4;
 c.prototype.writeInt32BE = function(e, t, n) {
 e = +e;
 t |= 0;
-n || k(this, e, t, 4, 2147483647, -2147483648);
+n || F(this, e, t, 4, 2147483647, -2147483648);
 e < 0 && (e = 4294967295 + e + 1);
 if (c.TYPED_ARRAY_SUPPORT) {
 this[t] = e >>> 24;
@@ -7077,7 +7361,7 @@ n = void 0 === n ? this.length : n >>> 0;
 e || (e = 0);
 var r;
 if ("number" == typeof e) for (r = t; r < n; ++r) this[r] = e; else {
-var a = c.isBuffer(e) ? e : Q(new c(e, o).toString()), s = a.length;
+var a = c.isBuffer(e) ? e : K(new c(e, o).toString()), s = a.length;
 for (r = 0; r < n - t; ++r) this[r + t] = a[r % s];
 }
 return this;
@@ -7091,7 +7375,7 @@ return e;
 function W(e) {
 return e.trim ? e.trim() : e.replace(/^\s+|\s+$/g, "");
 }
-function Q(e, t) {
+function K(e, t) {
 t = t || Infinity;
 for (var n, o = e.length, i = null, r = [], a = 0; a < o; ++a) {
 if ((n = e.charCodeAt(a)) > 55295 && n < 57344) {
@@ -7132,7 +7416,7 @@ r.push(n >> 18 | 240, n >> 12 & 63 | 128, n >> 6 & 63 | 128, 63 & n | 128);
 }
 return r;
 }
-function K(e) {
+function Q(e) {
 for (var t = [], n = 0; n < e.length; ++n) t.push(255 & e.charCodeAt(n));
 return t;
 }
@@ -7308,7 +7592,7 @@ s[c >>> 5] |= 128 << c % 32;
 s[14 + (c + 64 >>> 9 << 4)] = c;
 var h = a._ff, _ = a._gg, g = a._hh, y = a._ii;
 for (f = 0; f < s.length; f += 16) {
-var m = l, E = u, S = p, b = d;
+var m = l, v = u, E = p, S = d;
 l = h(l, u, p, d, s[f + 0], 7, -680876936);
 d = h(d, l, u, p, s[f + 1], 12, -389564586);
 p = h(p, d, l, u, s[f + 2], 17, 606105819);
@@ -7371,9 +7655,9 @@ d = y(d, l, u, p, s[f + 11], 10, -1120210379);
 p = y(p, d, l, u, s[f + 2], 15, 718787259);
 u = y(u, p, d, l, s[f + 9], 21, -343485551);
 l = l + m >>> 0;
-u = u + E >>> 0;
-p = p + S >>> 0;
-d = d + b >>> 0;
+u = u + v >>> 0;
+p = p + E >>> 0;
+d = d + S >>> 0;
 }
 return n.endian([ l, u, p, d ]);
 };
@@ -7671,6 +7955,61 @@ n.Dispatcher = o;
 window.dispatch = function() {
 App ? Reflect.apply(App.dispatcher.dispatch, App.dispatcher, arguments) : Reflect.apply(o.instance.dispatch, o.instance, arguments);
 };
+cc._RF.pop();
+}, {} ],
+Effect_FinishMgr: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "0b5fbcbBsRLR5ars4B9nJyc", "Effect_FinishMgr");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Main = null;
+t.node_Zhezhao = null;
+t.particleSystems = [];
+return t;
+}
+t.prototype.start = function() {};
+t.prototype.OpenShow = function(e) {
+var t = this;
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+this.node_Zhezhao.opacity = 1;
+for (var n = 0; n < this.particleSystems.length; n++) this.particleSystems[n].play();
+this.scheduleOnce(function() {
+e && e();
+t.node_Main.active = !1;
+t.node_Zhezhao.active = !1;
+}, 3);
+};
+r([ c(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ c(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ c(cc.ParticleSystem3D) ], t.prototype, "particleSystems", void 0);
+return r([ s ], t);
+}(cc.Component);
+n.default = l;
 cc._RF.pop();
 }, {} ],
 EntryDelegate: [ function(e, t, n) {
@@ -8376,7 +8715,7 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 n.Framewok = void 0;
-var o = e("./core/event/Dispatcher"), i = e("./core/ui/UIManager"), r = e("./core/storage/LocalStorage"), a = e("./core/asset/AssetManager"), s = e("./core/asset/CacheManager"), c = e("./core/update/UpdateManager"), l = e("./core/asset/BundleManager"), u = e("./core/entry/EntryManager"), p = e("./data/DataCenter"), d = e("./core/log/Logger"), f = e("./core/net/service/ServiceManager"), h = e("./core/net/http/HttpClient"), _ = e("./utils/Singleton"), g = e("./core/net/service/SenderManager"), y = e("./core/net/service/HandlerManager"), m = e("./utils/Utils"), E = e("./utils/CanvasHelper"), S = function() {
+var o = e("./core/event/Dispatcher"), i = e("./core/ui/UIManager"), r = e("./core/storage/LocalStorage"), a = e("./core/asset/AssetManager"), s = e("./core/asset/CacheManager"), c = e("./core/update/UpdateManager"), l = e("./core/asset/BundleManager"), u = e("./core/entry/EntryManager"), p = e("./data/DataCenter"), d = e("./core/log/Logger"), f = e("./core/net/service/ServiceManager"), h = e("./core/net/http/HttpClient"), _ = e("./utils/Singleton"), g = e("./core/net/service/SenderManager"), y = e("./core/net/service/HandlerManager"), m = e("./utils/Utils"), v = e("./utils/CanvasHelper"), E = function() {
 function e() {
 this.gameView = null;
 }
@@ -8529,7 +8868,7 @@ configurable: !0
 });
 Object.defineProperty(e.prototype, "canvasHelper", {
 get: function() {
-return _.Singleton.instance.get(E.CanvasHelper);
+return _.Singleton.instance.get(v.CanvasHelper);
 },
 enumerable: !1,
 configurable: !0
@@ -8540,7 +8879,7 @@ return this.gameView;
 e.prototype.init = function() {};
 return e;
 }();
-n.Framewok = S;
+n.Framewok = E;
 cc._RF.pop();
 }, {
 "./core/asset/AssetManager": "AssetManager",
@@ -8592,9 +8931,9 @@ cc._RF.pop();
 }, {
 "../defines/Macros": "Macros"
 } ],
-GameDesignSizeFit: [ function(e, t, n) {
+GameDesignSizeTopFit: [ function(e, t, n) {
 "use strict";
-cc._RF.push(t, "80a8egHxRpFHKlaMDwofLfD", "GameDesignSizeFit");
+cc._RF.push(t, "dec59oGiKxMX68B9BRhrcjL", "GameDesignSizeTopFit");
 var o, i = this && this.__extends || (o = function(e, t) {
 return (o = Object.setPrototypeOf || {
 __proto__: []
@@ -8617,11 +8956,12 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = e("../../common/event/CommonEvent"), s = e("../../sdk/SdkManager"), c = e("./EventComponent"), l = cc._decorator, u = l.ccclass, p = (l.property, 
-function(e) {
+var a = e("../../common/event/CommonEvent"), s = e("../../sdk/SdkManager"), c = e("./EventComponent"), l = cc._decorator, u = l.ccclass, p = l.property, d = function(e) {
 i(t, e);
 function t() {
-return null !== e && e.apply(this, arguments) || this;
+var t = null !== e && e.apply(this, arguments) || this;
+t.useMove = !0;
+return t;
 }
 t.prototype.addEvents = function() {
 this.onD(a.ComponentGameEvent.UpdateScreenSize, this.updateSize.bind(this));
@@ -8629,13 +8969,19 @@ this.updateSize();
 cc.view.setResizeCallback(this.updateSize.bind(this));
 };
 t.prototype.updateSize = function() {
-var e, t = s.default.getSizeRate();
-e = t.curRate >= 1 ? cc.view.getDesignResolutionSize().height / t.curRate : 1600;
-this.node.setContentSize(cc.view.getDesignResolutionSize().width, e);
+if (cc.isValid(this.node)) {
+var e = cc.view.getDesignResolutionSize().width, t = cc.view.getDesignResolutionSize().height;
+s.default.ResolutionPolicy == cc.ResolutionPolicy.FIXED_HEIGHT || (s.default.ResolutionPolicy == cc.ResolutionPolicy.FIXED_WIDTH ? t = 1600 / s.default.getSizeRate().curRate : (s.default.ResolutionPolicy, 
+cc.ResolutionPolicy.NO_BORDER));
+t -= s.default.getStatusBarHeight();
+this.node.setContentSize(e, t);
+this.useMove && this.node.setPosition(0, -s.default.getStatusBarHeight() / 2);
+}
 };
+r([ p(cc.Boolean) ], t.prototype, "useMove", void 0);
 return r([ u ], t);
-}(c.default));
-n.default = p;
+}(c.default);
+n.default = d;
 cc._RF.pop();
 }, {
 "../../common/event/CommonEvent": "CommonEvent",
@@ -10048,7 +10394,7 @@ done: !0
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var c = e("../../common/component/ZProgressbar"), l = e("../../common/config/Config"), u = e("../../common/config/ConstString"), p = e("../../common/config/GlobalVar"), d = e("../../common/config/HostInfo"), f = e("../../common/config/User"), h = e("../../common/event/CommonEvent"), _ = e("../../common/net/CommonSender"), g = e("../../common/net/HttpSender"), y = e("../../common/utils/CmmUtils"), m = e("../../framework/componects/EventComponent"), E = e("../../framework/core/update/Update"), S = e("../../framework/defines/Enums"), b = e("../../framework/defines/Macros"), v = e("../../sdk/AppInfo"), R = e("../../sdk/GameNativeConfig"), C = cc._decorator, T = C.ccclass, A = C.property, N = function(e) {
+var c = e("../../common/component/ZProgressbar"), l = e("../../common/config/Config"), u = e("../../common/config/ConstString"), p = e("../../common/config/GlobalVar"), d = e("../../common/config/HostInfo"), f = e("../../common/config/User"), h = e("../../common/event/CommonEvent"), _ = e("../../common/net/CommonSender"), g = e("../../common/net/HttpSender"), y = e("../../common/utils/CmmUtils"), m = e("../../framework/componects/EventComponent"), v = e("../../framework/core/update/Update"), E = e("../../framework/defines/Enums"), S = e("../../framework/defines/Macros"), b = e("../../sdk/AppInfo"), R = e("../../sdk/GameNativeConfig"), C = cc._decorator, T = C.ccclass, O = C.property, A = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -10138,7 +10484,7 @@ var e;
 return s(this, function(t) {
 switch (t.label) {
 case 0:
-if (!v.default.isBrowser) return [ 3, 1 ];
+if (!b.default.isBrowser) return [ 3, 1 ];
 this.enterGame();
 return [ 3, 4 ];
 
@@ -10153,7 +10499,7 @@ case 2:
 return [ 4, App.updateManager.getRemoteVersions() ];
 
 case 3:
-if (t.sent()) if (App.updateManager.getStatus(b.Macro.MAIN_PACK_BUNDLE_NAME) != E.Update.Status.UP_TO_DATE) App.entryManager.onCheckUpdate(); else {
+if (t.sent()) if (App.updateManager.getStatus(S.Macro.MAIN_PACK_BUNDLE_NAME) != v.Update.Status.UP_TO_DATE) App.entryManager.onCheckUpdate(); else {
 App.uiLoading.hide();
 App.entryManager.onCheckUpdate();
 this.enterGame();
@@ -10218,7 +10564,7 @@ this.cRoot2 && (this.cRoot2.active = f.default.self.isMerchantPlayer);
 t.LoingCallBack = function(e) {
 var t = this;
 Log.w(JSON.stringify(e));
-0 == e.log ? App.logger.level = S.LogLevel.NONE : App.logger.level = S.LogLevel.ALL;
+0 == e.log ? App.logger.level = E.LogLevel.NONE : App.logger.level = E.LogLevel.ALL;
 p.GlobalVar.cusUrl = e.cusUrl;
 App.storage.setItem(R.default.Key.PhoneId, e.pwdtoken);
 g.default.skey = e.skey;
@@ -10278,13 +10624,13 @@ dispatch(h.CommonEvent.Show_Hall);
 var n;
 t.sender = null;
 t.initIndex = 0;
-r([ A(cc.Node) ], t.prototype, "wRoot1", void 0);
-r([ A(cc.Node) ], t.prototype, "wRoot2", void 0);
-r([ A(cc.Node) ], t.prototype, "cRoot1", void 0);
-r([ A(cc.Node) ], t.prototype, "cRoot2", void 0);
+r([ O(cc.Node) ], t.prototype, "wRoot1", void 0);
+r([ O(cc.Node) ], t.prototype, "wRoot2", void 0);
+r([ O(cc.Node) ], t.prototype, "cRoot1", void 0);
+r([ O(cc.Node) ], t.prototype, "cRoot2", void 0);
 return n = r([ T ], t);
 }(m.default);
-n.default = N;
+n.default = A;
 cc._RF.pop();
 }, {
 "../../common/component/ZProgressbar": "ZProgressbar",
@@ -10316,50 +10662,6 @@ e.hot_version = "2.9.0";
 return e;
 }();
 n.default = o;
-cc._RF.pop();
-}, {} ],
-Html_sender: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "c1d8aDVGZhF/K86DKAtzTly", "Html_sender");
-var o = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var i = cc._decorator, r = i.ccclass, a = (i.property, function() {
-function e() {}
-e.sendExitGame = function() {
-if (window.JsCallJavaClass) {
-Log.d("window.JsCallJavaClass.ExitGame()");
-window.JsCallJavaClass.ExitGame();
-} else window.parent.postMessage({
-action: "exitGame"
-}, "*");
-};
-e.openUrlByApp = function(e) {
-var t, n = {};
-n.url = e;
-var o = JSON.stringify(n);
-console.error("window.jsBridge?.postMessage");
-null === (t = window.jsBridge) || void 0 === t || t.postMessage("openWindow", o);
-};
-e.isJsBridge = function() {
-return !!window.jsBridge;
-};
-e.iosNEIQIANWebGetALLSdkData = function() {
-var e, t, n, o;
-Log.e("window.jsBridge?.postMessage:iosNEIQIANWebGetALLSdkData");
-null === (e = window.jsBridge) || void 0 === e || e.postMessage("getidfa", "{}");
-null === (t = window.jsBridge) || void 0 === t || t.postMessage("getfirebaseid", "{}");
-null === (n = window.jsBridge) || void 0 === n || n.postMessage("getadjustid", "{}");
-null === (o = window.jsBridge) || void 0 === o || o.postMessage("getaddeeplink", "{}");
-};
-return o([ r ], e);
-}());
-n.default = a;
 cc._RF.pop();
 }, {} ],
 HttpClient: [ function(e, t, n) {
@@ -10581,96 +10883,56 @@ n = r.default.encrypt(n);
 t.data = n;
 return t;
 };
-t.prototype.SendPostHttp = function(e, t, n, o, i, r) {
-var c = this;
+t.prototype.SendPostHttp = function(e, t, n, o, i) {
+var r = this;
 void 0 === n && (n = _.GlobalEnum.HttpUrlType.Hall);
-return new Promise(function(u) {
-var d = new s.HttpPackage();
+return new Promise(function(c) {
+var l = new s.HttpPackage();
 switch (n) {
 case _.GlobalEnum.HttpUrlType.Login:
-d.data.url = h.HostInfo.URL_Login_Server;
+l.data.url = h.HostInfo.URL_Login_Server;
 o || (o = 100);
 break;
 
 case _.GlobalEnum.HttpUrlType.Hall:
-d.data.url = h.HostInfo.URL_Hall_Server;
+l.data.url = h.HostInfo.URL_Hall_Server;
 break;
 
 case _.GlobalEnum.HttpUrlType.Game:
-d.data.url = f.GlobalVar.game_http_url;
+l.data.url = f.GlobalVar.game_http_url;
 break;
 
 case _.GlobalEnum.HttpUrlType.ShareGift:
-d.data.url = h.HostInfo.agentUrl;
+l.data.url = h.HostInfo.agentUrl;
 break;
 
 case _.GlobalEnum.HttpUrlType.Activity:
-d.data.url = h.HostInfo.URL_Activity_Server;
+l.data.url = h.HostInfo.URL_Activity_Server;
 }
-d.data.isAutoAttachCurrentTime = !1;
-d.data.type = a.Http.Type.POST;
-var y = {};
-y = g.CmmUtils.copyObjWhenKeyEqual(e, y);
-d.params = c.addCommonParam(e);
-o && App.uiLoading.show(o);
-var m = i;
-m || (m = function(e) {
-o && App.uiLoading.hide();
+l.data.isAutoAttachCurrentTime = !1;
+l.data.type = a.Http.Type.POST;
+var u = {};
+u = g.CmmUtils.copyObjWhenKeyEqual(e, u);
+l.params = r.addCommonParam(e);
+var p = i;
+p || (p = function(e) {
 if (n != _.GlobalEnum.HttpUrlType.Game || f.GlobalVar.isGameing) {
 switch (e.type) {
 case a.Http.ErrorType.TimeOut:
-App.alert.show({
-text: e.reason,
-confirmString: "Try Again",
-tag: "http",
-isRepeat: !1,
-hideX: r,
-confirmCb: function() {
-c.SendPostHttp(y, t, n, o, null, r);
-},
-immediatelyCallback: !0
-});
-break;
-
-default:
-App.alert.show({
-text: e.reason,
-confirmString: "Try Again",
-tag: "http",
-isRepeat: !1,
-hideX: !0,
-confirmCb: function() {
-c.SendPostHttp(y, t, n, o, null, r);
-},
-closeCb: function() {
-if (App.SingleGame) p.default.ExitSingleGame(); else if ("LoginView" != App.gameView.className) {
-App.entryManager.enterBundle(l.Macro.BUNDLE_RESOURCES);
-p.default.setOrientation_l();
 }
-},
-immediatelyCallback: !0
-});
-}
-u(null);
+c(null);
 }
 });
-Log.e("http_new :" + d.data.url);
-d.send(function(e) {
-o && App.uiLoading.hide();
-var i = JSON.parse(e);
-Log.d("http_new :" + JSON.stringify(i));
-if (0 == i.ret) {
-t && t(i);
-0 != i.type && g.CmmUtils.popRetNoRet1(i, null);
-} else {
-Log.e(d.data.url);
+Log.e("http_new :" + l.data.url);
+l.send(function(e) {
+var o = JSON.parse(e);
+Log.d("http_new :" + JSON.stringify(o));
+if (0 == o.ret) t && t(o); else {
+Log.e(l.data.url);
 Log.e(n);
-Log.e(g.CmmUtils.isGameing());
-if (n == _.GlobalEnum.HttpUrlType.Game && !f.GlobalVar.isGameing) return;
-g.CmmUtils.popRet1(i, null);
 }
-u(i);
-}, m);
+c(o);
+}, p);
 });
 };
 t.prototype.SendGamePostHttp = function(e, t, n, o, i) {
@@ -11076,6 +11338,469 @@ cc._RF.pop();
 "../../../plugin/ByteArray": "ByteArray",
 "../Net": "Net",
 "./Message": "Message"
+} ],
+LevelChooseTC: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "9b093lv6r9D5oiewHZBIwzL", "LevelChooseTC");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/sdk/SdkManager"), s = e("../Model/ChooseLevelModel"), c = e("./SolitaireElimination"), l = cc._decorator, u = l.ccclass, p = l.property, d = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Main = null;
+t.node_Zhezhao = null;
+t.prefab_Model = null;
+t.scrollView_level = null;
+t.node_Content = null;
+t.chooseModels = [];
+t.curPlayLevel = 1;
+t.finishLevel = 0;
+t.tween_Content = null;
+t.finish_lv_Key = "finish_lv_Key";
+return t;
+}
+n = t;
+t.prototype.onLoad = function() {
+var e = this;
+n.instance = this;
+this.node_Content.destroyAllChildren();
+this.chooseModels = [];
+this.getLevel();
+for (var t = 0; t < 24; t++) {
+var o = cc.instantiate(this.prefab_Model);
+o.parent = this.node_Content;
+var i = o.getComponent(s.default);
+this.chooseModels.push(i);
+var r = t <= this.finishLevel;
+i.Init(t + 1, r, function(t) {
+e.Callback_ChooseLevel(t);
+});
+}
+this.OpenShow();
+};
+t.prototype.onDestroy = function() {
+n.instance = null;
+};
+t.prototype.start = function() {};
+t.prototype.ButtonClick_Return = function() {};
+t.prototype.OpenShow = function() {
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+a.default.showInterstitial();
+};
+t.prototype.CloseShow = function() {
+this.node_Main.active = !1;
+this.node_Zhezhao.active = !1;
+};
+t.prototype.SetFinishLevel = function(e) {
+if (e > this.finishLevel) {
+this.finishLevel = e;
+this.setLevel();
+for (var t = 0; t < this.chooseModels.length; t++) {
+var n = this.chooseModels[t], o = t <= this.finishLevel;
+n.RefreshState(o);
+}
+}
+};
+t.prototype.PlayNextLevel = function(e) {
+e < this.chooseModels.length ? this.Callback_ChooseLevel(e + 1) : this.Callback_ChooseLevel(e);
+};
+t.prototype.ButtonClick_Home = function() {
+cc.director.loadScene("login");
+a.default.showInterstitial();
+};
+t.prototype.ButtonClick_Setting = function() {};
+t.prototype.Callback_ChooseLevel = function(e) {
+this.curPlayLevel = e;
+dispatch(c.GameEventConfig.PlayLevel, e);
+this.CloseShow();
+};
+t.prototype.getLevel = function() {
+this.finishLevel = App.storage.getItem(this.finish_lv_Key, 0);
+};
+t.prototype.setLevel = function() {
+App.storage.setItem(this.finish_lv_Key, this.finishLevel);
+};
+var n;
+t.instance = null;
+r([ p(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ p(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ p(cc.Prefab) ], t.prototype, "prefab_Model", void 0);
+r([ p(cc.ScrollView) ], t.prototype, "scrollView_level", void 0);
+r([ p(cc.Node) ], t.prototype, "node_Content", void 0);
+return n = r([ u ], t);
+}(cc.Component);
+n.default = d;
+cc._RF.pop();
+}, {
+"../../../scripts/sdk/SdkManager": "SdkManager",
+"../Model/ChooseLevelModel": "ChooseLevelModel",
+"./SolitaireElimination": "SolitaireElimination"
+} ],
+LevelMgr: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "61518xNdb1LMaVV/g7lpvmi", "LevelMgr");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../Base/Level_Base"), s = cc._decorator, c = s.ccclass, l = s.property, u = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.prefab_Card = null;
+t.atlas_Card = null;
+t.sprite_Bg = null;
+t.prefab_Levels = [];
+t.spriteFrame_Bgs = [];
+t.curlevel = null;
+t.cardValues_Config = [ 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 500, 600 ];
+return t;
+}
+n = t;
+t.prototype.onLoad = function() {
+n.instance = this;
+};
+t.prototype.onDestroy = function() {
+n.instance = null;
+};
+t.prototype.start = function() {};
+t.prototype.Init = function(e) {
+this.node.destroyAllChildren();
+this.sprite_Bg.spriteFrame = this.spriteFrame_Bgs[(e - 1) % 5];
+var t = cc.instantiate(this.prefab_Levels[e - 1]);
+t.parent = this.node;
+this.curlevel = t.getComponent(a.default);
+this.curlevel.Init(e, this.prefab_Card, this.atlas_Card, this.cardValues_Config);
+};
+var n;
+t.instance = null;
+r([ l(cc.Prefab) ], t.prototype, "prefab_Card", void 0);
+r([ l(cc.SpriteAtlas) ], t.prototype, "atlas_Card", void 0);
+r([ l(cc.Sprite) ], t.prototype, "sprite_Bg", void 0);
+r([ l(cc.Prefab) ], t.prototype, "prefab_Levels", void 0);
+r([ l(cc.SpriteFrame) ], t.prototype, "spriteFrame_Bgs", void 0);
+return n = r([ c ], t);
+}(cc.Component);
+n.default = u;
+cc._RF.pop();
+}, {
+"../Base/Level_Base": "Level_Base"
+} ],
+Level_Base: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "30766jmmtdNfbUKllT1RUf0", "Level_Base");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/utils/RandomUtil"), s = e("../Mgr/SolitaireElimination"), c = e("../Model/MyCardModel"), l = e("../Service/AudioMgr"), u = cc._decorator, p = u.ccclass, d = u.property, f = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Floors = null;
+t.cardModels_Joker = [];
+t.node_OtherLayout = null;
+t.node_ShowCard = null;
+t.node_Btn_Other = null;
+t.atlas_Card = null;
+t.cardModels_Main = [];
+t.cardModels_Other = [];
+t.cardModels_Show = [];
+t.cardModels_LastChoose = null;
+t.otherCount = 22;
+t.leftCount_Main = 0;
+t.leftCount_Other = 0;
+t.leftCount_Joker = 0;
+t.cardValues_Config = [];
+t.cardValues = [];
+t.curLevel = 1;
+t.isGameOver = !1;
+return t;
+}
+t.prototype.Init = function(e, t, n, o) {
+this.curLevel = e;
+this.atlas_Card = n;
+this.cardValues_Config = o;
+this.isGameOver = !1;
+this.cardModels_Main = [];
+this.cardModels_Other = [];
+this.cardModels_Show = [];
+this.cardModels_LastChoose = null;
+for (var i = 0; i < this.node_Floors.childrenCount; i++) for (var r = this.node_Floors.getChildByName(i + ""), a = 0; a < r.childrenCount; a++) {
+var s = r.children[a].getComponent(c.default);
+this.cardModels_Main.push(s);
+s.ResetForBegin();
+}
+for (i = 0; i < this.otherCount; i++) {
+var l = cc.instantiate(t);
+l.parent = this.node_OtherLayout;
+l.position = cc.v3(0, 0, 0);
+s = l.getComponent(c.default);
+this.cardModels_Other.push(s);
+}
+this.node_OtherLayout.getComponent(cc.Layout).updateLayout();
+this.node_Btn_Other.width = this.node_OtherLayout.width + 110;
+this.leftCount_Joker = 3;
+this.leftCount_Main = this.cardModels_Main.length;
+this.CreatCardValues();
+this.SetCardValue();
+};
+t.prototype.ButtonClick_OpenOther = function() {
+if (this.cardModels_LastChoose) {
+this.cardModels_LastChoose.SetIsChoose(!1);
+this.cardModels_LastChoose = null;
+}
+var e = this.cardModels_Other[this.cardModels_Other.length - 1];
+e.node.parent = this.node_ShowCard;
+e.node.position = cc.v3(0, 0, 0);
+this.cardModels_Other.splice(this.cardModels_Other.length - 1, 1);
+this.cardModels_Show.push(e);
+e.ShowCard_OpenOther();
+this.node_Btn_Other.width = this.node_OtherLayout.width + 110;
+0 == this.cardModels_Other.length && (this.node_Btn_Other.active = !1);
+this.CheckLeftOpenCard();
+};
+t.prototype.CreatCardValues = function() {
+var e = this.cardModels_Main.length + 22, t = Math.floor(e / 2) - 5, n = [];
+this.cardValues = [];
+for (var o = 0; o < t; o++) {
+var i = a.RandomUtil.randomRange(1, 14), r = 100 * a.RandomUtil.randomRange(1, 5) + i, s = 100 * a.RandomUtil.randomRange(1, 5) + i;
+n.push(r);
+n.push(s);
+}
+var c = a.RandomUtil.randomRange(0, 4);
+for (o = 0; o < c; o++) n.push(600);
+var l = e - n.length;
+for (o = 0; o < l; o++) {
+var u = a.RandomUtil.randomRange(0, this.cardValues_Config.length);
+n.push(this.cardValues_Config[u]);
+}
+for (o = 0; o < e; o++) {
+var p = n[u = a.RandomUtil.randomRange(0, n.length)];
+this.cardValues.push(p);
+n.splice(u, 1);
+}
+};
+t.prototype.SetCardValue = function() {
+for (var e = this, t = 0, n = -1, o = 0; o < this.cardModels_Main.length; o++) {
+var i = this.cardModels_Main[o];
+n = this.cardValues[t];
+i.Init(c.CardType.Main, n, this.atlas_Card.getSpriteFrame(n + ""), function(t) {
+e.SetChooseCardModel(t);
+});
+t++;
+}
+for (o = 0; o < this.cardModels_Other.length; o++) {
+i = this.cardModels_Other[o];
+n = this.cardValues[t];
+i.Init(c.CardType.Other, n, this.atlas_Card.getSpriteFrame(n + ""), function(t) {
+e.SetChooseCardModel(t);
+});
+t++;
+}
+for (o = 0; o < this.cardModels_Joker.length; o++) (i = this.cardModels_Joker[o]).Init(c.CardType.Joker, 500, this.atlas_Card.getSpriteFrame("500"), function(t) {
+e.SetChooseCardModel(t);
+});
+};
+t.prototype.SetChooseCardModel = function(e) {
+if (null == this.cardModels_LastChoose) e.isChoose && (this.cardModels_LastChoose = e); else if (e.isChoose) if (e.cardValue >= 500 || this.cardModels_LastChoose.cardValue >= 500) {
+this.cardModels_LastChoose.PlayDestroyCard();
+e.PlayDestroyCard();
+this.RemoveCardModel(e);
+this.RemoveCardModel(this.cardModels_LastChoose);
+this.cardModels_LastChoose = null;
+l.default.instance.playEffect(s.AudioNameConfig.success);
+this.CheckLeftOpenCard();
+} else if (e.cardValue % 100 == this.cardModels_LastChoose.cardValue % 100) {
+this.cardModels_LastChoose.PlayDestroyCard();
+e.PlayDestroyCard();
+this.RemoveCardModel(e);
+this.RemoveCardModel(this.cardModels_LastChoose);
+this.cardModels_LastChoose = null;
+l.default.instance.playEffect(s.AudioNameConfig.success);
+this.CheckLeftOpenCard();
+} else {
+this.cardModels_LastChoose.SetIsChoose(!1);
+this.cardModels_LastChoose = e;
+} else this.cardModels_LastChoose = null;
+};
+t.prototype.CheckLeftOpenCard = function() {
+if (!this.isGameOver) {
+var e = !1;
+this.cardModels_Other.length > 0 && (e = !0);
+this.leftCount_Joker > 0 && (e = !0);
+var t = [];
+if (this.cardModels_Show.length > 0) {
+var n = this.cardModels_Show[this.cardModels_Show.length - 1].cardValue;
+n >= 500 && (e = !0);
+t.push(n % 100);
+}
+for (var o = 0; o < this.cardModels_Main.length; o++) {
+var i = this.cardModels_Main[o];
+if (i.isOpen) {
+i.cardValue >= 500 && (e = !0);
+t.indexOf(i.cardValue % 100) >= 0 && (e = !0);
+t.push(i.cardValue % 100);
+}
+}
+Log.e(t);
+e || dispatch(s.GameEventConfig.NomoreMove);
+}
+};
+t.prototype.RemoveCardModel = function(e) {
+if (e.cardType == c.CardType.Joker) this.leftCount_Joker--; else if (e.cardType == c.CardType.Main) {
+this.leftCount_Main--;
+0 == this.leftCount_Main && this.GameOver();
+} else this.cardModels_Show.splice(this.cardModels_Show.length - 1, 1);
+};
+t.prototype.GameOver = function() {
+this.isGameOver = !0;
+dispatch(s.GameEventConfig.GameOver, this.curLevel);
+Log.e("------GameOver  ");
+};
+r([ d(cc.Node) ], t.prototype, "node_Floors", void 0);
+r([ d(c.default) ], t.prototype, "cardModels_Joker", void 0);
+r([ d(cc.Node) ], t.prototype, "node_OtherLayout", void 0);
+r([ d(cc.Node) ], t.prototype, "node_ShowCard", void 0);
+r([ d(cc.Node) ], t.prototype, "node_Btn_Other", void 0);
+return r([ p ], t);
+}(cc.Component);
+n.default = f;
+cc._RF.pop();
+}, {
+"../../../scripts/common/utils/RandomUtil": "RandomUtil",
+"../Mgr/SolitaireElimination": "SolitaireElimination",
+"../Model/MyCardModel": "MyCardModel",
+"../Service/AudioMgr": "AudioMgr"
+} ],
+Level_First: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "a1a87yO1LZLAYTMc2UMfX6x", "Level_First");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../../scripts/common/utils/RandomUtil"), s = e("../Base/Level_Base"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Tip_notMatter = null;
+t.node_Tip_matching = null;
+t.node_Tip_ClearThese = null;
+t.node_Tip_Joker = null;
+t.node_Tip_Other = null;
+t.config_Fix = [ 106, 206, 313, 313, 312, 212, 209, 312, 404, 404 ];
+return t;
+}
+t.prototype.CreatCardValues = function() {
+this.cardValues = [];
+for (var e = 0; e < this.config_Fix.length; e++) {
+var t = this.config_Fix[e];
+this.cardValues.push(t);
+}
+for (e = 0; e < 22; e++) {
+var n = a.RandomUtil.randomRange(0, this.cardValues_Config.length);
+this.cardValues.push(this.cardValues_Config[n]);
+}
+};
+t.prototype.RemoveCardModel = function(t) {
+e.prototype.RemoveCardModel.call(this, t);
+this.cardModels_Main[0] == t ? this.node_Tip_notMatter.active = !1 : this.cardModels_Main[2] == t && (this.node_Tip_matching.active = !1);
+};
+t.prototype.GameOver = function() {
+e.prototype.GameOver.call(this);
+this.node_Tip_Joker.active = !1;
+this.node_Tip_ClearThese.active = !1;
+this.node_Tip_Other.active = !1;
+};
+r([ u(cc.Node) ], t.prototype, "node_Tip_notMatter", void 0);
+r([ u(cc.Node) ], t.prototype, "node_Tip_matching", void 0);
+r([ u(cc.Node) ], t.prototype, "node_Tip_ClearThese", void 0);
+r([ u(cc.Node) ], t.prototype, "node_Tip_Joker", void 0);
+r([ u(cc.Node) ], t.prototype, "node_Tip_Other", void 0);
+return r([ l ], t);
+}(s.default);
+n.default = p;
+cc._RF.pop();
+}, {
+"../../../scripts/common/utils/RandomUtil": "RandomUtil",
+"../Base/Level_Base": "Level_Base"
 } ],
 Loading: [ function(e, t, n) {
 "use strict";
@@ -11588,7 +12313,7 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = e("../../common/config/ConstString"), s = e("../../common/config/GlobalVar"), c = e("../../common/config/HostInfo"), l = e("../../common/config/User"), u = e("../../common/event/CommonEvent"), p = e("../../common/net/CommonSender"), d = e("../../common/net/HttpSender"), f = e("../../common/utils/UIUtils"), h = e("../../framework/core/ui/GameView"), _ = e("../../framework/defines/Enums"), g = e("../../framework/defines/Macros"), y = e("../../sdk/AppInfo"), m = e("../../sdk/SdkManager"), E = e("../net/LobbyService"), S = e("./HotUpdate"), b = e("./LoginViewNodes"), v = cc._decorator, R = v.ccclass, C = (v.property, 
+var a = e("../../common/config/ConstString"), s = e("../../common/config/GlobalVar"), c = e("../../common/config/HostInfo"), l = e("../../common/config/User"), u = e("../../common/event/CommonEvent"), p = e("../../common/net/CommonSender"), d = e("../../common/net/HttpSender"), f = e("../../common/utils/UIUtils"), h = e("../../framework/core/ui/GameView"), _ = e("../../framework/defines/Enums"), g = e("../../framework/defines/Macros"), y = e("../../sdk/AppInfo"), m = e("../../sdk/SdkManager"), v = e("../net/LobbyService"), E = e("./HotUpdate"), S = e("./LoginViewNodes"), b = cc._decorator, R = b.ccclass, C = (b.property, 
 function(e) {
 i(t, e);
 function t() {
@@ -11662,14 +12387,14 @@ dispatch(u.SimpleEvent.Html5_view_loading, !1);
 t.prototype.initNode = function() {
 this.root = cc.find("root", this.node);
 this.gameRoot = cc.find("root", this.root);
-this.hotUpdate = this.root.getComponent(S.default);
+this.hotUpdate = this.root.getComponent(E.default);
 this.hotUpdate.init();
 this.addLocalEvents();
 };
 t.prototype.initOfflineNode = function() {
 this.root = cc.find("root", this.node);
 this.gameRoot = cc.find("root", this.root);
-this.hotUpdate = this.root.getComponent(S.default);
+this.hotUpdate = this.root.getComponent(E.default);
 this.hotUpdate.init();
 this.ntaBtn = cc.find("root/top_layer/top_html/logo", this.root);
 this.logoNode = cc.find("root/top_layer/top_html/logo", this.root);
@@ -11693,7 +12418,7 @@ this.moneyLabel = cc.find("root/top_layer/top_html/total_coins/MoneyLabel", this
 this.refreshBtn = cc.find("root/top_layer/top_html/total_coins/Background/refreshBtn", this.root);
 this.coinBtn = cc.find("root/top_layer/top_html/total_coins/icon/coinBtn", this.root);
 this.kefuBtn = cc.find("root/kefuBtn", this.root);
-this.lgvNodes = this.root.getComponent(b.default);
+this.lgvNodes = this.root.getComponent(S.default);
 this.addLocalEvents();
 };
 t.prototype.addLocalEvents = function() {
@@ -11800,7 +12525,7 @@ m.default.openWebView(e);
 } else m.default.openUrl(e);
 };
 t.prototype.clearLoginToken = function() {
-App.serviceManager.get(E.LobbyService, !0).close(!0);
+App.serviceManager.get(v.LobbyService, !0).close(!0);
 this.moneyLabel.string = l.default.self.moneyString;
 this.bonus_label && (this.bonus_label.string = l.default.self.bonusBString);
 this.infoBtn && (this.infoBtn.active = !1);
@@ -11929,6 +12654,51 @@ cc._RF.pop();
 "../net/LobbyService": "LobbyService",
 "./HotUpdate": "HotUpdate",
 "./LoginViewNodes": "LoginViewNodes"
+} ],
+Login: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "1bc65AnotxDTr4x34sIE3ah", "Login");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../scripts/framework/componects/EventComponent"), s = e("../../scripts/framework/core/ui/UIManager"), c = cc._decorator, l = c.ccclass, u = (c.property, 
+function(e) {
+i(t, e);
+function t() {
+return null !== e && e.apply(this, arguments) || this;
+}
+t.prototype.addEvents = function() {
+s.UIManager.newGameTest();
+};
+t.prototype.ButtonClick_Play = function() {
+cc.director.loadScene("solitaireElimination");
+};
+return r([ l ], t);
+}(a.default));
+n.default = u;
+cc._RF.pop();
+}, {
+"../../scripts/framework/componects/EventComponent": "EventComponent",
+"../../scripts/framework/core/ui/UIManager": "UIManager"
 } ],
 Macros: [ function(e, t, n) {
 "use strict";
@@ -12164,6 +12934,130 @@ return t;
 n.Message = s;
 cc._RF.pop();
 }, {} ],
+MyCardModel: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "6b183ri875DCpALEHLTw5tj", "MyCardModel");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+n.CardType = void 0;
+var a, s = e("../Mgr/SolitaireElimination"), c = e("../Service/AudioMgr"), l = cc._decorator, u = l.ccclass, p = l.property;
+(function(e) {
+e[e.Other = 0] = "Other";
+e[e.Joker = 1] = "Joker";
+e[e.Main = 2] = "Main";
+})(a = n.CardType || (n.CardType = {}));
+var d = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Main = null;
+t.sprite = null;
+t.node_CardBack = null;
+t.color_Choose = cc.color(243, 238, 132, 255);
+t.color_Normal = cc.color(255, 255, 255, 255);
+t.cardModel_up = [];
+t.cardModel_Downs = [];
+t.cardType = a.Other;
+t.cardValue = 0;
+t.isOpen = !1;
+t.isChoose = !1;
+t.callback_Click = null;
+return t;
+}
+n = t;
+t.prototype.ResetForBegin = function() {
+this.cardModel_Downs = [];
+};
+t.prototype.Init = function(e, t, n, o) {
+this.cardType = e;
+this.cardValue = t;
+this.callback_Click = o;
+this.sprite.spriteFrame = n;
+if (e == a.Main) if (this.cardModel_up.length > 0) {
+this.node_CardBack.active = !0;
+this.isOpen = !1;
+} else {
+this.node_CardBack.active = !1;
+this.isOpen = !0;
+} else if (e == a.Joker) if (this.cardModel_up.length > 0) {
+this.node_CardBack.active = !0;
+this.isOpen = !1;
+} else {
+this.node_CardBack.active = !1;
+this.isOpen = !0;
+} else {
+this.node_CardBack.active = !0;
+this.isOpen = !1;
+}
+this.SetIsChoose(!1);
+this.node_Main.active = !0;
+if (this.cardModel_up.length > 0) for (var i = 0; i < this.cardModel_up.length; i++) this.cardModel_up[i].SetDownCardModel(this);
+};
+t.prototype.SetDownCardModel = function(e) {
+this.cardModel_Downs.push(e);
+};
+t.prototype.ShowCard = function(e) {
+var t = this, n = this.cardModel_up.indexOf(e);
+this.cardModel_up.splice(n, 1);
+if (0 == this.cardModel_up.length) {
+this.isOpen = !0;
+this.scheduleOnce(function() {
+t.node_CardBack.active = !1;
+}, .3);
+}
+};
+t.prototype.ShowCard_OpenOther = function() {
+this.node_CardBack.active = !1;
+this.isOpen = !0;
+};
+t.prototype.ButtonClick_Choose = function() {
+c.default.instance.playEffect(s.AudioNameConfig.flip);
+this.SetIsChoose(!this.isChoose);
+this.callback_Click && this.callback_Click(this);
+};
+t.prototype.PlayDestroyCard = function() {
+this.node_Main.active = !1;
+this.isOpen = !1;
+for (var e = 0; e < this.cardModel_Downs.length; e++) this.cardModel_Downs[e].ShowCard(this);
+};
+t.prototype.SetIsChoose = function(e) {
+this.isChoose = e;
+this.isChoose ? this.sprite.node.color = this.color_Choose : this.sprite.node.color = this.color_Normal;
+};
+var n;
+r([ p(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ p(cc.Sprite) ], t.prototype, "sprite", void 0);
+r([ p(cc.Node) ], t.prototype, "node_CardBack", void 0);
+r([ p(cc.Color) ], t.prototype, "color_Choose", void 0);
+r([ p(n) ], t.prototype, "cardModel_up", void 0);
+return r([ u ], t);
+}(cc.Component);
+n.default = d;
+cc._RF.pop();
+}, {
+"../Mgr/SolitaireElimination": "SolitaireElimination",
+"../Service/AudioMgr": "AudioMgr"
+} ],
 Net: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "7defc/7Iv1NMaarDPEKXxqf", "Net");
@@ -12179,6 +13073,80 @@ e[e.Proto = 2] = "Proto";
 e[e.BinaryStream = 3] = "BinaryStream";
 })(e.ServiceType || (e.ServiceType = {}));
 })(n.Net || (n.Net = {}));
+cc._RF.pop();
+}, {} ],
+NomoreMovesService: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "e05c2q/0vlBJprtN3/+x/lm", "NomoreMovesService");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.node_Main = null;
+t.node_Zhezhao = null;
+t.node_Tip = null;
+t.node_Btn = null;
+t.callback_Over = null;
+t.tween_Tip = null;
+return t;
+}
+t.prototype.OpenShow = function(e) {
+var t = this;
+this.callback_Over = e;
+this.tween_Tip && this.tween_Tip.stop();
+this.node_Tip.position = cc.v3(-800, 0, 0);
+this.node_Btn.active = !1;
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+this.tween_Tip = cc.tween(this.node_Tip).to(.5, {
+position: cc.v3(0, 0, 0)
+}, cc.easeSineOut()).call(function() {
+t.node_Btn.active = !0;
+}).delay(4).call(function() {
+t.CloseShow();
+}).start();
+};
+t.prototype.CloseShow = function() {
+if (this.callback_Over) {
+this.callback_Over();
+this.callback_Over = null;
+}
+this.node_Main.active = !1;
+this.node_Zhezhao.active = !1;
+};
+t.prototype.ButtonClick_Skip = function() {
+this.tween_Tip && this.tween_Tip.stop();
+this.CloseShow();
+};
+r([ c(cc.Node) ], t.prototype, "node_Main", void 0);
+r([ c(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
+r([ c(cc.Node) ], t.prototype, "node_Tip", void 0);
+r([ c(cc.Node) ], t.prototype, "node_Btn", void 0);
+return r([ s ], t);
+}(cc.Component);
+n.default = l;
 cc._RF.pop();
 }, {} ],
 Process: [ function(e, t, n) {
@@ -12394,6 +13362,38 @@ cc._RF.pop();
 "../Net": "Net",
 "./Message": "Message"
 } ],
+RandomUtil: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "6a648Q2y55Ilpl1isDmViBm", "RandomUtil");
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+n.RandomUtil = void 0;
+var o = function() {
+function e() {}
+e.randomString = function(e) {
+for (var t = "", n = 0; n < e; n++) t += this._keys[Math.floor((this._keys.length - 1) * Math.random())];
+return t;
+};
+e.randomNumber = function(e) {
+return Math.floor(Math.random() * e);
+};
+e.randomRange = function(t, n) {
+var o = e.randomNumber(n - t) + t;
+o < t && (o = t);
+return o;
+};
+e.randomFRange = function(e, t) {
+var n = Math.random() * (t - e) + e;
+n < e && (n = e);
+return n;
+};
+e._keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+return e;
+}();
+n.RandomUtil = o;
+cc._RF.pop();
+}, {} ],
 ReconnectHandler: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "332fdJoOHVG1YBiCqB4JIAB", "ReconnectHandler");
@@ -12869,6 +13869,9 @@ e.prototype.CallAndroidCallPlayAudio = function(e) {
 Log.e("----------CallAndroidCallPlayAudio:" + e);
 App.globalAudio.playButtonClick();
 };
+e.prototype.CallCocosAdReward = function() {
+dispatch(r.SdkEvent.SdkEvent_finish_video_back);
+};
 e._instance = null;
 return e;
 }();
@@ -12888,14 +13891,14 @@ cc._RF.push(t, "ec70dPSIyZHi4vccJg01+w7", "SdkManager");
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var o = e("../common/config/ConstString"), i = e("../common/config/GlobalVar"), r = e("../common/config/User"), a = e("../common/enum/GlobalEnum"), s = e("./AppInfo"), c = e("./GameNativeConfig"), l = e("../common/event/CommonEvent"), u = e("../html/Html_sender"), p = function() {
+var o = e("../common/config/ConstString"), i = e("../common/config/GlobalVar"), r = e("../common/enum/GlobalEnum"), a = e("./AppInfo"), s = e("../common/event/CommonEvent"), c = e("./SdkCallBack"), l = function() {
 function t() {}
 t.getGameConfig = function() {
 var e = null;
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 e = jsb.reflection.callStaticMethod(this.javaName_sdk, "getGameConfig", "()Ljava/lang/String;");
 Log.d("========AD获取设备数据:", e);
-} else if (s.default.isIOS) {
+} else if (a.default.isIOS) {
 e = jsb.reflection.callStaticMethod(this.iosName_sdk, "getGameConfig:", "");
 Log.d("========IOS获取设备数据:", e);
 }
@@ -12903,14 +13906,14 @@ return e || "{}";
 };
 t.UploadInstallData = function() {
 Log.d("Js Call Android Prev: GetAdjust上报");
-if (s.default.isAndroid) {
-jsb.reflection.callStaticMethod(this.javaName_sdk, "ReportedActivateData", "(Ljava/lang/String;)V", s.default.getChannelId().toString());
+if (a.default.isAndroid) {
+jsb.reflection.callStaticMethod(this.javaName_sdk, "ReportedActivateData", "(Ljava/lang/String;)V", a.default.getChannelId().toString());
 Log.d("Js Call Android After: GetAdjust上报");
 }
 };
 t.InitGoogleSignInManager = function(e) {
 Log.d("Js Call Android Prev: InitGoogleSignIn");
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 jsb.reflection.callStaticMethod(this.javaName_sdk, "InitGoogleSDK", "(Ljava/lang/String;)V", e);
 Log.d("Js Call Android After: InitGoogleSignIn");
 }
@@ -12918,10 +13921,10 @@ Log.d("Js Call Android After: InitGoogleSignIn");
 t.checkVPN = function() {
 Log.d("Js Call Android Prev: checkVPN");
 var e = "0";
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 e = jsb.reflection.callStaticMethod(this.javaName_sdk, "checkVPN", "()Ljava/lang/String;");
 Log.d("Js Call Android After: checkVPN = " + e);
-} else if (s.default.isIOS) {
+} else if (a.default.isIOS) {
 e = jsb.reflection.callStaticMethod(this.iosName_sdk, "checkVPN:", "");
 Log.d("Js Call Android After: checkVPN = " + e);
 } else cc.sys.isBrowser;
@@ -12930,11 +13933,11 @@ return e;
 t.getCountry = function() {
 Log.d("Js Call Android Prev: getCountry");
 var e = App.storage.getItem(o.ConstString.simData);
-if (!e || "" == e) if (s.default.isAndroid) {
+if (!e || "" == e) if (a.default.isAndroid) {
 e = jsb.reflection.callStaticMethod(this.javaName_sdk, "getCountryCode", "()Ljava/lang/String;");
 App.storage.setItem(o.ConstString.simData, e);
 Log.d("Js Call Android After: getCountry = " + e);
-} else s.default.isIOS ? e = i.GlobalVar.countryCode + "" : cc.sys.isBrowser;
+} else a.default.isIOS ? e = i.GlobalVar.countryCode + "" : cc.sys.isBrowser;
 return e;
 };
 t.getDeviceId = function() {
@@ -12958,22 +13961,22 @@ t.getFirebaseAppInstanceId = function() {
 if (this._ios_firebaseid) return this._ios_firebaseid;
 Log.d("Js Call Android Prev: getFirebaseAppInstanceId");
 var e = "";
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 e = jsb.reflection.callStaticMethod(this.javaName_sdk, "getFireBaseAppInstanceId", "()Ljava/lang/String;");
 Log.d("Js Call Android After: getFirebaseAppInstanceId = " + e);
 return e;
 }
-s.default.isIOS;
+a.default.isIOS;
 return e;
 };
 t.getGoogleID = function() {
 Log.d("Js Call Android Prev: getGoogleID");
 if (this._ios_idfa) return this._ios_idfa;
 var e = null;
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 e = jsb.reflection.callStaticMethod(this.javaName_sdk, "getGoogleId", "()Ljava/lang/String;");
 Log.d("Js Call Android After: getGoogleID = " + e);
-} else if (s.default.isIOS) {
+} else if (a.default.isIOS) {
 e = jsb.reflection.callStaticMethod(this.iosName_sdk, "getIDFA:", "");
 Log.d("Js Call Android After: getIDFA = " + e);
 } else cc.sys.isBrowser;
@@ -12982,10 +13985,10 @@ return e;
 t.getAdjustAdid = function() {
 if (this._ios_adjustid) return this._ios_adjustid;
 if (this._adjustAdid) return this._adjustAdid;
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 this._adjustAdid = jsb.reflection.callStaticMethod(this.javaName_sdk, "getAdid", "()Ljava/lang/String;");
 Log.d("Js Call Android After: getAdjustAdid = " + this._adjustAdid);
-} else if (s.default.isIOS) {
+} else if (a.default.isIOS) {
 this._adjustAdid = jsb.reflection.callStaticMethod(this.iosName_sdk, "getAdid:", "");
 Log.d("Js Call IOS After: getAdjustAdid = " + this._adjustAdid);
 }
@@ -12994,10 +13997,13 @@ return this._adjustAdid;
 t.GetAppsFlyerId = function() {
 Log.d("Js Call Android Prev: GetAppsFlyerId");
 if (this._afid) return this._afid;
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 this._afid = jsb.reflection.callStaticMethod(this.javaName_sdk, "GetAppsFlyerId", "()Ljava/lang/String;");
 Log.d("Js Call Android After: GetAppsFlyerId = " + this._afid);
-} else s.default.isIOS;
+} else if (a.default.isIOS) {
+this._afid = jsb.reflection.callStaticMethod(this.iosName_sdk, "GetAppsFlyerId:", "");
+Log.d("Js Call IOS After: GetAppsFlyerId = " + this._afid);
+}
 return this._afid;
 };
 t.getIdfa = function() {
@@ -13010,25 +14016,24 @@ return this._idfa;
 };
 t.getPkgId = function() {
 Log.d("Js Call Android Prev: getPkgId");
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 var e = jsb.reflection.callStaticMethod(this.javaName_sdk, "PkgID", "()Ljava/lang/String;");
 Log.d("Js Call Android After: getPkgId = " + e);
 return e;
 }
-s.default.isIOS;
+a.default.isIOS;
 return "";
 };
 t.google_Login = function() {
 Log.d("Js Call Android Prev: google_Login");
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 jsb.reflection.callStaticMethod(this.javaName_sdk, "google_Login", "()V");
 Log.d("Js Call Android After: google_Login");
 }
 };
 t.SDK_LoginOut = function() {
 Log.d("Js Call Android Prev: GoogleSignOut");
-if (s.default.isAndroid) switch (r.default.self.loginType) {
-case c.default.LoginType.Google:
+if (a.default.isAndroid) {
 jsb.reflection.callStaticMethod(this.javaName_sdk, "google_LoginOut", "()V");
 Log.d("Js Call Android After: GoogleSignOut");
 }
@@ -13036,11 +14041,11 @@ Log.d("Js Call Android After: GoogleSignOut");
 t.setClipboardContent = function(e) {
 App.globalAudio.playButtonClick();
 Log.d("Js Call Android Prev: copy");
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 jsb.reflection.callStaticMethod(this.javaName_sdk, "copy", "(Ljava/lang/String;)Z", e);
 Log.d("Js Call Android After: copy");
 } else {
-if (!s.default.isIOS) {
+if (!a.default.isIOS) {
 if (!e || "" == e) return App.tips.show("is empty");
 if (!document.queryCommandSupported("copy")) {
 App.tips.show("not support!");
@@ -13051,7 +14056,7 @@ t.value = e;
 document.body.appendChild(t);
 t.select();
 t.setSelectionRange(0, e.length);
-document.execCommand("copy") ? App.tips.show("copy successful") : App.tips.show("not support!");
+document.execCommand("copy") || App.tips.show("not support!");
 t.remove();
 return;
 }
@@ -13059,15 +14064,15 @@ jsb.reflection.callStaticMethod(this.iosName_sdk, "copy:", e);
 }
 };
 t.openUrl = function(e) {
-s.default.isBrowser ? u.default.isJsBridge() ? u.default.openUrlByApp(e) : cc.sys.openURL(e) : s.default.isAndroid && s.default.isSupportOpenAndroidUrl() ? jsb.reflection.callStaticMethod(this.javaName_sdk, "openUrl", "(Ljava/lang/String;)V", e) : cc.sys.openURL(e);
+a.default.isAndroid && a.default.isSupportOpenAndroidUrl() ? jsb.reflection.callStaticMethod(this.javaName_sdk, "openUrl", "(Ljava/lang/String;)V", e) : cc.sys.openURL(e);
 };
 t.openWebView = function(e) {
-s.default.isAndroid && jsb.reflection.callStaticMethod(this.javaName_sdk, "OpenWebView", "(Ljava/lang/String;)V", e);
+a.default.isAndroid && jsb.reflection.callStaticMethod(this.javaName_sdk, "OpenWebView", "(Ljava/lang/String;)V", e);
 };
 t.CheckIsSimulator = function() {
 Log.d("Js Call Android Prev: CheckIsSimulator");
 var e = "0";
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 e = jsb.reflection.callStaticMethod(this.javaName_sdk, "checkSimulator", "()Ljava/lang/String;");
 Log.d("Js Call Android 安卓检查是否为模拟器-----\x3e" + e);
 }
@@ -13075,32 +14080,32 @@ return e;
 };
 t.LogPurchaseEvent_Firebase = function(e, t) {
 Log.d("Js Call Android Prev: LogPurchaseEvent_Firebase");
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 jsb.reflection.callStaticMethod(this.javaName_sdk, "logPurchaseEvent_Firebase", "(Ljava/lang/String;Ljava/lang/String;)V", e, t);
 Log.d("Js Call Android After: LogPurchaseEvent_Firebase");
 }
 };
 t.updateApplication = function(e) {
 Log.d("Js Call Android Prev: updateApplication");
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 jsb.reflection.callStaticMethod(this.javaName_sdk, "updateApplication", "(Ljava/lang/String;)V", e);
 Log.d("Js Call Android After: updateApplication");
 }
 };
 t.StopShakePhone = function() {
-s.default.isAndroid;
+a.default.isAndroid;
 };
 t.shareFacebook = function(e) {
 Log.d("Js Call Android Prev: shareFacebook:" + e);
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 jsb.reflection.callStaticMethod(this.javaName_sdk, "shareFacebook", "(Ljava/lang/String;)V", e);
 Log.d("Js Call Android After: shareFacebook");
 }
 };
 t.SetAppsFlyerCustomerID = function(e) {
-if (i.GlobalVar.des == a.GlobalEnum.ChannelDes.c4_N) {
+if (i.GlobalVar.des == r.GlobalEnum.ChannelDes.c4_N) {
 Log.d("Js Call Android Prev: SetAppsFlyerCustomerID:" + e);
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 jsb.reflection.callStaticMethod(this.javaName_sdk, "SetAppsFlyerCustomerID", "(Ljava/lang/String;)V", e);
 Log.d("Js Call Android After: SetAppsFlyerCustomerID");
 }
@@ -13109,118 +14114,160 @@ Log.d("Js Call Android After: SetAppsFlyerCustomerID");
 t.GetUrlData = function() {
 var e;
 Log.d("Js Call Android Prev: GetUrlData:" + e);
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 e = jsb.reflection.callStaticMethod(this.javaName_sdk, "GetUrlData", "()Ljava/lang/String;");
 Log.d("Js Call Android After: GetUrlData:" + e);
-} else if (s.default.isIOS) {
+} else if (a.default.isIOS) {
 e = jsb.reflection.callStaticMethod(this.iosName_sdk, "GetUrlData:", "");
 Log.d("========IOS获取url:", e);
 }
 return e;
 };
 t.getHttpId = function() {
-if (s.default.isAndroid) {
+if (a.default.isAndroid) {
 t.httpId = jsb.reflection.callStaticMethod(this.javaName_sdk, "getHttpId", "()Ljava/lang/String;");
 Log.d("Js Call Android After: getHttpId:" + t.httpId);
 }
 return t.httpId;
 };
-t.setOrientation_l = function() {
-if (t.isP) {
-t.isP = !1;
-s.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "setOrientation_l", "()V") : s.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "setOrientation_l:", "");
-cc.view.setDesignResolutionSize(1600, 750, cc.ResolutionPolicy.SHOW_ALL);
-cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
-dispatch(l.ComponentGameEvent.UpdateScreenSize);
+t.showCSRDialog = function(e) {
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "showCSRDialog", "(Ljava/lang/String;)V", e) : a.default.isIOS;
+};
+t.chooseAudioPath = function() {
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "chooseAudioPath", "()V") : a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "chooseAudioPath:", "");
+};
+t.playLocalAudio = function() {
+var e = App.storage.getItem(o.ConstString.localBgmPath, "");
+Log.e("播放music" + e);
+if (a.default.isAndroid) {
+jsb.reflection.callStaticMethod(this.javaName_sdk, "playLocalAudio", "(Ljava/lang/String;)V", e);
+Log.d("Js Call Android After: playLocalAudio");
+} else a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "playLocalAudio:", e);
+};
+t.pauseLocalAudio = function() {
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "pauseLocalAudio", "()V") : a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "pauseLocalAudio:", "");
+};
+t.resumeLocalAudio = function() {
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "resumeLocalAudio", "()V") : a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "resumeLocalAudio:", "");
+};
+t.stopLocalAudio = function() {
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "stopLocalAudio", "()V") : a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "stopLocalAudio:", "");
+};
+t.openPhoto = function() {
+if (a.default.isAndroid) {
+jsb.reflection.callStaticMethod(this.javaName_sdk, "openPhotoAlbum", "()V");
+Log.d("Js Call Android After: openPhotoAlbum:");
+} else a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "openPhotoAlbum:", "");
+};
+t.sendThirdMessage = function(e, t) {
+if (a.default.isAndroid) {
+t = t.replace("+", "");
+jsb.reflection.callStaticMethod(this.javaName_sdk, "earnLogin", "(Ljava/lang/String;Ljava/lang/String;)V", e, t);
+Log.d("Js Call Android After: earnLogin:");
 }
 };
+t.setOrientation_l = function() {
+dispatch(s.CommonEvent.TopBlackNode, !1);
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "setOrientation_l", "()V") : a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "setOrientation_l:", "");
+cc.view.setDesignResolutionSize(1600, 750, cc.ResolutionPolicy.SHOW_ALL);
+cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
+this.isP = !1;
+dispatch(s.ComponentGameEvent.UpdateScreenSize);
+};
 t.setOrientation_p = function(e) {
-if (!t.isP) {
-t.isP = !0;
+dispatch(s.CommonEvent.TopBlackNode, !0);
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "setOrientation_p", "()V") : a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "setOrientation_p:", "");
 t.setAspect(e);
-s.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "setOrientation_p", "()V") : s.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "setOrientation_p:", "");
 cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT);
-dispatch(l.ComponentGameEvent.UpdateScreenSize);
-}
+this.isP = !0;
+dispatch(s.ComponentGameEvent.UpdateScreenSize);
 };
 t.ExitSingleGame = function() {
 window.opener && window.close();
 };
-t.showInterstitial = function() {
-if (s.default.isAndroid) {
-jsb.reflection.callStaticMethod(this.javaName_sdk, "showInterstitial", "()V");
-Log.d("Js Call Android After: showInterstitial:");
-} else if (s.default.isIOS) {
-jsb.reflection.callStaticMethod(this.iosName_sdk, "showInterstitial:", "");
-Log.d("Js Call IOS After: showInterstitial:");
-}
+t.initAdmob = function() {
+Log.e("Js Call Android Prev: initAdmob");
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "initAdmob", "()V") : a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "initAdmob:", "");
 };
-t.showRewardedAd = function() {
-if (s.default.isAndroid) {
-jsb.reflection.callStaticMethod(this.javaName_sdk, "showRewardedAd", "()V");
-Log.d("Js Call Android After: showRewardedAd:");
-} else if (s.default.isIOS) {
-jsb.reflection.callStaticMethod(this.iosName_sdk, "showRewardedAd:", "");
-Log.d("Js Call IOS After: showRewardedAd:");
-}
+t.showInterstitial = function() {
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "showInterstitial", "()V") : a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "showInterstitial:", "");
+};
+t.showRewardedAd = function(e) {
+this.rewardTag = e || "";
+a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "showRewardedAd", "()V") : a.default.isIOS ? jsb.reflection.callStaticMethod(this.iosName_sdk, "showRewardedAd:", "") : c.default.getInstance().CallCocosAdReward("");
+};
+t.isReadyRewardedAd = function() {
+return a.default.isAndroid ? jsb.reflection.callStaticMethod(this.javaName_sdk, "isReadyRewardedAd", "()Z") : !!a.default.isIOS && jsb.reflection.callStaticMethod(this.iosName_sdk, "isReadyRewardedAd:", "()Z");
 };
 t.getScreenSize = function() {
-var e = t.getSizeRate();
-return t.ResolutionPolicy == cc.ResolutionPolicy.FIXED_HEIGHT ? cc.view.getDesignResolutionSize() : t.ResolutionPolicy == cc.ResolutionPolicy.FIXED_WIDTH ? s.default.isApp ? cc.size(cc.view.getDesignResolutionSize().width, 1334) : cc.size(cc.view.getDesignResolutionSize().width, 1600) : t.ResolutionPolicy == cc.ResolutionPolicy.NO_BORDER ? cc.size(cc.view.getDesignResolutionSize().width, cc.view.getDesignResolutionSize().height / e.curRate) : void 0;
+var e = cc.view.getDesignResolutionSize().width, t = cc.view.getDesignResolutionSize().height;
+return cc.size(e, t);
 };
 t.getSizeRate = function() {
-var e = cc.view.getFrameSize().height, t = cc.view.getFrameSize().width, n = e > t ? t : e, o = e < t ? t : e, i = cc.view.getDesignResolutionSize().height, r = cc.view.getDesignResolutionSize().width, a = o / n;
+var e = cc.view.getFrameSize().height, t = cc.view.getFrameSize().width, n = (e > t ? e : t) / (e < t ? e : t);
 return {
-curRate: (i < r ? r : i) / (i > r ? r : i) / a,
-curAspect: a
+curRate: 1600 / 750 / n,
+curAspect: n,
+isPad: n < 1334 / 750
 };
 };
-t.setAspect = function(e) {
-var n = !1;
-e ? n = !0 : i.GlobalVar.curGameId && (n = !0);
-var o = t.getSizeRate(), r = 1600;
-n && (r = 1334);
-if (s.default.isWindowBrowser) {
-cc.view.setDesignResolutionSize(750, r, cc.ResolutionPolicy.FIXED_HEIGHT);
-t.ResolutionPolicy = cc.ResolutionPolicy.FIXED_HEIGHT;
-} else if (e) {
-cc.view.setDesignResolutionSize(750, 1600, cc.ResolutionPolicy.NO_BORDER);
-t.ResolutionPolicy = cc.ResolutionPolicy.NO_BORDER;
-} else if (o.curRate > 1) if (o.curAspect >= 1.75 && n) {
-cc.view.setDesignResolutionSize(750, r, cc.ResolutionPolicy.NO_BORDER);
-t.ResolutionPolicy = cc.ResolutionPolicy.NO_BORDER;
-} else {
-cc.view.setDesignResolutionSize(750, r, cc.ResolutionPolicy.FIXED_HEIGHT);
+t.setAspect = function() {
+var e = t.getSizeRate();
+if (a.default.isWindowBrowser) {
+cc.view.setDesignResolutionSize(750, 1334, cc.ResolutionPolicy.FIXED_HEIGHT);
 t.ResolutionPolicy = cc.ResolutionPolicy.FIXED_HEIGHT;
 } else {
-cc.view.setDesignResolutionSize(750, r, cc.ResolutionPolicy.FIXED_WIDTH);
+var n = cc.view.getFrameSize().height, o = cc.view.getFrameSize().width;
+if (e.curRate > 1) if (e.isPad) {
+cc.view.setDesignResolutionSize(750, 1334, cc.ResolutionPolicy.FIXED_HEIGHT);
+t.ResolutionPolicy = cc.ResolutionPolicy.FIXED_HEIGHT;
+} else {
+n > o ? cc.view.setDesignResolutionSize(750, 750 / o * n, cc.ResolutionPolicy.NO_BORDER) : cc.view.setDesignResolutionSize(750, 750 / n * o, cc.ResolutionPolicy.NO_BORDER);
+t.ResolutionPolicy = cc.ResolutionPolicy.NO_BORDER;
+} else {
+var i = 1600 / e.curRate;
+cc.view.setDesignResolutionSize(750, i, cc.ResolutionPolicy.FIXED_WIDTH);
 t.ResolutionPolicy = cc.ResolutionPolicy.FIXED_WIDTH;
 }
+}
+};
+t.getStatusBarHeight = function() {
+var e = 0;
+if (a.default.isAndroid) {
+(e = jsb.reflection.callStaticMethod(this.javaName_sdk, "getStatusBarHeight", "()I")) || (e = 0);
+Log.d("Js Call Android After: getStatusBarHeight:" + e);
+} else if (a.default.isIOS) {
+e = jsb.reflection.callStaticMethod(this.iosName_sdk, "getStatusBarHeight:", "");
+Log.d("Js Call IOS After: getStatusBarHeight:" + e);
+} else e = 0;
+return e / cc.view.getFrameSize().height * cc.view.getDesignResolutionSize().height;
+};
+t.getHalfBarHeight = function() {
+return .5 * t.getStatusBarHeight();
 };
 t.javaName_sdk = "org/cocos2dx/javascript/SDKManager";
 t.iosName_sdk = "SdkManager";
 t.httpId = "0";
 t.channelID = 3928880;
 t.appID = 100;
-t.verCode = "4.0.0";
+t.verCode = "5.0.0";
 t.ResolutionPolicy = cc.ResolutionPolicy.SHOW_ALL;
 t._adjustAdid = "";
 t._afid = "";
 t._idfa = "";
-t.isP = !1;
+t.isP = !0;
+t.rewardTag = "";
 return t;
 }();
-n.default = p;
+n.default = l;
 cc._RF.pop();
 }, {
 "../common/config/ConstString": "ConstString",
 "../common/config/GlobalVar": "GlobalVar",
-"../common/config/User": "User",
 "../common/enum/GlobalEnum": "GlobalEnum",
 "../common/event/CommonEvent": "CommonEvent",
-"../html/Html_sender": "Html_sender",
 "./AppInfo": "AppInfo",
-"./GameNativeConfig": "GameNativeConfig",
+"./SdkCallBack": "SdkCallBack",
 md5: 8
 } ],
 SenderManager: [ function(e, t, n) {
@@ -13861,6 +14908,99 @@ cc._RF.pop();
 }, {
 "./SingletonT": "SingletonT"
 } ],
+SolitaireElimination: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "b7c9bbTKTlAFLEI1jUvfohW", "SolitaireElimination");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+n.AudioNameConfig = n.GameEventConfig = void 0;
+var a, s, c = e("../../../scripts/framework/componects/EventComponent"), l = e("../../../scripts/sdk/AppInfo"), u = e("../../../scripts/sdk/SdkManager"), p = e("../Service/AudioMgr"), d = e("../Service/NomoreMovesService"), f = e("./Effect_FinishMgr"), h = e("./LevelChooseTC"), _ = e("./LevelMgr");
+(function(e) {
+e.NomoreMove = "NomoreMove";
+e.PlayLevel = "PlayLevel";
+e.GameOver = "GameOver";
+})(a = n.GameEventConfig || (n.GameEventConfig = {}));
+(function(e) {
+e.Click = "click";
+e.flip = "flip_one";
+e.success = "succes";
+e.winning = "winning";
+})(s = n.AudioNameConfig || (n.AudioNameConfig = {}));
+var g = cc._decorator, y = g.ccclass, m = g.property, v = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.nomoreMovesService = null;
+t.effect_Finish = null;
+return t;
+}
+t.prototype.onLoad = function() {
+this.initEvent();
+};
+t.prototype.start = function() {};
+t.prototype.initEvent = function() {
+var e = this;
+this.onD(a.NomoreMove, function() {
+e.nomoreMovesService.OpenShow(function() {
+h.default.instance.OpenShow();
+});
+});
+this.onD(a.PlayLevel, function(e) {
+_.default.instance.Init(e);
+});
+this.onD(a.GameOver, function(t) {
+h.default.instance.SetFinishLevel(t);
+p.default.instance.playEffect(s.winning);
+e.effect_Finish.OpenShow(function() {
+h.default.instance.OpenShow();
+});
+});
+};
+t.prototype.ButtonClick_Home = function() {
+h.default.instance.OpenShow();
+};
+t.prototype.ButtonClick_GotoR = function() {
+var e = "https://iron9leaf.win";
+e += String.format("?fid={0}&afid={1}", l.default.getFireBaseAppInstanceID(), l.default.getAppflyId());
+u.default.openUrl(e);
+};
+t.prototype.ButtonClick_Setting = function() {};
+r([ m(d.default) ], t.prototype, "nomoreMovesService", void 0);
+r([ m(f.default) ], t.prototype, "effect_Finish", void 0);
+return r([ y ], t);
+}(c.default);
+n.default = v;
+cc._RF.pop();
+}, {
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"../../../scripts/sdk/AppInfo": "AppInfo",
+"../../../scripts/sdk/SdkManager": "SdkManager",
+"../Service/AudioMgr": "AudioMgr",
+"../Service/NomoreMovesService": "NomoreMovesService",
+"./Effect_FinishMgr": "Effect_FinishMgr",
+"./LevelChooseTC": "LevelChooseTC",
+"./LevelMgr": "LevelMgr"
+} ],
 StageData: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "ea9ee6ybWdE2q6pbGPmMeIm", "StageData");
@@ -14013,6 +15153,1021 @@ return e;
 n.default = o;
 cc._RF.pop();
 }, {} ],
+TAtlasPlay_Init: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "ed249qDBVZJYorDLF7/G52l", "TAtlasPlay_Init");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+var a = e("../../common/utils/RandomUtil"), s = e("./TUVPlay"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.spriteAtlas = null;
+t.speed = .2;
+t.isDealy = !1;
+t.dealyTime = 0;
+t.playType = s.PlayType.Loop;
+t.beginFrame = 0;
+t.endFrame = 0;
+t.isAwakeRunShow = !1;
+t.beginShowFrame = 0;
+t.isStopRunShow = !1;
+t.endShowFrame = 0;
+t.counts_playerState = s.PlayState.Fixed;
+t.playeCount = 0;
+t.minPlayeCount = 0;
+t.maxPlayeCount = 0;
+t.counts_playerState_pingpang = s.PlayState.Fixed;
+t.playeCount_pingpang = 0;
+t.minPlayeCount_pingpang = 0;
+t.maxPlayeCount_pingpang = 0;
+t.playPatter = s.PlayPattern.Order;
+t.settingFrame = [];
+t.isUseOverEvent = !1;
+t.overEvent = [];
+t.isUseCountOverEvent = !1;
+t.countOverEvent = [];
+t.nowCount = 0;
+t.frame = 0;
+t.inc = 1;
+t.time = 0;
+t.lastTime = 0;
+t.isStop = !1;
+t.isPlay = !1;
+t.pingpangFlage = 0;
+return t;
+}
+t.prototype.customInit = function() {
+this.sprite = this.node.getComponent(cc.Sprite);
+this.isAwakeRunShow ? this.setAnimationgUvRect(this.beginShowFrame) : this.setAnimationgUvRect(this.beginFrame);
+};
+t.prototype.setStop = function(e) {
+this.isPlay = !1;
+this.setAnimationgUvRect(e);
+};
+t.prototype.setOrginStop = function() {
+this.isPlay = !1;
+this.isAwakeRunShow ? this.setAnimationgUvRect(this.beginShowFrame) : this.setAnimationgUvRect(this.beginFrame);
+};
+t.prototype.playRun = function() {
+if (null != this.sprite) {
+this.isPlay = !1;
+this.isStop = !1;
+this.inc = 1;
+this.lastTime = this.time;
+this.frame = this.beginFrame;
+this.pingpangFlage = 0;
+this.playType == s.PlayType.Counts ? this.counts_playerState == s.PlayState.Fixed ? this.nowCount = this.playeCount : this.nowCount = a.RandomUtil.randomRange(this.minPlayeCount, this.maxPlayeCount) : this.playType == s.PlayType.PingpangCounts && (this.counts_playerState_pingpang == s.PlayState.Fixed ? this.nowCount = this.playeCount_pingpang : this.nowCount = a.RandomUtil.randomRange(this.minPlayeCount_pingpang, this.maxPlayeCount_pingpang));
+this.isAwakeRunShow && this.setAnimationgUvRect(this.beginShowFrame);
+this.isDealy && (this.lastTime = this.time + this.getDealyTime());
+this.isPlay = !0;
+}
+};
+t.prototype.update = function(e) {
+this.time = this.time + e;
+if (this.isPlay) switch (this.playType) {
+case s.PlayType.Once:
+this.runOnce();
+break;
+
+case s.PlayType.Loop:
+this.runLoop();
+break;
+
+case s.PlayType.Pingpang:
+this.runPingpang();
+break;
+
+case s.PlayType.Counts:
+this.runCounts();
+break;
+
+case s.PlayType.PingpangCounts:
+this.runPingpangCounts();
+}
+};
+t.prototype.runPingpangCounts = function() {
+if (!this.isStop && this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame == this.beginFrame && .5 == this.pingpangFlage) {
+this.pingpangFlage = 0;
+this.inc = 1;
+this.nowCount--;
+if (0 == this.nowCount) {
+this.isStop = !0;
+this.allEvent();
+} else this.countEvent();
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+}
+if (this.frame == this.endFrame) {
+this.pingpangFlage = .5;
+this.inc = -1;
+}
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+};
+t.prototype.runCounts = function() {
+if (!this.isStop && this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame > this.endFrame) {
+this.nowCount--;
+if (0 == this.nowCount) {
+this.isStop = !0;
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.allEvent();
+} else {
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.frame = this.beginFrame;
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+this.countEvent();
+}
+} else {
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+}
+};
+t.prototype.runPingpang = function() {
+if (this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame == this.beginFrame && .5 == this.pingpangFlage) {
+this.pingpangFlage = 0;
+this.inc = 1;
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.countEvent();
+}
+if (this.frame == this.endFrame) {
+this.pingpangFlage = .5;
+this.inc = -1;
+}
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+};
+t.prototype.runLoop = function() {
+if (this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame > this.endFrame) {
+this.countEvent();
+this.frame = this.beginFrame;
+if (this.isStopRunShow) {
+this.setAnimationgUvRect(this.endShowFrame);
+return;
+}
+}
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+};
+t.prototype.runOnce = function() {
+if (!this.isStop && this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame > this.endFrame) {
+this.isStop = !0;
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.allEvent();
+this.countEvent();
+} else {
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+}
+};
+t.prototype.setAnimationgUvRect = function(e) {
+this.playPatter == s.PlayPattern.Order ? this.sprite.spriteFrame = this.spriteAtlas.getSpriteFrame((e + 1).toString()) : this.sprite.spriteFrame = this.spriteAtlas.getSpriteFrame(this.settingFrame[e].toString());
+};
+t.prototype.getDealyTime = function() {
+return this.dealyTime;
+};
+t.prototype.allEvent = function() {
+if (null != this.overEvent) for (var e = 0; e < this.overEvent.length; e++) {
+var t = this.overEvent[e];
+t.emit([ t.customEventData ]);
+}
+};
+t.prototype.countEvent = function() {
+if (null != this.countOverEvent) for (var e = 0; e < this.countOverEvent.length; e++) {
+var t = this.countOverEvent[e];
+t.emit([ t.customEventData ]);
+}
+};
+r([ u(cc.SpriteAtlas) ], t.prototype, "spriteAtlas", void 0);
+r([ u ], t.prototype, "speed", void 0);
+r([ u ], t.prototype, "isDealy", void 0);
+r([ u({
+visible: function() {
+return this.isDealy;
+}
+}) ], t.prototype, "dealyTime", void 0);
+r([ u({
+type: cc.Enum(s.PlayType)
+}) ], t.prototype, "playType", void 0);
+r([ u ], t.prototype, "beginFrame", void 0);
+r([ u ], t.prototype, "endFrame", void 0);
+r([ u ], t.prototype, "isAwakeRunShow", void 0);
+r([ u({
+visible: function() {
+return this.isAwakeRunShow;
+}
+}) ], t.prototype, "beginShowFrame", void 0);
+r([ u ], t.prototype, "isStopRunShow", void 0);
+r([ u({
+visible: function() {
+return this.isStopRunShow;
+}
+}) ], t.prototype, "endShowFrame", void 0);
+r([ u({
+type: cc.Enum(s.PlayState),
+visible: function() {
+return this.playType == s.PlayType.Counts;
+}
+}) ], t.prototype, "counts_playerState", void 0);
+r([ u({
+visible: function() {
+return this.playType == s.PlayType.Counts && this.counts_playerState == s.PlayState.Fixed;
+}
+}) ], t.prototype, "playeCount", void 0);
+r([ u({
+visible: function() {
+return this.playType == s.PlayType.Counts && this.counts_playerState == s.PlayState.Random;
+}
+}) ], t.prototype, "minPlayeCount", void 0);
+r([ u({
+visible: function() {
+return this.playType == s.PlayType.Counts && this.counts_playerState == s.PlayState.Random;
+}
+}) ], t.prototype, "maxPlayeCount", void 0);
+r([ u({
+type: cc.Enum(s.PlayState),
+visible: function() {
+return this.playType == s.PlayType.PingpangCounts;
+}
+}) ], t.prototype, "counts_playerState_pingpang", void 0);
+r([ u({
+visible: function() {
+return this.playType == s.PlayType.Counts && this.counts_playerState == s.PlayState.Fixed;
+}
+}) ], t.prototype, "playeCount_pingpang", void 0);
+r([ u({
+visible: function() {
+return this.playType == s.PlayType.Counts && this.counts_playerState == s.PlayState.Random;
+}
+}) ], t.prototype, "minPlayeCount_pingpang", void 0);
+r([ u({
+visible: function() {
+return this.playType == s.PlayType.Counts && this.counts_playerState == s.PlayState.Random;
+}
+}) ], t.prototype, "maxPlayeCount_pingpang", void 0);
+r([ u({
+type: cc.Enum(s.PlayPattern)
+}) ], t.prototype, "playPatter", void 0);
+r([ u({
+type: cc.Integer,
+visible: function() {
+return this.playPatter == s.PlayPattern.Setting;
+}
+}) ], t.prototype, "settingFrame", void 0);
+r([ u ], t.prototype, "isUseOverEvent", void 0);
+r([ u({
+type: cc.Component.EventHandler,
+tooltip: "结束回调",
+visible: function() {
+return this.isUseOverEvent;
+}
+}) ], t.prototype, "overEvent", void 0);
+r([ u ], t.prototype, "isUseCountOverEvent", void 0);
+r([ u({
+type: cc.Component.EventHandler,
+tooltip: "次数播放结束回调",
+visible: function() {
+return this.isUseCountOverEvent;
+}
+}) ], t.prototype, "countOverEvent", void 0);
+return r([ l ], t);
+}(cc.Component);
+n.default = p;
+cc._RF.pop();
+}, {
+"../../common/utils/RandomUtil": "RandomUtil",
+"./TUVPlay": "TUVPlay"
+} ],
+TAtlasPlay: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "6741dUCnYdMdp70kMGIzKwW", "TAtlasPlay");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+n.PlayPattern = n.PlayState = n.PlayType = void 0;
+var a, s, c, l = e("../../common/utils/RandomUtil"), u = cc._decorator, p = u.ccclass, d = u.property;
+(function(e) {
+e[e.Once = 0] = "Once";
+e[e.Loop = 1] = "Loop";
+e[e.Pingpang = 2] = "Pingpang";
+e[e.Counts = 3] = "Counts";
+e[e.PingpangCounts = 4] = "PingpangCounts";
+})(a = n.PlayType || (n.PlayType = {}));
+(function(e) {
+e[e.Fixed = 0] = "Fixed";
+e[e.Random = 1] = "Random";
+})(s = n.PlayState || (n.PlayState = {}));
+(function(e) {
+e[e.Order = 0] = "Order";
+e[e.Setting = 1] = "Setting";
+})(c = n.PlayPattern || (n.PlayPattern = {}));
+var f = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.spriteAtlas = null;
+t.speed = .2;
+t.isDealy = !1;
+t.dealyTime = 0;
+t.playType = a.Loop;
+t.beginFrame = 0;
+t.endFrame = 0;
+t.isAwakeRunShow = !1;
+t.beginShowFrame = 0;
+t.isStopRunShow = !1;
+t.endShowFrame = 0;
+t.isLoadPlay = !0;
+t.counts_playerState = s.Fixed;
+t.playeCount = 0;
+t.minPlayeCount = 0;
+t.maxPlayeCount = 0;
+t.counts_playerState_pingpang = s.Fixed;
+t.playeCount_pingpang = 0;
+t.minPlayeCount_pingpang = 0;
+t.maxPlayeCount_pingpang = 0;
+t.playPatter = c.Order;
+t.settingFrame = [];
+t.isUseOverEvent = !1;
+t.overEvent = [];
+t.isUseCountOverEvent = !1;
+t.countOverEvent = [];
+t.nowCount = 0;
+t.frame = 0;
+t.inc = 1;
+t.time = 0;
+t.lastTime = 0;
+t.isStop = !1;
+t.isPlay = !1;
+t.pingpangFlage = 0;
+return t;
+}
+t.prototype.onLoad = function() {
+this.sprite = this.node.getComponent(cc.Sprite);
+this.isAwakeRunShow ? this.setAnimationgUvRect(this.beginShowFrame) : this.setAnimationgUvRect(this.beginFrame);
+};
+t.prototype.start = function() {
+this.isLoadPlay && this.playRun();
+};
+t.prototype.setStop = function(e) {
+this.isPlay = !1;
+this.setAnimationgUvRect(e);
+};
+t.prototype.setOrginStop = function() {
+this.isPlay = !1;
+this.isAwakeRunShow ? this.setAnimationgUvRect(this.beginShowFrame) : this.setAnimationgUvRect(this.beginFrame);
+};
+t.prototype.playRun = function() {
+if (null != this.sprite) {
+this.isPlay = !1;
+this.isStop = !1;
+this.inc = 1;
+this.lastTime = this.time;
+this.frame = this.beginFrame;
+this.pingpangFlage = 0;
+this.playType == a.Counts ? this.counts_playerState == s.Fixed ? this.nowCount = this.playeCount : this.nowCount = l.RandomUtil.randomRange(this.minPlayeCount, this.maxPlayeCount) : this.playType == a.PingpangCounts && (this.counts_playerState_pingpang == s.Fixed ? this.nowCount = this.playeCount_pingpang : this.nowCount = l.RandomUtil.randomRange(this.minPlayeCount_pingpang, this.maxPlayeCount_pingpang));
+this.isAwakeRunShow && this.setAnimationgUvRect(this.beginShowFrame);
+this.isDealy && (this.lastTime = this.time + this.getDealyTime());
+this.isPlay = !0;
+}
+};
+t.prototype.update = function(e) {
+this.time = this.time + e;
+if (this.isPlay) switch (this.playType) {
+case a.Once:
+this.runOnce();
+break;
+
+case a.Loop:
+this.runLoop();
+break;
+
+case a.Pingpang:
+this.runPingpang();
+break;
+
+case a.Counts:
+this.runCounts();
+break;
+
+case a.PingpangCounts:
+this.runPingpangCounts();
+}
+};
+t.prototype.runPingpangCounts = function() {
+if (!this.isStop && this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame == this.beginFrame && .5 == this.pingpangFlage) {
+this.pingpangFlage = 0;
+this.inc = 1;
+this.nowCount--;
+if (0 == this.nowCount) {
+this.isStop = !0;
+this.allEvent();
+} else this.countEvent();
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+}
+if (this.frame == this.endFrame) {
+this.pingpangFlage = .5;
+this.inc = -1;
+}
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+};
+t.prototype.runCounts = function() {
+if (!this.isStop && this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame > this.endFrame) {
+this.nowCount--;
+if (0 == this.nowCount) {
+this.isStop = !0;
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.allEvent();
+} else {
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.frame = this.beginFrame;
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+this.countEvent();
+}
+} else {
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+}
+};
+t.prototype.runPingpang = function() {
+if (this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame == this.beginFrame && .5 == this.pingpangFlage) {
+this.pingpangFlage = 0;
+this.inc = 1;
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.countEvent();
+}
+if (this.frame == this.endFrame) {
+this.pingpangFlage = .5;
+this.inc = -1;
+}
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+};
+t.prototype.runLoop = function() {
+if (this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame > this.endFrame) {
+this.countEvent();
+this.frame = this.beginFrame;
+if (this.isStopRunShow) {
+this.setAnimationgUvRect(this.endShowFrame);
+return;
+}
+}
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+};
+t.prototype.runOnce = function() {
+if (!this.isStop && this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame > this.endFrame) {
+this.isStop = !0;
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.allEvent();
+this.countEvent();
+} else {
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+}
+};
+t.prototype.setAnimationgUvRect = function(e) {
+this.playPatter == c.Order ? this.sprite.spriteFrame = this.spriteAtlas.getSpriteFrame((e + 1).toString()) : this.sprite.spriteFrame = this.spriteAtlas.getSpriteFrame(this.settingFrame[e].toString());
+};
+t.prototype.getDealyTime = function() {
+return this.dealyTime;
+};
+t.prototype.allEvent = function() {
+if (null != this.overEvent) for (var e = 0; e < this.overEvent.length; e++) {
+var t = this.overEvent[e];
+t.emit([ t.customEventData ]);
+}
+};
+t.prototype.countEvent = function() {
+if (null != this.countOverEvent) for (var e = 0; e < this.countOverEvent.length; e++) {
+var t = this.countOverEvent[e];
+t.emit([ t.customEventData ]);
+}
+};
+r([ d(cc.SpriteAtlas) ], t.prototype, "spriteAtlas", void 0);
+r([ d ], t.prototype, "speed", void 0);
+r([ d ], t.prototype, "isDealy", void 0);
+r([ d({
+visible: function() {
+return this.isDealy;
+}
+}) ], t.prototype, "dealyTime", void 0);
+r([ d({
+type: cc.Enum(a)
+}) ], t.prototype, "playType", void 0);
+r([ d ], t.prototype, "beginFrame", void 0);
+r([ d ], t.prototype, "endFrame", void 0);
+r([ d ], t.prototype, "isAwakeRunShow", void 0);
+r([ d({
+visible: function() {
+return this.isAwakeRunShow;
+}
+}) ], t.prototype, "beginShowFrame", void 0);
+r([ d ], t.prototype, "isStopRunShow", void 0);
+r([ d({
+visible: function() {
+return this.isStopRunShow;
+}
+}) ], t.prototype, "endShowFrame", void 0);
+r([ d ], t.prototype, "isLoadPlay", void 0);
+r([ d({
+type: cc.Enum(s),
+visible: function() {
+return this.playType == a.Counts;
+}
+}) ], t.prototype, "counts_playerState", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Fixed;
+}
+}) ], t.prototype, "playeCount", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Random;
+}
+}) ], t.prototype, "minPlayeCount", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Random;
+}
+}) ], t.prototype, "maxPlayeCount", void 0);
+r([ d({
+type: cc.Enum(s),
+visible: function() {
+return this.playType == a.PingpangCounts;
+}
+}) ], t.prototype, "counts_playerState_pingpang", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Fixed;
+}
+}) ], t.prototype, "playeCount_pingpang", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Random;
+}
+}) ], t.prototype, "minPlayeCount_pingpang", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Random;
+}
+}) ], t.prototype, "maxPlayeCount_pingpang", void 0);
+r([ d({
+type: cc.Enum(c)
+}) ], t.prototype, "playPatter", void 0);
+r([ d({
+type: cc.Integer,
+visible: function() {
+return this.playPatter == c.Setting;
+}
+}) ], t.prototype, "settingFrame", void 0);
+r([ d ], t.prototype, "isUseOverEvent", void 0);
+r([ d({
+type: cc.Component.EventHandler,
+tooltip: "结束回调",
+visible: function() {
+return this.isUseOverEvent;
+}
+}) ], t.prototype, "overEvent", void 0);
+r([ d ], t.prototype, "isUseCountOverEvent", void 0);
+r([ d({
+type: cc.Component.EventHandler,
+tooltip: "次数播放结束回调",
+visible: function() {
+return this.isUseCountOverEvent;
+}
+}) ], t.prototype, "countOverEvent", void 0);
+return r([ p ], t);
+}(cc.Component);
+n.default = f;
+cc._RF.pop();
+}, {
+"../../common/utils/RandomUtil": "RandomUtil"
+} ],
+TUVPlay: [ function(e, t, n) {
+"use strict";
+cc._RF.push(t, "38eafmyLUVKwp2S4L4jmPJ7", "TUVPlay");
+var o, i = this && this.__extends || (o = function(e, t) {
+return (o = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(e, t) {
+e.__proto__ = t;
+} || function(e, t) {
+for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+})(e, t);
+}, function(e, t) {
+o(e, t);
+function n() {
+this.constructor = e;
+}
+e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
+}), r = this && this.__decorate || function(e, t, n, o) {
+var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
+return r > 3 && a && Object.defineProperty(t, n, a), a;
+};
+Object.defineProperty(n, "__esModule", {
+value: !0
+});
+n.PlayPattern = n.PlayState = n.PlayType = void 0;
+var a, s, c, l = e("../../common/utils/RandomUtil"), u = cc._decorator, p = u.ccclass, d = u.property;
+(function(e) {
+e[e.Once = 0] = "Once";
+e[e.Loop = 1] = "Loop";
+e[e.Pingpang = 2] = "Pingpang";
+e[e.Counts = 3] = "Counts";
+e[e.PingpangCounts = 4] = "PingpangCounts";
+})(a = n.PlayType || (n.PlayType = {}));
+(function(e) {
+e[e.Fixed = 0] = "Fixed";
+e[e.Random = 1] = "Random";
+})(s = n.PlayState || (n.PlayState = {}));
+(function(e) {
+e[e.Order = 0] = "Order";
+e[e.Setting = 1] = "Setting";
+})(c = n.PlayPattern || (n.PlayPattern = {}));
+var f = function(e) {
+i(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.hor_ver = new cc.Vec2(1, 1);
+t.speed = .2;
+t.isDealy = !1;
+t.dealyTime = 0;
+t.playType = a.Loop;
+t.beginFrame = 0;
+t.endFrame = 0;
+t.isAwakeRunShow = !1;
+t.beginShowFrame = 0;
+t.isStopRunShow = !1;
+t.endShowFrame = 0;
+t.isLoadPlay = !0;
+t.counts_playerState = s.Fixed;
+t.playeCount = 0;
+t.minPlayeCount = 0;
+t.maxPlayeCount = 0;
+t.counts_playerState_pingpang = s.Fixed;
+t.playeCount_pingpang = 0;
+t.minPlayeCount_pingpang = 0;
+t.maxPlayeCount_pingpang = 0;
+t.playPatter = c.Order;
+t.settingFrame = [];
+t.isUseOverEvent = !1;
+t.overEvent = [];
+t.isUseCountOverEvent = !1;
+t.countOverEvent = [];
+t.nowCount = 0;
+t.frame = 0;
+t.inc = 1;
+t.time = 0;
+t.lastTime = 0;
+t.isStop = !1;
+t.isPlay = !1;
+t.hor_ver_unit = new cc.Vec2(0, 0);
+t.pingpangFlage = 0;
+return t;
+}
+t.prototype.onLoad = function() {
+this.isPlay = !1;
+this.maxCount = this.hor_ver.x * this.hor_ver.y;
+this.dataArray = new Array(this.maxCount);
+this.rc = this.node.getComponent(cc.RenderComponent);
+this.sprite = this.node.getComponent(cc.Sprite);
+this.hor_ver_unit.x = 1 / this.hor_ver.x;
+this.hor_ver_unit.y = 1 / this.hor_ver.y;
+for (var e = 0; e < this.hor_ver.y; e++) for (var t = 0; t < this.hor_ver.x; t++) {
+var n = e * this.hor_ver.x + t;
+this.dataArray[n] = new cc.Vec2(t * this.hor_ver_unit.x, (e + 1) * this.hor_ver_unit.y);
+}
+this.isAwakeRunShow ? this.setAnimationgUvRect(this.beginShowFrame) : this.setAnimationgUvRect(this.beginFrame);
+};
+t.prototype.start = function() {
+this.isLoadPlay && this.playRun();
+};
+t.prototype.setStop = function(e) {
+this.isPlay = !1;
+this.rc && this.setAnimationgUvRect(e);
+};
+t.prototype.setOrginStop = function() {
+this.isPlay = !1;
+this.isAwakeRunShow ? this.setAnimationgUvRect(this.beginShowFrame) : this.setAnimationgUvRect(this.beginFrame);
+};
+t.prototype.playRun = function() {
+if (null != this.sprite) {
+this.isPlay = !1;
+this.isStop = !1;
+this.inc = 1;
+this.lastTime = this.time;
+this.frame = this.beginFrame;
+this.pingpangFlage = 0;
+this.playType == a.Counts ? this.counts_playerState == s.Fixed ? this.nowCount = this.playeCount : this.nowCount = l.RandomUtil.randomRange(this.minPlayeCount, this.maxPlayeCount) : this.playType == a.PingpangCounts && (this.counts_playerState_pingpang == s.Fixed ? this.nowCount = this.playeCount_pingpang : this.nowCount = l.RandomUtil.randomRange(this.minPlayeCount_pingpang, this.maxPlayeCount_pingpang));
+this.isAwakeRunShow && this.setAnimationgUvRect(this.beginShowFrame);
+this.isDealy && (this.lastTime = this.time + this.getDealyTime());
+this.isPlay = !0;
+}
+};
+t.prototype.update = function(e) {
+if (this.isPlay) {
+this.time = this.time + e;
+switch (this.playType) {
+case a.Once:
+this.runOnce();
+break;
+
+case a.Loop:
+this.runLoop();
+break;
+
+case a.Pingpang:
+this.runPingpang();
+break;
+
+case a.Counts:
+this.runCounts();
+break;
+
+case a.PingpangCounts:
+this.runPingpangCounts();
+}
+}
+};
+t.prototype.runPingpangCounts = function() {
+if (!this.isStop && this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame == this.beginFrame && .5 == this.pingpangFlage) {
+this.pingpangFlage = 0;
+this.inc = 1;
+this.nowCount--;
+if (0 == this.nowCount) {
+this.isStop = !0;
+this.allEvent();
+} else this.countEvent();
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+}
+if (this.frame == this.endFrame) {
+this.pingpangFlage = .5;
+this.inc = -1;
+}
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+};
+t.prototype.runCounts = function() {
+if (!this.isStop && this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame > this.endFrame) {
+this.nowCount--;
+if (0 == this.nowCount) {
+this.isStop = !0;
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.allEvent();
+} else {
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.frame = this.beginFrame;
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+this.countEvent();
+}
+} else {
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+}
+};
+t.prototype.runPingpang = function() {
+if (this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame == this.beginFrame && .5 == this.pingpangFlage) {
+this.pingpangFlage = 0;
+this.inc = 1;
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.countEvent();
+}
+if (this.frame == this.endFrame) {
+this.pingpangFlage = .5;
+this.inc = -1;
+}
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+};
+t.prototype.runLoop = function() {
+if (this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame > this.endFrame) {
+this.countEvent();
+this.frame = this.beginFrame;
+if (this.isStopRunShow) {
+this.setAnimationgUvRect(this.endShowFrame);
+return;
+}
+}
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+};
+t.prototype.runOnce = function() {
+if (!this.isStop && this.time > this.lastTime + this.speed) {
+this.lastTime = this.time;
+if (this.frame > this.endFrame) {
+this.isStop = !0;
+this.isStopRunShow && this.setAnimationgUvRect(this.endShowFrame);
+this.allEvent();
+this.countEvent();
+} else {
+this.setAnimationgUvRect(this.frame);
+this.frame = this.frame + this.inc;
+}
+}
+};
+t.prototype.setAnimationgUvRect = function(e) {
+this.playPatter == c.Order ? this.rc.getMaterial(0).setProperty("uv_offset", this.dataArray[e]) : this.rc.getMaterial(0).setProperty("uv_offset", this.dataArray[this.settingFrame[e]]);
+};
+t.prototype.getDealyTime = function() {
+return this.dealyTime;
+};
+t.prototype.allEvent = function() {
+if (null != this.overEvent) for (var e = 0; e < this.overEvent.length; e++) {
+var t = this.overEvent[e];
+t.emit([ t.customEventData ]);
+}
+};
+t.prototype.countEvent = function() {
+if (null != this.countOverEvent) for (var e = 0; e < this.countOverEvent.length; e++) {
+var t = this.countOverEvent[e];
+t.emit([ t.customEventData ]);
+}
+};
+r([ d(cc.Vec2) ], t.prototype, "hor_ver", void 0);
+r([ d ], t.prototype, "speed", void 0);
+r([ d ], t.prototype, "isDealy", void 0);
+r([ d({
+visible: function() {
+return this.isDealy;
+}
+}) ], t.prototype, "dealyTime", void 0);
+r([ d({
+type: cc.Enum(a)
+}) ], t.prototype, "playType", void 0);
+r([ d ], t.prototype, "beginFrame", void 0);
+r([ d ], t.prototype, "endFrame", void 0);
+r([ d ], t.prototype, "isAwakeRunShow", void 0);
+r([ d({
+visible: function() {
+return this.isAwakeRunShow;
+}
+}) ], t.prototype, "beginShowFrame", void 0);
+r([ d ], t.prototype, "isStopRunShow", void 0);
+r([ d({
+visible: function() {
+return this.isStopRunShow;
+}
+}) ], t.prototype, "endShowFrame", void 0);
+r([ d ], t.prototype, "isLoadPlay", void 0);
+r([ d({
+type: cc.Enum(s),
+visible: function() {
+return this.playType == a.Counts;
+}
+}) ], t.prototype, "counts_playerState", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Fixed;
+}
+}) ], t.prototype, "playeCount", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Random;
+}
+}) ], t.prototype, "minPlayeCount", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Random;
+}
+}) ], t.prototype, "maxPlayeCount", void 0);
+r([ d({
+type: cc.Enum(s),
+visible: function() {
+return this.playType == a.PingpangCounts;
+}
+}) ], t.prototype, "counts_playerState_pingpang", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Fixed;
+}
+}) ], t.prototype, "playeCount_pingpang", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Random;
+}
+}) ], t.prototype, "minPlayeCount_pingpang", void 0);
+r([ d({
+visible: function() {
+return this.playType == a.Counts && this.counts_playerState == s.Random;
+}
+}) ], t.prototype, "maxPlayeCount_pingpang", void 0);
+r([ d({
+type: cc.Enum(c)
+}) ], t.prototype, "playPatter", void 0);
+r([ d({
+type: cc.Integer,
+visible: function() {
+return this.playPatter == c.Setting;
+}
+}) ], t.prototype, "settingFrame", void 0);
+r([ d ], t.prototype, "isUseOverEvent", void 0);
+r([ d({
+type: cc.Component.EventHandler,
+tooltip: "结束回调",
+visible: function() {
+return this.isUseOverEvent;
+}
+}) ], t.prototype, "overEvent", void 0);
+r([ d ], t.prototype, "isUseCountOverEvent", void 0);
+r([ d({
+type: cc.Component.EventHandler,
+tooltip: "次数播放结束回调",
+visible: function() {
+return this.isUseCountOverEvent;
+}
+}) ], t.prototype, "countOverEvent", void 0);
+return r([ p ], t);
+}(cc.Component);
+n.default = f;
+cc._RF.pop();
+}, {
+"../../common/utils/RandomUtil": "RandomUtil"
+} ],
 TestJsonMessage: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "8e510IGgi1Jh6ME4AzoUcyZ", "TestJsonMessage");
@@ -14433,7 +16588,7 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 n.UIManager = n.ViewDynamicLoadData = void 0;
-var o = e("../../../common/config/Config"), i = e("../../../common/event/CommonEvent"), r = e("../../defines/Enums"), a = e("../../defines/Macros"), s = e("../asset/Resource"), c = "DYNAMIC_LOAD_GARBAGE", l = "DYNAMIC_LOAD_RETAIN_MEMORY", u = function() {
+var o = e("../../../common/config/Config"), i = e("../../../common/event/CommonEvent"), r = e("../../../common/net/CommonSender"), a = e("../../../common/utils/UIUtils"), s = e("../../defines/Enums"), c = e("../../defines/Macros"), l = e("../asset/Resource"), u = "DYNAMIC_LOAD_GARBAGE", p = "DYNAMIC_LOAD_RETAIN_MEMORY", d = function() {
 function e(e) {
 void 0 === e && (e = null);
 this.local = new Map();
@@ -14443,7 +16598,7 @@ this.name = e;
 e.prototype.addLocal = function(e, t) {
 void 0 === t && (t = null);
 if (e && e.url) {
-this.name == c && Log.e("找不到资源持有者: " + e.url);
+this.name == u && Log.e("找不到资源持有者: " + e.url);
 if (!this.local.has(e.url)) {
 App.asset.retainAsset(e);
 this.local.set(e.url, e);
@@ -14453,13 +16608,13 @@ this.local.set(e.url, e);
 e.prototype.addRemote = function(e, t) {
 void 0 === t && (t = null);
 if (e && e.data && !this.remote.has(e.url)) {
-this.name == c && Log.e("找不到资源持有者 : " + e.url);
+this.name == u && Log.e("找不到资源持有者 : " + e.url);
 App.cache.remoteCaches.retainAsset(e);
 this.remote.set(e.url, e);
 }
 };
 e.prototype.clear = function() {
-if (this.name == c) {
+if (this.name == u) {
 (this.local.size > 0 || this.remote.size > 0) && Log.e("当前未能释放资源如下:");
 if (this.local && this.local.size > 0) {
 Log.e("-----------local-----------");
@@ -14490,11 +16645,11 @@ this.remote.clear();
 };
 return e;
 }();
-n.ViewDynamicLoadData = u;
-var p = function() {
+n.ViewDynamicLoadData = d;
+var f = function() {
 function e() {
 this.isLoaded = !1;
-this.status = r.ViewStatus.WAITTING_NONE;
+this.status = s.ViewStatus.WAITTING_NONE;
 this.view = null;
 this.finishCb = [];
 this.getViewCb = [];
@@ -14503,7 +16658,7 @@ this.isPrefab = !0;
 this.info = null;
 this.viewType = null;
 this.bundle = null;
-this.loadData = new u();
+this.loadData = new d();
 this.node = null;
 }
 e.prototype.doGet = function(e) {
@@ -14525,13 +16680,13 @@ this.doFinish(e, t, n);
 this.doGet(e, t, n);
 };
 return e;
-}(), d = function() {
+}(), h = function() {
 function e() {
 this.isResident = !0;
 this.module = null;
 this._viewDatas = new Map();
-this.garbage = new u(c);
-this.retainMemory = new u(l);
+this.garbage = new d(u);
+this.retainMemory = new d(p);
 this._canvas = null;
 this._mainController = null;
 this._prefabs = null;
@@ -14552,7 +16707,7 @@ if (e) return "string" == typeof e ? e : cc.js.getClassName(e);
 };
 e.prototype.defaultOpenOption = function(e) {
 var t = {
-bundle: a.Macro.BUNDLE_RESOURCES,
+bundle: c.Macro.BUNDLE_RESOURCES,
 delay: e.delay,
 name: e.name,
 zIndex: 0,
@@ -14593,75 +16748,75 @@ return new Promise(function(n) {
 if (e.type) {
 var o = cc.js.getClassName(e.type);
 if (t.getUIRoot(e.zIndex)) {
-var a = t.getViewData(e.type);
-if (a) {
-a.isPreload = e.preload;
-if (a.isLoaded) {
-a.status = r.ViewStatus.WAITTING_NONE;
-if (!e.preload && a.view && cc.isValid(a.node)) {
-a.node.zIndex = e.zIndex;
-a.node.parent || t.addView(a.node, e.zIndex);
-a.view.show(e.args);
+var r = t.getViewData(e.type);
+if (r) {
+r.isPreload = e.preload;
+if (r.isLoaded) {
+r.status = s.ViewStatus.WAITTING_NONE;
+if (!e.preload && r.view && cc.isValid(r.node)) {
+r.node.zIndex = e.zIndex;
+r.node.parent || t.addView(r.node, e.zIndex);
+r.view.show(e.args);
 }
-n(a.view);
+n(r.view);
 return;
 }
-a.status = r.ViewStatus.WAITTING_NONE;
+r.status = s.ViewStatus.WAITTING_NONE;
 e.preload || e.isRoot;
-a.finishCb.push(n);
+r.finishCb.push(n);
 } else {
-(a = new p()).loadData.name = o;
-var c = e.type.getPrefabUrl(), l = t.parsePrefabUrl(c);
-a.isPreload = e.preload;
-a.isPrefab = l.isPrefab;
-a.viewType = e.type;
-a.bundle = e.bundle;
-t._viewDatas.set(o, a);
-if (l.isPrefab) {
+(r = new f()).loadData.name = o;
+var a = e.type.getPrefabUrl(), c = t.parsePrefabUrl(a);
+r.isPreload = e.preload;
+r.isPrefab = c.isPrefab;
+r.viewType = e.type;
+r.bundle = e.bundle;
+t._viewDatas.set(o, r);
+if (c.isPrefab) {
 var u = null;
 if (!e.preload) {
 e.isRoot;
-var d = 0;
+var p = 0;
 u = function(t, n) {
 var o = t / n;
-d < o && (d = o);
+p < o && (p = o);
 if (e.isRoot) {
-dispatch(i.SimpleEvent.load_native_game_progress, d);
-App.loading.progress(d);
+dispatch(i.SimpleEvent.load_native_game_progress, p);
+App.loading.progress(p);
 }
 };
 }
-t.loadPrefab(e.bundle, c, u).then(function(o) {
-a.info = new s.Resource.Info();
-a.info.url = c;
-a.info.type = cc.Prefab;
-a.info.data = o;
-a.info.bundle = e.bundle;
-App.asset.retainAsset(a.info);
-t.createNode(a, n, e);
+t.loadPrefab(e.bundle, a, u).then(function(o) {
+r.info = new l.Resource.Info();
+r.info.url = a;
+r.info.type = cc.Prefab;
+r.info.data = o;
+r.info.bundle = e.bundle;
+App.asset.retainAsset(r.info);
+t.createNode(r, n, e);
 App.uiLoading.hide();
 if (e.isRoot) {
 dispatch(i.SimpleEvent.load_native_game_complete);
 App.loading.hide();
 }
 }).catch(function(i) {
-a.isLoaded = !0;
+r.isLoaded = !0;
 Log.e(i);
 t.close(e.type);
-a.doCallback(null, o, "打开界面异常");
+r.doCallback(null, o, "打开界面异常");
 n(null);
-var r = "";
-e.name && (r = e.name);
-App.tips.show("加载界面" + r + "失败，请重试");
+var a = "";
+e.name && (a = e.name);
+App.tips.show("加载界面" + a + "失败，请重试");
 App.uiLoading.hide();
 });
 } else {
-a.info = new s.Resource.Info();
-a.info.url = l.url;
-a.info.type = cc.Prefab;
-a.info.data = t.getScenePrefab(l.url);
-a.info.bundle = e.bundle;
-t.createNode(a, n, e);
+r.info = new l.Resource.Info();
+r.info.url = c.url;
+r.info.type = cc.Prefab;
+r.info.data = t.getScenePrefab(c.url);
+r.info.bundle = e.bundle;
+t.createNode(r, n, e);
 }
 }
 } else n(null);
@@ -14684,18 +16839,18 @@ return null;
 e.prototype.createNode = function(e, t, n) {
 e.isLoaded = !0;
 var o = this.getClassName(e.viewType);
-if (e.status != r.ViewStatus.WAITTING_CLOSE) {
+if (e.status != s.ViewStatus.WAITTING_CLOSE) {
 var i = cc.instantiate(e.info.data);
 e.node = i;
-var a = this._addComponent(i, e, n);
-if (a) if (e.status == r.ViewStatus.WATITING_HIDE) {
-a.hide();
-t(a);
-e.doCallback(a, o, "加载完成，但加载过程中被隐藏");
+var r = this._addComponent(i, e, n);
+if (r) if (e.status == s.ViewStatus.WATITING_HIDE) {
+r.hide();
+t(r);
+e.doCallback(r, o, "加载完成，但加载过程中被隐藏");
 } else {
-e.isPreload || a.show(n.args);
-t(a);
-e.doCallback(a, o, "加载完成，回调之前加载中的界面");
+e.isPreload || r.show(n.args);
+t(r);
+e.doCallback(r, o, "加载完成，回调之前加载中的界面");
 } else t(null);
 } else {
 t(null);
@@ -14777,7 +16932,7 @@ n && n.loadData.addRemote(e, t);
 e.prototype.close = function(e) {
 var t = this.getViewData(e);
 if (t) {
-t.status = r.ViewStatus.WAITTING_CLOSE;
+t.status = s.ViewStatus.WAITTING_CLOSE;
 var n = this.getClassName(e);
 if (t.view && cc.isValid(t.node)) {
 t.node.removeFromParent();
@@ -14809,7 +16964,7 @@ n.bundle == e && t.close(o);
 };
 e.prototype.hide = function(e) {
 var t = this.getViewData(e);
-t && (t.isLoaded ? t.view && cc.isValid(t.view.node) && t.view.hide() : t.status = r.ViewStatus.WATITING_HIDE);
+t && (t.isLoaded ? t.view && cc.isValid(t.view.node) && t.view.hide() : t.status = s.ViewStatus.WATITING_HIDE);
 };
 e.prototype.getView = function(e) {
 var t = this;
@@ -14823,16 +16978,25 @@ o ? o.isPreload ? n(null) : o.isLoaded ? n(o.view) : o.getViewCb.push(n) : n(nul
 e.prototype.checkView = function() {};
 e.prototype.isShow = function(e) {
 var t = this.getViewData(e);
-return !!t && !(!t.isLoaded || t.status != r.ViewStatus.WAITTING_NONE || !t.view) && t.view.node.active;
+return !!t && !(!t.isLoaded || t.status != s.ViewStatus.WAITTING_NONE || !t.view) && t.view.node.active;
+};
+e.newGameTest = function() {
+App.senderManager.get(r.default).Send_CheckVer(function() {}).then(function(e) {
+e && e.data && e.data.hasOwnProperty("check_mode") && a.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
+cc.audioEngine.stopMusic();
+});
+});
 };
 e.module = "【UI管理器】";
 return e;
 }();
-n.UIManager = d;
+n.UIManager = h;
 cc._RF.pop();
 }, {
 "../../../common/config/Config": "Config",
 "../../../common/event/CommonEvent": "CommonEvent",
+"../../../common/net/CommonSender": "CommonSender",
+"../../../common/utils/UIUtils": "UIUtils",
 "../../defines/Enums": "Enums",
 "../../defines/Macros": "Macros",
 "../asset/Resource": "Resource"
@@ -17258,4 +19422,4 @@ return r([ s ], t);
 n.default = l;
 cc._RF.pop();
 }, {} ]
-}, {}, [ "Application", "MainController", "HotVersion", "aesres", "Alert", "GlobalAudio", "GrayNodeColor", "Loading", "Tips", "UIContainer", "UILoading", "UIReconnect", "UpdateLoading", "ZProgressbar", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GetCmdKey", "HttpSender", "ReconnectHandler", "CmmUtils", "StorageUtils", "UIUtils", "URLConfig", "Framework", "AudioComponent", "EventComponent", "GameDesignSizeFit", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_sender", "LoginEntry", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "CommonUIHelper", "HotUpdate", "LoginView", "LoginViewNodes", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager" ]);
+}, {}, [ "Application", "MainController", "Level_Base", "Login", "Effect_FinishMgr", "LevelChooseTC", "LevelMgr", "SolitaireElimination", "ChooseLevelModel", "MyCardModel", "AudioMgr", "Level_First", "NomoreMovesService", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "Alert", "GlobalAudio", "GrayNodeColor", "Loading", "Tips", "UIContainer", "UILoading", "UIReconnect", "UpdateLoading", "ZProgressbar", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GetCmdKey", "HttpSender", "ReconnectHandler", "CmmUtils", "RandomUtil", "StorageUtils", "UIUtils", "URLConfig", "Framework", "AudioComponent", "EventComponent", "GameDesignSizeTopFit", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "LoginEntry", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "CommonUIHelper", "HotUpdate", "LoginView", "LoginViewNodes", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager" ]);
