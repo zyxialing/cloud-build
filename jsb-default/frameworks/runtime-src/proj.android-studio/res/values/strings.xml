@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Westland Tales Slots</string>
+    <string name="app_name" translatable="false">Westland Tales</string>
     <string name="deepLinkScheme" translatable="false">hkslots</string>
     <string name="deepLinkHost" translatable="false">megaslots9201011</string>
 </resources>
