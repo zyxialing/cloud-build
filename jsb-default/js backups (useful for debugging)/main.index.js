@@ -412,7 +412,7 @@ configurable: !0
 });
 Object.defineProperty(e, "appData", {
 get: function() {
-return this._data;
+return this._data || {};
 },
 enumerable: !1,
 configurable: !0
@@ -832,7 +832,7 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 n.Application = void 0;
-var r = e("./scripts/common/component/Alert"), a = e("./scripts/common/component/GlobalAudio"), s = e("./scripts/common/component/Loading"), c = e("./scripts/common/component/Tips"), l = e("./scripts/common/component/UILoading"), u = e("./scripts/common/component/UIReconnect"), p = e("./scripts/common/component/UpdateLoading"), d = e("./scripts/common/config/ConstString"), f = e("./scripts/common/config/GlobalVar"), h = e("./scripts/common/config/HostInfo"), _ = e("./scripts/common/data/Bundles"), g = e("./scripts/common/data/StageData"), y = e("./scripts/common/entry/CmmEntry"), m = e("./scripts/common/utils/CmmUtils"), v = e("./scripts/config/URLConfig"), E = e("./scripts/framework/defines/Enums"), S = e("./scripts/framework/defines/Macros"), b = e("./scripts/framework/Framework"), R = e("./scripts/framework/utils/Singleton"), C = e("./scripts/sdk/AppInfo"), T = e("./scripts/sdk/SdkManager"), O = function(e) {
+var r = e("./scripts/common/component/Alert"), a = e("./scripts/common/component/GlobalAudio"), s = e("./scripts/common/component/Loading"), c = e("./scripts/common/component/Tips"), l = e("./scripts/common/component/UILoading"), u = e("./scripts/common/component/UIReconnect"), p = e("./scripts/common/component/UpdateLoading"), d = e("./scripts/common/config/ConstString"), f = e("./scripts/common/config/GlobalVar"), h = e("./scripts/common/config/HostInfo"), _ = e("./scripts/common/data/Bundles"), g = e("./scripts/common/data/StageData"), y = e("./scripts/common/entry/CmmEntry"), m = e("./scripts/common/utils/CmmUtils"), E = e("./scripts/config/URLConfig"), S = e("./scripts/framework/defines/Enums"), v = e("./scripts/framework/defines/Macros"), b = e("./scripts/framework/Framework"), R = e("./scripts/framework/utils/Singleton"), C = e("./scripts/sdk/AppInfo"), T = e("./scripts/sdk/SdkManager"), A = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -995,8 +995,8 @@ var e = this;
 if (C.default.isAndroid || C.default.isIOS) {
 var t = T.default.GetUrlData();
 if (m.CmmUtils.stringNotEmpty(t)) {
-v.default.urlData = t;
-var n = v.default.getChannel();
+E.default.urlData = t;
+var n = E.default.getChannel();
 this.initConfig(n);
 }
 this._offlineMode = C.default.getOffLineMode();
@@ -1027,9 +1027,9 @@ default:
 f.GlobalVar.money_symbol = "₹";
 f.GlobalVar.countryCode = 0;
 }
-} else App.asset.LoadTxt(S.Macro.BUNDLE_RESOURCES, "configs/url", null, function(t, n) {
-v.default.urlData = n.text;
-var o = v.default.getChannel();
+} else App.asset.LoadTxt(v.Macro.BUNDLE_RESOURCES, "configs/url", null, function(t, n) {
+E.default.urlData = n.text;
+var o = E.default.getChannel();
 e.initConfig(o);
 });
 };
@@ -1057,11 +1057,11 @@ App.globalAudio.onEnterBackground();
 t.prototype.onEnterForgeground = function() {};
 return t;
 }(b.Framewok);
-n.Application = O;
-var A = new O();
-A.logger.level = E.LogLevel.ALL;
-window.App = A;
-A.init();
+n.Application = A;
+var O = new A();
+O.logger.level = S.LogLevel.ALL;
+window.App = O;
+O.init();
 cc._RF.pop();
 }, {
 "./scripts/common/component/Alert": "Alert",
@@ -1641,88 +1641,6 @@ cc._RF.pop();
 "../utils/Singleton": "Singleton",
 "./EventComponent": "EventComponent"
 } ],
-AudioMgr: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "bfb4fhT6L1HzLi8umIX5SbW", "AudioMgr");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.bgm = null;
-t.effects = [];
-return t;
-}
-n = t;
-t.prototype.onLoad = function() {
-n.instance = this;
-var e = App.storage.getItem("soundState", !0);
-this.setSoundState(e);
-this.playBGM(this.bgm);
-};
-t.prototype.onDestroy = function() {
-this.stopBGM();
-n.instance = null;
-};
-t.prototype.playEffect = function(e) {
-for (var t = -1, n = 0; n < this.effects.length; n++) {
-var o = this.effects[n];
-if (o.name == e) {
-t = cc.audioEngine.playEffect(o, !1);
-break;
-}
-}
-return t;
-};
-t.prototype.PauseMusic = function() {
-this.bgm && cc.audioEngine.pauseMusic();
-};
-t.prototype.ResumeMusic = function() {
-this.bgm && cc.audioEngine.resumeMusic();
-};
-t.prototype.playBGM = function(e) {
-e ? cc.audioEngine.playMusic(e, !0) : cc.audioEngine.playMusic(this.bgm, !0);
-};
-t.prototype.stopBGM = function() {
-cc.audioEngine.stopMusic();
-};
-t.prototype.StopEffect_audioID = function(e) {
-cc.audioEngine.stopEffect(e);
-};
-t.prototype.setSoundState = function(e) {
-cc.audioEngine.setMusicVolume(e ? 1 : 0);
-cc.audioEngine.setEffectsVolume(e ? 1 : 0);
-};
-var n;
-t.instance = null;
-r([ c(cc.AudioClip) ], t.prototype, "bgm", void 0);
-r([ c(cc.AudioClip) ], t.prototype, "effects", void 0);
-return n = r([ s ], t);
-}(cc.Component);
-n.default = l;
-cc._RF.pop();
-}, {} ],
 BinaryStreamMessage: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "0b706caWmdEULamHl7PndHE", "BinaryStreamMessage");
@@ -1903,7 +1821,7 @@ e.writeByte(this.data);
 return t;
 }(u);
 n.UBYTE = m;
-var v = function(e) {
+var E = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -1916,8 +1834,8 @@ e.writeUnsignedShort(this.data);
 };
 return t;
 }(u);
-n.USHORT = v;
-var E = function(e) {
+n.USHORT = E;
+var S = function(e) {
 i(t, e);
 function t() {
 return null !== e && e.apply(this, arguments) || this;
@@ -1930,8 +1848,8 @@ e.writeUnsignedInt(this.data);
 };
 return t;
 }(u);
-n.UINT = E;
-var S = function(e) {
+n.UINT = S;
+var v = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -1947,7 +1865,7 @@ this.buffer = this.byteArray.bytes;
 return !0;
 };
 t.prototype.isNumberValue = function(e) {
-return e == f || e == h || e == _ || e == g || e == y || e == m || e == v || e == E;
+return e == f || e == h || e == _ || e == g || e == y || e == m || e == E || e == S;
 };
 t.prototype.isBoolValue = function(e) {
 return e == p;
@@ -2071,7 +1989,7 @@ this._deserializeArray(this[e], e, t, n, o, i);
 };
 return t;
 }(c.Message);
-n.BinaryStream = S;
+n.BinaryStream = v;
 var b = function(e) {
 i(t, e);
 function t() {
@@ -2079,7 +1997,7 @@ return null !== e && e.apply(this, arguments) || this;
 }
 t.type = s.Net.ServiceType.BinaryStream;
 return t;
-}(S);
+}(v);
 n.BinaryStreamHeartbeat = b;
 cc._RF.pop();
 }, {
@@ -3321,64 +3239,6 @@ return e;
 n.CanvasHelper = o;
 cc._RF.pop();
 }, {} ],
-ChooseLevelModel: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "a0e52+5S5hF4ZAyrfyDf6r6", "ChooseLevelModel");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = e("../Mgr/SolitaireElimination"), s = e("../Service/AudioMgr"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.node_cardBack = null;
-t.label_Level = null;
-t.curLevel = 0;
-t.calBack_Play = null;
-return t;
-}
-t.prototype.Init = function(e, t, n) {
-this.curLevel = e;
-this.calBack_Play = n;
-this.label_Level.string = e + "";
-this.node_cardBack.active = !t;
-};
-t.prototype.RefreshState = function(e) {
-this.node_cardBack.active = !e;
-};
-t.prototype.ButtonClick_Play = function() {
-s.default.instance.playEffect(a.AudioNameConfig.Click);
-this.calBack_Play && this.calBack_Play(this.curLevel);
-};
-r([ u(cc.Node) ], t.prototype, "node_cardBack", void 0);
-r([ u(cc.Label) ], t.prototype, "label_Level", void 0);
-return r([ l ], t);
-}(cc.Component);
-n.default = p;
-cc._RF.pop();
-}, {
-"../Mgr/SolitaireElimination": "SolitaireElimination",
-"../Service/AudioMgr": "AudioMgr"
-} ],
 CmdConfig: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "f7ecb37+gFCb4nV3AYSD2s7", "CmdConfig");
@@ -6667,7 +6527,7 @@ return n;
 case "utf8":
 case "utf-8":
 case void 0:
-return K(e).length;
+return Q(e).length;
 
 case "ucs2":
 case "ucs-2":
@@ -6682,13 +6542,13 @@ case "base64":
 return Z(e).length;
 
 default:
-if (o) return K(e).length;
+if (o) return Q(e).length;
 t = ("" + t).toLowerCase();
 o = !0;
 }
 }
 c.byteLength = m;
-function v(e, t, n) {
+function E(e, t, n) {
 var o = !1;
 (void 0 === t || t < 0) && (t = 0);
 if (t > this.length) return "";
@@ -6705,11 +6565,11 @@ case "utf-8":
 return I(this, t, n);
 
 case "ascii":
-return w(this, t, n);
+return P(this, t, n);
 
 case "latin1":
 case "binary":
-return P(this, t, n);
+return w(this, t, n);
 
 case "base64":
 return M(this, t, n);
@@ -6718,7 +6578,7 @@ case "ucs2":
 case "ucs-2":
 case "utf16le":
 case "utf-16le":
-return B(this, t, n);
+return G(this, t, n);
 
 default:
 if (o) throw new TypeError("Unknown encoding: " + e);
@@ -6727,7 +6587,7 @@ o = !0;
 }
 }
 c.prototype._isBuffer = !0;
-function E(e, t, n) {
+function S(e, t, n) {
 var o = e[t];
 e[t] = e[n];
 e[n] = o;
@@ -6735,15 +6595,15 @@ e[n] = o;
 c.prototype.swap16 = function() {
 var e = this.length;
 if (e % 2 != 0) throw new RangeError("Buffer size must be a multiple of 16-bits");
-for (var t = 0; t < e; t += 2) E(this, t, t + 1);
+for (var t = 0; t < e; t += 2) S(this, t, t + 1);
 return this;
 };
 c.prototype.swap32 = function() {
 var e = this.length;
 if (e % 4 != 0) throw new RangeError("Buffer size must be a multiple of 32-bits");
 for (var t = 0; t < e; t += 4) {
-E(this, t, t + 3);
-E(this, t + 1, t + 2);
+S(this, t, t + 3);
+S(this, t + 1, t + 2);
 }
 return this;
 };
@@ -6751,16 +6611,16 @@ c.prototype.swap64 = function() {
 var e = this.length;
 if (e % 8 != 0) throw new RangeError("Buffer size must be a multiple of 64-bits");
 for (var t = 0; t < e; t += 8) {
-E(this, t, t + 7);
-E(this, t + 1, t + 6);
-E(this, t + 2, t + 5);
-E(this, t + 3, t + 4);
+S(this, t, t + 7);
+S(this, t + 1, t + 6);
+S(this, t + 2, t + 5);
+S(this, t + 3, t + 4);
 }
 return this;
 };
 c.prototype.toString = function() {
 var e = 0 | this.length;
-return 0 === e ? "" : 0 === arguments.length ? I(this, 0, e) : v.apply(this, arguments);
+return 0 === e ? "" : 0 === arguments.length ? I(this, 0, e) : E.apply(this, arguments);
 };
 c.prototype.equals = function(e) {
 if (!c.isBuffer(e)) throw new TypeError("Argument must be a Buffer");
@@ -6792,7 +6652,7 @@ break;
 }
 return r < a ? -1 : a < r ? 1 : 0;
 };
-function S(e, t, n, o, i) {
+function v(e, t, n, o, i) {
 if (0 === e.length) return -1;
 if ("string" == typeof n) {
 o = n;
@@ -6853,10 +6713,10 @@ c.prototype.includes = function(e, t, n) {
 return -1 !== this.indexOf(e, t, n);
 };
 c.prototype.indexOf = function(e, t, n) {
-return S(this, e, t, n, !0);
+return v(this, e, t, n, !0);
 };
 c.prototype.lastIndexOf = function(e, t, n) {
-return S(this, e, t, n, !1);
+return v(this, e, t, n, !1);
 };
 function R(e, t, n, o) {
 n = Number(n) || 0;
@@ -6873,15 +6733,15 @@ e[n + a] = s;
 return a;
 }
 function C(e, t, n, o) {
-return q(K(t, e.length - n), e, n, o);
+return q(Q(t, e.length - n), e, n, o);
 }
 function T(e, t, n, o) {
-return q(Q(t), e, n, o);
-}
-function O(e, t, n, o) {
-return T(e, t, n, o);
+return q(K(t), e, n, o);
 }
 function A(e, t, n, o) {
+return T(e, t, n, o);
+}
+function O(e, t, n, o) {
 return q(Z(t), e, n, o);
 }
 function N(e, t, n, o) {
@@ -6924,10 +6784,10 @@ return T(this, e, t, n);
 
 case "latin1":
 case "binary":
-return O(this, e, t, n);
+return A(this, e, t, n);
 
 case "base64":
-return A(this, e, t, n);
+return O(this, e, t, n);
 
 case "ucs2":
 case "ucs-2":
@@ -6989,22 +6849,22 @@ a = 56320 | 1023 & a;
 o.push(a);
 i += s;
 }
-return U(o);
+return L(o);
 }
-var L = 4096;
-function U(e) {
+var U = 4096;
+function L(e) {
 var t = e.length;
-if (t <= L) return String.fromCharCode.apply(String, e);
-for (var n = "", o = 0; o < t; ) n += String.fromCharCode.apply(String, e.slice(o, o += L));
+if (t <= U) return String.fromCharCode.apply(String, e);
+for (var n = "", o = 0; o < t; ) n += String.fromCharCode.apply(String, e.slice(o, o += U));
 return n;
 }
-function w(e, t, n) {
+function P(e, t, n) {
 var o = "";
 n = Math.min(e.length, n);
 for (var i = t; i < n; ++i) o += String.fromCharCode(127 & e[i]);
 return o;
 }
-function P(e, t, n) {
+function w(e, t, n) {
 var o = "";
 n = Math.min(e.length, n);
 for (var i = t; i < n; ++i) o += String.fromCharCode(e[i]);
@@ -7017,7 +6877,7 @@ var o, i = e.length;
 for (var r = "", a = t; a < n; ++a) r += (o = e[a]) < 16 ? "0" + o.toString(16) : o.toString(16);
 return r;
 }
-function B(e, t, n) {
+function G(e, t, n) {
 for (var o = e.slice(t, n), i = "", r = 0; r < o.length; r += 2) i += String.fromCharCode(o[r] + 256 * o[r + 1]);
 return i;
 }
@@ -7033,48 +6893,48 @@ for (var r = 0; r < i; ++r) n[r] = this[r + e];
 }
 return n;
 };
-function G(e, t, n) {
+function B(e, t, n) {
 if (e % 1 != 0 || e < 0) throw new RangeError("offset is not uint");
 if (e + t > n) throw new RangeError("Trying to access beyond buffer length");
 }
 c.prototype.readUIntLE = function(e, t, n) {
 e |= 0;
 t |= 0;
-n || G(e, t, this.length);
+n || B(e, t, this.length);
 for (var o = this[e], i = 1, r = 0; ++r < t && (i *= 256); ) o += this[e + r] * i;
 return o;
 };
 c.prototype.readUIntBE = function(e, t, n) {
 e |= 0;
 t |= 0;
-n || G(e, t, this.length);
+n || B(e, t, this.length);
 for (var o = this[e + --t], i = 1; t > 0 && (i *= 256); ) o += this[e + --t] * i;
 return o;
 };
 c.prototype.readUInt8 = function(e, t) {
-t || G(e, 1, this.length);
+t || B(e, 1, this.length);
 return this[e];
 };
 c.prototype.readUInt16LE = function(e, t) {
-t || G(e, 2, this.length);
+t || B(e, 2, this.length);
 return this[e] | this[e + 1] << 8;
 };
 c.prototype.readUInt16BE = function(e, t) {
-t || G(e, 2, this.length);
+t || B(e, 2, this.length);
 return this[e] << 8 | this[e + 1];
 };
 c.prototype.readUInt32LE = function(e, t) {
-t || G(e, 4, this.length);
+t || B(e, 4, this.length);
 return (this[e] | this[e + 1] << 8 | this[e + 2] << 16) + 16777216 * this[e + 3];
 };
 c.prototype.readUInt32BE = function(e, t) {
-t || G(e, 4, this.length);
+t || B(e, 4, this.length);
 return 16777216 * this[e] + (this[e + 1] << 16 | this[e + 2] << 8 | this[e + 3]);
 };
 c.prototype.readIntLE = function(e, t, n) {
 e |= 0;
 t |= 0;
-n || G(e, t, this.length);
+n || B(e, t, this.length);
 for (var o = this[e], i = 1, r = 0; ++r < t && (i *= 256); ) o += this[e + r] * i;
 o >= (i *= 128) && (o -= Math.pow(2, 8 * t));
 return o;
@@ -7082,47 +6942,47 @@ return o;
 c.prototype.readIntBE = function(e, t, n) {
 e |= 0;
 t |= 0;
-n || G(e, t, this.length);
+n || B(e, t, this.length);
 for (var o = t, i = 1, r = this[e + --o]; o > 0 && (i *= 256); ) r += this[e + --o] * i;
 r >= (i *= 128) && (r -= Math.pow(2, 8 * t));
 return r;
 };
 c.prototype.readInt8 = function(e, t) {
-t || G(e, 1, this.length);
+t || B(e, 1, this.length);
 return 128 & this[e] ? -1 * (255 - this[e] + 1) : this[e];
 };
 c.prototype.readInt16LE = function(e, t) {
-t || G(e, 2, this.length);
+t || B(e, 2, this.length);
 var n = this[e] | this[e + 1] << 8;
 return 32768 & n ? 4294901760 | n : n;
 };
 c.prototype.readInt16BE = function(e, t) {
-t || G(e, 2, this.length);
+t || B(e, 2, this.length);
 var n = this[e + 1] | this[e] << 8;
 return 32768 & n ? 4294901760 | n : n;
 };
 c.prototype.readInt32LE = function(e, t) {
-t || G(e, 4, this.length);
+t || B(e, 4, this.length);
 return this[e] | this[e + 1] << 8 | this[e + 2] << 16 | this[e + 3] << 24;
 };
 c.prototype.readInt32BE = function(e, t) {
-t || G(e, 4, this.length);
+t || B(e, 4, this.length);
 return this[e] << 24 | this[e + 1] << 16 | this[e + 2] << 8 | this[e + 3];
 };
 c.prototype.readFloatLE = function(e, t) {
-t || G(e, 4, this.length);
+t || B(e, 4, this.length);
 return i.read(this, e, !0, 23, 4);
 };
 c.prototype.readFloatBE = function(e, t) {
-t || G(e, 4, this.length);
+t || B(e, 4, this.length);
 return i.read(this, e, !1, 23, 4);
 };
 c.prototype.readDoubleLE = function(e, t) {
-t || G(e, 8, this.length);
+t || B(e, 8, this.length);
 return i.read(this, e, !0, 52, 8);
 };
 c.prototype.readDoubleBE = function(e, t) {
-t || G(e, 8, this.length);
+t || B(e, 8, this.length);
 return i.read(this, e, !1, 52, 8);
 };
 function F(e, t, n, o, i, r) {
@@ -7361,7 +7221,7 @@ n = void 0 === n ? this.length : n >>> 0;
 e || (e = 0);
 var r;
 if ("number" == typeof e) for (r = t; r < n; ++r) this[r] = e; else {
-var a = c.isBuffer(e) ? e : K(new c(e, o).toString()), s = a.length;
+var a = c.isBuffer(e) ? e : Q(new c(e, o).toString()), s = a.length;
 for (r = 0; r < n - t; ++r) this[r + t] = a[r % s];
 }
 return this;
@@ -7375,7 +7235,7 @@ return e;
 function W(e) {
 return e.trim ? e.trim() : e.replace(/^\s+|\s+$/g, "");
 }
-function K(e, t) {
+function Q(e, t) {
 t = t || Infinity;
 for (var n, o = e.length, i = null, r = [], a = 0; a < o; ++a) {
 if ((n = e.charCodeAt(a)) > 55295 && n < 57344) {
@@ -7416,7 +7276,7 @@ r.push(n >> 18 | 240, n >> 12 & 63 | 128, n >> 6 & 63 | 128, 63 & n | 128);
 }
 return r;
 }
-function Q(e) {
+function K(e) {
 for (var t = [], n = 0; n < e.length; ++n) t.push(255 & e.charCodeAt(n));
 return t;
 }
@@ -7592,7 +7452,7 @@ s[c >>> 5] |= 128 << c % 32;
 s[14 + (c + 64 >>> 9 << 4)] = c;
 var h = a._ff, _ = a._gg, g = a._hh, y = a._ii;
 for (f = 0; f < s.length; f += 16) {
-var m = l, v = u, E = p, S = d;
+var m = l, E = u, S = p, v = d;
 l = h(l, u, p, d, s[f + 0], 7, -680876936);
 d = h(d, l, u, p, s[f + 1], 12, -389564586);
 p = h(p, d, l, u, s[f + 2], 17, 606105819);
@@ -7655,9 +7515,9 @@ d = y(d, l, u, p, s[f + 11], 10, -1120210379);
 p = y(p, d, l, u, s[f + 2], 15, 718787259);
 u = y(u, p, d, l, s[f + 9], 21, -343485551);
 l = l + m >>> 0;
-u = u + v >>> 0;
-p = p + E >>> 0;
-d = d + S >>> 0;
+u = u + E >>> 0;
+p = p + S >>> 0;
+d = d + v >>> 0;
 }
 return n.endian([ l, u, p, d ]);
 };
@@ -7955,61 +7815,6 @@ n.Dispatcher = o;
 window.dispatch = function() {
 App ? Reflect.apply(App.dispatcher.dispatch, App.dispatcher, arguments) : Reflect.apply(o.instance.dispatch, o.instance, arguments);
 };
-cc._RF.pop();
-}, {} ],
-Effect_FinishMgr: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "0b5fbcbBsRLR5ars4B9nJyc", "Effect_FinishMgr");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.node_Main = null;
-t.node_Zhezhao = null;
-t.particleSystems = [];
-return t;
-}
-t.prototype.start = function() {};
-t.prototype.OpenShow = function(e) {
-var t = this;
-this.node_Main.active = !0;
-this.node_Zhezhao.active = !0;
-this.node_Zhezhao.opacity = 1;
-for (var n = 0; n < this.particleSystems.length; n++) this.particleSystems[n].play();
-this.scheduleOnce(function() {
-e && e();
-t.node_Main.active = !1;
-t.node_Zhezhao.active = !1;
-}, 3);
-};
-r([ c(cc.Node) ], t.prototype, "node_Main", void 0);
-r([ c(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
-r([ c(cc.ParticleSystem3D) ], t.prototype, "particleSystems", void 0);
-return r([ s ], t);
-}(cc.Component);
-n.default = l;
 cc._RF.pop();
 }, {} ],
 EntryDelegate: [ function(e, t, n) {
@@ -8715,7 +8520,7 @@ Object.defineProperty(n, "__esModule", {
 value: !0
 });
 n.Framewok = void 0;
-var o = e("./core/event/Dispatcher"), i = e("./core/ui/UIManager"), r = e("./core/storage/LocalStorage"), a = e("./core/asset/AssetManager"), s = e("./core/asset/CacheManager"), c = e("./core/update/UpdateManager"), l = e("./core/asset/BundleManager"), u = e("./core/entry/EntryManager"), p = e("./data/DataCenter"), d = e("./core/log/Logger"), f = e("./core/net/service/ServiceManager"), h = e("./core/net/http/HttpClient"), _ = e("./utils/Singleton"), g = e("./core/net/service/SenderManager"), y = e("./core/net/service/HandlerManager"), m = e("./utils/Utils"), v = e("./utils/CanvasHelper"), E = function() {
+var o = e("./core/event/Dispatcher"), i = e("./core/ui/UIManager"), r = e("./core/storage/LocalStorage"), a = e("./core/asset/AssetManager"), s = e("./core/asset/CacheManager"), c = e("./core/update/UpdateManager"), l = e("./core/asset/BundleManager"), u = e("./core/entry/EntryManager"), p = e("./data/DataCenter"), d = e("./core/log/Logger"), f = e("./core/net/service/ServiceManager"), h = e("./core/net/http/HttpClient"), _ = e("./utils/Singleton"), g = e("./core/net/service/SenderManager"), y = e("./core/net/service/HandlerManager"), m = e("./utils/Utils"), E = e("./utils/CanvasHelper"), S = function() {
 function e() {
 this.gameView = null;
 }
@@ -8868,7 +8673,7 @@ configurable: !0
 });
 Object.defineProperty(e.prototype, "canvasHelper", {
 get: function() {
-return _.Singleton.instance.get(v.CanvasHelper);
+return _.Singleton.instance.get(E.CanvasHelper);
 },
 enumerable: !1,
 configurable: !0
@@ -8879,7 +8684,7 @@ return this.gameView;
 e.prototype.init = function() {};
 return e;
 }();
-n.Framewok = E;
+n.Framewok = S;
 cc._RF.pop();
 }, {
 "./core/asset/AssetManager": "AssetManager",
@@ -10394,7 +10199,7 @@ done: !0
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var c = e("../../common/component/ZProgressbar"), l = e("../../common/config/Config"), u = e("../../common/config/ConstString"), p = e("../../common/config/GlobalVar"), d = e("../../common/config/HostInfo"), f = e("../../common/config/User"), h = e("../../common/event/CommonEvent"), _ = e("../../common/net/CommonSender"), g = e("../../common/net/HttpSender"), y = e("../../common/utils/CmmUtils"), m = e("../../framework/componects/EventComponent"), v = e("../../framework/core/update/Update"), E = e("../../framework/defines/Enums"), S = e("../../framework/defines/Macros"), b = e("../../sdk/AppInfo"), R = e("../../sdk/GameNativeConfig"), C = cc._decorator, T = C.ccclass, O = C.property, A = function(e) {
+var c = e("../../common/component/ZProgressbar"), l = e("../../common/config/Config"), u = e("../../common/config/ConstString"), p = e("../../common/config/GlobalVar"), d = e("../../common/config/HostInfo"), f = e("../../common/config/User"), h = e("../../common/event/CommonEvent"), _ = e("../../common/net/CommonSender"), g = e("../../common/net/HttpSender"), y = e("../../common/utils/CmmUtils"), m = e("../../framework/componects/EventComponent"), E = e("../../framework/core/update/Update"), S = e("../../framework/defines/Enums"), v = e("../../framework/defines/Macros"), b = e("../../sdk/AppInfo"), R = e("../../sdk/GameNativeConfig"), C = cc._decorator, T = C.ccclass, A = C.property, O = function(e) {
 i(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -10499,7 +10304,7 @@ case 2:
 return [ 4, App.updateManager.getRemoteVersions() ];
 
 case 3:
-if (t.sent()) if (App.updateManager.getStatus(S.Macro.MAIN_PACK_BUNDLE_NAME) != v.Update.Status.UP_TO_DATE) App.entryManager.onCheckUpdate(); else {
+if (t.sent()) if (App.updateManager.getStatus(v.Macro.MAIN_PACK_BUNDLE_NAME) != E.Update.Status.UP_TO_DATE) App.entryManager.onCheckUpdate(); else {
 App.uiLoading.hide();
 App.entryManager.onCheckUpdate();
 this.enterGame();
@@ -10564,7 +10369,7 @@ this.cRoot2 && (this.cRoot2.active = f.default.self.isMerchantPlayer);
 t.LoingCallBack = function(e) {
 var t = this;
 Log.w(JSON.stringify(e));
-0 == e.log ? App.logger.level = E.LogLevel.NONE : App.logger.level = E.LogLevel.ALL;
+0 == e.log ? App.logger.level = S.LogLevel.NONE : App.logger.level = S.LogLevel.ALL;
 p.GlobalVar.cusUrl = e.cusUrl;
 App.storage.setItem(R.default.Key.PhoneId, e.pwdtoken);
 g.default.skey = e.skey;
@@ -10624,13 +10429,13 @@ dispatch(h.CommonEvent.Show_Hall);
 var n;
 t.sender = null;
 t.initIndex = 0;
-r([ O(cc.Node) ], t.prototype, "wRoot1", void 0);
-r([ O(cc.Node) ], t.prototype, "wRoot2", void 0);
-r([ O(cc.Node) ], t.prototype, "cRoot1", void 0);
-r([ O(cc.Node) ], t.prototype, "cRoot2", void 0);
+r([ A(cc.Node) ], t.prototype, "wRoot1", void 0);
+r([ A(cc.Node) ], t.prototype, "wRoot2", void 0);
+r([ A(cc.Node) ], t.prototype, "cRoot1", void 0);
+r([ A(cc.Node) ], t.prototype, "cRoot2", void 0);
 return n = r([ T ], t);
 }(m.default);
-n.default = A;
+n.default = O;
 cc._RF.pop();
 }, {
 "../../common/component/ZProgressbar": "ZProgressbar",
@@ -11339,469 +11144,6 @@ cc._RF.pop();
 "../Net": "Net",
 "./Message": "Message"
 } ],
-LevelChooseTC: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "9b093lv6r9D5oiewHZBIwzL", "LevelChooseTC");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = e("../../../scripts/sdk/SdkManager"), s = e("../Model/ChooseLevelModel"), c = e("./SolitaireElimination"), l = cc._decorator, u = l.ccclass, p = l.property, d = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.node_Main = null;
-t.node_Zhezhao = null;
-t.prefab_Model = null;
-t.scrollView_level = null;
-t.node_Content = null;
-t.chooseModels = [];
-t.curPlayLevel = 1;
-t.finishLevel = 0;
-t.tween_Content = null;
-t.finish_lv_Key = "finish_lv_Key";
-return t;
-}
-n = t;
-t.prototype.onLoad = function() {
-var e = this;
-n.instance = this;
-this.node_Content.destroyAllChildren();
-this.chooseModels = [];
-this.getLevel();
-for (var t = 0; t < 24; t++) {
-var o = cc.instantiate(this.prefab_Model);
-o.parent = this.node_Content;
-var i = o.getComponent(s.default);
-this.chooseModels.push(i);
-var r = t <= this.finishLevel;
-i.Init(t + 1, r, function(t) {
-e.Callback_ChooseLevel(t);
-});
-}
-this.OpenShow();
-};
-t.prototype.onDestroy = function() {
-n.instance = null;
-};
-t.prototype.start = function() {};
-t.prototype.ButtonClick_Return = function() {};
-t.prototype.OpenShow = function() {
-this.node_Main.active = !0;
-this.node_Zhezhao.active = !0;
-a.default.showInterstitial();
-};
-t.prototype.CloseShow = function() {
-this.node_Main.active = !1;
-this.node_Zhezhao.active = !1;
-};
-t.prototype.SetFinishLevel = function(e) {
-if (e > this.finishLevel) {
-this.finishLevel = e;
-this.setLevel();
-for (var t = 0; t < this.chooseModels.length; t++) {
-var n = this.chooseModels[t], o = t <= this.finishLevel;
-n.RefreshState(o);
-}
-}
-};
-t.prototype.PlayNextLevel = function(e) {
-e < this.chooseModels.length ? this.Callback_ChooseLevel(e + 1) : this.Callback_ChooseLevel(e);
-};
-t.prototype.ButtonClick_Home = function() {
-cc.director.loadScene("login");
-a.default.showInterstitial();
-};
-t.prototype.ButtonClick_Setting = function() {};
-t.prototype.Callback_ChooseLevel = function(e) {
-this.curPlayLevel = e;
-dispatch(c.GameEventConfig.PlayLevel, e);
-this.CloseShow();
-};
-t.prototype.getLevel = function() {
-this.finishLevel = App.storage.getItem(this.finish_lv_Key, 0);
-};
-t.prototype.setLevel = function() {
-App.storage.setItem(this.finish_lv_Key, this.finishLevel);
-};
-var n;
-t.instance = null;
-r([ p(cc.Node) ], t.prototype, "node_Main", void 0);
-r([ p(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
-r([ p(cc.Prefab) ], t.prototype, "prefab_Model", void 0);
-r([ p(cc.ScrollView) ], t.prototype, "scrollView_level", void 0);
-r([ p(cc.Node) ], t.prototype, "node_Content", void 0);
-return n = r([ u ], t);
-}(cc.Component);
-n.default = d;
-cc._RF.pop();
-}, {
-"../../../scripts/sdk/SdkManager": "SdkManager",
-"../Model/ChooseLevelModel": "ChooseLevelModel",
-"./SolitaireElimination": "SolitaireElimination"
-} ],
-LevelMgr: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "61518xNdb1LMaVV/g7lpvmi", "LevelMgr");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = e("../Base/Level_Base"), s = cc._decorator, c = s.ccclass, l = s.property, u = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.prefab_Card = null;
-t.atlas_Card = null;
-t.sprite_Bg = null;
-t.prefab_Levels = [];
-t.spriteFrame_Bgs = [];
-t.curlevel = null;
-t.cardValues_Config = [ 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 500, 600 ];
-return t;
-}
-n = t;
-t.prototype.onLoad = function() {
-n.instance = this;
-};
-t.prototype.onDestroy = function() {
-n.instance = null;
-};
-t.prototype.start = function() {};
-t.prototype.Init = function(e) {
-this.node.destroyAllChildren();
-this.sprite_Bg.spriteFrame = this.spriteFrame_Bgs[(e - 1) % 5];
-var t = cc.instantiate(this.prefab_Levels[e - 1]);
-t.parent = this.node;
-this.curlevel = t.getComponent(a.default);
-this.curlevel.Init(e, this.prefab_Card, this.atlas_Card, this.cardValues_Config);
-};
-var n;
-t.instance = null;
-r([ l(cc.Prefab) ], t.prototype, "prefab_Card", void 0);
-r([ l(cc.SpriteAtlas) ], t.prototype, "atlas_Card", void 0);
-r([ l(cc.Sprite) ], t.prototype, "sprite_Bg", void 0);
-r([ l(cc.Prefab) ], t.prototype, "prefab_Levels", void 0);
-r([ l(cc.SpriteFrame) ], t.prototype, "spriteFrame_Bgs", void 0);
-return n = r([ c ], t);
-}(cc.Component);
-n.default = u;
-cc._RF.pop();
-}, {
-"../Base/Level_Base": "Level_Base"
-} ],
-Level_Base: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "30766jmmtdNfbUKllT1RUf0", "Level_Base");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = e("../../../scripts/common/utils/RandomUtil"), s = e("../Mgr/SolitaireElimination"), c = e("../Model/MyCardModel"), l = e("../Service/AudioMgr"), u = cc._decorator, p = u.ccclass, d = u.property, f = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.node_Floors = null;
-t.cardModels_Joker = [];
-t.node_OtherLayout = null;
-t.node_ShowCard = null;
-t.node_Btn_Other = null;
-t.atlas_Card = null;
-t.cardModels_Main = [];
-t.cardModels_Other = [];
-t.cardModels_Show = [];
-t.cardModels_LastChoose = null;
-t.otherCount = 22;
-t.leftCount_Main = 0;
-t.leftCount_Other = 0;
-t.leftCount_Joker = 0;
-t.cardValues_Config = [];
-t.cardValues = [];
-t.curLevel = 1;
-t.isGameOver = !1;
-return t;
-}
-t.prototype.Init = function(e, t, n, o) {
-this.curLevel = e;
-this.atlas_Card = n;
-this.cardValues_Config = o;
-this.isGameOver = !1;
-this.cardModels_Main = [];
-this.cardModels_Other = [];
-this.cardModels_Show = [];
-this.cardModels_LastChoose = null;
-for (var i = 0; i < this.node_Floors.childrenCount; i++) for (var r = this.node_Floors.getChildByName(i + ""), a = 0; a < r.childrenCount; a++) {
-var s = r.children[a].getComponent(c.default);
-this.cardModels_Main.push(s);
-s.ResetForBegin();
-}
-for (i = 0; i < this.otherCount; i++) {
-var l = cc.instantiate(t);
-l.parent = this.node_OtherLayout;
-l.position = cc.v3(0, 0, 0);
-s = l.getComponent(c.default);
-this.cardModels_Other.push(s);
-}
-this.node_OtherLayout.getComponent(cc.Layout).updateLayout();
-this.node_Btn_Other.width = this.node_OtherLayout.width + 110;
-this.leftCount_Joker = 3;
-this.leftCount_Main = this.cardModels_Main.length;
-this.CreatCardValues();
-this.SetCardValue();
-};
-t.prototype.ButtonClick_OpenOther = function() {
-if (this.cardModels_LastChoose) {
-this.cardModels_LastChoose.SetIsChoose(!1);
-this.cardModels_LastChoose = null;
-}
-var e = this.cardModels_Other[this.cardModels_Other.length - 1];
-e.node.parent = this.node_ShowCard;
-e.node.position = cc.v3(0, 0, 0);
-this.cardModels_Other.splice(this.cardModels_Other.length - 1, 1);
-this.cardModels_Show.push(e);
-e.ShowCard_OpenOther();
-this.node_Btn_Other.width = this.node_OtherLayout.width + 110;
-0 == this.cardModels_Other.length && (this.node_Btn_Other.active = !1);
-this.CheckLeftOpenCard();
-};
-t.prototype.CreatCardValues = function() {
-var e = this.cardModels_Main.length + 22, t = Math.floor(e / 2) - 5, n = [];
-this.cardValues = [];
-for (var o = 0; o < t; o++) {
-var i = a.RandomUtil.randomRange(1, 14), r = 100 * a.RandomUtil.randomRange(1, 5) + i, s = 100 * a.RandomUtil.randomRange(1, 5) + i;
-n.push(r);
-n.push(s);
-}
-var c = a.RandomUtil.randomRange(0, 4);
-for (o = 0; o < c; o++) n.push(600);
-var l = e - n.length;
-for (o = 0; o < l; o++) {
-var u = a.RandomUtil.randomRange(0, this.cardValues_Config.length);
-n.push(this.cardValues_Config[u]);
-}
-for (o = 0; o < e; o++) {
-var p = n[u = a.RandomUtil.randomRange(0, n.length)];
-this.cardValues.push(p);
-n.splice(u, 1);
-}
-};
-t.prototype.SetCardValue = function() {
-for (var e = this, t = 0, n = -1, o = 0; o < this.cardModels_Main.length; o++) {
-var i = this.cardModels_Main[o];
-n = this.cardValues[t];
-i.Init(c.CardType.Main, n, this.atlas_Card.getSpriteFrame(n + ""), function(t) {
-e.SetChooseCardModel(t);
-});
-t++;
-}
-for (o = 0; o < this.cardModels_Other.length; o++) {
-i = this.cardModels_Other[o];
-n = this.cardValues[t];
-i.Init(c.CardType.Other, n, this.atlas_Card.getSpriteFrame(n + ""), function(t) {
-e.SetChooseCardModel(t);
-});
-t++;
-}
-for (o = 0; o < this.cardModels_Joker.length; o++) (i = this.cardModels_Joker[o]).Init(c.CardType.Joker, 500, this.atlas_Card.getSpriteFrame("500"), function(t) {
-e.SetChooseCardModel(t);
-});
-};
-t.prototype.SetChooseCardModel = function(e) {
-if (null == this.cardModels_LastChoose) e.isChoose && (this.cardModels_LastChoose = e); else if (e.isChoose) if (e.cardValue >= 500 || this.cardModels_LastChoose.cardValue >= 500) {
-this.cardModels_LastChoose.PlayDestroyCard();
-e.PlayDestroyCard();
-this.RemoveCardModel(e);
-this.RemoveCardModel(this.cardModels_LastChoose);
-this.cardModels_LastChoose = null;
-l.default.instance.playEffect(s.AudioNameConfig.success);
-this.CheckLeftOpenCard();
-} else if (e.cardValue % 100 == this.cardModels_LastChoose.cardValue % 100) {
-this.cardModels_LastChoose.PlayDestroyCard();
-e.PlayDestroyCard();
-this.RemoveCardModel(e);
-this.RemoveCardModel(this.cardModels_LastChoose);
-this.cardModels_LastChoose = null;
-l.default.instance.playEffect(s.AudioNameConfig.success);
-this.CheckLeftOpenCard();
-} else {
-this.cardModels_LastChoose.SetIsChoose(!1);
-this.cardModels_LastChoose = e;
-} else this.cardModels_LastChoose = null;
-};
-t.prototype.CheckLeftOpenCard = function() {
-if (!this.isGameOver) {
-var e = !1;
-this.cardModels_Other.length > 0 && (e = !0);
-this.leftCount_Joker > 0 && (e = !0);
-var t = [];
-if (this.cardModels_Show.length > 0) {
-var n = this.cardModels_Show[this.cardModels_Show.length - 1].cardValue;
-n >= 500 && (e = !0);
-t.push(n % 100);
-}
-for (var o = 0; o < this.cardModels_Main.length; o++) {
-var i = this.cardModels_Main[o];
-if (i.isOpen) {
-i.cardValue >= 500 && (e = !0);
-t.indexOf(i.cardValue % 100) >= 0 && (e = !0);
-t.push(i.cardValue % 100);
-}
-}
-Log.e(t);
-e || dispatch(s.GameEventConfig.NomoreMove);
-}
-};
-t.prototype.RemoveCardModel = function(e) {
-if (e.cardType == c.CardType.Joker) this.leftCount_Joker--; else if (e.cardType == c.CardType.Main) {
-this.leftCount_Main--;
-0 == this.leftCount_Main && this.GameOver();
-} else this.cardModels_Show.splice(this.cardModels_Show.length - 1, 1);
-};
-t.prototype.GameOver = function() {
-this.isGameOver = !0;
-dispatch(s.GameEventConfig.GameOver, this.curLevel);
-Log.e("------GameOver  ");
-};
-r([ d(cc.Node) ], t.prototype, "node_Floors", void 0);
-r([ d(c.default) ], t.prototype, "cardModels_Joker", void 0);
-r([ d(cc.Node) ], t.prototype, "node_OtherLayout", void 0);
-r([ d(cc.Node) ], t.prototype, "node_ShowCard", void 0);
-r([ d(cc.Node) ], t.prototype, "node_Btn_Other", void 0);
-return r([ p ], t);
-}(cc.Component);
-n.default = f;
-cc._RF.pop();
-}, {
-"../../../scripts/common/utils/RandomUtil": "RandomUtil",
-"../Mgr/SolitaireElimination": "SolitaireElimination",
-"../Model/MyCardModel": "MyCardModel",
-"../Service/AudioMgr": "AudioMgr"
-} ],
-Level_First: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "a1a87yO1LZLAYTMc2UMfX6x", "Level_First");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = e("../../../scripts/common/utils/RandomUtil"), s = e("../Base/Level_Base"), c = cc._decorator, l = c.ccclass, u = c.property, p = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.node_Tip_notMatter = null;
-t.node_Tip_matching = null;
-t.node_Tip_ClearThese = null;
-t.node_Tip_Joker = null;
-t.node_Tip_Other = null;
-t.config_Fix = [ 106, 206, 313, 313, 312, 212, 209, 312, 404, 404 ];
-return t;
-}
-t.prototype.CreatCardValues = function() {
-this.cardValues = [];
-for (var e = 0; e < this.config_Fix.length; e++) {
-var t = this.config_Fix[e];
-this.cardValues.push(t);
-}
-for (e = 0; e < 22; e++) {
-var n = a.RandomUtil.randomRange(0, this.cardValues_Config.length);
-this.cardValues.push(this.cardValues_Config[n]);
-}
-};
-t.prototype.RemoveCardModel = function(t) {
-e.prototype.RemoveCardModel.call(this, t);
-this.cardModels_Main[0] == t ? this.node_Tip_notMatter.active = !1 : this.cardModels_Main[2] == t && (this.node_Tip_matching.active = !1);
-};
-t.prototype.GameOver = function() {
-e.prototype.GameOver.call(this);
-this.node_Tip_Joker.active = !1;
-this.node_Tip_ClearThese.active = !1;
-this.node_Tip_Other.active = !1;
-};
-r([ u(cc.Node) ], t.prototype, "node_Tip_notMatter", void 0);
-r([ u(cc.Node) ], t.prototype, "node_Tip_matching", void 0);
-r([ u(cc.Node) ], t.prototype, "node_Tip_ClearThese", void 0);
-r([ u(cc.Node) ], t.prototype, "node_Tip_Joker", void 0);
-r([ u(cc.Node) ], t.prototype, "node_Tip_Other", void 0);
-return r([ l ], t);
-}(s.default);
-n.default = p;
-cc._RF.pop();
-}, {
-"../../../scripts/common/utils/RandomUtil": "RandomUtil",
-"../Base/Level_Base": "Level_Base"
-} ],
 Loading: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "bb305D9F5lGI6TgHkSWfCvt", "Loading");
@@ -12313,7 +11655,7 @@ return r > 3 && a && Object.defineProperty(t, n, a), a;
 Object.defineProperty(n, "__esModule", {
 value: !0
 });
-var a = e("../../common/config/ConstString"), s = e("../../common/config/GlobalVar"), c = e("../../common/config/HostInfo"), l = e("../../common/config/User"), u = e("../../common/event/CommonEvent"), p = e("../../common/net/CommonSender"), d = e("../../common/net/HttpSender"), f = e("../../common/utils/UIUtils"), h = e("../../framework/core/ui/GameView"), _ = e("../../framework/defines/Enums"), g = e("../../framework/defines/Macros"), y = e("../../sdk/AppInfo"), m = e("../../sdk/SdkManager"), v = e("../net/LobbyService"), E = e("./HotUpdate"), S = e("./LoginViewNodes"), b = cc._decorator, R = b.ccclass, C = (b.property, 
+var a = e("../../common/config/ConstString"), s = e("../../common/config/GlobalVar"), c = e("../../common/config/HostInfo"), l = e("../../common/config/User"), u = e("../../common/event/CommonEvent"), p = e("../../common/net/CommonSender"), d = e("../../common/net/HttpSender"), f = e("../../common/utils/UIUtils"), h = e("../../framework/core/ui/GameView"), _ = e("../../framework/defines/Enums"), g = e("../../framework/defines/Macros"), y = e("../../sdk/AppInfo"), m = e("../../sdk/SdkManager"), E = e("../net/LobbyService"), S = e("./HotUpdate"), v = e("./LoginViewNodes"), b = cc._decorator, R = b.ccclass, C = (b.property, 
 function(e) {
 i(t, e);
 function t() {
@@ -12387,14 +11729,14 @@ dispatch(u.SimpleEvent.Html5_view_loading, !1);
 t.prototype.initNode = function() {
 this.root = cc.find("root", this.node);
 this.gameRoot = cc.find("root", this.root);
-this.hotUpdate = this.root.getComponent(E.default);
+this.hotUpdate = this.root.getComponent(S.default);
 this.hotUpdate.init();
 this.addLocalEvents();
 };
 t.prototype.initOfflineNode = function() {
 this.root = cc.find("root", this.node);
 this.gameRoot = cc.find("root", this.root);
-this.hotUpdate = this.root.getComponent(E.default);
+this.hotUpdate = this.root.getComponent(S.default);
 this.hotUpdate.init();
 this.ntaBtn = cc.find("root/top_layer/top_html/logo", this.root);
 this.logoNode = cc.find("root/top_layer/top_html/logo", this.root);
@@ -12418,7 +11760,7 @@ this.moneyLabel = cc.find("root/top_layer/top_html/total_coins/MoneyLabel", this
 this.refreshBtn = cc.find("root/top_layer/top_html/total_coins/Background/refreshBtn", this.root);
 this.coinBtn = cc.find("root/top_layer/top_html/total_coins/icon/coinBtn", this.root);
 this.kefuBtn = cc.find("root/kefuBtn", this.root);
-this.lgvNodes = this.root.getComponent(S.default);
+this.lgvNodes = this.root.getComponent(v.default);
 this.addLocalEvents();
 };
 t.prototype.addLocalEvents = function() {
@@ -12525,7 +11867,7 @@ m.default.openWebView(e);
 } else m.default.openUrl(e);
 };
 t.prototype.clearLoginToken = function() {
-App.serviceManager.get(v.LobbyService, !0).close(!0);
+App.serviceManager.get(E.LobbyService, !0).close(!0);
 this.moneyLabel.string = l.default.self.moneyString;
 this.bonus_label && (this.bonus_label.string = l.default.self.bonusBString);
 this.infoBtn && (this.infoBtn.active = !1);
@@ -12654,51 +11996,6 @@ cc._RF.pop();
 "../net/LobbyService": "LobbyService",
 "./HotUpdate": "HotUpdate",
 "./LoginViewNodes": "LoginViewNodes"
-} ],
-Login: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "1bc65AnotxDTr4x34sIE3ah", "Login");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = e("../../scripts/framework/componects/EventComponent"), s = e("../../scripts/framework/core/ui/UIManager"), c = cc._decorator, l = c.ccclass, u = (c.property, 
-function(e) {
-i(t, e);
-function t() {
-return null !== e && e.apply(this, arguments) || this;
-}
-t.prototype.addEvents = function() {
-s.UIManager.newGameTest();
-};
-t.prototype.ButtonClick_Play = function() {
-cc.director.loadScene("solitaireElimination");
-};
-return r([ l ], t);
-}(a.default));
-n.default = u;
-cc._RF.pop();
-}, {
-"../../scripts/framework/componects/EventComponent": "EventComponent",
-"../../scripts/framework/core/ui/UIManager": "UIManager"
 } ],
 Macros: [ function(e, t, n) {
 "use strict";
@@ -12934,130 +12231,6 @@ return t;
 n.Message = s;
 cc._RF.pop();
 }, {} ],
-MyCardModel: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "6b183ri875DCpALEHLTw5tj", "MyCardModel");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-n.CardType = void 0;
-var a, s = e("../Mgr/SolitaireElimination"), c = e("../Service/AudioMgr"), l = cc._decorator, u = l.ccclass, p = l.property;
-(function(e) {
-e[e.Other = 0] = "Other";
-e[e.Joker = 1] = "Joker";
-e[e.Main = 2] = "Main";
-})(a = n.CardType || (n.CardType = {}));
-var d = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.node_Main = null;
-t.sprite = null;
-t.node_CardBack = null;
-t.color_Choose = cc.color(243, 238, 132, 255);
-t.color_Normal = cc.color(255, 255, 255, 255);
-t.cardModel_up = [];
-t.cardModel_Downs = [];
-t.cardType = a.Other;
-t.cardValue = 0;
-t.isOpen = !1;
-t.isChoose = !1;
-t.callback_Click = null;
-return t;
-}
-n = t;
-t.prototype.ResetForBegin = function() {
-this.cardModel_Downs = [];
-};
-t.prototype.Init = function(e, t, n, o) {
-this.cardType = e;
-this.cardValue = t;
-this.callback_Click = o;
-this.sprite.spriteFrame = n;
-if (e == a.Main) if (this.cardModel_up.length > 0) {
-this.node_CardBack.active = !0;
-this.isOpen = !1;
-} else {
-this.node_CardBack.active = !1;
-this.isOpen = !0;
-} else if (e == a.Joker) if (this.cardModel_up.length > 0) {
-this.node_CardBack.active = !0;
-this.isOpen = !1;
-} else {
-this.node_CardBack.active = !1;
-this.isOpen = !0;
-} else {
-this.node_CardBack.active = !0;
-this.isOpen = !1;
-}
-this.SetIsChoose(!1);
-this.node_Main.active = !0;
-if (this.cardModel_up.length > 0) for (var i = 0; i < this.cardModel_up.length; i++) this.cardModel_up[i].SetDownCardModel(this);
-};
-t.prototype.SetDownCardModel = function(e) {
-this.cardModel_Downs.push(e);
-};
-t.prototype.ShowCard = function(e) {
-var t = this, n = this.cardModel_up.indexOf(e);
-this.cardModel_up.splice(n, 1);
-if (0 == this.cardModel_up.length) {
-this.isOpen = !0;
-this.scheduleOnce(function() {
-t.node_CardBack.active = !1;
-}, .3);
-}
-};
-t.prototype.ShowCard_OpenOther = function() {
-this.node_CardBack.active = !1;
-this.isOpen = !0;
-};
-t.prototype.ButtonClick_Choose = function() {
-c.default.instance.playEffect(s.AudioNameConfig.flip);
-this.SetIsChoose(!this.isChoose);
-this.callback_Click && this.callback_Click(this);
-};
-t.prototype.PlayDestroyCard = function() {
-this.node_Main.active = !1;
-this.isOpen = !1;
-for (var e = 0; e < this.cardModel_Downs.length; e++) this.cardModel_Downs[e].ShowCard(this);
-};
-t.prototype.SetIsChoose = function(e) {
-this.isChoose = e;
-this.isChoose ? this.sprite.node.color = this.color_Choose : this.sprite.node.color = this.color_Normal;
-};
-var n;
-r([ p(cc.Node) ], t.prototype, "node_Main", void 0);
-r([ p(cc.Sprite) ], t.prototype, "sprite", void 0);
-r([ p(cc.Node) ], t.prototype, "node_CardBack", void 0);
-r([ p(cc.Color) ], t.prototype, "color_Choose", void 0);
-r([ p(n) ], t.prototype, "cardModel_up", void 0);
-return r([ u ], t);
-}(cc.Component);
-n.default = d;
-cc._RF.pop();
-}, {
-"../Mgr/SolitaireElimination": "SolitaireElimination",
-"../Service/AudioMgr": "AudioMgr"
-} ],
 Net: [ function(e, t, n) {
 "use strict";
 cc._RF.push(t, "7defc/7Iv1NMaarDPEKXxqf", "Net");
@@ -13073,80 +12246,6 @@ e[e.Proto = 2] = "Proto";
 e[e.BinaryStream = 3] = "BinaryStream";
 })(e.ServiceType || (e.ServiceType = {}));
 })(n.Net || (n.Net = {}));
-cc._RF.pop();
-}, {} ],
-NomoreMovesService: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "e05c2q/0vlBJprtN3/+x/lm", "NomoreMovesService");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.node_Main = null;
-t.node_Zhezhao = null;
-t.node_Tip = null;
-t.node_Btn = null;
-t.callback_Over = null;
-t.tween_Tip = null;
-return t;
-}
-t.prototype.OpenShow = function(e) {
-var t = this;
-this.callback_Over = e;
-this.tween_Tip && this.tween_Tip.stop();
-this.node_Tip.position = cc.v3(-800, 0, 0);
-this.node_Btn.active = !1;
-this.node_Main.active = !0;
-this.node_Zhezhao.active = !0;
-this.tween_Tip = cc.tween(this.node_Tip).to(.5, {
-position: cc.v3(0, 0, 0)
-}, cc.easeSineOut()).call(function() {
-t.node_Btn.active = !0;
-}).delay(4).call(function() {
-t.CloseShow();
-}).start();
-};
-t.prototype.CloseShow = function() {
-if (this.callback_Over) {
-this.callback_Over();
-this.callback_Over = null;
-}
-this.node_Main.active = !1;
-this.node_Zhezhao.active = !1;
-};
-t.prototype.ButtonClick_Skip = function() {
-this.tween_Tip && this.tween_Tip.stop();
-this.CloseShow();
-};
-r([ c(cc.Node) ], t.prototype, "node_Main", void 0);
-r([ c(cc.Node) ], t.prototype, "node_Zhezhao", void 0);
-r([ c(cc.Node) ], t.prototype, "node_Tip", void 0);
-r([ c(cc.Node) ], t.prototype, "node_Btn", void 0);
-return r([ s ], t);
-}(cc.Component);
-n.default = l;
 cc._RF.pop();
 }, {} ],
 Process: [ function(e, t, n) {
@@ -14250,7 +13349,7 @@ t.iosName_sdk = "SdkManager";
 t.httpId = "0";
 t.channelID = 3928880;
 t.appID = 100;
-t.verCode = "5.0.0";
+t.verCode = "6.0.0";
 t.ResolutionPolicy = cc.ResolutionPolicy.SHOW_ALL;
 t._adjustAdid = "";
 t._afid = "";
@@ -14907,99 +14006,6 @@ n.Singleton = r;
 cc._RF.pop();
 }, {
 "./SingletonT": "SingletonT"
-} ],
-SolitaireElimination: [ function(e, t, n) {
-"use strict";
-cc._RF.push(t, "b7c9bbTKTlAFLEI1jUvfohW", "SolitaireElimination");
-var o, i = this && this.__extends || (o = function(e, t) {
-return (o = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(e, t) {
-e.__proto__ = t;
-} || function(e, t) {
-for (var n in t) Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-})(e, t);
-}, function(e, t) {
-o(e, t);
-function n() {
-this.constructor = e;
-}
-e.prototype = null === t ? Object.create(t) : (n.prototype = t.prototype, new n());
-}), r = this && this.__decorate || function(e, t, n, o) {
-var i, r = arguments.length, a = r < 3 ? t : null === o ? o = Object.getOwnPropertyDescriptor(t, n) : o;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(e, t, n, o); else for (var s = e.length - 1; s >= 0; s--) (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(t, n, a) : i(t, n)) || a);
-return r > 3 && a && Object.defineProperty(t, n, a), a;
-};
-Object.defineProperty(n, "__esModule", {
-value: !0
-});
-n.AudioNameConfig = n.GameEventConfig = void 0;
-var a, s, c = e("../../../scripts/framework/componects/EventComponent"), l = e("../../../scripts/sdk/AppInfo"), u = e("../../../scripts/sdk/SdkManager"), p = e("../Service/AudioMgr"), d = e("../Service/NomoreMovesService"), f = e("./Effect_FinishMgr"), h = e("./LevelChooseTC"), _ = e("./LevelMgr");
-(function(e) {
-e.NomoreMove = "NomoreMove";
-e.PlayLevel = "PlayLevel";
-e.GameOver = "GameOver";
-})(a = n.GameEventConfig || (n.GameEventConfig = {}));
-(function(e) {
-e.Click = "click";
-e.flip = "flip_one";
-e.success = "succes";
-e.winning = "winning";
-})(s = n.AudioNameConfig || (n.AudioNameConfig = {}));
-var g = cc._decorator, y = g.ccclass, m = g.property, v = function(e) {
-i(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.nomoreMovesService = null;
-t.effect_Finish = null;
-return t;
-}
-t.prototype.onLoad = function() {
-this.initEvent();
-};
-t.prototype.start = function() {};
-t.prototype.initEvent = function() {
-var e = this;
-this.onD(a.NomoreMove, function() {
-e.nomoreMovesService.OpenShow(function() {
-h.default.instance.OpenShow();
-});
-});
-this.onD(a.PlayLevel, function(e) {
-_.default.instance.Init(e);
-});
-this.onD(a.GameOver, function(t) {
-h.default.instance.SetFinishLevel(t);
-p.default.instance.playEffect(s.winning);
-e.effect_Finish.OpenShow(function() {
-h.default.instance.OpenShow();
-});
-});
-};
-t.prototype.ButtonClick_Home = function() {
-h.default.instance.OpenShow();
-};
-t.prototype.ButtonClick_GotoR = function() {
-var e = "https://iron9leaf.win";
-e += String.format("?fid={0}&afid={1}", l.default.getFireBaseAppInstanceID(), l.default.getAppflyId());
-u.default.openUrl(e);
-};
-t.prototype.ButtonClick_Setting = function() {};
-r([ m(d.default) ], t.prototype, "nomoreMovesService", void 0);
-r([ m(f.default) ], t.prototype, "effect_Finish", void 0);
-return r([ y ], t);
-}(c.default);
-n.default = v;
-cc._RF.pop();
-}, {
-"../../../scripts/framework/componects/EventComponent": "EventComponent",
-"../../../scripts/sdk/AppInfo": "AppInfo",
-"../../../scripts/sdk/SdkManager": "SdkManager",
-"../Service/AudioMgr": "AudioMgr",
-"../Service/NomoreMovesService": "NomoreMovesService",
-"./Effect_FinishMgr": "Effect_FinishMgr",
-"./LevelChooseTC": "LevelChooseTC",
-"./LevelMgr": "LevelMgr"
 } ],
 StageData: [ function(e, t, n) {
 "use strict";
@@ -19422,4 +18428,4 @@ return r([ s ], t);
 n.default = l;
 cc._RF.pop();
 }, {} ]
-}, {}, [ "Application", "MainController", "Level_Base", "Login", "Effect_FinishMgr", "LevelChooseTC", "LevelMgr", "SolitaireElimination", "ChooseLevelModel", "MyCardModel", "AudioMgr", "Level_First", "NomoreMovesService", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "Alert", "GlobalAudio", "GrayNodeColor", "Loading", "Tips", "UIContainer", "UILoading", "UIReconnect", "UpdateLoading", "ZProgressbar", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GetCmdKey", "HttpSender", "ReconnectHandler", "CmmUtils", "RandomUtil", "StorageUtils", "UIUtils", "URLConfig", "Framework", "AudioComponent", "EventComponent", "GameDesignSizeTopFit", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "LoginEntry", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "CommonUIHelper", "HotUpdate", "LoginView", "LoginViewNodes", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager" ]);
+}, {}, [ "Application", "MainController", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "Alert", "GlobalAudio", "GrayNodeColor", "Loading", "Tips", "UIContainer", "UILoading", "UIReconnect", "UpdateLoading", "ZProgressbar", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GetCmdKey", "HttpSender", "ReconnectHandler", "CmmUtils", "RandomUtil", "StorageUtils", "UIUtils", "URLConfig", "Framework", "AudioComponent", "EventComponent", "GameDesignSizeTopFit", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "LoginEntry", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "CommonUIHelper", "HotUpdate", "LoginView", "LoginViewNodes", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager" ]);
