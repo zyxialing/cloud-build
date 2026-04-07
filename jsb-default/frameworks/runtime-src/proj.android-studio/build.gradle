@@ -6,14 +6,14 @@ buildscript {
         mavenLocal()
 
         // Google 和 Maven Central 的镜像
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-
-        // 国内的 JCenter 和 Huawei 仓库
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url 'https://developer.huawei.com/repo/' }
+//        maven { url 'https://maven.aliyun.com/repository/google' }
+//        maven { url 'https://maven.aliyun.com/repository/public' }
+//        maven { url 'https://maven.aliyun.com/repository/central' }
+//        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+//
+//        // 国内的 JCenter 和 Huawei 仓库
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+//        maven { url 'https://developer.huawei.com/repo/' }
 //
 //        // Gitee 作为备选
 //        maven { url "https://gitee.com/afra55/afa55-junk-code/raw/master" }

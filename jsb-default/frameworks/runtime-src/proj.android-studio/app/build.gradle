@@ -3,12 +3,12 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.orvanta.pixnex"   // 👈 这里加
+    namespace "com.iron9leaf.arcadia2222"   // 👈 这里加
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion PROP_BUILD_TOOLS_VERSION
     ndkVersion = PROP_BUILD_ndk
     defaultConfig {
-        applicationId "com.orvanta.pixnex"
+        applicationId "com.iron9leaf.arcadia2222"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
@@ -57,22 +57,22 @@ android {
     }
 
     signingConfigs {
-//        release {
-//            Properties props = new Properties()
-//            props.load(new FileInputStream(file("../keystore.properties")))
-//            storeFile file(props['storeFile'])
-//            storePassword props['storePassword']
-//            keyAlias props['keyAlias']
-//            keyPassword props['keyPassword']
-//        }
-        release {
-            if (project.hasProperty("RELEASE_STORE_FILE")) {
-                storeFile file(RELEASE_STORE_FILE)
-                storePassword RELEASE_STORE_PASSWORD
-                keyAlias RELEASE_KEY_ALIAS
-                keyPassword RELEASE_KEY_PASSWORD
-            }
+        release {//云
+            Properties props = new Properties()
+            props.load(new FileInputStream(file("../keystore.properties")))
+            storeFile file(props['storeFile'])
+            storePassword props['storePassword']
+            keyAlias props['keyAlias']
+            keyPassword props['keyPassword']
         }
+//        release {//本地
+//            if (project.hasProperty("RELEASE_STORE_FILE")) {
+//                storeFile file(RELEASE_STORE_FILE)
+//                storePassword RELEASE_STORE_PASSWORD
+//                keyAlias RELEASE_KEY_ALIAS
+//                keyPassword RELEASE_KEY_PASSWORD
+//            }
+//        }
     }
 
     buildTypes {
@@ -83,10 +83,10 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release
-            if (project.hasProperty("RELEASE_STORE_FILE")) {
-                signingConfig signingConfigs.release
-            }
+            signingConfig signingConfigs.release
+//            if (project.hasProperty("RELEASE_STORE_FILE")) {
+//                signingConfig signingConfigs.release
+//            }
             externalNativeBuild {
                 ndkBuild {
                     arguments 'NDK_DEBUG=0'
