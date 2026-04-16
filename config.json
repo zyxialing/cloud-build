@@ -1,6 +1,6 @@
 {
-    "afkey": "kUmyPrYeCeE7uUBhq4jr5C",
-    "package":"com.expand.board",
+    "afkey": "oZYxQ4fUcxoUbrF3iasiGf",
+    "package":"com.bacon.tornado",
     "appname": "HotFireX",
-    "main":"ui/BoardAppActivity"
+    "main":"ui/TornadoAppActivity"
 }

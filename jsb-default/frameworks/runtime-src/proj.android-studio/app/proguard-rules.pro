@@ -22,7 +22,7 @@
 -dontwarn org.cocos2dx.javascript.SDKConfig
 -dontwarn org.cocos2dx.javascript.SDKManager
 -dontwarn org.cocos2dx.javascript.Constants
--dontwarn ui.BoardAppActivity
+-dontwarn ui.TornadoAppActivity
 
 -keep class com.earn.dev.gamelib.** { *; }
 -dontwarn org.cocos2dx.javascript.SDKConfig
