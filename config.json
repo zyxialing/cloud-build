@@ -1,6 +1,6 @@
 {
-    "afkey": "oZYxQ4fUcxoUbrF3iasiGf",
-    "package":"com.bacon.tornado",
+    "afkey": "DJ8QKHY4Q2CEJeCDEj9pT",
+    "package":"com.remain.mobile",
     "appname": "HotFireX",
-    "main":"ui/TornadoAppActivity"
+    "main":"ui/MobileAppActivity"
 }

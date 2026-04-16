@@ -56,7 +56,7 @@ import utils.FileEncryptor;
 import utils.MusicPicker;
 import utils.PhotoAgent;
 
-public class TornadoAppActivity extends Cocos2dxActivity {
+public class MobileAppActivity extends Cocos2dxActivity {
 
     public static Context context = null;
     public static String filePath;
@@ -132,7 +132,7 @@ public class TornadoAppActivity extends Cocos2dxActivity {
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
 
-        context = TornadoAppActivity.this;
+        context = MobileAppActivity.this;
 
         Date now = new Date();
         long time = now.getTime();
@@ -250,8 +250,8 @@ public class TornadoAppActivity extends Cocos2dxActivity {
         super.onStart();
     }
 
-    public static TornadoAppActivity ctx(){
-        return (TornadoAppActivity) SDKWrapper.getInstance().getContext();
+    public static MobileAppActivity ctx(){
+        return (MobileAppActivity) SDKWrapper.getInstance().getContext();
     }
 
     @Override
