@@ -1,6 +1,6 @@
 {
-    "afkey": "DJ8QKHY4Q2CEJeCDEj9pT",
-    "package":"com.remain.mobile",
+    "afkey": "HQafYLJRUVEr6v3EnRz6oW",
+    "package":"com.inject.topic",
     "appname": "HotFireX",
-    "main":"ui/MobileAppActivity"
+    "main":"mainui/MainActivity"
 }
