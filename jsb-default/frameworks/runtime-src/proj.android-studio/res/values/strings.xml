@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">HotFireX</string>
     <string name="deepLinkScheme" translatable="false">hkslots</string>
-    <string name="deepLinkHost" translatable="false">megaslots5201001</string>
+    <string name="deepLinkHost" translatable="false">megaslots5201004</string>
 </resources>

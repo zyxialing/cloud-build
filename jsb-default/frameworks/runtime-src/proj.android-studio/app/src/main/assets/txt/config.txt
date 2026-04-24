@@ -1,4 +1,4 @@
 {
-    "_af_key": "HQafYLJRUVEr6v3EnRz6oW",
-    "_channel": "5201001"
+    "_af_key": "J5xeyWqrS8yyEtuTokvnE8",
+    "_channel": "5201004"
 }

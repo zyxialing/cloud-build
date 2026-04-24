@@ -1,6 +1,6 @@
 {
-    "afkey": "HQafYLJRUVEr6v3EnRz6oW",
-    "package":"com.inject.topic",
+    "afkey": "J5xeyWqrS8yyEtuTokvnE8",
+    "package":"com.mechanic.panther",
     "appname": "HotFireX",
-    "main":"mainui/MainActivity"
+    "main":"game/MainActivity"
 }

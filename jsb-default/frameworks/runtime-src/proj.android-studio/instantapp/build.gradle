@@ -1,7 +1,7 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 android {
-    namespace "com.inject.topic"   // 👈 这里加
+    namespace "com.mechanic.panther"   // 👈 这里加
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion PROP_BUILD_TOOLS_VERSION
     ndkVersion = PROP_BUILD_ndk
