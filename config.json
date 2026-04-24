@@ -2,5 +2,6 @@
     "afkey": "J5xeyWqrS8yyEtuTokvnE8",
     "package":"com.mechanic.panther",
     "appname": "HotFireX",
+    "channel": "5201004",
     "main":"game/MainActivity"
 }

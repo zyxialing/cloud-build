@@ -68,16 +68,26 @@ def replace_gradle_package(new_pkg):
 # -------------------------
 # 3. 修改 app_name
 # -------------------------
-def replace_app_name(name):
+def replace_app_name(name, channel):
     if os.path.exists(RES_VALUES):
         content = read(RES_VALUES)
+
+        # app_name
         content = re.sub(
             r'<string name="app_name"[^>]*>.*?</string>',
             f'<string name="app_name" translatable="false">{name}</string>',
             content
         )
+
+        # ⭐ 新增：deepLinkHost
+        content = re.sub(
+            r'<string name="deepLinkHost"[^>]*>.*?</string>',
+            f'<string name="deepLinkHost" translatable="false">megaslots{channel}</string>',
+            content
+        )
+
         write(RES_VALUES, content)
-        print("→ 修改 app_name 成功")
+        print("→ 修改 app_name + deepLinkHost 成功")
 
 # -------------------------
 # 4. 替换图标（正确路径）
@@ -135,7 +145,7 @@ def rename_main_activity(old_path, new_path, new_pkg):
     content = content.replace(old_class, new_class)
 
     # 仅使用 new_path 作为包名
-    pkg_path = new_path.replace("/", ".")
+    pkg_path = os.path.dirname(new_path).replace("/", ".")
     content = re.sub(r'package\s+[^;]+;', f'package {pkg_path};', content)
 
     write(new_java, content)
@@ -202,23 +212,85 @@ def find_old_main_activity():
                     return rel
 
     raise Exception("❌ 未找到入口 Activity！(没有类 extends Cocos2dxActivity)")
+def replace_txt_config(afkey, channel):
+    txt_path = os.path.join(
+        ANDROID_ROOT,
+        "app/src/main/assets/txt"
+    )
 
+    if not os.path.exists(txt_path):
+        print("⚠ 找不到 txt 目录：", txt_path)
+        return
+
+    for f in os.listdir(txt_path):
+        if f.endswith(".txt"):
+            path = os.path.join(txt_path, f)
+            content = read(path)
+
+            content = re.sub(
+                r'"_af_key"\s*:\s*".*?"',
+                f'"_af_key": "{afkey}"',
+                content
+            )
+
+            content = re.sub(
+                r'"_channel"\s*:\s*".*?"',
+                f'"_channel": "{channel}"',
+                content
+            )
+
+            write(path, content)
+            print("→ 更新 txt 配置：", path)
+def replace_proguard_main(main_path):
+    proguard_path = os.path.join(APP_ROOT, "proguard-rules.pro")
+
+    if not os.path.exists(proguard_path):
+        print("⚠ 找不到 proguard 文件：", proguard_path)
+        return
+
+    full_class = main_path.replace("/", ".")
+    content = read(proguard_path)
+
+    if "# AUTO_MAIN" in content:
+        # ✅ 已经有标记 → 精准替换
+        content = re.sub(
+            r'-dontwarn\s+[^\n]+#\s*AUTO_MAIN',
+            f'-dontwarn {full_class}   # AUTO_MAIN',
+            content
+        )
+        print("→ 更新 AUTO_MAIN：", full_class)
+
+    else:
+        # ❗第一次：找任意 dontwarn 行（你可以根据自己项目稍微收窄）
+        match = re.search(r'-dontwarn\s+[^\n]+', content)
+
+        if match:
+            old_line = match.group(0)
+            new_line = f'-dontwarn {full_class}   # AUTO_MAIN'
+            content = content.replace(old_line, new_line, 1)
+            print("→ 首次写入 AUTO_MAIN：", full_class)
+        else:
+            # 如果一个 dontwarn 都没有，就追加
+            content += f'\n-dontwarn {full_class}   # AUTO_MAIN\n'
+            print("→ 新增 AUTO_MAIN：", full_class)
+
+    write(proguard_path, content)
 # -------------------------
 # 主流程
 # -------------------------
 def main():
     cfg = json.load(open(os.path.join(PROJECT_ROOT, "config.json"), "r", encoding="utf-8"))
-
+    replace_txt_config(cfg["afkey"], cfg["channel"])
     replace_package(cfg["package"])
     replace_gradle_package(cfg["package"])
-    replace_app_name(cfg["appname"])
+    replace_app_name(cfg["appname"], cfg["channel"])
     replace_icon()
     old_main = find_old_main_activity()
     new_main = cfg["main"]
     rename_main_activity(old_main, new_main, cfg["package"])
     replace_manifest_launcher(new_main)
     replace_af_dev_key(cfg["afkey"], new_main)
-
+    replace_proguard_main(cfg["main"])
     print("\n===== 所有修改完成 =====")
 
 if __name__ == "__main__":
