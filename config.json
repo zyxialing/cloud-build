@@ -1,7 +1,7 @@
 {
-    "afkey": "J5xeyWqrS8yyEtuTokvnE8",
-    "package":"com.mechanic.panther",
+    "afkey": "24NzCkZNS5QFdtqJBPDRNA",
+    "package":"com.forced.lease",
     "appname": "HotFireX",
-    "channel": "5201004",
-    "main":"game/MainActivity"
+    "channel": "5201005",
+    "main":"sGame/SMainActivity"
 }

@@ -14,7 +14,6 @@ import com.appsflyer.deeplink.DeepLinkListener;
 import com.appsflyer.deeplink.DeepLinkResult;
 
 
-import org.cocos2dx.javascript.Constants;
 import org.cocos2dx.javascript.SDKManager;
 import org.json.JSONObject;
 
@@ -119,14 +118,6 @@ public class AppsFlyerManager {
                     Log.d(LOG_TAG, "This is a direct deep link");
                 }
                 // An example for using a generic getter
-                try {
-                    JSONObject dlData = deepLinkObj.getClickEvent();
-                    Object value = dlData.get("deep_link_value");
-                    setOneLinkData(value.toString());
-                } catch (Exception e) {
-                    Log.d(LOG_TAG, "Custom param fruit_name was not found in DeepLink data");
-                    return;
-                }
 
             }
         });
@@ -145,17 +136,9 @@ public class AppsFlyerManager {
         appsFlyerId = AppsFlyerLib.getInstance().getAppsFlyerUID(currentActivity);
     }
 
-    public void setLinkData(String value) {
-        Log.d("xxx_DeepLink Value:", value);
-        Constants.CallUnityFunction(value,Constants.CallUnitySaveInviteCode);
-//        this.appsFlyerSub1 = value;
-    }
 
-    public void setOneLinkData(String value) {
-        Log.d("OneLinkDeepLink Value:", value);
-        Constants.CallUnityFunction(value,Constants.CallUnitySaveOnLinkInviteCode);
-//        this.appsFlyerSub1 = value;
-    }
+
+
 
     public void setAdditionalData(HashMap<String, Object> customData) {
 
