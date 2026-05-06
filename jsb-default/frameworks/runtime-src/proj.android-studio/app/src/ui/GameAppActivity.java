@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package game;
+package ui;
 
 import org.cocos2dx.javascript.Constants;
 import org.cocos2dx.javascript.SDKConfig;
@@ -56,7 +56,7 @@ import utils.FileEncryptor;
 import utils.MusicPicker;
 import utils.PhotoAgent;
 
-public class MainActivity extends Cocos2dxActivity {
+public class GameAppActivity extends Cocos2dxActivity {
 
     public static Context context = null;
     public static String filePath;
@@ -132,7 +132,7 @@ public class MainActivity extends Cocos2dxActivity {
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
 
-        context = MainActivity.this;
+        context = GameAppActivity.this;
 
         Date now = new Date();
         long time = now.getTime();
@@ -250,8 +250,8 @@ public class MainActivity extends Cocos2dxActivity {
         super.onStart();
     }
 
-    public static MainActivity ctx(){
-        return (MainActivity) SDKWrapper.getInstance().getContext();
+    public static GameAppActivity ctx(){
+        return (GameAppActivity) SDKWrapper.getInstance().getContext();
     }
 
     @Override
