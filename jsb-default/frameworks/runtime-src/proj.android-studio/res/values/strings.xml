@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">HotFireX</string>
-    <string name="deepLinkScheme" translatable="false">hkslots</string>
-    <string name="deepLinkHost" translatable="false">megaslots5201005</string>
+    <string name="app_name" translatable="false">Golden Treasure Slots</string>
+    <string name="deepLinkScheme" translatable="false">deepGame</string>
+    <string name="deepLinkHost" translatable="false">goldenslots</string>
 </resources>
