@@ -1,7 +1,7 @@
 {
-    "afkey": "J5xeyWqrS8yyEtuTokvnE8",
-    "package":"com.mechanic.panther",
+    "afkey": "24UPCTDuz7LA726ZDSdpTi",
+    "package":"com.calling.junior",
     "appname": "HotFireX",
-    "channel": "5201004",
-    "main":"game/MainActivity"
+    "channel": "5201003",
+    "main":"win/CoMainActivity"
 }
