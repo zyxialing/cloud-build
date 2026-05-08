@@ -1,7 +1,7 @@
 {
-    "afkey": "DJ8QKHY4Q2CEJeCDEj9pT",
-    "package":"com.remain.mobile",
+    "afkey": "24UPCTDuz7LA726ZDSdpTi",
+    "package":"com.calling.junior",
     "appname": "HotFireX",
     "channel": "5201003",
-    "main":"ui/GameAppActivity"
+    "main":"co/CoGameActivity"
 }
