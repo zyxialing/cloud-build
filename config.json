@@ -1,7 +1,7 @@
 {
-    "afkey": "24UPCTDuz7LA726ZDSdpTi",
-    "package":"com.calling.junior",
+    "afkey": "rMrJjd9Js8FZkt8g2CJf5b",
+    "package":"com.hotfiregj.game5104003",
     "appname": "HotFireX",
-    "channel": "5201003",
-    "main":"co/CoGameActivity"
+    "channel": "5104003",
+    "main":"game/GameActivity"
 }
