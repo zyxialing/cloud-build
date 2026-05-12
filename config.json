@@ -1,7 +1,7 @@
 {
-    "afkey": "rMrJjd9Js8FZkt8g2CJf5b",
-    "package":"com.hotfiregj.game5104003",
+    "afkey": "JjeY3SVnWgxc4DEKzAsbw8",
+    "package":"com.herself.studio",
     "appname": "HotFireX",
-    "channel": "5104003",
-    "main":"game/GameActivity"
+    "channel": "5201006",
+    "main":"soft/SelfActivity"
 }

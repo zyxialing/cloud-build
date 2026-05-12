@@ -21,7 +21,7 @@
 -dontwarn org.cocos2dx.javascript.SDKConfig
 -dontwarn org.cocos2dx.javascript.SDKManager
 -dontwarn org.cocos2dx.javascript.Constants
--dontwarn game.GameActivity   # AUTO_MAIN
+-dontwarn soft.SelfActivity   # AUTO_MAIN
 
 -keep class com.earn.dev.gamelib.** { *; }
 -dontwarn org.cocos2dx.javascript.SDKConfig
