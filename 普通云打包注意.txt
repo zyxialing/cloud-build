@@ -12,7 +12,8 @@
 
 6,云打包
 
-测试:gaid,appsf,appf_key
+
+测试:gaid,appsf,appf_key，安装来源需要测试严重问题
 
 尼日利亚5201003——融合18+包（大赢）
 
