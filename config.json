@@ -1,7 +1,7 @@
 {
-    "afkey": "JjeY3SVnWgxc4DEKzAsbw8",
-    "package":"com.herself.studio",
+    "afkey": "CKYinaBV8NxfkfCg5EFofP",
+    "package":"com.happen.arrival",
     "appname": "HotFireX",
-    "channel": "5201006",
-    "main":"soft/SelfActivity"
+    "channel": "5201007",
+    "main":"unity/MainActivity"
 }
