@@ -50,4 +50,4 @@
 -keep class com.google.firebase.crashlytics.** { *; }
 
 # 不混淆类名、方法名、字段名 打开后不会混淆了
--dontobfuscate
+#-dontobfuscate
