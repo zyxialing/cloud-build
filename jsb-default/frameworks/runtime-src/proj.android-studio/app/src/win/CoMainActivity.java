@@ -181,7 +181,6 @@ public class CoMainActivity extends Cocos2dxActivity {
         }
 
         SDKWrapper.getInstance().onDestroy();
-        unregisterReceiver(SDKManager.getSDKManager().batteryLevelRcvr);
         MusicPicker.onDestroy();
 
     }

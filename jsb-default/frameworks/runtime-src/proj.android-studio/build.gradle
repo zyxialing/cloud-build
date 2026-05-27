@@ -11,8 +11,6 @@ buildscript {
 //        maven { url 'https://maven.aliyun.com/repository/central' }
 //        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
 //
-//        // 国内的 JCenter 和 Huawei 仓库
-//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
 //        maven { url 'https://developer.huawei.com/repo/' }
 //
 //        // Gitee 作为备选
@@ -21,13 +19,11 @@ buildscript {
         google()
         mavenCentral()
 
-        // 本地的 libs 仓库
-        flatDir {
-            dirs 'libs'  // 本地库放在最后，优先查找远程仓库
-        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.6.1'
+        classpath 'com.google.gms:google-services:4.4.4'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.3'
     }
 }
 
@@ -36,7 +32,6 @@ allprojects {
         mavenLocal()  // 必须添加
         mavenCentral()
         google()
-        jcenter() {url 'https://maven.aliyun.com/repository/central'}
     }
 }
 

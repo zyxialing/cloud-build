@@ -2,18 +2,12 @@ package utils;
 
 import android.app.Activity;
 import android.util.Base64;
-
-
-import androidx.room.jarjarred.org.antlr.v4.runtime.CharStreams;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-
-import kotlin.text.Charsets;
 
 public class FileEncryptor {
 

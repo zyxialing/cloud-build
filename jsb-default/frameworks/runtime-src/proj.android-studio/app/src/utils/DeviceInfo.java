@@ -1,26 +1,11 @@
 package utils;
-
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-
-
-import androidx.core.app.ActivityCompat;
-
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.ResultCallback;
-
-//import com.huawei.android.hms.pps.AdvertisingIdClient;
-
-import java.io.IOException;
-import java.security.DomainLoadStoreParameter;
 import java.security.MessageDigest;
 import java.util.Locale;
 import java.util.UUID;

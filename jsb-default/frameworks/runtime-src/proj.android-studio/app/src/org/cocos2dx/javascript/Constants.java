@@ -16,7 +16,6 @@ public class    Constants {
     public static String CallUnityFBLoginCallback = "SDK_LoginCallback";
     public static String CallUnityIronSourceRewardADCallBack = "ShowAdCallBack";
     public static String CallUnityIronSourceInterstitialADCallBack = "ShowInterstitialAdCallBack";
-    public static String CallUnityBatteryManagerCallBack = "BatteryDataCallback";
     public static String CallUnityupdateApplicationCallBack = "CallUnityupdateApplicationCallBack";
     public static String CallUnityPurchaseCallBack="PurchaseCallBack";
     public static String CallUnitySaveInviteCode="SaveInviteCode";

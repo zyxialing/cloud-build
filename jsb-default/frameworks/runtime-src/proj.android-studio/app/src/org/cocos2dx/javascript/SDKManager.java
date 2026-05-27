@@ -92,19 +92,10 @@ public class SDKManager {
         DeviceInfo.getDeviceInfoManager().initDeviceInfoManager(currentActivity);
         PhotoAgent.getPhotoAgent().initialize(currentActivity);
         AppsFlyerManager.getAppsFlyerManager().AppsFlyerInit(currentActivity);
-        monitorBatteryState();
-        currentActivity.registerReceiver(batteryLevelRcvr,batteryLevelFilter);
         getIsSimulator();
-        //showSplash();
         Log.d("Android Studio Log:","InitSdkManager");
-
         Date date = new Date();
-        //getGameConfig();
-//        Log.d("screen+StatusBar:",getStatusBarHeight()+"");
-//        Log.d("screen+Navigation:",getNavigationBarHeight()+"");
-//        Log.d("screen+RealScreen:",getRealScreenHeight()+"");
-//        Log.d("screen+UsableScreen:",getUsableScreenHeight()+"");
-//        Log.d("screen+UsableScreenw:",getRealScreenWitdh()+"");
+
     }
 
 
@@ -243,32 +234,6 @@ public class SDKManager {
         return 1;
     }
 
-    //-------Wifi_Speed----begin--
-    public static int wifi_speed = 0;
-    private void initWifi() {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    wifi_speed = getWifiSpeed(); //信号
-                }
-            }
-        };
-        thread.start();
-    }
-
-    public static int getWifiSpeed() {
-        return wifi_speed;
-    }
-    //-------Wifi_Speed----end--
-
-
-
     //获取游戏配置项
     public static String getGameConfig() {
         JSONObject jsonData = new JSONObject();
@@ -302,27 +267,6 @@ public class SDKManager {
     }
 
 
-    public BroadcastReceiver batteryLevelRcvr;
-    public IntentFilter batteryLevelFilter;
-    private static String batteryDataStr = "";
-    private void monitorBatteryState() {
-        batteryLevelRcvr = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int rawlevel = intent.getIntExtra("level", -1);
-                int scale = intent.getIntExtra("scale", -1);
-                int status = intent.getIntExtra("status", -1);
-
-                int level = -1; // percentage, or -1 for unknown
-                if (rawlevel >= 0 && scale > 0) {
-                    level = (rawlevel * 100) / scale;
-                }
-                batteryDataStr = level+"|"+scale+"|"+status;
-                Constants.CallUnityFunction(batteryDataStr,Constants.CallUnityBatteryManagerCallBack);
-            }
-        };
-        batteryLevelFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-    }
 
     //---------------上报启动----begin---------
     public static boolean isGetCocosGameNative=false;
@@ -494,16 +438,23 @@ public class SDKManager {
     }
 
     public static void openUrl(String url){
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            intent.setPackage("com.android.chrome"); // 指定 Chrome 包名
-            currentActivity.startActivity(intent);
-        } catch (Exception e) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            currentActivity.startActivity(intent);
-        }
+        Log.e("CrashTest", "setOrientation_l called");
+        currentActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                throw new RuntimeException("Firebase Crashlytics test crash");
+            }
+        });
+//        try {
+//            Intent intent = new Intent(Intent.ACTION_VIEW);
+//            intent.setData(Uri.parse(url));
+//            intent.setPackage("com.android.chrome"); // 指定 Chrome 包名
+//            currentActivity.startActivity(intent);
+//        } catch (Exception e) {
+//            Intent intent = new Intent(Intent.ACTION_VIEW);
+//            intent.setData(Uri.parse(url));
+//            currentActivity.startActivity(intent);
+//        }
     }
 
 
@@ -527,6 +478,9 @@ public class SDKManager {
 
     public static void setOrientation_l(){
         currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        Log.e("CrashTest", "setOrientation_l called");
+        throw new RuntimeException("Firebase Crashlytics test crash");
+
     }
 
     public static void setOrientation_p(){
