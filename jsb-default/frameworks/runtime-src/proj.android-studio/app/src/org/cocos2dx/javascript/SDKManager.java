@@ -34,6 +34,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.android.installreferrer.api.InstallReferrerClient;
+import com.android.installreferrer.api.InstallReferrerStateListener;
+import com.android.installreferrer.api.ReferrerDetails;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,7 +65,6 @@ public class SDKManager {
 
     public static  String channel = "";
     public static  String urlData = "";
-
     public static final String gameVersion = "6.0.0";
     public static final String defaultCountryCode = "D";
     public static final int FILECHOOSER_RESULT_CODE = 10000;
@@ -85,20 +88,50 @@ public class SDKManager {
 
     public void InitSDKManager(Activity activity, long activeT)
     {
+        Date date = new Date();
         activeTime = activeT;
         currentActivity = activity;
         GetGAID_INIT();
         MusicPicker.Init(currentActivity);
+        initGooglePlayInstallReferrer(currentActivity.getApplication(),date);
         DeviceInfo.getDeviceInfoManager().initDeviceInfoManager(currentActivity);
         PhotoAgent.getPhotoAgent().initialize(currentActivity);
         AppsFlyerManager.getAppsFlyerManager().AppsFlyerInit(currentActivity);
         getIsSimulator();
         Log.d("Android Studio Log:","InitSdkManager");
-        Date date = new Date();
+
 
     }
 
+    private void initGooglePlayInstallReferrer(Application ctx, Date now){
+        InstallReferrerClient referrerClient = InstallReferrerClient.newBuilder(ctx).build();
+        referrerClient.startConnection(new InstallReferrerStateListener() {
+            @Override
+            public void onInstallReferrerSetupFinished(int responseCode) {
+                switch (responseCode) {
+                    case InstallReferrerClient.InstallReferrerResponse.OK:
+                        // Connection established.
+                        handleInstallReferrer(ctx, referrerClient, now);
+                        break;
+                    case InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
+                        // API not available on the current Play Store app.
+                        Log.e("", "FEATURE_NOT_SUPPORTED");
+                        break;
+                    case InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
+                        // Connection couldn't be established.
+                        Log.e("", "SERVICE_UNAVAILABLE");
+                        break;
+                }
+            }
 
+            @Override
+            public void onInstallReferrerServiceDisconnected() {
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+                Log.d("", "onInstallReferrerServiceDisconnected!");
+            }
+        });
+    }
     public static String checkVPN() {
         //don't know why always returns null:
         ConnectivityManager connMgr = (ConnectivityManager) currentActivity.getBaseContext()
@@ -110,22 +143,51 @@ public class SDKManager {
         }
         return ret;
     }
-
+    public static int getTimeZone() {
+        TimeZone timeZone = TimeZone.getDefault();
+        String timeZoneId = timeZone.getID();
+        int offsetMillis = timeZone.getOffset(System.currentTimeMillis());
+        int offsetMinutes = offsetMillis / (1000 * 60);
+        Log.d("TimeZone Log", "timeZoneId = " + timeZoneId);
+        Log.d("TimeZone Log", "offsetMinutes = " + offsetMinutes);
+        return offsetMinutes;
+    }
     public static String isIndiaTimeZone() {
-        TimeZone tz = TimeZone.getDefault();
-
-        // 获取原始偏移（毫秒） → 转分钟
-        int offsetMinutes = tz.getRawOffset() / (1000 * 60);
-        if(offsetMinutes == 330){
-            return "1";
-        }
         return "0";
     }
 
 
     static String installReferrer = "";
     static long installReferrer_ts = 0;
+    private static void handleInstallReferrer(Application ctx, InstallReferrerClient client, Date now){
+        long temp = activeTime - now.getTime();
 
+        try {
+            ReferrerDetails response = client.getInstallReferrer();
+            String referrer = response.getInstallReferrer();
+            installReferrer = referrer;
+            installReferrer_ts = temp;
+            Log.i("", "安装来源值: referrer=" + referrer + "; 耗时=" + temp + "ms");
+
+            if (TextUtils.isEmpty(referrer)) {
+                Log.e("", "安装来源值为空!");
+            } else {
+                JSONObject jsonObj = new JSONObject();
+                try {
+                    jsonObj.put("installReferrer", referrer);
+                    jsonObj.put("installReferrer_ts", temp);
+                    Log.d("referrer----->",jsonObj.toString());
+                    Constants.CallUnityFunction(jsonObj.toString(), Constants.CallUnityInstallReferrerCallBack);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            client.endConnection();
+        } catch (Exception ex) {
+            Log.e("InstallReferrerHelper", ex.toString());
+        }
+    }
     public static String getGoogleId()
     {
         if(googleAdId.equals("0")||googleAdId.equals("") ||googleAdId.equals("00000000-0000-0000-0000-000000000000"))
@@ -438,23 +500,16 @@ public class SDKManager {
     }
 
     public static void openUrl(String url){
-        Log.e("CrashTest", "setOrientation_l called");
-        currentActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                throw new RuntimeException("Firebase Crashlytics test crash");
-            }
-        });
-//        try {
-//            Intent intent = new Intent(Intent.ACTION_VIEW);
-//            intent.setData(Uri.parse(url));
-//            intent.setPackage("com.android.chrome"); // 指定 Chrome 包名
-//            currentActivity.startActivity(intent);
-//        } catch (Exception e) {
-//            Intent intent = new Intent(Intent.ACTION_VIEW);
-//            intent.setData(Uri.parse(url));
-//            currentActivity.startActivity(intent);
-//        }
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            intent.setPackage("com.android.chrome"); // 指定 Chrome 包名
+            currentActivity.startActivity(intent);
+        } catch (Exception e) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            currentActivity.startActivity(intent);
+        }
     }
 
 
@@ -478,9 +533,6 @@ public class SDKManager {
 
     public static void setOrientation_l(){
         currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        Log.e("CrashTest", "setOrientation_l called");
-        throw new RuntimeException("Firebase Crashlytics test crash");
-
     }
 
     public static void setOrientation_p(){
