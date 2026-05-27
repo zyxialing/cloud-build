@@ -1825,7 +1825,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("./GameMgr"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -1837,17 +1837,9 @@ return e;
 o = e;
 e.prototype.onLoad = function() {
 o.instance = this;
-this.refreshSoundState();
-this.refreshMusicState();
+var t = App.storage.getItem("soundState", !0);
+this.setSoundState(t);
 this.playBGM(this.bgm);
-};
-e.prototype.refreshSoundState = function() {
-var t = App.storage.getItem(a.MyGameEvent_A.SoundState, !0);
-o.instance.setSoundState(t);
-};
-e.prototype.refreshMusicState = function() {
-var t = App.storage.getItem(a.MyGameEvent_A.MusicState, !0);
-o.instance.setMusicState(t);
 };
 e.prototype.onDestroy = function() {
 this.stopBGM();
@@ -1879,23 +1871,19 @@ e.prototype.StopEffect_audioID = function(t) {
 cc.audioEngine.stopEffect(t);
 };
 e.prototype.setSoundState = function(t) {
-cc.audioEngine.setEffectsVolume(t ? 1 : 0);
-};
-e.prototype.setMusicState = function(t) {
 cc.audioEngine.setMusicVolume(t ? 1 : 0);
+cc.audioEngine.setEffectsVolume(t ? 1 : 0);
 };
 var o;
 e.instance = null;
-r([ l(cc.AudioClip) ], e.prototype, "bgm", void 0);
-r([ l(cc.AudioClip) ], e.prototype, "bgm_game", void 0);
-r([ l(cc.AudioClip) ], e.prototype, "effects", void 0);
-return o = r([ c ], e);
+r([ c(cc.AudioClip) ], e.prototype, "bgm", void 0);
+r([ c(cc.AudioClip) ], e.prototype, "bgm_game", void 0);
+r([ c(cc.AudioClip) ], e.prototype, "effects", void 0);
+return o = r([ s ], e);
 }(cc.Component);
-o.default = p;
+o.default = l;
 cc._RF.pop();
-}, {
-"./GameMgr": "GameMgr"
-} ],
+}, {} ],
 AutoScaleShow: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "c5b15LNJchOjrVjPy8IFp+N", "AutoScaleShow");
@@ -2011,7 +1999,7 @@ t.node_Zhezhao.active = !1;
 }).start();
 };
 e.prototype.ButtonClick_Close = function() {
-s.default.instance.playEffect(c.AudioName.Click);
+s.default.instance.playEffect("click");
 this.CloseShow();
 };
 e.prototype.ButtonClick_Count0 = function() {
@@ -2031,14 +2019,14 @@ this.SetSelectAutoCount(4);
 };
 e.prototype.ButtonClick_StartAutoSpin = function() {
 var t = this;
-s.default.instance.playEffect(c.AudioName.Click);
+s.default.instance.playEffect("click");
 this.CloseShow();
 this.scheduleOnce(function() {
 dispatch(c.MyGameEvent_A.SetAutoCount, t.autoCount);
 }, .3);
 };
 e.prototype.SetSelectAutoCount = function(t) {
-s.default.instance.playEffect(c.AudioName.Click);
+s.default.instance.playEffect("click");
 this.autoCount = this.autoCounts_Config[t];
 Log.e("Select Auto Count = " + this.autoCount);
 for (var e = 0; e < this.label_Counts.length; e++) {
@@ -4541,20 +4529,26 @@ e.node_Main = null;
 e.node_CanClick = null;
 e.node_Lock = null;
 e.label_Level = null;
-e.label_Level2 = null;
+e.sprite_Icon = null;
 e.isCanPlay = !1;
 e.curLevel = 1;
 e.callBack_Btn = null;
+e.tween_Main = null;
 return e;
 }
-e.prototype.Init = function(t, e, o) {
+e.prototype.Init = function(t, e, o, n, i) {
 this.curLevel = t;
-this.isCanPlay = e;
-this.callBack_Btn = o;
+this.isCanPlay = o;
+this.callBack_Btn = i;
+this.ClearTween();
+this.sprite_Icon.spriteFrame = e;
 this.label_Level.string = "" + t;
-this.label_Level2.string = "" + t;
-this.node_CanClick.active = e;
-this.node_Lock.active = !e;
+this.node_CanClick.active = o;
+this.node_Lock.active = !o;
+this.node_Main.scale = 0;
+this.tween_Main = cc.tween(this.node_Main).delay(n).to(.3, {
+scale: 1
+}).start();
 };
 e.prototype.ResetState = function(t) {
 this.isCanPlay = t;
@@ -4564,11 +4558,14 @@ this.node_CanClick.active = t;
 e.prototype.ButtonClick_Choose = function() {
 this.callBack_Btn && this.callBack_Btn(this.curLevel);
 };
+e.prototype.ClearTween = function() {
+this.tween_Main && this.tween_Main.stop();
+};
 r([ c(cc.Node) ], e.prototype, "node_Main", void 0);
 r([ c(cc.Node) ], e.prototype, "node_CanClick", void 0);
 r([ c(cc.Node) ], e.prototype, "node_Lock", void 0);
 r([ c(cc.Label) ], e.prototype, "label_Level", void 0);
-r([ c(cc.Label) ], e.prototype, "label_Level2", void 0);
+r([ c(cc.Sprite) ], e.prototype, "sprite_Icon", void 0);
 return r([ s ], e);
 }(cc.Component);
 o.default = l;
@@ -14255,18 +14252,15 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.AudioName = o.VideoType_A = o.MyGameEvent_A = void 0;
-var a, s, c, l = t("console"), p = t("../../../scripts/common/enum/GlobalEnum"), u = t("../../../scripts/common/utils/RandomUtil"), d = t("../../../scripts/framework/componects/EventComponent"), h = t("./AudioMgr"), f = t("./slotsOperate"), m = t("./Service/HomeTipTCService_A"), _ = t("./Service/LoadingGameService_A"), g = t("./RulePanel"), y = t("./PayTabelPanel"), v = t("./PayLinesPanel"), b = t("../../../scripts/common/event/CommonEvent"), C = t("./Service/Reward_YouWin_A"), w = t("../../../scripts/sdk/SdkManager"), E = t("./Service/AutoService_A"), S = t("./Service/TaskService"), R = t("./Service/LevelManager_A"), O = t("../../core/newRoll/ZRollControler");
+var a, s, c, l = t("console"), p = t("../../../scripts/common/enum/GlobalEnum"), u = t("../../../scripts/common/utils/RandomUtil"), d = t("../../../scripts/framework/componects/EventComponent"), h = t("../../core/newRoll/ZRollControler"), f = t("./AudioMgr"), m = t("./slotsOperate"), _ = t("./Service/HomeTipTCService_A"), g = t("./Service/LoadingGameService_A"), y = t("./RulePanel"), v = t("./PayTabelPanel"), b = t("./PayLinesPanel"), C = t("../../../scripts/common/event/CommonEvent"), w = t("./Service/Reward_YouWin_A"), E = t("../../../scripts/sdk/SdkManager"), S = t("./Service/AutoService_A");
 (function(t) {
-t.ChooseLevel = "ChoseLevel_1";
-t.LevelFinish = "LevelFinish_1";
-t.PlayGame_LevelTipTC = "PlayGame_LevelTipTC_1";
-t.OpenRuleTC = "OpenRuleTC_1";
-t.OpenPayTabelTC = "OpenPayTableTC_1";
-t.OpenPayLineTC = "OpenPayLineTC_1";
-t.SetAutoCount = "SetAutoCount_1";
-t.SoundState = "SoundState_1";
-t.MusicState = "MusicState_1";
-t.Coin = "Coin_Flower";
+t.ChooseLevel = "ChoseLevel_A";
+t.LevelFinish = "LevelFinish_A";
+t.PlayGame_LevelTipTC = "PlayGame_LevelTipTC_A";
+t.OpenRuleTC = "OpenRuleTC_A";
+t.OpenPayTabelTC = "OpenPayTableTC_A";
+t.OpenPayLineTC = "OpenPayLineTC_A";
+t.SetAutoCount = "SetAutoCount_A";
 })(a = o.MyGameEvent_A || (o.MyGameEvent_A = {}));
 (function(t) {
 t.AddMoney = "1";
@@ -14283,7 +14277,7 @@ t.spin = "yx_spin";
 t.stop = "yx_stop";
 t.ele_award = "ele_award";
 })(c = o.AudioName || (o.AudioName = {}));
-var A = cc._decorator, P = A.ccclass, L = A.property, I = function(t) {
+var R = cc._decorator, O = R.ccclass, A = R.property, P = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -14296,15 +14290,12 @@ e.homeTipTC = null;
 e.loadingService = null;
 e.reward_YouWin = null;
 e.node_NotCanClick = null;
-e.taskService = null;
 e.rulePanel = null;
 e.payTablePanel = null;
 e.payLinesPanel = null;
 e.autoService = null;
-e.label_CurLevel = null;
 e.spriteFrames = [];
 e.curLevelData = null;
-e.curCollectCount = 0;
 e.curTime = 0;
 e.beginTime_Delay = 0;
 e.delayTimeToClick = 0;
@@ -14321,7 +14312,7 @@ t.prototype.onLoad.call(this);
 this.initEvent();
 };
 e.prototype.initNode = function() {
-this.operate = cc.find("operate", this.node).getComponent(f.default);
+this.operate = cc.find("operate", this.node).getComponent(m.default);
 };
 e.prototype.initEvent = function() {
 var t = this;
@@ -14337,13 +14328,13 @@ t.payTablePanel.OpenShow();
 this.onD(a.OpenPayLineTC, function() {
 t.payLinesPanel.OpenShow();
 });
-this.onD(b.SdkEvent.SdkEvent_finish_video_back, function(e) {
+this.onD(C.SdkEvent.SdkEvent_finish_video_back, function(e) {
 Log.d("激励视频播放完成，发放奖励");
 var o = JSON.parse(e);
 Log.e(o);
 o.rewardType == s.AddMoney ? o.isCanAward && t.operate.updateCoins(1e3) : o.rewardType == s.Bigwin && t.reward_YouWin.SetRewardX2(o.isCanAward);
 });
-this.onD(b.CommonEvent.EventMaskAll, function(e) {
+this.onD(C.CommonEvent.EventMaskAll, function(e) {
 t.beginTime_Delay = t.curTime;
 t.delayTimeToClick = e;
 t.node_NotCanClick.active = !0;
@@ -14357,33 +14348,30 @@ t.operate.ButtonClick_Spin();
 });
 };
 e.prototype.ButtonClick_Setting = function() {
-h.default.instance.playEffect(c.Click);
+f.default.instance.playEffect(c.Click);
 this.node_SetPanel.active = !0;
 };
 e.prototype.ButtonClick_Home = function() {
-h.default.instance.playEffect(c.Click);
+f.default.instance.playEffect(c.Click);
 this.homeTipTC.OpenShow(function(t) {
 if (t) {
 cc.director.loadScene("login");
-w.default.showInterstitial();
-h.default.instance.playBGM(h.default.instance.bgm);
+E.default.showInterstitial();
+f.default.instance.playBGM(f.default.instance.bgm);
 }
 });
 };
 e.prototype.ButtonClick_Rule = function() {
-h.default.instance.playEffect(c.Click);
+f.default.instance.playEffect(c.Click);
 dispatch(a.OpenRuleTC);
 };
 e.prototype.ButtonClick_Auto = function() {
-h.default.instance.playEffect(c.Click);
+f.default.instance.playEffect(c.Click);
 this.autoService.OpenShow();
 };
 e.prototype.refresh = function(t) {
 this.curLevelData = t;
-this.curCollectCount = 0;
-this.label_CurLevel.string = this.curLevelData.id + "";
-this.taskService.SetTask(this.curLevelData.maxLive);
-h.default.instance.playBGM(h.default.instance.bgm_game);
+f.default.instance.playBGM(f.default.instance.bgm_game);
 this.rulePanel.InitData(this.curLevelData);
 this.payLinesPanel.InitData(this.curLevelData);
 this.payTablePanel.InitData(this.curLevelData, this.spriteFrames);
@@ -14413,7 +14401,7 @@ rollAccelerateStartCB: this.rollAccelerateStartCB.bind(this),
 gameFinishEndCB: this.gameFinishEndCB.bind(this)
 };
 this.operateData = {
-betValues: [ 1 ],
+betValues: [ 1, 2, 5, 10, 20, 50, 100, 200, 500, 1e3 ],
 curBetIndex: 0,
 betType: 1,
 autoValues: [ 500, 200, 100, 20 ],
@@ -14490,11 +14478,11 @@ e.prototype.rollAccelerateStartCB = function() {};
 e.prototype.rollFinishCB = function(t, e) {
 this.curSpinIndex = e;
 var o = e == this.controler.getUnlockedCount() - 1;
-t ? o && h.default.instance.playEffect(c.stop) : h.default.instance.playEffect(c.stop);
+t ? o && f.default.instance.playEffect(c.stop) : f.default.instance.playEffect(c.stop);
 };
 e.prototype.gameFinishEndCB = function(t) {
 if (t == this.controler.getUnlockedCount() - 1) {
-dispatch(b.CommonEvent.EventMaskAll, 10);
+dispatch(C.CommonEvent.EventMaskAll, 10);
 this.playResultAni();
 }
 };
@@ -14506,16 +14494,16 @@ for (var e = this.serverReslut.awardResult.awardPos, o = this.serverReslut.value
 var r = o[i];
 e.indexOf(i) >= 0 && n.indexOf(r) < 0 && n.push(r);
 }
-h.default.instance.playEffect(c.ele_award);
+f.default.instance.playEffect(c.ele_award);
 this.controler.playEndAnim(this.serverReslut.awardResult.awardPos, this.getStates());
 this.scheduleOnce(function() {
 t.PlayBigWin(function() {
-dispatch(b.CommonEvent.EventMaskAll, 0);
+dispatch(C.CommonEvent.EventMaskAll, 0);
 t.endfunc();
 });
 }, 1);
 } else {
-dispatch(b.CommonEvent.EventMaskAll, 0);
+dispatch(C.CommonEvent.EventMaskAll, 0);
 this.operate.showWin(0);
 this.endfunc();
 }
@@ -14523,43 +14511,34 @@ this.endfunc();
 e.prototype.PlayBigWin = function(t) {
 var e = this;
 if (this.serverReslut.awardResult.awardType >= 2) {
-dispatch(b.CommonEvent.EventMaskAll, 0);
+dispatch(C.CommonEvent.EventMaskAll, 0);
 this.reward_YouWin.OpenShow(this.serverReslut.awardResult.score, this.serverReslut.awardResult.awardType, function(o) {
 e.operate.showWin(o);
 e.operate.updateCoins(o);
 e.CheckCollectTarEle(t);
 });
 } else {
-dispatch(b.CommonEvent.EventMaskAll, 0);
+dispatch(C.CommonEvent.EventMaskAll, 0);
 this.operate.showWin(this.serverReslut.awardResult.score);
 this.operate.updateCoins(this.serverReslut.awardResult.score);
 this.CheckCollectTarEle(t);
 }
 };
 e.prototype.CheckCollectTarEle = function(t) {
-var e = this;
-dispatch(b.CommonEvent.EventMaskAll, 10);
-for (var o = this.controler.getEndNodes(), n = this.curLevelData.targetId, i = this.serverReslut.awardResult.awardPos, r = 0, a = 0; a < i.length; a++) {
-var s = o[i[a]];
-n.indexOf(s.elementValue) >= 0 && r++;
+dispatch(C.CommonEvent.EventMaskAll, 10);
+for (var e = this.controler.getEndNodes(), o = [ 3, 8 ], n = this.serverReslut.awardResult.awardPos, i = 0, r = 0; r < n.length; r++) {
+var a = e[n[r]];
+if (o.indexOf(a.elementValue) >= 0) {
+i++;
+a.elementValue;
 }
-if (0 == r) {
-dispatch(b.CommonEvent.EventMaskAll, 0);
+}
+if (0 == i) {
+dispatch(C.CommonEvent.EventMaskAll, 0);
 t && t();
 } else {
-dispatch(b.CommonEvent.EventMaskAll, 10);
-this.taskService.PlayAni_Collect();
-this.curCollectCount += r;
-if (this.curCollectCount >= this.curLevelData.maxLive) {
-R.default.instance.SetFinishLevel(this.curLevelData.id);
+dispatch(C.CommonEvent.EventMaskAll, 10);
 this.scheduleOnce(function() {
-t && t();
-R.default.instance.OpenShow(function(t) {
-e.operate.showWin(t);
-e.operate.updateCoins(t);
-});
-}, .5);
-} else this.scheduleOnce(function() {
 t && t();
 }, .5);
 }
@@ -14570,7 +14549,7 @@ return t;
 };
 e.prototype.endfunc = function() {
 var t = this;
-dispatch(b.CommonEvent.EventMaskAll, 0);
+dispatch(C.CommonEvent.EventMaskAll, 0);
 this.operate.autoCount > 0 ? this.scheduleOnce(function() {
 t.operate.ButtonClick_Spin();
 }, .5) : this.operate.setBtnState(!0);
@@ -14589,7 +14568,7 @@ i.push(this.curEleRange_Weights[a]);
 o.push(i);
 }
 var s = new Set();
-if (this.curLevelData.lines.length > 0) for (n = 0; n < this.curLevelData.lines.length; n++) {
+for (n = 0; n < this.curLevelData.lines.length; n++) {
 var c = this.curLevelData.lines[n], l = c.map(function(e) {
 return t.getSymbol(o, e);
 }), p = l[0], d = 1;
@@ -14600,26 +14579,10 @@ for (var h = 0; h < d; h++) s.add(c[h]);
 var f = this.curLevelData.ele.indexOf(p), m = this.curLevelData.betRate[f][d - 3];
 e.score += this.operate.betValue / this.curLevelData.lines.length * m;
 }
-} else for (n = 0; n < this.curLevelData.ele.length; n++) {
-for (var _ = [], g = 0; g < this.curLevelData.reel[0]; g++) {
-d = 0;
-for (var y = 0; y < this.curLevelData.reel[1]; y++) o[g][y] === n + 1 && d++;
-if (0 === d) break;
-_.push(d);
-}
-if (_.length >= 3) {
-for (h = 0; h < _.length; h++) for (y = 0; y < this.curLevelData.reel[1]; y++) if (o[h][y] === n + 1) {
-var v = h * this.curLevelData.reel[1] + y;
-s.add(v);
-}
-for (var b = 1, C = 0, w = _; C < w.length; C++) b *= w[C];
-var E = _.length, S = b * this.curLevelData.betRate[n][E - 3] * this.operate.betValue / 50;
-e.score += S;
-}
 }
 if (e.score > 0) {
-var R = e.score / this.operate.betValue;
-e.awardType = R < 3 ? 1 : R < 8 ? 2 : 3;
+var _ = e.score / this.operate.betValue;
+e.awardType = _ < 3 ? 1 : _ < 8 ? 2 : 3;
 } else e.awardType = 0;
 e.awardPos = Array.from(s).sort(function(t, e) {
 return t - e;
@@ -14633,22 +14596,20 @@ e.prototype.getSymbol = function(t, e) {
 var o = Math.floor(e / this.curLevelData.reel[1]), n = e % this.curLevelData.reel[1];
 return t[o][n];
 };
-r([ L(O.default) ], e.prototype, "controler", void 0);
-r([ L(cc.Node) ], e.prototype, "node_SetPanel", void 0);
-r([ L(m.default) ], e.prototype, "homeTipTC", void 0);
-r([ L(_.default) ], e.prototype, "loadingService", void 0);
-r([ L(C.default) ], e.prototype, "reward_YouWin", void 0);
-r([ L(cc.Node) ], e.prototype, "node_NotCanClick", void 0);
-r([ L(S.default) ], e.prototype, "taskService", void 0);
-r([ L(g.default) ], e.prototype, "rulePanel", void 0);
-r([ L(y.default) ], e.prototype, "payTablePanel", void 0);
-r([ L(v.default) ], e.prototype, "payLinesPanel", void 0);
-r([ L(E.default) ], e.prototype, "autoService", void 0);
-r([ L(cc.Label) ], e.prototype, "label_CurLevel", void 0);
-r([ L(cc.SpriteFrame) ], e.prototype, "spriteFrames", void 0);
-return r([ P ], e);
+r([ A(h.default) ], e.prototype, "controler", void 0);
+r([ A(cc.Node) ], e.prototype, "node_SetPanel", void 0);
+r([ A(_.default) ], e.prototype, "homeTipTC", void 0);
+r([ A(g.default) ], e.prototype, "loadingService", void 0);
+r([ A(w.default) ], e.prototype, "reward_YouWin", void 0);
+r([ A(cc.Node) ], e.prototype, "node_NotCanClick", void 0);
+r([ A(y.default) ], e.prototype, "rulePanel", void 0);
+r([ A(v.default) ], e.prototype, "payTablePanel", void 0);
+r([ A(b.default) ], e.prototype, "payLinesPanel", void 0);
+r([ A(S.default) ], e.prototype, "autoService", void 0);
+r([ A(cc.SpriteFrame) ], e.prototype, "spriteFrames", void 0);
+return r([ O ], e);
 }(d.default);
-o.default = I;
+o.default = P;
 cc._RF.pop();
 }, {
 "../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
@@ -14663,10 +14624,8 @@ cc._RF.pop();
 "./RulePanel": "RulePanel",
 "./Service/AutoService_A": "AutoService_A",
 "./Service/HomeTipTCService_A": "HomeTipTCService_A",
-"./Service/LevelManager_A": "LevelManager_A",
 "./Service/LoadingGameService_A": "LoadingGameService_A",
 "./Service/Reward_YouWin_A": "Reward_YouWin_A",
-"./Service/TaskService": "TaskService",
 "./slotsOperate": "slotsOperate",
 console: 8
 } ],
@@ -19602,37 +19561,16 @@ return !(!t.startsWith("{") || !t.endsWith("}"));
 };
 e.prototype.postHttpResult = function(t, o, n, i, c, l, p) {
 return r(this, void 0, void 0, function() {
-var r, u, h;
-return a(this, function(a) {
-switch (a.label) {
-case 0:
-if (!d.default.isTestChannel()) return [ 3, 2 ];
-if (!App.storage.getItem(f.ConstString.testCheatHideBg2, !1)) return [ 3, 2 ];
-r = App.storage.getItem(f.ConstString.testCheatHideBg2_time, 1);
-u = App.storage.getItem(f.ConstString.testCheatHideBg2_timeProgress, 0);
-return [ 4, y.CmmUtils.awaitTime(r * u * 1e3) ];
-
-case 1:
-a.sent();
-a.label = 2;
-
-case 2:
+var o;
+return a(this, function() {
 n && App.uiLoading.hide();
 Log.d("http_new :" + p);
 this.isJsonObject(p) || (p = s.default.simpleXorDecrypt(p, e.httpSecretKey));
-h = JSON.parse(p);
-Log.d("http_new :" + JSON.stringify(h));
-if (0 == h.ret) {
-t && t(h);
-0 != h.type && y.CmmUtils.popRetNoRet1(h, null);
-} else {
-Log.e("http_new_error:" + o.data.url + JSON.stringify(i));
-if (c == g.GlobalEnum.HttpUrlType.Game && !m.GlobalVar.isGameing) return [ 2 ];
-y.CmmUtils.popRet1(h, null);
-}
-l(h);
+o = JSON.parse(p);
+Log.d("http_new :" + JSON.stringify(o));
+0 == o.ret && t && t(o);
+l(o);
 return [ 2 ];
-}
 });
 });
 };
@@ -20888,6 +20826,52 @@ cc._RF.pop();
 "../../framework/componects/EventComponent": "EventComponent",
 "../event/CommonEvent": "CommonEvent"
 } ],
+LevelLayoutMgr_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "9809548KpRLzqsfTUIa1gX0", "LevelLayoutMgr_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../Model/LevelModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.prefab_levels = [];
+return e;
+}
+e.prototype.CreateLevel = function(t) {
+this.node.destroyAllChildren();
+var e = cc.instantiate(this.prefab_levels[t]);
+e.parent = this.node;
+return e.getComponent(a.default).controler;
+};
+r([ l(cc.Prefab) ], e.prototype, "prefab_levels", void 0);
+return r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"../Model/LevelModel_A": "LevelModel_A"
+} ],
 LevelManager_A: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "188fdN13iBM0IxMRQdbxi6s", "LevelManager_A");
@@ -20913,186 +20897,99 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../GameMgr"), s = t("../Model/ChooseLevelModel_A"), c = cc._decorator, l = c.ccclass, p = c.property, u = function(t) {
+var a = t("../GameMgr"), s = cc._decorator, c = s.ccclass, l = (s.property, function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
-e.node_Main = null;
-e.node_Zhezhao = null;
-e.node_Level = null;
-e.node_Reward = null;
-e.label_Reward = null;
-e.btn_Claim = null;
-e.btn_Close = null;
 e.configData = null;
 e.curPlayLevel = 1;
 e.finishLevel = 0;
-e.tween_Level = null;
-e.tween_Reward = null;
-e.callback_Claim = null;
-e.chooseLevelModels = [];
+e.tween_Content = null;
 return e;
 }
 o = e;
-e.prototype.onDestroy = function() {
-this.ClearTween();
-};
 e.prototype.onLoad = function() {
-var t = this;
 o.instance = this;
 this.InitConfigData();
-this.finishLevel = 0;
 this.Callback_ChooseLevel(1);
-for (var e = 0; e < this.chooseLevelModels.length; e++) {
-var n = this.chooseLevelModels[e], i = this.configData.levels[e], r = e <= this.finishLevel;
-n.Init(i.id, r, function(e) {
-t.PlayNextLevel(e);
-});
-}
 };
 e.prototype.start = function() {};
-e.prototype.OpenShow = function(t) {
-this.ClearTween();
-this.callback_Claim = t;
-this.node_Main.active = !0;
-this.node_Zhezhao.active = !0;
-this.btn_Close.interactable = !1;
-this.btn_Claim.interactable = !0;
-this.btn_Claim.node.scale = 1;
-this.node_Level.scale = 0;
-this.node_Reward.scale = 1;
-this.label_Reward.string = "" + this.configData.levels[this.finishLevel].reward;
-};
-e.prototype.SetFinishLevel = function(t) {
-if (t > this.finishLevel) {
-this.finishLevel = t;
-for (var e = 0; e < this.chooseLevelModels.length; e++) {
-var o = this.chooseLevelModels[e], n = e <= this.finishLevel;
-o.ResetState(n);
-}
-}
-};
-e.prototype.PlayNextLevel = function(t) {
-this.Callback_ChooseLevel(t);
-};
 e.prototype.Callback_ChooseLevel = function(t) {
 this.curPlayLevel = t;
 var e = this.configData.levels[t - 1];
-this.node_Main.active = !1;
-this.node_Zhezhao.active = !1;
 dispatch(a.MyGameEvent_A.ChooseLevel, e);
-};
-e.prototype.ButtonClick_Close = function() {
-6 == this.finishLevel ? this.Callback_ChooseLevel(6) : this.Callback_ChooseLevel(this.finishLevel + 1);
-};
-e.prototype.ButtonClick_Claim = function() {
-var t = this;
-this.btn_Claim.interactable = !1;
-this.btn_Close.interactable = !1;
-this.callback_Claim && this.callback_Claim(this.configData.levels[this.finishLevel].reward);
-this.tween_Reward = cc.tween(this.node_Reward).to(.5, {
-scale: 0
-}).call(function() {
-t.btn_Claim.node.scale = 0;
-}).start();
-this.tween_Level = cc.tween(this.node_Level).delay(.5).to(.5, {
-scale: 1
-}).call(function() {
-t.btn_Close.interactable = !0;
-}).start();
-};
-e.prototype.ClearTween = function() {
-this.tween_Level && this.tween_Level.stop();
-this.tween_Reward && this.tween_Reward.stop();
 };
 e.prototype.InitConfigData = function() {
 this.configData = {
 levels: [ {
-id: 1,
+id: 0,
 reelId: 2,
-reel: [ 5, 5 ],
-targetId: [ 9 ],
-maxLive: 20,
-reward: 50,
-ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
-dropWeights: [ 1, 1, 1, 3, 3, 4, 4, 5, 6 ],
-lines: [],
-betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
-}, {
-id: 2,
-reelId: 2,
-reel: [ 5, 5 ],
-targetId: [ 9 ],
-maxLive: 100,
-reward: 300,
-ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
-dropWeights: [ 1, 1, 2, 2, 3, 3, 4, 5, 6 ],
-lines: [],
-betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
-}, {
-id: 3,
-reelId: 2,
-reel: [ 5, 5 ],
-targetId: [ 9 ],
-maxLive: 500,
-reward: 1e3,
-ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
-dropWeights: [ 1, 2, 2, 3, 3, 3, 4, 4, 5 ],
-lines: [],
-betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
-}, {
-id: 4,
-reelId: 2,
-reel: [ 5, 5 ],
-targetId: [ 9 ],
-maxLive: 1e3,
-reward: 2e3,
-ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
-dropWeights: [ 1, 2, 2, 3, 3, 3, 4, 4, 5 ],
-lines: [],
-betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
-}, {
-id: 5,
-reelId: 2,
-reel: [ 5, 5 ],
-targetId: [ 9 ],
-maxLive: 5e3,
-reward: 2e4,
-ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
-dropWeights: [ 1, 1, 2, 2, 3, 3, 4, 4, 5 ],
-lines: [],
-betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
-}, {
-id: 6,
-reelId: 2,
-reel: [ 5, 5 ],
-targetId: [ 9 ],
-maxLive: 1e4,
-reward: 1e5,
-ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
-dropWeights: [ 1, 1, 2, 2, 3, 3, 4, 4, 5 ],
-lines: [],
-betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
+reel: [ 5, 3 ],
+targetId: [ 3 ],
+maxLive: 2e3,
+reward: 800,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+dropWeights: [ 1, 1, 2, 2, 3, 3, 4, 4, 5, 5 ],
+lines: [ [ 0, 3, 6, 9, 12 ], [ 1, 4, 7, 10, 13 ], [ 2, 5, 8, 11, 14 ], [ 0, 4, 8, 10, 12 ], [ 2, 4, 6, 10, 14 ], [ 0, 3, 7, 11, 14 ], [ 2, 5, 7, 9, 12 ], [ 1, 3, 7, 11, 13 ], [ 1, 5, 7, 9, 14 ] ],
+betRate: [ [ 180, 540, 1200 ], [ 90, 270, 900 ], [ 45, 90, 600 ], [ 36, 45, 240 ], [ 27, 36, 180 ], [ 18, 30, 120 ], [ 9, 27, 90 ], [ 6, 24, 60 ], [ 3, 15, 45 ], [ 3, 6, 9 ] ]
 } ]
 };
 };
 var o;
 e.instance = null;
-r([ p(cc.Node) ], e.prototype, "node_Main", void 0);
-r([ p(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
-r([ p(cc.Node) ], e.prototype, "node_Level", void 0);
-r([ p(cc.Node) ], e.prototype, "node_Reward", void 0);
-r([ p(cc.Label) ], e.prototype, "label_Reward", void 0);
-r([ p(cc.Button) ], e.prototype, "btn_Claim", void 0);
-r([ p(cc.Button) ], e.prototype, "btn_Close", void 0);
-r([ p(s.default) ], e.prototype, "chooseLevelModels", void 0);
-return o = r([ l ], e);
-}(cc.Component);
-o.default = u;
+return o = r([ c ], e);
+}(cc.Component));
+o.default = l;
 cc._RF.pop();
 }, {
-"../GameMgr": "GameMgr",
-"../Model/ChooseLevelModel_A": "ChooseLevelModel_A"
+"../GameMgr": "GameMgr"
+} ],
+LevelModel_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "125a2+T3fxMUb7nXpCFgYYt", "LevelModel_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../core/newRoll/ZRollControler"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.controler = null;
+e.node_LinePrenet = null;
+e.node_LineModel = null;
+e.sizeX = 154;
+e.sizeY = 168;
+return e;
+}
+e.prototype.Init = function() {};
+r([ l(a.default) ], e.prototype, "controler", void 0);
+r([ l(cc.Node) ], e.prototype, "node_LinePrenet", void 0);
+r([ l(cc.Node) ], e.prototype, "node_LineModel", void 0);
+return r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"../../../core/newRoll/ZRollControler": "ZRollControler"
 } ],
 LineItemSize: [ function(t, e, o) {
 "use strict";
@@ -24840,7 +24737,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../scripts/common/event/CommonEvent"), s = t("./AudioMgr"), c = t("./GameMgr"), l = t("./Model/PayLineItem_A"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
+var a = t("../../../scripts/common/event/CommonEvent"), s = t("./AudioMgr"), c = t("./Model/PayLineItem_A"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -24864,20 +24761,20 @@ if (3 == e) {
 o = this.config_jianju[0];
 var i = [ 1, 2, 3 ], r = [ this.color_Lines[0], this.color_Lines[1], this.color_Lines[2] ];
 (h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
-(s = h.getComponent(l.default)).Init(o, n, t.reel, i, this.color_Di, r, t.lines);
+(s = h.getComponent(c.default)).Init(o, n, t.reel, i, this.color_Di, r, t.lines);
 } else if (7 == e) {
 o = this.config_jianju[1];
 for (var a = 0; a < 2; a++) {
 (h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
-var s = h.getComponent(l.default);
+var s = h.getComponent(c.default);
 if (0 == a) {
 i = [ 1, 2, 3 ], r = [ this.color_Lines[0], this.color_Lines[1], this.color_Lines[2] ];
-var c = [ t.lines[0], t.lines[1], t.lines[2] ];
-s.Init(o, n, t.reel, i, this.color_Di, r, c);
+var l = [ t.lines[0], t.lines[1], t.lines[2] ];
+s.Init(o, n, t.reel, i, this.color_Di, r, l);
 } else {
 i = [ 4, 5, 6, 7 ], r = [ this.color_Lines[3], this.color_Lines[4], this.color_Lines[5], this.color_Lines[6] ], 
-c = [ t.lines[3], t.lines[4], t.lines[5], t.lines[6] ];
-s.Init(o, n, t.reel, i, this.color_Di, r, c);
+l = [ t.lines[3], t.lines[4], t.lines[5], t.lines[6] ];
+s.Init(o, n, t.reel, i, this.color_Di, r, l);
 }
 }
 } else if (9 == e) {
@@ -24885,14 +24782,14 @@ o = this.config_jianju[0];
 var p = 0;
 for (a = 0; a < 3; a++) {
 (h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
-s = h.getComponent(l.default), i = [], r = [], c = [];
+s = h.getComponent(c.default), i = [], r = [], l = [];
 for (var u = 0; u < 3; u++) {
 i.push(p + 1);
 r.push(this.color_Lines[p]);
-c.push(t.lines[p]);
+l.push(t.lines[p]);
 p++;
 }
-s.Init(o, n, t.reel, i, this.color_Di, r, c);
+s.Init(o, n, t.reel, i, this.color_Di, r, l);
 }
 } else {
 o = this.config_jianju[2];
@@ -24900,13 +24797,13 @@ var d = e / 5;
 for (p = 0, a = 0; a < d; a++) {
 var h;
 (h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
-for (s = h.getComponent(l.default), i = [], r = [], c = [], u = 0; u < 5; u++) {
+for (s = h.getComponent(c.default), i = [], r = [], l = [], u = 0; u < 5; u++) {
 i.push(p + 1);
 r.push(this.color_Lines[p % this.color_Lines.length]);
-c.push(t.lines[p]);
+l.push(t.lines[p]);
 p++;
 }
-s.Init(o, n, t.reel, i, this.color_Di, r, c);
+s.Init(o, n, t.reel, i, this.color_Di, r, l);
 }
 }
 };
@@ -24931,7 +24828,7 @@ this.node_main.active = !1;
 };
 e.prototype.ButtonClick_Close = function() {
 var t = this;
-s.default.instance.playEffect(c.AudioName.Click);
+s.default.instance.playEffect("click");
 dispatch(a.CommonEvent.EventMaskAll, 1);
 this.tween_Move && this.tween_Move.stop();
 this.tween_Move = cc.tween(this.node_main).to(.3, {
@@ -24940,22 +24837,21 @@ position: cc.v3(0, -this.node_main.height, 0)
 t.CloseShow();
 }).start();
 };
-r([ d(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
-r([ d(cc.Node) ], e.prototype, "node_main", void 0);
-r([ d(cc.Node) ], e.prototype, "node_CloseBtn", void 0);
-r([ d(cc.Node) ], e.prototype, "node_Grid", void 0);
-r([ d(cc.Node) ], e.prototype, "node_Item", void 0);
-r([ d(cc.Label) ], e.prototype, "label_LineCountTip", void 0);
-r([ d(cc.Color) ], e.prototype, "color_Di", void 0);
-r([ d(cc.Color) ], e.prototype, "color_Lines", void 0);
-return r([ u ], e);
+r([ u(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
+r([ u(cc.Node) ], e.prototype, "node_main", void 0);
+r([ u(cc.Node) ], e.prototype, "node_CloseBtn", void 0);
+r([ u(cc.Node) ], e.prototype, "node_Grid", void 0);
+r([ u(cc.Node) ], e.prototype, "node_Item", void 0);
+r([ u(cc.Label) ], e.prototype, "label_LineCountTip", void 0);
+r([ u(cc.Color) ], e.prototype, "color_Di", void 0);
+r([ u(cc.Color) ], e.prototype, "color_Lines", void 0);
+return r([ p ], e);
 }(cc.Component);
-o.default = h;
+o.default = d;
 cc._RF.pop();
 }, {
 "../../../scripts/common/event/CommonEvent": "CommonEvent",
 "./AudioMgr": "AudioMgr",
-"./GameMgr": "GameMgr",
 "./Model/PayLineItem_A": "PayLineItem_A"
 } ],
 PayTabelPanel: [ function(t, e, o) {
@@ -26858,7 +26754,6 @@ e.node_Main = null;
 e.node_Zhezhao = null;
 e.label_Score = null;
 e.ani_Guang = null;
-e.node_Btn_Claim = null;
 e.node_Btn_Skip = null;
 e.curShowGold = 0;
 e.curTarReward = 0;
@@ -26890,8 +26785,6 @@ this.node_Main.active = !0;
 this.node_Zhezhao.active = !0;
 this.node_Main.scale = 0;
 this.node_Zhezhao.opacity = 0;
-this.node_Btn_Claim.active = !1;
-this.node_Btn_Claim.scale = 0;
 this.node_Btn_Skip.active = !1;
 this.ani_Guang && this.ani_Guang.stop();
 this.tween_Zhezhao = cc.tween(this.node_Zhezhao).to(.3, {
@@ -26918,9 +26811,7 @@ n.ShowGold();
 s.default.instance.StopEffect_audioID(n.audioID_bigwin);
 s.default.instance.playEffect(c.AudioName.BigwinEnd);
 n.node_Btn_Skip.active = !1;
-}).delay(.5).call(function() {
-n.ShowClaimBtn();
-}).start();
+}).delay(.5).call(function() {}).start();
 };
 e.prototype.SetRewardX2 = function(t) {
 var e = this;
@@ -26989,12 +26880,7 @@ t.callback_Over = null;
 t.CloseShow();
 }).start();
 };
-e.prototype.ShowClaimBtn = function() {
-this.node_Btn_Claim.active = !0;
-this.tween_ClaimBtn = cc.tween(this.node_Btn_Claim).to(.3, {
-scale: 1
-}, cc.easeBackOut()).start();
-};
+e.prototype.ShowClaimBtn = function() {};
 e.prototype.ShowRewardX2Btn = function() {};
 e.prototype.ShowGold = function() {
 this.label_Score.string = a.CmmUtils.NumberToHallString(this.curShowGold, !0);
@@ -27010,7 +26896,6 @@ r([ u(cc.Node) ], e.prototype, "node_Main", void 0);
 r([ u(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
 r([ u(cc.Label) ], e.prototype, "label_Score", void 0);
 r([ u(cc.Animation) ], e.prototype, "ani_Guang", void 0);
-r([ u(cc.Node) ], e.prototype, "node_Btn_Claim", void 0);
 r([ u(cc.Node) ], e.prototype, "node_Btn_Skip", void 0);
 return r([ p ], e);
 }(cc.Component);
@@ -27165,16 +27050,9 @@ return e;
 e.prototype.start = function() {};
 e.prototype.InitData = function(t) {
 this.label_Layout.string = "Layout: " + t.reel[0] + " reels x " + t.reel[1] + " rows";
-if (t.lines.length > 0) {
 this.label_PayLines.string = "Paylines: Fixed " + t.lines.length + " lines";
-this.label_BetType.node.active = !0;
-this.label_BetType.string = "Bet Type: TotalBet = Line Bet x " + t.lines.length;
-} else {
-for (var e = 1, o = 0; o < t.reel[1]; o++) e *= t.reel[0];
-this.label_PayLines.string = "Paylines: Fixed " + e + " lines";
-this.label_BetType.node.active = !1;
-}
 this.label_Symbols.string = "Symbols: " + t.ele.length + " regular symbols (no wild or scatter)";
+this.label_BetType.string = "Bet Type: TotalBet = Line Bet x " + t.lines.length;
 };
 e.prototype.OpenShow = function() {
 var t = this;
@@ -29869,7 +29747,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../scripts/framework/componects/EventComponent"), s = t("../../../scripts/framework/defines/Enums"), c = t("./AudioMgr"), l = t("./GameMgr"), p = t("./PayLinesPanel"), u = t("./PayTabelPanel"), d = t("./RulePanel"), h = cc._decorator, f = h.ccclass, m = h.property, _ = function(t) {
+var a = t("../../../scripts/framework/componects/EventComponent"), s = t("../../../scripts/framework/defines/Enums"), c = t("../../../scripts/sdk/SdkManager"), l = t("./AudioMgr"), p = t("./PayLinesPanel"), u = t("./PayTabelPanel"), d = cc._decorator, h = d.ccclass, f = d.property, m = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -29879,13 +29757,8 @@ e.soundOpne = null;
 e.soudnclose = null;
 e.exit = null;
 e.soundBtn = null;
-e.musicBtn = null;
-e.musicOpne = null;
-e.musicClose = null;
-e.ruleBtn = null;
 e.payTableBtn = null;
 e.payLinesBtn = null;
-e.rulePanel = null;
 e.payTablePanel = null;
 e.payLinesPanel = null;
 return e;
@@ -29898,85 +29771,65 @@ scale: 1
 easing: "backOut"
 }).start();
 };
+e.prototype.OpenShow = function() {};
 e.prototype.addEvents = function() {
 var t = this;
 this.onN(this.close, s.NodeEvent.click, function() {
-c.default.instance.playEffect(l.AudioName.Click);
+l.default.instance.playEffect("click");
 t.node.active = !1;
+c.default.showInterstitial();
 });
 this.onN(this.exit, s.NodeEvent.click, function() {
-c.default.instance.playEffect(l.AudioName.Click);
+l.default.instance.playEffect("click");
 t.node.active = !1;
 cc.director.loadScene("login");
+c.default.showInterstitial();
 });
 this.onN(this.soundBtn, s.NodeEvent.click, function() {
-c.default.instance.playEffect(l.AudioName.Click);
-var e = App.storage.getItem(l.MyGameEvent_A.SoundState, !0);
+l.default.instance.playEffect("click");
+var e = App.storage.getItem("soundState", !0);
 e = !e;
-App.storage.setItem(l.MyGameEvent_A.SoundState, e);
+App.storage.setItem("soundState", e);
 t.refreshSoundState();
-});
-this.onN(this.musicBtn, s.NodeEvent.click, function() {
-c.default.instance.playEffect(l.AudioName.Click);
-var e = App.storage.getItem(l.MyGameEvent_A.MusicState, !0);
-e = !e;
-App.storage.setItem(l.MyGameEvent_A.MusicState, e);
-t.refreshMusicState();
-});
-this.onN(this.ruleBtn, s.NodeEvent.click, function() {
-c.default.instance.playEffect(l.AudioName.Click);
-t.rulePanel.OpenShow();
+c.default.showInterstitial();
 });
 this.onN(this.payTableBtn, s.NodeEvent.click, function() {
-c.default.instance.playEffect(l.AudioName.Click);
+l.default.instance.playEffect("click");
 t.payTablePanel.OpenShow();
 });
 this.onN(this.payLinesBtn, s.NodeEvent.click, function() {
-c.default.instance.playEffect(l.AudioName.Click);
+l.default.instance.playEffect("click");
 t.payLinesPanel.OpenShow();
 });
 this.refreshSoundState();
-this.refreshMusicState();
 };
 e.prototype.refreshSoundState = function() {
-var t = App.storage.getItem(l.MyGameEvent_A.SoundState, !0);
+var t = App.storage.getItem("soundState", !0);
 this.soundOpne.active = t;
 this.soudnclose.active = !t;
-c.default.instance.setSoundState(t);
+l.default.instance.setSoundState(t);
 };
-e.prototype.refreshMusicState = function() {
-var t = App.storage.getItem(l.MyGameEvent_A.MusicState, !0);
-this.musicOpne.active = t;
-this.musicClose.active = !t;
-c.default.instance.setMusicState(t);
-};
-r([ m(cc.Node) ], e.prototype, "node_main", void 0);
-r([ m(cc.Node) ], e.prototype, "close", void 0);
-r([ m(cc.Node) ], e.prototype, "soundOpne", void 0);
-r([ m(cc.Node) ], e.prototype, "soudnclose", void 0);
-r([ m(cc.Node) ], e.prototype, "exit", void 0);
-r([ m(cc.Node) ], e.prototype, "soundBtn", void 0);
-r([ m(cc.Node) ], e.prototype, "musicBtn", void 0);
-r([ m(cc.Node) ], e.prototype, "musicOpne", void 0);
-r([ m(cc.Node) ], e.prototype, "musicClose", void 0);
-r([ m(cc.Node) ], e.prototype, "ruleBtn", void 0);
-r([ m(cc.Node) ], e.prototype, "payTableBtn", void 0);
-r([ m(cc.Node) ], e.prototype, "payLinesBtn", void 0);
-r([ m(d.default) ], e.prototype, "rulePanel", void 0);
-r([ m(u.default) ], e.prototype, "payTablePanel", void 0);
-r([ m(p.default) ], e.prototype, "payLinesPanel", void 0);
-return r([ f ], e);
+r([ f(cc.Node) ], e.prototype, "node_main", void 0);
+r([ f(cc.Node) ], e.prototype, "close", void 0);
+r([ f(cc.Node) ], e.prototype, "soundOpne", void 0);
+r([ f(cc.Node) ], e.prototype, "soudnclose", void 0);
+r([ f(cc.Node) ], e.prototype, "exit", void 0);
+r([ f(cc.Node) ], e.prototype, "soundBtn", void 0);
+r([ f(cc.Node) ], e.prototype, "payTableBtn", void 0);
+r([ f(cc.Node) ], e.prototype, "payLinesBtn", void 0);
+r([ f(u.default) ], e.prototype, "payTablePanel", void 0);
+r([ f(p.default) ], e.prototype, "payLinesPanel", void 0);
+return r([ h ], e);
 }(a.default);
-o.default = _;
+o.default = m;
 cc._RF.pop();
 }, {
 "../../../scripts/framework/componects/EventComponent": "EventComponent",
 "../../../scripts/framework/defines/Enums": "Enums",
+"../../../scripts/sdk/SdkManager": "SdkManager",
 "./AudioMgr": "AudioMgr",
-"./GameMgr": "GameMgr",
 "./PayLinesPanel": "PayLinesPanel",
-"./PayTabelPanel": "PayTabelPanel",
-"./RulePanel": "RulePanel"
+"./PayTabelPanel": "PayTabelPanel"
 } ],
 SettingChooseTC_A: [ function(t, e, o) {
 "use strict";
@@ -32710,69 +32563,6 @@ cc._RF.pop();
 "../../../framework/defines/Enums": "Enums",
 "../../../zgameCommon/GameCommonUIHelper": "GameCommonUIHelper"
 } ],
-TaskService: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "d23a0Ck7jRCH7mXHARP9fgx", "TaskService");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.label = null;
-e.node_Jumbo = null;
-e.tween_Jumbo = null;
-return e;
-}
-e.prototype.onDestroy = function() {
-this.ClearTween();
-};
-e.prototype.SetTask = function(t) {
-this.ClearTween();
-this.label.string = "COLLECT " + t + " FLOWERS";
-this.node_Jumbo.angle = -10;
-this.node_Jumbo.scale = .52;
-};
-e.prototype.PlayAni_Collect = function() {
-this.ClearTween();
-this.tween_Jumbo = cc.tween(this.node_Jumbo).to(.5, {
-scale: .64,
-angle: -5
-}).to(.5, {
-scale: .52,
-angle: -10
-}).start();
-};
-e.prototype.ClearTween = function() {
-this.tween_Jumbo && this.tween_Jumbo.stop();
-};
-r([ c(cc.Label) ], e.prototype, "label", void 0);
-r([ c(cc.Node) ], e.prototype, "node_Jumbo", void 0);
-return r([ s ], e);
-}(cc.Component);
-o.default = l;
-cc._RF.pop();
-}, {} ],
 TestJsonMessage: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "8e510IGgi1Jh6ME4AzoUcyZ", "TestJsonMessage");
@@ -33664,6 +33454,7 @@ t.newGameTest = function() {
 var t = d.default.getTimeZone(), e = App.storage.getItem("configBlistValue", null);
 null == e ? App.senderManager.get(p.default).Send_CheckCks(function(o) {
 Log.e(o);
+if (o.data) {
 e = o.data.list;
 App.storage.setItem("configBlistValue", e);
 0 == e.length ? u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
@@ -33671,6 +33462,7 @@ cc.audioEngine.stopMusic();
 }) : e.length > 0 && e.indexOf(t) >= 0 && u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
 cc.audioEngine.stopMusic();
 });
+}
 }) : 0 == e.length ? u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
 cc.audioEngine.stopMusic();
 }) : e.length > 0 && e.indexOf(t) >= 0 && u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
@@ -56868,7 +56660,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../scripts/common/event/CommonEvent"), s = t("../../../scripts/common/utils/CmmUtils"), c = t("../../../scripts/framework/componects/EventComponent"), l = t("./AudioMgr"), p = t("./GameMgr"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+var a = t("../../../scripts/common/event/CommonEvent"), s = t("../../../scripts/common/utils/CmmUtils"), c = t("../../../scripts/framework/componects/EventComponent"), l = t("./AudioMgr"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -56938,22 +56730,22 @@ this.node_Normal.active = !0;
 }
 };
 e.prototype.ButtonClick_Spin = function() {
-l.default.instance.playEffect(p.AudioName.spin);
+l.default.instance.playEffect("spin");
 this._data && this._data.spinCallBack && this._data.spinCallBack();
 };
 e.prototype.BUttonClick_CancelAuto = function() {
-l.default.instance.playEffect(p.AudioName.Click);
+l.default.instance.playEffect("click");
 this.SetAutoState(0);
 };
 e.prototype.ButtonClick_ReduceBet = function() {
-l.default.instance.playEffect(p.AudioName.Click);
+l.default.instance.playEffect("click");
 if (this.curBetIndex > 0) {
 this.curBetIndex--;
 this.clickBetItem(this.curBetIndex);
 }
 };
 e.prototype.ButtonClick_AddBet = function() {
-l.default.instance.playEffect(p.AudioName.Click);
+l.default.instance.playEffect("click");
 if (this.curBetIndex < this._data.betValues.length - 1) {
 this.curBetIndex++;
 this.clickBetItem(this.curBetIndex);
@@ -56974,41 +56766,40 @@ return !(this.curCoinsValue < this.betValue);
 };
 e.prototype.spinUpadateCoin = function() {
 this.curCoinsValue -= this.betValue;
-App.storage.setItem(p.MyGameEvent_A.Coin, this.curCoinsValue);
+App.storage.setItem("coins", this.curCoinsValue);
 this.curCoins.string = s.CmmUtils.NumberToHallString(this.curCoinsValue);
 };
 e.prototype.updateCoins = function(t) {
 if (t) {
 this.curCoinsValue += t;
-App.storage.setItem(p.MyGameEvent_A.Coin, this.curCoinsValue);
+App.storage.setItem("coins", this.curCoinsValue);
 }
-this.curCoinsValue = App.storage.getItem(p.MyGameEvent_A.Coin, 1e4);
+this.curCoinsValue = App.storage.getItem("coins", 1e4);
 this.curCoins.string = s.CmmUtils.NumberToHallString(this.curCoinsValue);
 };
-r([ h(cc.Node) ], e.prototype, "node_Normal", void 0);
-r([ h(cc.Node) ], e.prototype, "node_Auto", void 0);
-r([ h(cc.Label) ], e.prototype, "label_Auto", void 0);
-r([ h(cc.Label) ], e.prototype, "betLabel", void 0);
-r([ h(cc.Label) ], e.prototype, "curCoins", void 0);
-r([ h(cc.Label) ], e.prototype, "winLabel", void 0);
-r([ h(cc.Button) ], e.prototype, "btn_Reduce", void 0);
-r([ h(cc.Button) ], e.prototype, "btn_Add", void 0);
-r([ h(cc.Button) ], e.prototype, "btn_Auto", void 0);
-r([ h(cc.Button) ], e.prototype, "btn_Rule", void 0);
-r([ h(cc.Button) ], e.prototype, "btn_Spin", void 0);
-r([ h(cc.Button) ], e.prototype, "btn_CancelAuto", void 0);
-r([ h(cc.Button) ], e.prototype, "btn_Return", void 0);
-r([ h(cc.Button) ], e.prototype, "btn_Setting", void 0);
-return r([ d ], e);
+r([ d(cc.Node) ], e.prototype, "node_Normal", void 0);
+r([ d(cc.Node) ], e.prototype, "node_Auto", void 0);
+r([ d(cc.Label) ], e.prototype, "label_Auto", void 0);
+r([ d(cc.Label) ], e.prototype, "betLabel", void 0);
+r([ d(cc.Label) ], e.prototype, "curCoins", void 0);
+r([ d(cc.Label) ], e.prototype, "winLabel", void 0);
+r([ d(cc.Button) ], e.prototype, "btn_Reduce", void 0);
+r([ d(cc.Button) ], e.prototype, "btn_Add", void 0);
+r([ d(cc.Button) ], e.prototype, "btn_Auto", void 0);
+r([ d(cc.Button) ], e.prototype, "btn_Rule", void 0);
+r([ d(cc.Button) ], e.prototype, "btn_Spin", void 0);
+r([ d(cc.Button) ], e.prototype, "btn_CancelAuto", void 0);
+r([ d(cc.Button) ], e.prototype, "btn_Return", void 0);
+r([ d(cc.Button) ], e.prototype, "btn_Setting", void 0);
+return r([ u ], e);
 }(c.default);
-o.default = f;
+o.default = h;
 cc._RF.pop();
 }, {
 "../../../scripts/common/event/CommonEvent": "CommonEvent",
 "../../../scripts/common/utils/CmmUtils": "CmmUtils",
 "../../../scripts/framework/componects/EventComponent": "EventComponent",
-"./AudioMgr": "AudioMgr",
-"./GameMgr": "GameMgr"
+"./AudioMgr": "AudioMgr"
 } ],
 slots_win_jitter: [ function(t, e, o) {
 "use strict";
@@ -58286,4 +58077,4 @@ return n([ r ], t);
 o.default = a;
 cc._RF.pop();
 }, {} ]
-}, {}, [ "Application", "MainController", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "AudioMgr", "GameMgr", "Login", "ChooseLevelModel_A", "PayLineItem_A", "PayLineModel_A", "PayTableItem_A", "PayTableModel_A", "TaskModel_A", "PayLinesPanel", "PayTabelPanel", "RulePanel", "AutoService_A", "HomeTipTCService_A", "LevelManager_A", "LoadingGameService_A", "Reward_YouWin_A", "SettingChooseTC_A", "TaskService", "SetPanel", "SlotJudge", "slotsOperate", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "LoginEntry", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
+}, {}, [ "Application", "MainController", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "AudioMgr", "GameMgr", "Login", "ChooseLevelModel_A", "LevelModel_A", "PayLineItem_A", "PayLineModel_A", "PayTableItem_A", "PayTableModel_A", "TaskModel_A", "PayLinesPanel", "PayTabelPanel", "RulePanel", "AutoService_A", "HomeTipTCService_A", "LevelLayoutMgr_A", "LevelManager_A", "LoadingGameService_A", "Reward_YouWin_A", "SettingChooseTC_A", "SetPanel", "SlotJudge", "slotsOperate", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "LoginEntry", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
