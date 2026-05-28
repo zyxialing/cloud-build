@@ -26,6 +26,6 @@
       applicationId="org.cocos2dx.lib"
       generatedSourceFolders="build\generated\ap_generated_sources\release\out"
       generatedResourceFolders="build\generated\res\resValues\release"
-      desugaredMethodsFiles="C:\Users\Administrator\.gradle\caches\transforms-4\2eeb19da258637dcb755c052a9e3651b\transformed\D8BackportedDesugaredMethods.txt">
+      desugaredMethodsFiles="C:\Users\Administrator\.gradle\caches\transforms-4\c6192cefc9c24e04fcff5a106a4f54ef\transformed\D8BackportedDesugaredMethods.txt">
   </artifact>
 </variant>
