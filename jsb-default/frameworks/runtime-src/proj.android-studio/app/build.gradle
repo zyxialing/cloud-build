@@ -1,16 +1,16 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
+//apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    namespace "com.calling.junior"   // 👈 这里加
+    namespace "com.herself.studio"   // 👈 这里加
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion PROP_BUILD_TOOLS_VERSION
     ndkVersion = PROP_BUILD_ndk
     defaultConfig {
-        applicationId "com.calling.junior"
+        applicationId "com.herself.studio"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
@@ -84,9 +84,9 @@ android {
             renderscriptDebuggable false
             minifyEnabled true
             shrinkResources true
-            firebaseCrashlytics {//暂时不上传
-                mappingFileUploadEnabled false
-            }
+//            firebaseCrashlytics {//暂时不上传
+//                mappingFileUploadEnabled false
+//            }
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //            signingConfig signingConfigs.release
             if (project.hasProperty("RELEASE_STORE_FILE")) {
@@ -148,8 +148,8 @@ dependencies {
     // Add the dependency for the Crashlytics Gradle plugi
     implementation 'com.google.android.gms:play-services-ads-identifier:18.2.0'
     // Firebase (Crashlytics & Analytics)
-    implementation platform('com.google.firebase:firebase-bom:34.13.0')
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-crashlytics'
+//    implementation platform('com.google.firebase:firebase-bom:34.13.0')
+//    implementation 'com.google.firebase:firebase-analytics'
+//    implementation 'com.google.firebase:firebase-crashlytics'
 
 }
