@@ -375,62 +375,6 @@ cc._RF.pop();
 "../../framework/componects/EventComponent": "EventComponent",
 "../event/CommonEvent": "CommonEvent"
 } ],
-AnimationPlayState: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "0ca1c2dxK1CBLcdpUI2RcMf", "AnimationPlayState");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("./BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
-function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.anim = null;
-return e;
-}
-e.prototype.init = function() {
-if (!this.anim) {
-this.anim = this.node.getComponentInChildren(cc.Animation);
-this.rewardNode = this.anim.node;
-}
-};
-e.prototype.show = function(e) {
-t.prototype.show.call(this, e);
-this.init();
-this.node.active = !0;
-this.anim.play(null, 0);
-};
-e.prototype.hide = function() {
-this.init();
-this.node.active = !1;
-};
-return r([ c ], e);
-}(a.default));
-o.default = l;
-cc._RF.pop();
-}, {
-"./BaseAnimState": "BaseAnimState"
-} ],
 Animation_Nodes: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "c7591OPSYRHNZ0MVtaoU6om", "Animation_Nodes");
@@ -941,7 +885,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.Application = void 0;
-var r = t("./scripts/common/component/Alert"), a = t("./scripts/common/component/GlobalAudio"), s = t("./scripts/common/component/Loading"), c = t("./scripts/common/component/LocalMusicIndexedDBPlayer"), l = t("./scripts/common/component/Tips"), p = t("./scripts/common/component/UILoading"), u = t("./scripts/common/component/UIReconnect"), d = t("./scripts/common/component/UpdateLoading"), h = t("./scripts/common/config/GlobalVar"), f = t("./scripts/common/config/HostInfo"), m = t("./scripts/common/config/User"), _ = t("./scripts/common/data/Bundles"), g = t("./scripts/common/data/StageData"), y = t("./scripts/common/entry/CmmEntry"), v = t("./scripts/common/event/CommonEvent"), b = t("./scripts/common/utils/CmmData"), C = t("./scripts/common/utils/CmmUtils"), w = t("./scripts/config/ConfigMgr"), E = t("./scripts/config/URLConfig"), S = t("./scripts/framework/defines/Enums"), R = t("./scripts/framework/defines/Macros"), O = t("./scripts/framework/Framework"), A = t("./scripts/framework/utils/Singleton"), P = t("./scripts/login/view/HotUpdate"), L = t("./scripts/sdk/AppInfo"), I = t("./scripts/sdk/SdkManager"), N = function(t) {
+var r = t("./scripts/common/component/Alert"), a = t("./scripts/common/component/GlobalAudio"), s = t("./scripts/common/component/Loading"), c = t("./scripts/common/component/LocalMusicIndexedDBPlayer"), l = t("./scripts/common/component/Tips"), p = t("./scripts/common/component/UILoading"), u = t("./scripts/common/component/UIReconnect"), d = t("./scripts/common/component/UpdateLoading"), h = t("./scripts/common/config/GlobalVar"), f = t("./scripts/common/config/HostInfo"), m = t("./scripts/common/config/User"), g = t("./scripts/common/data/Bundles"), _ = t("./scripts/common/data/StageData"), y = t("./scripts/common/entry/CmmEntry"), v = t("./scripts/common/event/CommonEvent"), b = t("./scripts/common/utils/CmmData"), C = t("./scripts/common/utils/CmmUtils"), w = t("./scripts/config/ConfigMgr"), E = t("./scripts/config/URLConfig"), S = t("./scripts/framework/defines/Enums"), R = t("./scripts/framework/defines/Macros"), O = t("./scripts/framework/Framework"), A = t("./scripts/framework/utils/Singleton"), P = t("./scripts/login/view/HotUpdate"), L = t("./scripts/sdk/AppInfo"), I = t("./scripts/sdk/SdkManager"), N = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -962,7 +906,7 @@ configurable: !0
 });
 Object.defineProperty(e.prototype, "Bundles", {
 get: function() {
-return _.Bundles;
+return g.Bundles;
 },
 enumerable: !1,
 configurable: !0
@@ -1060,7 +1004,7 @@ configurable: !0
 });
 Object.defineProperty(e.prototype, "stageData", {
 get: function() {
-return this.dataCenter.get(g.StageData);
+return this.dataCenter.get(_.StageData);
 },
 enumerable: !1,
 configurable: !0
@@ -1511,7 +1455,7 @@ App.storage.setItem(this._storeEffectVolumeKey + u.GlobalVar.curGameAlias, this.
 };
 t.module = "【音效数据】";
 return t;
-}()), _ = function(t) {
+}()), g = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -1789,7 +1733,7 @@ var o;
 e.globalClip = new Map();
 return o = r([ f ], e);
 }(a.default);
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../common/config/GlobalVar": "GlobalVar",
@@ -1800,90 +1744,6 @@ cc._RF.pop();
 "../utils/Singleton": "Singleton",
 "./EventComponent": "EventComponent"
 } ],
-AudioMgr: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "bfb4fhT6L1HzLi8umIX5SbW", "AudioMgr");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.bgm = null;
-e.bgm_game = null;
-e.effects = [];
-return e;
-}
-o = e;
-e.prototype.onLoad = function() {
-o.instance = this;
-var t = App.storage.getItem("soundState", !0);
-this.setSoundState(t);
-this.playBGM(this.bgm);
-};
-e.prototype.onDestroy = function() {
-this.stopBGM();
-o.instance = null;
-};
-e.prototype.playEffect = function(t) {
-for (var e = -1, o = 0; o < this.effects.length; o++) {
-var n = this.effects[o];
-if (n.name == t) {
-e = cc.audioEngine.playEffect(n, !1);
-break;
-}
-}
-return e;
-};
-e.prototype.PauseMusic = function() {
-this.bgm && cc.audioEngine.pauseMusic();
-};
-e.prototype.ResumeMusic = function() {
-this.bgm && cc.audioEngine.resumeMusic();
-};
-e.prototype.playBGM = function(t) {
-t ? cc.audioEngine.playMusic(t, !0) : cc.audioEngine.playMusic(this.bgm, !0);
-};
-e.prototype.stopBGM = function() {
-cc.audioEngine.stopMusic();
-};
-e.prototype.StopEffect_audioID = function(t) {
-cc.audioEngine.stopEffect(t);
-};
-e.prototype.setSoundState = function(t) {
-cc.audioEngine.setMusicVolume(t ? 1 : 0);
-cc.audioEngine.setEffectsVolume(t ? 1 : 0);
-};
-var o;
-e.instance = null;
-r([ c(cc.AudioClip) ], e.prototype, "bgm", void 0);
-r([ c(cc.AudioClip) ], e.prototype, "bgm_game", void 0);
-r([ c(cc.AudioClip) ], e.prototype, "effects", void 0);
-return o = r([ s ], e);
-}(cc.Component);
-o.default = l;
-cc._RF.pop();
-}, {} ],
 AutoScaleShow: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "c5b15LNJchOjrVjPy8IFp+N", "AutoScaleShow");
@@ -1933,124 +1793,6 @@ return r([ s ], e);
 o.default = l;
 cc._RF.pop();
 }, {} ],
-AutoService_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "b8a5f+NH9pBSYYLPMyasBMr", "AutoService_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../../scripts/common/event/CommonEvent"), s = t("../AudioMgr"), c = t("../GameMgr"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_Main = null;
-e.node_Zhezhao = null;
-e.node_Move = null;
-e.color_Count_Normal = null;
-e.color_Count_Select = null;
-e.label_Counts = [];
-e.node_Mask_Autobtn = null;
-e.hidePos = cc.v3(0, -500, 0);
-e.autoCounts_Config = [ 10, 30, 50, 80, 1e3 ];
-e.autoCount = 0;
-e.tween_Move = null;
-return e;
-}
-e.prototype.OpenShow = function() {
-dispatch(a.CommonEvent.EventMaskAll, .5);
-this.node_Mask_Autobtn.active = !0;
-for (var t = 0; t < this.label_Counts.length; t++) this.label_Counts[t].node.color = this.color_Count_Normal;
-this.tween_Move && this.tween_Move.stop();
-this.node_Move.position = this.hidePos;
-this.node_Zhezhao.active = !0;
-this.node_Main.active = !0;
-this.tween_Move = cc.tween(this.node_Move).to(.3, {
-position: cc.v3(0, 0, 0)
-}).start();
-};
-e.prototype.CloseShow = function() {
-var t = this;
-dispatch(a.CommonEvent.EventMaskAll, .5);
-this.tween_Move && this.tween_Move.stop();
-this.tween_Move = cc.tween(this.node_Move).to(.3, {
-position: this.hidePos
-}).call(function() {
-t.node_Main.active = !1;
-t.node_Zhezhao.active = !1;
-}).start();
-};
-e.prototype.ButtonClick_Close = function() {
-s.default.instance.playEffect("click");
-this.CloseShow();
-};
-e.prototype.ButtonClick_Count0 = function() {
-this.SetSelectAutoCount(0);
-};
-e.prototype.ButtonClick_Count1 = function() {
-this.SetSelectAutoCount(1);
-};
-e.prototype.ButtonClick_Count2 = function() {
-this.SetSelectAutoCount(2);
-};
-e.prototype.ButtonClick_Count3 = function() {
-this.SetSelectAutoCount(3);
-};
-e.prototype.ButtonClick_Count4 = function() {
-this.SetSelectAutoCount(4);
-};
-e.prototype.ButtonClick_StartAutoSpin = function() {
-var t = this;
-s.default.instance.playEffect("click");
-this.CloseShow();
-this.scheduleOnce(function() {
-dispatch(c.MyGameEvent_A.SetAutoCount, t.autoCount);
-}, .3);
-};
-e.prototype.SetSelectAutoCount = function(t) {
-s.default.instance.playEffect("click");
-this.autoCount = this.autoCounts_Config[t];
-Log.e("Select Auto Count = " + this.autoCount);
-for (var e = 0; e < this.label_Counts.length; e++) {
-this.label_Counts[e].node.color = t == e ? this.color_Count_Select : this.color_Count_Normal;
-}
-this.node_Mask_Autobtn.active = !1;
-};
-r([ u(cc.Node) ], e.prototype, "node_Main", void 0);
-r([ u(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
-r([ u(cc.Node) ], e.prototype, "node_Move", void 0);
-r([ u(cc.Color) ], e.prototype, "color_Count_Normal", void 0);
-r([ u(cc.Color) ], e.prototype, "color_Count_Select", void 0);
-r([ u(cc.Label) ], e.prototype, "label_Counts", void 0);
-r([ u(cc.Node) ], e.prototype, "node_Mask_Autobtn", void 0);
-r([ u ], e.prototype, "hidePos", void 0);
-return r([ p ], e);
-}(cc.Component);
-o.default = d;
-cc._RF.pop();
-}, {
-"../../../../scripts/common/event/CommonEvent": "CommonEvent",
-"../AudioMgr": "AudioMgr",
-"../GameMgr": "GameMgr"
-} ],
 AutoUpdateScaleShow: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "06eaatFRdRHVq8B10n/a2zc", "AutoUpdateScaleShow");
@@ -2144,142 +1886,6 @@ r([ c(cc.Label) ], e.prototype, "label", void 0);
 return r([ s ], e);
 }(cc.Component);
 o.default = l;
-cc._RF.pop();
-}, {} ],
-BaseAnimState: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "caa3bDLKYxOVpuxk6Plb8Cn", "BaseAnimState");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/enum/GlobalEnum"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.state = a.GlobalEnum.ElementState.Normal;
-return e;
-}
-e.prototype.show = function(t) {
-this.config = t;
-this.node.active = !0;
-};
-e.prototype.hide = function() {
-this.node.active = !1;
-};
-r([ l({
-type: cc.Enum(a.GlobalEnum.ElementState)
-}) ], e.prototype, "state", void 0);
-return r([ c ], e);
-}(cc.Component);
-o.default = p;
-cc._RF.pop();
-}, {
-"../../../scripts/common/enum/GlobalEnum": "GlobalEnum"
-} ],
-"BaseLineItem ": [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "e0daew5TE9HTr87k1MeqWuo", "BaseLineItem ");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
-i(e, t);
-function e() {
-return null !== t && t.apply(this, arguments) || this;
-}
-e.prototype.init = function() {};
-e.prototype.show = function() {
-this.node.active = !0;
-};
-e.prototype.hide = function() {
-this.node.active = !1;
-};
-return r([ s ], e);
-}(cc.Component));
-o.default = c;
-cc._RF.pop();
-}, {} ],
-BaseLineMgr: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "582a4IlwrtCwLMi/e9YjH6+", "BaseLineMgr");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
-i(e, t);
-function e() {
-return null !== t && t.apply(this, arguments) || this;
-}
-e.prototype.init = function() {};
-e.prototype.showRewardLine = function(t) {
-this.lines[t].show();
-};
-e.prototype.showRewardLines = function() {};
-e.prototype.showOtherType = function() {};
-e.prototype.hide = function() {
-if (this.lines) for (var t = 0; t < this.lines.length; t++) this.lines[t].hide();
-};
-e.prototype.lineAnims_None = function() {};
-return r([ s ], e);
-}(cc.Component));
-o.default = c;
 cc._RF.pop();
 }, {} ],
 BinaryStreamMessage: [ function(t, e, o) {
@@ -2420,7 +2026,7 @@ t.writeByte(this.data);
 return e;
 }(p);
 o.BYTE = m;
-var _ = function(t) {
+var g = function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
@@ -2433,8 +2039,8 @@ t.writeShort(this.data);
 };
 return e;
 }(p);
-o.SHORT = _;
-var g = function(t) {
+o.SHORT = g;
+var _ = function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
@@ -2447,7 +2053,7 @@ t.writeInt(this.data);
 };
 return e;
 }(p);
-o.INT = g;
+o.INT = _;
 var y = function(t) {
 i(e, t);
 function e() {
@@ -2506,7 +2112,7 @@ this.buffer = this.byteArray.bytes;
 return !0;
 };
 e.prototype.isNumberValue = function(t) {
-return t == h || t == f || t == m || t == _ || t == g || t == y || t == v || t == b;
+return t == h || t == f || t == m || t == g || t == _ || t == y || t == v || t == b;
 };
 e.prototype.isBoolValue = function(t) {
 return t == u;
@@ -4019,10 +3625,10 @@ t.prototype.genBitmapImage = function(t) {
 var e = t.width, o = t.height, n = e * o * 3, i = n + 54, r = [ 66, 77, 255 & i, i >> 8 & 255, i >> 16 & 255, i >> 24 & 255, 0, 0, 0, 0, 54, 0, 0, 0 ], a = [ 40, 0, 0, 0, 255 & e, e >> 8 & 255, e >> 16 & 255, e >> 24 & 255, 255 & o, o >> 8 & 255, o >> 16 & 255, o >> 24 & 255, 1, 0, 24, 0, 0, 0, 0, 0, 255 & n, n >> 8 & 255, n >> 16 & 255, n >> 24 & 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], s = (4 - 3 * e % 4) % 4, c = t.data, l = "", p = e << 2, u = o, d = String.fromCharCode;
 do {
 for (var h = p * (u - 1), f = "", m = 0; m < e; m++) {
-var _ = m << 2;
-f += d(c[h + _ + 2]) + d(c[h + _ + 1]) + d(c[h + _]);
+var g = m << 2;
+f += d(c[h + g + 2]) + d(c[h + g + 1]) + d(c[h + g]);
 }
-for (var g = 0; g < s; g++) f += String.fromCharCode(0);
+for (var _ = 0; _ < s; _++) f += String.fromCharCode(0);
 l += f;
 } while (--u);
 return this.encodeData(r.concat(a)) + this.encodeData(l);
@@ -4496,81 +4102,6 @@ cc._RF.pop();
 "../../login/view/CommonUIHelper": "CommonUIHelper",
 "../../sdk/SdkManager": "SdkManager"
 } ],
-ChooseLevelModel_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "897eajH43xJr5MNFG5WzLF6", "ChooseLevelModel_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_Main = null;
-e.node_CanClick = null;
-e.node_Lock = null;
-e.label_Level = null;
-e.sprite_Icon = null;
-e.isCanPlay = !1;
-e.curLevel = 1;
-e.callBack_Btn = null;
-e.tween_Main = null;
-return e;
-}
-e.prototype.Init = function(t, e, o, n, i) {
-this.curLevel = t;
-this.isCanPlay = o;
-this.callBack_Btn = i;
-this.ClearTween();
-this.sprite_Icon.spriteFrame = e;
-this.label_Level.string = "" + t;
-this.node_CanClick.active = o;
-this.node_Lock.active = !o;
-this.node_Main.scale = 0;
-this.tween_Main = cc.tween(this.node_Main).delay(n).to(.3, {
-scale: 1
-}).start();
-};
-e.prototype.ResetState = function(t) {
-this.isCanPlay = t;
-this.node_Lock.active = !t;
-this.node_CanClick.active = t;
-};
-e.prototype.ButtonClick_Choose = function() {
-this.callBack_Btn && this.callBack_Btn(this.curLevel);
-};
-e.prototype.ClearTween = function() {
-this.tween_Main && this.tween_Main.stop();
-};
-r([ c(cc.Node) ], e.prototype, "node_Main", void 0);
-r([ c(cc.Node) ], e.prototype, "node_CanClick", void 0);
-r([ c(cc.Node) ], e.prototype, "node_Lock", void 0);
-r([ c(cc.Label) ], e.prototype, "label_Level", void 0);
-r([ c(cc.Sprite) ], e.prototype, "sprite_Icon", void 0);
-return r([ s ], e);
-}(cc.Component);
-o.default = l;
-cc._RF.pop();
-}, {} ],
 CmdConfig: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "f7ecb37+gFCb4nV3AYSD2s7", "CmdConfig");
@@ -5509,7 +5040,7 @@ value: !0
 o.director = o.display = o.CmmUtils = o.UPDATE_TIME = void 0;
 var r = t("../../framework/defines/Macros"), a = t("../../framework/utils/Utils"), s = t("../../sdk/AppInfo"), c = t("../../sdk/SdkManager"), l = t("../config/Config"), p = t("../config/ConstString"), u = t("../config/GlobalVar"), d = t("../config/User"), h = t("../event/CommonEvent"), f = t("../net/CommonSender"), m = t("./UIUtils");
 o.UPDATE_TIME = .02;
-var _ = function(e) {
+var g = function(e) {
 i(o, e);
 function o() {
 return null !== e && e.apply(this, arguments) || this;
@@ -6330,7 +5861,7 @@ i.push(s);
 }
 var f = [];
 for (r = 0; r < i.length; r++) {
-var m = i[r], _ = {
+var m = i[r], g = {
 awardline: o[r] || [],
 awardPos: n[r] || [],
 resultWilds: [],
@@ -6338,7 +5869,7 @@ wildNums: [],
 wildPos: [],
 results: m
 };
-f.push(_);
+f.push(g);
 }
 return f;
 };
@@ -6398,8 +5929,8 @@ o.cachPics = new Map();
 o.cachTxts = new Map();
 return o;
 }(a.Utils);
-o.CmmUtils = _;
-var g = function() {
+o.CmmUtils = g;
+var _ = function() {
 function t() {}
 Object.defineProperty(t, "width", {
 get: function() {
@@ -6448,7 +5979,7 @@ y.height > t.height && (e.scale = t.scaleY);
 };
 return t;
 }();
-o.display = g;
+o.display = _;
 var y = function() {
 function t() {}
 Object.defineProperty(t, "scene", {
@@ -8080,7 +7611,7 @@ cc._RF.push(e, "0c91aF8q+tMCpJHoa5RPmTf", "CommonUIHelper");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var n = t("../../common/config/Config"), i = t("../../common/config/GlobalVar"), r = t("../../common/config/User"), a = t("../../common/net/CommonSender"), s = t("../../framework/defines/Macros"), c = t("../../sdk/AppInfo"), l = t("../../vcode/scripts/mian/view/VBindCPFView"), p = t("../../vcode/scripts/mian/view/VBindForgotPhoneView"), u = t("../../vcode/scripts/mian/view/VBindKycView"), d = t("../../vcode/scripts/mian/view/VChangeAvatarView"), h = t("../../vcode/scripts/mian/view/VChangeNameView"), f = t("../../vcode/scripts/mian/view/VDailySignInView"), m = t("../../vcode/scripts/mian/view/VEmailView"), _ = t("../../vcode/scripts/mian/view/VHtmlDownView"), g = t("../../vcode/scripts/mian/view/VIosOpenView"), y = t("../../vcode/scripts/mian/view/VNoticeView"), v = t("../../vcode/scripts/mian/view/VPayCardInfoView"), b = t("../../vcode/scripts/mian/view/VRechargeRecordsWebView"), C = t("../../vcode/scripts/mian/view/VRedeemCodeView"), w = t("../../vcode/scripts/mian/view/VResetPasswordView"), E = t("../../vcode/scripts/mian/view/VSettingView"), S = t("../../vcode/scripts/mian/view/VVipUpgradeNoticeView"), R = t("../../vcode/scripts/mian/view/VWithdrawView"), O = t("../../vcode/scripts/mian/view/VWithdrawVipInfo"), A = t("../../vcode/scripts/mian/view/activitys/VThreeSoneView"), P = t("../../zgameCommon/GameCheatView"), L = t("./loading/common_loadingView"), I = t("./loading/loading_gameView"), N = t("./offline/RecordsOfflineView"), T = t("./offline/TaskOfflineView"), M = t("../../vcode/scripts/mian/view/VBaxipaiZhaoView"), U = t("../../vcode/scripts/mian/view/VQRView"), k = t("../../vcode/scripts/mian/view/VShareView"), B = t("../../vcode/scripts/mian/view/VPurTipsView"), V = t("../../vcode/scripts/mian/view/VPiggyBankView"), D = t("../../vcode/scripts/mian/view/VVipInfoView"), G = t("../../vcode/scripts/mian/view/VRegisterInView"), x = t("../../vcode/scripts/mian/view/VGameChooseTCView"), j = t("../../vcode/scripts/mian/view/VUseCouponView"), F = t("../../vcode/scripts/mian/view/VAccountSecurityView"), H = t("../../vcode/scripts/mian/view/VIconTipsView"), z = t("./InviteWithdrawRecordsWebView"), W = t("../../vcode/scripts/mian/view/VUseGroupCodeView"), Y = t("../../vcode/scripts/mian/view/VLaBaInfoView"), J = t("../../vcode/scripts/mian/view/VChargeView"), Z = t("../../vcode/scripts/mian/view/VFirstChargeView"), Q = t("../../vcode/scripts/mian/view/VGroupChargeView"), K = t("../../vcode/scripts/mian/view/VMonthCardView"), q = t("../../vcode/scripts/mian/view/VWithdrawVipInfo2"), X = t("../../vcode/scripts/mian/view/VDailyTaskView"), $ = t("../../vcode/scripts/mian/view/VTradeView"), tt = t("../../vcode/scripts/mian/view/VWithdrawVipInfo3"), et = t("../../vcode/scripts/mian/view/VSendRecordView"), ot = t("../../vcode/scripts/mian/view/VXS2XXView"), nt = function() {
+var n = t("../../common/config/Config"), i = t("../../common/config/GlobalVar"), r = t("../../common/config/User"), a = t("../../common/net/CommonSender"), s = t("../../framework/defines/Macros"), c = t("../../sdk/AppInfo"), l = t("../../vcode/scripts/mian/view/VBindCPFView"), p = t("../../vcode/scripts/mian/view/VBindForgotPhoneView"), u = t("../../vcode/scripts/mian/view/VBindKycView"), d = t("../../vcode/scripts/mian/view/VChangeAvatarView"), h = t("../../vcode/scripts/mian/view/VChangeNameView"), f = t("../../vcode/scripts/mian/view/VDailySignInView"), m = t("../../vcode/scripts/mian/view/VEmailView"), g = t("../../vcode/scripts/mian/view/VHtmlDownView"), _ = t("../../vcode/scripts/mian/view/VIosOpenView"), y = t("../../vcode/scripts/mian/view/VNoticeView"), v = t("../../vcode/scripts/mian/view/VPayCardInfoView"), b = t("../../vcode/scripts/mian/view/VRechargeRecordsWebView"), C = t("../../vcode/scripts/mian/view/VRedeemCodeView"), w = t("../../vcode/scripts/mian/view/VResetPasswordView"), E = t("../../vcode/scripts/mian/view/VSettingView"), S = t("../../vcode/scripts/mian/view/VVipUpgradeNoticeView"), R = t("../../vcode/scripts/mian/view/VWithdrawView"), O = t("../../vcode/scripts/mian/view/VWithdrawVipInfo"), A = t("../../vcode/scripts/mian/view/activitys/VThreeSoneView"), P = t("../../zgameCommon/GameCheatView"), L = t("./loading/common_loadingView"), I = t("./loading/loading_gameView"), N = t("./offline/RecordsOfflineView"), T = t("./offline/TaskOfflineView"), M = t("../../vcode/scripts/mian/view/VBaxipaiZhaoView"), U = t("../../vcode/scripts/mian/view/VQRView"), k = t("../../vcode/scripts/mian/view/VShareView"), V = t("../../vcode/scripts/mian/view/VPurTipsView"), B = t("../../vcode/scripts/mian/view/VPiggyBankView"), D = t("../../vcode/scripts/mian/view/VVipInfoView"), G = t("../../vcode/scripts/mian/view/VRegisterInView"), x = t("../../vcode/scripts/mian/view/VGameChooseTCView"), j = t("../../vcode/scripts/mian/view/VUseCouponView"), F = t("../../vcode/scripts/mian/view/VAccountSecurityView"), H = t("../../vcode/scripts/mian/view/VIconTipsView"), z = t("./InviteWithdrawRecordsWebView"), W = t("../../vcode/scripts/mian/view/VUseGroupCodeView"), Y = t("../../vcode/scripts/mian/view/VLaBaInfoView"), J = t("../../vcode/scripts/mian/view/VChargeView"), Q = t("../../vcode/scripts/mian/view/VFirstChargeView"), K = t("../../vcode/scripts/mian/view/VGroupChargeView"), Z = t("../../vcode/scripts/mian/view/VMonthCardView"), q = t("../../vcode/scripts/mian/view/VWithdrawVipInfo2"), X = t("../../vcode/scripts/mian/view/VDailyTaskView"), $ = t("../../vcode/scripts/mian/view/VTradeView"), tt = t("../../vcode/scripts/mian/view/VWithdrawVipInfo3"), et = t("../../vcode/scripts/mian/view/VSendRecordView"), ot = t("../../vcode/scripts/mian/view/VXS2XXView"), nt = function() {
 function t() {}
 t.showVVipInfoView = function(t) {
 r.default.self.isLoginFinish ? App.uiManager.open({
@@ -8198,7 +7729,7 @@ args: t
 };
 t.showIosOpenView = function(t) {
 App.uiManager.open({
-type: g.default,
+type: _.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI,
 args: t
@@ -8343,7 +7874,7 @@ args: t
 };
 t.showShareView = function(t) {
 c.default.isBrowser ? App.uiManager.open({
-type: _.default,
+type: g.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI,
 args: t
@@ -8374,7 +7905,7 @@ zIndex: n.ViewZOrder.UI
 };
 t.showBounsView = function(t) {
 r.default.self.isLoginFinish ? App.uiManager.open({
-type: V.default,
+type: B.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI,
 args: t
@@ -8382,7 +7913,7 @@ args: t
 };
 t.showMiniTips = function(t) {
 App.uiManager.open({
-type: B.default,
+type: V.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI,
 args: t
@@ -8434,7 +7965,7 @@ t.showVFirstChargeView = function() {
 if (!r.default.self.isFinishAllBigSale) {
 i.GlobalVar.gameBackToHall = !1;
 App.uiManager.open({
-type: Z.default,
+type: Q.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -8444,7 +7975,7 @@ t.showVGroupChargeView = function() {
 if (r.default.self.isLoginFinish) {
 App.globalAudio.playButtonClick();
 App.uiManager.open({
-type: Q.default,
+type: K.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -8455,7 +7986,7 @@ Log.e("9999999999999999");
 if (r.default.self.isLoginFinish) {
 App.globalAudio.playButtonClick();
 App.uiManager.open({
-type: K.default,
+type: Z.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -10068,7 +9599,7 @@ if (o.isPrimitive(t) || o.isPrimitive(e)) return t === e;
 var i = d(t), r = d(e);
 if (i && !r || !i && r) return !1;
 if (i) return u(t = n.call(t), e = n.call(e));
-var a, s, c = _(t), l = _(e);
+var a, s, c = g(t), l = g(e);
 if (c.length != l.length) return !1;
 c.sort();
 l.sort();
@@ -10113,7 +9644,7 @@ m.apply(this, [ !1 ].concat(n.call(arguments)));
 r.ifError = function(t) {
 if (t) throw t;
 };
-var _ = Object.keys || function(t) {
+var g = Object.keys || function(t) {
 var e = [];
 for (var o in t) i.call(t, o) && e.push(o);
 return e;
@@ -10281,7 +9812,7 @@ if (R(e)) return t.stylize(Date.prototype.toString.call(e), "date");
 if (O(e)) return h(e);
 }
 var l, y = "", v = !1, b = [ "{", "}" ];
-if (g(e)) {
+if (_(e)) {
 v = !0;
 b = [ "[", "]" ];
 }
@@ -10296,7 +9827,7 @@ l = v ? f(t, e, n, s, a) : a.map(function(o) {
 return m(t, e, n, s, o, v);
 });
 t.seen.pop();
-return _(l, y, b);
+return g(l, y, b);
 }
 function d(t, e) {
 if (w(e)) return t.stylize("undefined", "undefined");
@@ -10339,16 +9870,16 @@ a = t.stylize(a, "string");
 }
 return a + ": " + s;
 }
-function _(t, e, o) {
+function g(t, e, o) {
 return t.reduce(function(t, e) {
 e.indexOf("\n");
 return t + e.replace(/\u001b\[\d\d?m/g, "").length + 1;
 }, 0) > 60 ? o[0] + ("" === e ? "" : e + "\n ") + " " + t.join(",\n  ") + " " + o[1] : o[0] + e + " " + t.join(", ") + " " + o[1];
 }
-function g(t) {
+function _(t) {
 return Array.isArray(t);
 }
-o.isArray = g;
+o.isArray = _;
 function y(t) {
 return "boolean" == typeof t;
 }
@@ -10539,7 +10070,7 @@ return t;
 };
 function l(t, e, o, n) {
 if ("number" == typeof e) throw new TypeError('"value" argument must not be a number');
-return "undefined" != typeof ArrayBuffer && e instanceof ArrayBuffer ? m(t, e, o, n) : "string" == typeof e ? h(t, e, o) : _(t, e);
+return "undefined" != typeof ArrayBuffer && e instanceof ArrayBuffer ? m(t, e, o, n) : "string" == typeof e ? h(t, e, o) : g(t, e);
 }
 c.from = function(t, e, o) {
 return l(null, t, e, o);
@@ -10565,7 +10096,7 @@ return u(null, t, e, o);
 };
 function d(t, e) {
 p(e);
-t = s(t, e < 0 ? 0 : 0 | g(e));
+t = s(t, e < 0 ? 0 : 0 | _(e));
 if (!c.TYPED_ARRAY_SUPPORT) for (var o = 0; o < e; ++o) t[o] = 0;
 return t;
 }
@@ -10583,7 +10114,7 @@ i !== n && (t = t.slice(0, i));
 return t;
 }
 function f(t, e) {
-var o = e.length < 0 ? 0 : 0 | g(e.length);
+var o = e.length < 0 ? 0 : 0 | _(e.length);
 t = s(t, o);
 for (var n = 0; n < o; n += 1) t[n] = 255 & e[n];
 return t;
@@ -10596,9 +10127,9 @@ e = void 0 === o && void 0 === n ? new Uint8Array(e) : void 0 === n ? new Uint8A
 c.TYPED_ARRAY_SUPPORT ? (t = e).__proto__ = c.prototype : t = f(t, e);
 return t;
 }
-function _(t, e) {
+function g(t, e) {
 if (c.isBuffer(e)) {
-var o = 0 | g(e.length);
+var o = 0 | _(e.length);
 if (0 === (t = s(t, o)).length) return t;
 e.copy(t, 0, 0, o);
 return t;
@@ -10610,7 +10141,7 @@ if ("Buffer" === e.type && r(e.data)) return f(t, e.data);
 var n;
 throw new TypeError("First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.");
 }
-function g(t) {
+function _(t) {
 if (t >= a()) throw new RangeError("Attempt to allocate Buffer larger than maximum size: 0x" + a().toString(16) + " bytes");
 return 0 | t;
 }
@@ -10690,7 +10221,7 @@ case "hex":
 return o >>> 1;
 
 case "base64":
-return K(t).length;
+return Z(t).length;
 
 default:
 if (n) return J(t).length;
@@ -10729,7 +10260,7 @@ case "ucs2":
 case "ucs-2":
 case "utf16le":
 case "utf-16le":
-return B(this, e, o);
+return V(this, e, o);
 
 default:
 if (n) throw new TypeError("Unknown encoding: " + t);
@@ -10887,16 +10418,16 @@ function S(t, e, o, n) {
 return q(J(e, t.length - o), t, o, n);
 }
 function R(t, e, o, n) {
-return q(Z(e), t, o, n);
+return q(Q(e), t, o, n);
 }
 function O(t, e, o, n) {
 return R(t, e, o, n);
 }
 function A(t, e, o, n) {
-return q(K(e), t, o, n);
+return q(Z(e), t, o, n);
 }
 function P(t, e, o, n) {
-return q(Q(e, t.length - o), t, o, n);
+return q(K(e, t.length - o), t, o, n);
 }
 c.prototype.write = function(t, e, o, n) {
 if (void 0 === e) {
@@ -11028,7 +10559,7 @@ var n, i = t.length;
 for (var r = "", a = e; a < o; ++a) r += (n = t[a]) < 16 ? "0" + n.toString(16) : n.toString(16);
 return r;
 }
-function B(t, e, o) {
+function V(t, e, o) {
 for (var n = t.slice(e, o), i = "", r = 0; r < n.length; r += 2) i += String.fromCharCode(n[r] + 256 * n[r + 1]);
 return i;
 }
@@ -11044,48 +10575,48 @@ for (var r = 0; r < i; ++r) o[r] = this[r + t];
 }
 return o;
 };
-function V(t, e, o) {
+function B(t, e, o) {
 if (t % 1 != 0 || t < 0) throw new RangeError("offset is not uint");
 if (t + e > o) throw new RangeError("Trying to access beyond buffer length");
 }
 c.prototype.readUIntLE = function(t, e, o) {
 t |= 0;
 e |= 0;
-o || V(t, e, this.length);
+o || B(t, e, this.length);
 for (var n = this[t], i = 1, r = 0; ++r < e && (i *= 256); ) n += this[t + r] * i;
 return n;
 };
 c.prototype.readUIntBE = function(t, e, o) {
 t |= 0;
 e |= 0;
-o || V(t, e, this.length);
+o || B(t, e, this.length);
 for (var n = this[t + --e], i = 1; e > 0 && (i *= 256); ) n += this[t + --e] * i;
 return n;
 };
 c.prototype.readUInt8 = function(t, e) {
-e || V(t, 1, this.length);
+e || B(t, 1, this.length);
 return this[t];
 };
 c.prototype.readUInt16LE = function(t, e) {
-e || V(t, 2, this.length);
+e || B(t, 2, this.length);
 return this[t] | this[t + 1] << 8;
 };
 c.prototype.readUInt16BE = function(t, e) {
-e || V(t, 2, this.length);
+e || B(t, 2, this.length);
 return this[t] << 8 | this[t + 1];
 };
 c.prototype.readUInt32LE = function(t, e) {
-e || V(t, 4, this.length);
+e || B(t, 4, this.length);
 return (this[t] | this[t + 1] << 8 | this[t + 2] << 16) + 16777216 * this[t + 3];
 };
 c.prototype.readUInt32BE = function(t, e) {
-e || V(t, 4, this.length);
+e || B(t, 4, this.length);
 return 16777216 * this[t] + (this[t + 1] << 16 | this[t + 2] << 8 | this[t + 3]);
 };
 c.prototype.readIntLE = function(t, e, o) {
 t |= 0;
 e |= 0;
-o || V(t, e, this.length);
+o || B(t, e, this.length);
 for (var n = this[t], i = 1, r = 0; ++r < e && (i *= 256); ) n += this[t + r] * i;
 n >= (i *= 128) && (n -= Math.pow(2, 8 * e));
 return n;
@@ -11093,47 +10624,47 @@ return n;
 c.prototype.readIntBE = function(t, e, o) {
 t |= 0;
 e |= 0;
-o || V(t, e, this.length);
+o || B(t, e, this.length);
 for (var n = e, i = 1, r = this[t + --n]; n > 0 && (i *= 256); ) r += this[t + --n] * i;
 r >= (i *= 128) && (r -= Math.pow(2, 8 * e));
 return r;
 };
 c.prototype.readInt8 = function(t, e) {
-e || V(t, 1, this.length);
+e || B(t, 1, this.length);
 return 128 & this[t] ? -1 * (255 - this[t] + 1) : this[t];
 };
 c.prototype.readInt16LE = function(t, e) {
-e || V(t, 2, this.length);
+e || B(t, 2, this.length);
 var o = this[t] | this[t + 1] << 8;
 return 32768 & o ? 4294901760 | o : o;
 };
 c.prototype.readInt16BE = function(t, e) {
-e || V(t, 2, this.length);
+e || B(t, 2, this.length);
 var o = this[t + 1] | this[t] << 8;
 return 32768 & o ? 4294901760 | o : o;
 };
 c.prototype.readInt32LE = function(t, e) {
-e || V(t, 4, this.length);
+e || B(t, 4, this.length);
 return this[t] | this[t + 1] << 8 | this[t + 2] << 16 | this[t + 3] << 24;
 };
 c.prototype.readInt32BE = function(t, e) {
-e || V(t, 4, this.length);
+e || B(t, 4, this.length);
 return this[t] << 24 | this[t + 1] << 16 | this[t + 2] << 8 | this[t + 3];
 };
 c.prototype.readFloatLE = function(t, e) {
-e || V(t, 4, this.length);
+e || B(t, 4, this.length);
 return i.read(this, t, !0, 23, 4);
 };
 c.prototype.readFloatBE = function(t, e) {
-e || V(t, 4, this.length);
+e || B(t, 4, this.length);
 return i.read(this, t, !1, 23, 4);
 };
 c.prototype.readDoubleLE = function(t, e) {
-e || V(t, 8, this.length);
+e || B(t, 8, this.length);
 return i.read(this, t, !0, 52, 8);
 };
 c.prototype.readDoubleBE = function(t, e) {
-e || V(t, 8, this.length);
+e || B(t, 8, this.length);
 return i.read(this, t, !1, 52, 8);
 };
 function D(t, e, o, n, i, r) {
@@ -11427,11 +10958,11 @@ r.push(o >> 18 | 240, o >> 12 & 63 | 128, o >> 6 & 63 | 128, 63 & o | 128);
 }
 return r;
 }
-function Z(t) {
+function Q(t) {
 for (var e = [], o = 0; o < t.length; ++o) e.push(255 & t.charCodeAt(o));
 return e;
 }
-function Q(t, e) {
+function K(t, e) {
 for (var o, n, i, r = [], a = 0; a < t.length && !((e -= 2) < 0); ++a) {
 n = (o = t.charCodeAt(a)) >> 8;
 i = o % 256;
@@ -11440,7 +10971,7 @@ r.push(n);
 }
 return r;
 }
-function K(t) {
+function Z(t) {
 return n.toByteArray(W(t));
 }
 function q(t, e, o, n) {
@@ -11651,16 +11182,16 @@ i.env = {};
 i.argv = [];
 i.version = "";
 i.versions = {};
-function _() {}
-i.on = _;
-i.addListener = _;
-i.once = _;
-i.off = _;
-i.removeListener = _;
-i.removeAllListeners = _;
-i.emit = _;
-i.prependListener = _;
-i.prependOnceListener = _;
+function g() {}
+i.on = g;
+i.addListener = g;
+i.once = g;
+i.off = g;
+i.removeListener = g;
+i.removeAllListeners = g;
+i.emit = g;
+i.prependListener = g;
+i.prependOnceListener = g;
 i.listeners = function() {
 return [];
 };
@@ -11784,7 +11315,7 @@ t.constructor == String ? t = e && "binary" === e.encoding ? r.stringToBytes(t) 
 for (var s = o.bytesToWords(t), c = 8 * t.length, l = 1732584193, p = -271733879, u = -1732584194, d = 271733878, h = 0; h < s.length; h++) s[h] = 16711935 & (s[h] << 8 | s[h] >>> 24) | 4278255360 & (s[h] << 24 | s[h] >>> 8);
 s[c >>> 5] |= 128 << c % 32;
 s[14 + (c + 64 >>> 9 << 4)] = c;
-var f = a._ff, m = a._gg, _ = a._hh, g = a._ii;
+var f = a._ff, m = a._gg, g = a._hh, _ = a._ii;
 for (h = 0; h < s.length; h += 16) {
 var y = l, v = p, b = u, C = d;
 l = f(l, p, u, d, s[h + 0], 7, -680876936);
@@ -11817,37 +11348,37 @@ p = m(p, u, d, l, s[h + 8], 20, 1163531501);
 l = m(l, p, u, d, s[h + 13], 5, -1444681467);
 d = m(d, l, p, u, s[h + 2], 9, -51403784);
 u = m(u, d, l, p, s[h + 7], 14, 1735328473);
-l = _(l, p = m(p, u, d, l, s[h + 12], 20, -1926607734), u, d, s[h + 5], 4, -378558);
-d = _(d, l, p, u, s[h + 8], 11, -2022574463);
-u = _(u, d, l, p, s[h + 11], 16, 1839030562);
-p = _(p, u, d, l, s[h + 14], 23, -35309556);
-l = _(l, p, u, d, s[h + 1], 4, -1530992060);
-d = _(d, l, p, u, s[h + 4], 11, 1272893353);
-u = _(u, d, l, p, s[h + 7], 16, -155497632);
-p = _(p, u, d, l, s[h + 10], 23, -1094730640);
-l = _(l, p, u, d, s[h + 13], 4, 681279174);
-d = _(d, l, p, u, s[h + 0], 11, -358537222);
-u = _(u, d, l, p, s[h + 3], 16, -722521979);
-p = _(p, u, d, l, s[h + 6], 23, 76029189);
-l = _(l, p, u, d, s[h + 9], 4, -640364487);
-d = _(d, l, p, u, s[h + 12], 11, -421815835);
-u = _(u, d, l, p, s[h + 15], 16, 530742520);
-l = g(l, p = _(p, u, d, l, s[h + 2], 23, -995338651), u, d, s[h + 0], 6, -198630844);
-d = g(d, l, p, u, s[h + 7], 10, 1126891415);
-u = g(u, d, l, p, s[h + 14], 15, -1416354905);
-p = g(p, u, d, l, s[h + 5], 21, -57434055);
-l = g(l, p, u, d, s[h + 12], 6, 1700485571);
-d = g(d, l, p, u, s[h + 3], 10, -1894986606);
-u = g(u, d, l, p, s[h + 10], 15, -1051523);
-p = g(p, u, d, l, s[h + 1], 21, -2054922799);
-l = g(l, p, u, d, s[h + 8], 6, 1873313359);
-d = g(d, l, p, u, s[h + 15], 10, -30611744);
-u = g(u, d, l, p, s[h + 6], 15, -1560198380);
-p = g(p, u, d, l, s[h + 13], 21, 1309151649);
-l = g(l, p, u, d, s[h + 4], 6, -145523070);
-d = g(d, l, p, u, s[h + 11], 10, -1120210379);
-u = g(u, d, l, p, s[h + 2], 15, 718787259);
-p = g(p, u, d, l, s[h + 9], 21, -343485551);
+l = g(l, p = m(p, u, d, l, s[h + 12], 20, -1926607734), u, d, s[h + 5], 4, -378558);
+d = g(d, l, p, u, s[h + 8], 11, -2022574463);
+u = g(u, d, l, p, s[h + 11], 16, 1839030562);
+p = g(p, u, d, l, s[h + 14], 23, -35309556);
+l = g(l, p, u, d, s[h + 1], 4, -1530992060);
+d = g(d, l, p, u, s[h + 4], 11, 1272893353);
+u = g(u, d, l, p, s[h + 7], 16, -155497632);
+p = g(p, u, d, l, s[h + 10], 23, -1094730640);
+l = g(l, p, u, d, s[h + 13], 4, 681279174);
+d = g(d, l, p, u, s[h + 0], 11, -358537222);
+u = g(u, d, l, p, s[h + 3], 16, -722521979);
+p = g(p, u, d, l, s[h + 6], 23, 76029189);
+l = g(l, p, u, d, s[h + 9], 4, -640364487);
+d = g(d, l, p, u, s[h + 12], 11, -421815835);
+u = g(u, d, l, p, s[h + 15], 16, 530742520);
+l = _(l, p = g(p, u, d, l, s[h + 2], 23, -995338651), u, d, s[h + 0], 6, -198630844);
+d = _(d, l, p, u, s[h + 7], 10, 1126891415);
+u = _(u, d, l, p, s[h + 14], 15, -1416354905);
+p = _(p, u, d, l, s[h + 5], 21, -57434055);
+l = _(l, p, u, d, s[h + 12], 6, 1700485571);
+d = _(d, l, p, u, s[h + 3], 10, -1894986606);
+u = _(u, d, l, p, s[h + 10], 15, -1051523);
+p = _(p, u, d, l, s[h + 1], 21, -2054922799);
+l = _(l, p, u, d, s[h + 8], 6, 1873313359);
+d = _(d, l, p, u, s[h + 15], 10, -30611744);
+u = _(u, d, l, p, s[h + 6], 15, -1560198380);
+p = _(p, u, d, l, s[h + 13], 21, 1309151649);
+l = _(l, p, u, d, s[h + 4], 6, -145523070);
+d = _(d, l, p, u, s[h + 11], 10, -1120210379);
+u = _(u, d, l, p, s[h + 2], 15, 718787259);
+p = _(p, u, d, l, s[h + 9], 21, -343485551);
 l = l + y >>> 0;
 p = p + v >>> 0;
 u = u + b >>> 0;
@@ -12151,58 +11682,6 @@ App ? Reflect.apply(App.dispatcher.dispatch, App.dispatcher, arguments) : Reflec
 };
 cc._RF.pop();
 }, {} ],
-DragonPlayState: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "cf70foaiJ9FcIJlsyRC2mld", "DragonPlayState");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("./BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
-function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.dragon = null;
-return e;
-}
-e.prototype.init = function() {
-this.dragon || (this.dragon = this.node.getComponentInChildren(dragonBones.ArmatureDisplay));
-};
-e.prototype.show = function() {
-this.init();
-this.node.active = !0;
-this.dragon.armature().animation.gotoAndPlayByFrame(this.dragon.animationName, 0);
-};
-e.prototype.hide = function() {
-this.init();
-this.node.active = !1;
-};
-return r([ c ], e);
-}(a.default));
-o.default = l;
-cc._RF.pop();
-}, {
-"./BaseAnimState": "BaseAnimState"
-} ],
 EditorBoxEvent: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "7a3d15uTSNIiJWEkYUAH7l3", "EditorBoxEvent");
@@ -12348,60 +11827,6 @@ o.default = p;
 cc._RF.pop();
 }, {
 "../common/enum/GlobalEnum": "GlobalEnum"
-} ],
-ElementState: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "a5689NY8kROP6+M7phBJEYf", "ElementState");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../ElementAnimState/BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
-function(t) {
-i(e, t);
-function e() {
-return null !== t && t.apply(this, arguments) || this;
-}
-e.prototype.init = function(t) {
-this.rollConfig = t;
-this.states = [];
-for (var e = this.node.children, o = 0; o < e.length; o++) {
-var n = e[o].getComponent(a.default);
-n && this.states.push(n);
-}
-};
-e.prototype.show = function(t) {
-this.node.active = !0;
-for (var e = 0; e < this.states.length; e++) this.states[e].state == t ? this.states[e].show(this.rollConfig) : this.states[e].hide();
-};
-e.prototype.hide = function() {
-this.node.active = !1;
-};
-e.prototype.setExtraFunction = function() {};
-return r([ c ], e);
-}(cc.Component));
-o.default = l;
-cc._RF.pop();
-}, {
-"../ElementAnimState/BaseAnimState": "BaseAnimState"
 } ],
 EntryDelegate: [ function(t, e, o) {
 "use strict";
@@ -13250,48 +12675,6 @@ return t;
 o.EventProcessor = n;
 cc._RF.pop();
 }, {} ],
-ExtraState: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "bc670TB6P1Jr595FGCNsF7i", "ExtraState");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
-i(e, t);
-function e() {
-return null !== t && t.apply(this, arguments) || this;
-}
-e.prototype.init = function() {};
-e.prototype.show = function() {
-this.node.active = !0;
-};
-e.prototype.hide = function() {
-this.node.active = !1;
-};
-return r([ s ], e);
-}(cc.Component));
-o.default = c;
-cc._RF.pop();
-}, {} ],
 FBL_VerticalScreen: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "ad4cfFV/OBOnaeP76V7LSA4", "FBL_VerticalScreen");
@@ -13536,76 +12919,76 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.Framewok = void 0;
-var n = t("./core/event/Dispatcher"), i = t("./core/ui/UIManager"), r = t("./core/storage/LocalStorage"), a = t("./core/asset/AssetManager"), s = t("./core/asset/CacheManager"), c = t("./core/nodePool/NodePoolManager"), l = t("./core/update/UpdateManager"), p = t("./core/asset/BundleManager"), u = t("./core/net/service/ProtoManager"), d = t("./core/entry/EntryManager"), h = t("./data/DataCenter"), f = t("./core/log/Logger"), m = t("./core/net/service/ServiceManager"), _ = t("./core/net/http/HttpClient"), g = t("./utils/Singleton"), y = t("./core/net/service/SenderManager"), v = t("./core/net/service/HandlerManager"), b = t("./utils/Utils"), C = t("./utils/CanvasHelper"), w = t("../common/zlanguage/ZLan"), E = function() {
+var n = t("./core/event/Dispatcher"), i = t("./core/ui/UIManager"), r = t("./core/storage/LocalStorage"), a = t("./core/asset/AssetManager"), s = t("./core/asset/CacheManager"), c = t("./core/nodePool/NodePoolManager"), l = t("./core/update/UpdateManager"), p = t("./core/asset/BundleManager"), u = t("./core/net/service/ProtoManager"), d = t("./core/entry/EntryManager"), h = t("./data/DataCenter"), f = t("./core/log/Logger"), m = t("./core/net/service/ServiceManager"), g = t("./core/net/http/HttpClient"), _ = t("./utils/Singleton"), y = t("./core/net/service/SenderManager"), v = t("./core/net/service/HandlerManager"), b = t("./utils/Utils"), C = t("./utils/CanvasHelper"), w = t("../common/zlanguage/ZLan"), E = function() {
 function t() {
 this.gameView = null;
 }
 Object.defineProperty(t.prototype, "serviceManager", {
 get: function() {
-return g.Singleton.instance.get(m.ServiceManager);
+return _.Singleton.instance.get(m.ServiceManager);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "senderManager", {
 get: function() {
-return g.Singleton.instance.get(y.SenderManager);
+return _.Singleton.instance.get(y.SenderManager);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "handlerManager", {
 get: function() {
-return g.Singleton.instance.get(v.HandlerManager);
+return _.Singleton.instance.get(v.HandlerManager);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "logger", {
 get: function() {
-return g.Singleton.instance.get(f.LoggerImpl);
+return _.Singleton.instance.get(f.LoggerImpl);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "dataCenter", {
 get: function() {
-return g.Singleton.instance.get(h.DataCenter);
+return _.Singleton.instance.get(h.DataCenter);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "entryManager", {
 get: function() {
-return g.Singleton.instance.get(d.EntryManager);
+return _.Singleton.instance.get(d.EntryManager);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "utils", {
 get: function() {
-return g.Singleton.instance.get(b.Utils);
+return _.Singleton.instance.get(b.Utils);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "protoManager", {
 get: function() {
-return g.Singleton.instance.get(u.ProtoManager);
+return _.Singleton.instance.get(u.ProtoManager);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "bundleManager", {
 get: function() {
-return g.Singleton.instance.get(p.BundleManager);
+return _.Singleton.instance.get(p.BundleManager);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "updateManager", {
 get: function() {
-return g.Singleton.instance.get(l.UpdateManager);
+return _.Singleton.instance.get(l.UpdateManager);
 },
 enumerable: !1,
 configurable: !0
@@ -13619,21 +13002,21 @@ configurable: !0
 });
 Object.defineProperty(t.prototype, "zLan", {
 get: function() {
-return g.Singleton.instance.get(w.ZLan);
+return _.Singleton.instance.get(w.ZLan);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "dispatcher", {
 get: function() {
-return g.Singleton.instance.get(n.Dispatcher);
+return _.Singleton.instance.get(n.Dispatcher);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "uiManager", {
 get: function() {
-return g.Singleton.instance.get(i.UIManager);
+return _.Singleton.instance.get(i.UIManager);
 },
 enumerable: !1,
 configurable: !0
@@ -13647,7 +13030,7 @@ configurable: !0
 });
 Object.defineProperty(t.prototype, "storage", {
 get: function() {
-return g.Singleton.instance.get(r.LocalStorage);
+return _.Singleton.instance.get(r.LocalStorage);
 },
 enumerable: !1,
 configurable: !0
@@ -13661,7 +13044,7 @@ configurable: !0
 });
 Object.defineProperty(t.prototype, "asset", {
 get: function() {
-return g.Singleton.instance.get(a.AssetManager);
+return _.Singleton.instance.get(a.AssetManager);
 },
 enumerable: !1,
 configurable: !0
@@ -13675,7 +13058,7 @@ configurable: !0
 });
 Object.defineProperty(t.prototype, "cache", {
 get: function() {
-return g.Singleton.instance.get(s.CacheManager);
+return _.Singleton.instance.get(s.CacheManager);
 },
 enumerable: !1,
 configurable: !0
@@ -13689,14 +13072,14 @@ configurable: !0
 });
 Object.defineProperty(t.prototype, "pool", {
 get: function() {
-return g.Singleton.instance.get(c.NodePoolManager);
+return _.Singleton.instance.get(c.NodePoolManager);
 },
 enumerable: !1,
 configurable: !0
 });
 Object.defineProperty(t.prototype, "http", {
 get: function() {
-return g.Singleton.instance.get(_.HttpClient);
+return _.Singleton.instance.get(g.HttpClient);
 },
 enumerable: !1,
 configurable: !0
@@ -13717,7 +13100,7 @@ configurable: !0
 });
 Object.defineProperty(t.prototype, "canvasHelper", {
 get: function() {
-return g.Singleton.instance.get(C.CanvasHelper);
+return _.Singleton.instance.get(C.CanvasHelper);
 },
 enumerable: !1,
 configurable: !0
@@ -13777,7 +13160,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../common/component/UIContainer"), s = t("../common/config/ConstString"), c = t("../common/config/GlobalVar"), l = t("../common/event/CommonEvent"), p = t("../common/net/GameSender"), u = t("../framework/core/ui/UIView"), d = t("../framework/defines/Decorators"), h = t("../framework/defines/Enums"), f = cc._decorator, m = f.ccclass, _ = (f.property, 
+var a = t("../common/component/UIContainer"), s = t("../common/config/ConstString"), c = t("../common/config/GlobalVar"), l = t("../common/event/CommonEvent"), p = t("../common/net/GameSender"), u = t("../framework/core/ui/UIView"), d = t("../framework/defines/Decorators"), h = t("../framework/defines/Enums"), f = cc._decorator, m = f.ccclass, g = (f.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -13884,7 +13267,7 @@ r([ d.inject("Background/content/gameCheat", a.default) ], e.prototype, "gameChe
 r([ d.inject("Background/content/ver1/toggle", cc.Toggle) ], e.prototype, "toggle", void 0);
 return r([ m ], e);
 }(u.default));
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../common/component/UIContainer": "UIContainer",
@@ -14225,409 +13608,6 @@ cc._RF.pop();
 "../framework/defines/Decorators": "Decorators",
 "../framework/defines/Enums": "Enums",
 "../login/other/howtoplay_item": "howtoplay_item"
-} ],
-GameMgr: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "fc7edWM57dHLbakB/Az/sIi", "GameMgr");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-o.AudioName = o.VideoType_A = o.MyGameEvent_A = void 0;
-var a, s, c, l = t("console"), p = t("../../../scripts/common/enum/GlobalEnum"), u = t("../../../scripts/common/utils/RandomUtil"), d = t("../../../scripts/framework/componects/EventComponent"), h = t("../../core/newRoll/ZRollControler"), f = t("./AudioMgr"), m = t("./slotsOperate"), _ = t("./Service/HomeTipTCService_A"), g = t("./Service/LoadingGameService_A"), y = t("./RulePanel"), v = t("./PayTabelPanel"), b = t("./PayLinesPanel"), C = t("../../../scripts/common/event/CommonEvent"), w = t("./Service/Reward_YouWin_A"), E = t("../../../scripts/sdk/SdkManager"), S = t("./Service/AutoService_A");
-(function(t) {
-t.ChooseLevel = "ChoseLevel_A";
-t.LevelFinish = "LevelFinish_A";
-t.PlayGame_LevelTipTC = "PlayGame_LevelTipTC_A";
-t.OpenRuleTC = "OpenRuleTC_A";
-t.OpenPayTabelTC = "OpenPayTableTC_A";
-t.OpenPayLineTC = "OpenPayLineTC_A";
-t.SetAutoCount = "SetAutoCount_A";
-})(a = o.MyGameEvent_A || (o.MyGameEvent_A = {}));
-(function(t) {
-t.AddMoney = "1";
-t.Bigwin = "2";
-t.LevelReward = "3";
-})(s = o.VideoType_A || (o.VideoType_A = {}));
-(function(t) {
-t.Bigwin = "yx_Bigwin";
-t.BigwinEnd = "yx_bigwinEnd";
-t.Click = "yx_click";
-t.levelReward = "yx_levelReward";
-t.rewardFinish = "yx_rewardFinish";
-t.spin = "yx_spin";
-t.stop = "yx_stop";
-t.ele_award = "ele_award";
-})(c = o.AudioName || (o.AudioName = {}));
-var R = cc._decorator, O = R.ccclass, A = R.property, P = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.mainRollConfig = null;
-e.operateData = null;
-e.operate = null;
-e.controler = null;
-e.node_SetPanel = null;
-e.homeTipTC = null;
-e.loadingService = null;
-e.reward_YouWin = null;
-e.node_NotCanClick = null;
-e.rulePanel = null;
-e.payTablePanel = null;
-e.payLinesPanel = null;
-e.autoService = null;
-e.spriteFrames = [];
-e.curLevelData = null;
-e.curTime = 0;
-e.beginTime_Delay = 0;
-e.delayTimeToClick = 0;
-e.isDelayToCanClick = !1;
-e.curSpinTime = 0;
-e.oneClick = !1;
-e.isGetReward = !1;
-e.curEleRange_Weights = [];
-return e;
-}
-e.prototype.onLoad = function() {
-this.initNode();
-t.prototype.onLoad.call(this);
-this.initEvent();
-};
-e.prototype.initNode = function() {
-this.operate = cc.find("operate", this.node).getComponent(m.default);
-};
-e.prototype.initEvent = function() {
-var t = this;
-this.onD(a.ChooseLevel, function(e) {
-t.refresh(e);
-});
-this.onD(a.OpenRuleTC, function() {
-t.rulePanel.OpenShow();
-});
-this.onD(a.OpenPayTabelTC, function() {
-t.payTablePanel.OpenShow();
-});
-this.onD(a.OpenPayLineTC, function() {
-t.payLinesPanel.OpenShow();
-});
-this.onD(C.SdkEvent.SdkEvent_finish_video_back, function(e) {
-Log.d("激励视频播放完成，发放奖励");
-var o = JSON.parse(e);
-Log.e(o);
-o.rewardType == s.AddMoney ? o.isCanAward && t.operate.updateCoins(1e3) : o.rewardType == s.Bigwin && t.reward_YouWin.SetRewardX2(o.isCanAward);
-});
-this.onD(C.CommonEvent.EventMaskAll, function(e) {
-t.beginTime_Delay = t.curTime;
-t.delayTimeToClick = e;
-t.node_NotCanClick.active = !0;
-t.isDelayToCanClick = !0;
-});
-this.onD(a.SetAutoCount, function(e) {
-t.operate.SetAutoState(e);
-t.scheduleOnce(function() {
-t.operate.ButtonClick_Spin();
-}, .1);
-});
-};
-e.prototype.ButtonClick_Setting = function() {
-f.default.instance.playEffect(c.Click);
-this.node_SetPanel.active = !0;
-};
-e.prototype.ButtonClick_Home = function() {
-f.default.instance.playEffect(c.Click);
-this.homeTipTC.OpenShow(function(t) {
-if (t) {
-cc.director.loadScene("login");
-E.default.showInterstitial();
-f.default.instance.playBGM(f.default.instance.bgm);
-}
-});
-};
-e.prototype.ButtonClick_Rule = function() {
-f.default.instance.playEffect(c.Click);
-dispatch(a.OpenRuleTC);
-};
-e.prototype.ButtonClick_Auto = function() {
-f.default.instance.playEffect(c.Click);
-this.autoService.OpenShow();
-};
-e.prototype.refresh = function(t) {
-this.curLevelData = t;
-f.default.instance.playBGM(f.default.instance.bgm_game);
-this.rulePanel.InitData(this.curLevelData);
-this.payLinesPanel.InitData(this.curLevelData);
-this.payTablePanel.InitData(this.curLevelData, this.spriteFrames);
-this.curEleRange_Weights = [];
-for (var e = 0; e < this.curLevelData.ele.length; e++) for (var o = this.curLevelData.ele[e], n = this.curLevelData.dropWeights[e], i = 0; i < n; i++) this.curEleRange_Weights.push(o);
-var r = [];
-for (e = 0; e < this.curLevelData.reel[0]; e++) r.push(this.curLevelData.ele);
-this.mainRollConfig = {
-speed: 3e3,
-accelerate: 3e3,
-lineCount: this.curLevelData.lines.length,
-numY: this.curLevelData.reel[1],
-easeTime: .3,
-elementCount: this.curLevelData.ele.length,
-name: "roll",
-interval: .24,
-turnType: 1,
-inEase: 0,
-stopTime: 1.5,
-rewardExtraEffect: 1,
-elementRange_Init: r,
-elementRange_Run: r,
-elementRangeRate: this.curLevelData.dropWeights,
-rollStartCB: this.rollStartCB.bind(this),
-rollFinishCB: this.rollFinishCB.bind(this),
-rollAccelerateStartCB: this.rollAccelerateStartCB.bind(this),
-gameFinishEndCB: this.gameFinishEndCB.bind(this)
-};
-this.operateData = {
-betValues: [ 1, 2, 5, 10, 20, 50, 100, 200, 500, 1e3 ],
-curBetIndex: 0,
-betType: 1,
-autoValues: [ 500, 200, 100, 20 ],
-spinCallBack: this.spinCallBack.bind(this),
-stopCallBack: this.stopCallBack.bind(this)
-};
-this.controler.initData(this.mainRollConfig);
-this.operate.init(this.operateData);
-this.operate.setBtnState(!0);
-};
-e.prototype.start = function() {};
-e.prototype.spinCallBack = function() {
-if (this.operate.isCanSpin()) {
-if (this.operate.autoCount > 0) {
-this.operate.autoCount--;
-this.operate.SetAutoState(this.operate.autoCount);
-}
-this.operate.setBtnState(!1);
-this.controler.startRoll(0);
-} else l.error("余额不足，请充值");
-};
-e.prototype.stopCallBack = function() {
-if (this.oneClick) {
-this.controler.quickStopRoll();
-this.oneClick = !1;
-}
-};
-e.prototype.update = function(t) {
-if (this.oneClick) {
-this.curSpinTime += t;
-if (this.curSpinTime > this.mainRollConfig.stopTime && this.isGetReward) {
-this.updateAutoStop();
-this.oneClick = !1;
-return;
-}
-}
-this.curTime += t;
-if (this.isDelayToCanClick && this.beginTime_Delay + this.delayTimeToClick <= this.curTime) {
-this.isDelayToCanClick = !1;
-this.node_NotCanClick.active = !1;
-}
-};
-e.prototype.updateReward = function() {
-this.serverReslut = this.GetResult();
-console.error(this.serverReslut);
-for (var t = [], e = 0; e < this.curLevelData.reel[0]; e++) {
-for (var o = [], n = 0; n < this.curLevelData.reel[1]; n++) {
-var i = this.serverReslut.value[e][n];
-o.push({
-index: i - 1,
-value: i,
-isEmpty: !1
-});
-}
-t.push(o);
-}
-this.controler.results = t;
-this.isGetReward = !0;
-};
-e.prototype.updateAutoStop = function() {
-this.controler.stopRoll();
-};
-e.prototype.rollStartCB = function() {
-this.operate.showWin(0);
-this.oneClick = !0;
-this.curSpinTime = 0;
-this.isGetReward = !1;
-this.updateReward();
-this.curSpinIndex = -1;
-this.chiliElements = [];
-this.operate.spinUpadateCoin();
-};
-e.prototype.rollAccelerateStartCB = function() {};
-e.prototype.rollFinishCB = function(t, e) {
-this.curSpinIndex = e;
-var o = e == this.controler.getUnlockedCount() - 1;
-t ? o && f.default.instance.playEffect(c.stop) : f.default.instance.playEffect(c.stop);
-};
-e.prototype.gameFinishEndCB = function(t) {
-if (t == this.controler.getUnlockedCount() - 1) {
-dispatch(C.CommonEvent.EventMaskAll, 10);
-this.playResultAni();
-}
-};
-e.prototype.playResultAni = function() {
-var t = this;
-this.controler.resetAllElementState();
-if (this.serverReslut.awardResult.awardType > 0) {
-for (var e = this.serverReslut.awardResult.awardPos, o = this.serverReslut.value[0], n = [], i = 0; i < o.length; i++) {
-var r = o[i];
-e.indexOf(i) >= 0 && n.indexOf(r) < 0 && n.push(r);
-}
-f.default.instance.playEffect(c.ele_award);
-this.controler.playEndAnim(this.serverReslut.awardResult.awardPos, this.getStates());
-this.scheduleOnce(function() {
-t.PlayBigWin(function() {
-dispatch(C.CommonEvent.EventMaskAll, 0);
-t.endfunc();
-});
-}, 1);
-} else {
-dispatch(C.CommonEvent.EventMaskAll, 0);
-this.operate.showWin(0);
-this.endfunc();
-}
-};
-e.prototype.PlayBigWin = function(t) {
-var e = this;
-if (this.serverReslut.awardResult.awardType >= 2) {
-dispatch(C.CommonEvent.EventMaskAll, 0);
-this.reward_YouWin.OpenShow(this.serverReslut.awardResult.score, this.serverReslut.awardResult.awardType, function(o) {
-e.operate.showWin(o);
-e.operate.updateCoins(o);
-e.CheckCollectTarEle(t);
-});
-} else {
-dispatch(C.CommonEvent.EventMaskAll, 0);
-this.operate.showWin(this.serverReslut.awardResult.score);
-this.operate.updateCoins(this.serverReslut.awardResult.score);
-this.CheckCollectTarEle(t);
-}
-};
-e.prototype.CheckCollectTarEle = function(t) {
-dispatch(C.CommonEvent.EventMaskAll, 10);
-for (var e = this.controler.getEndNodes(), o = [ 3, 8 ], n = this.serverReslut.awardResult.awardPos, i = 0, r = 0; r < n.length; r++) {
-var a = e[n[r]];
-if (o.indexOf(a.elementValue) >= 0) {
-i++;
-a.elementValue;
-}
-}
-if (0 == i) {
-dispatch(C.CommonEvent.EventMaskAll, 0);
-t && t();
-} else {
-dispatch(C.CommonEvent.EventMaskAll, 10);
-this.scheduleOnce(function() {
-t && t();
-}, .5);
-}
-};
-e.prototype.getStates = function() {
-for (var t = [], e = this.serverReslut.awardResult.awardPos, o = 0; o < e.length; o++) t.push(p.GlobalEnum.ElementState.Reward);
-return t;
-};
-e.prototype.endfunc = function() {
-var t = this;
-dispatch(C.CommonEvent.EventMaskAll, 0);
-this.operate.autoCount > 0 ? this.scheduleOnce(function() {
-t.operate.ButtonClick_Spin();
-}, .5) : this.operate.setBtnState(!0);
-};
-e.prototype.GetResult = function() {
-for (var t = this, e = {
-awardline: [],
-awardPos: [],
-awardType: 0,
-score: 0
-}, o = [], n = 0; n < this.curLevelData.reel[0]; n++) {
-for (var i = [], r = 0; r < this.curLevelData.reel[1]; r++) {
-var a = u.RandomUtil.randomRange(0, this.curEleRange_Weights.length);
-i.push(this.curEleRange_Weights[a]);
-}
-o.push(i);
-}
-var s = new Set();
-for (n = 0; n < this.curLevelData.lines.length; n++) {
-var c = this.curLevelData.lines[n], l = c.map(function(e) {
-return t.getSymbol(o, e);
-}), p = l[0], d = 1;
-for (r = 1; r < l.length && l[r] === p; r++) d++;
-if (d >= 3) {
-e.awardline.push(n);
-for (var h = 0; h < d; h++) s.add(c[h]);
-var f = this.curLevelData.ele.indexOf(p), m = this.curLevelData.betRate[f][d - 3];
-e.score += this.operate.betValue / this.curLevelData.lines.length * m;
-}
-}
-if (e.score > 0) {
-var _ = e.score / this.operate.betValue;
-e.awardType = _ < 3 ? 1 : _ < 8 ? 2 : 3;
-} else e.awardType = 0;
-e.awardPos = Array.from(s).sort(function(t, e) {
-return t - e;
-});
-return {
-awardResult: e,
-value: o
-};
-};
-e.prototype.getSymbol = function(t, e) {
-var o = Math.floor(e / this.curLevelData.reel[1]), n = e % this.curLevelData.reel[1];
-return t[o][n];
-};
-r([ A(h.default) ], e.prototype, "controler", void 0);
-r([ A(cc.Node) ], e.prototype, "node_SetPanel", void 0);
-r([ A(_.default) ], e.prototype, "homeTipTC", void 0);
-r([ A(g.default) ], e.prototype, "loadingService", void 0);
-r([ A(w.default) ], e.prototype, "reward_YouWin", void 0);
-r([ A(cc.Node) ], e.prototype, "node_NotCanClick", void 0);
-r([ A(y.default) ], e.prototype, "rulePanel", void 0);
-r([ A(v.default) ], e.prototype, "payTablePanel", void 0);
-r([ A(b.default) ], e.prototype, "payLinesPanel", void 0);
-r([ A(S.default) ], e.prototype, "autoService", void 0);
-r([ A(cc.SpriteFrame) ], e.prototype, "spriteFrames", void 0);
-return r([ O ], e);
-}(d.default);
-o.default = P;
-cc._RF.pop();
-}, {
-"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
-"../../../scripts/common/event/CommonEvent": "CommonEvent",
-"../../../scripts/common/utils/RandomUtil": "RandomUtil",
-"../../../scripts/framework/componects/EventComponent": "EventComponent",
-"../../../scripts/sdk/SdkManager": "SdkManager",
-"../../core/newRoll/ZRollControler": "ZRollControler",
-"./AudioMgr": "AudioMgr",
-"./PayLinesPanel": "PayLinesPanel",
-"./PayTabelPanel": "PayTabelPanel",
-"./RulePanel": "RulePanel",
-"./Service/AutoService_A": "AutoService_A",
-"./Service/HomeTipTCService_A": "HomeTipTCService_A",
-"./Service/LoadingGameService_A": "LoadingGameService_A",
-"./Service/Reward_YouWin_A": "Reward_YouWin_A",
-"./slotsOperate": "slotsOperate",
-console: 8
 } ],
 GameNativeConfig: [ function(t, e, o) {
 "use strict";
@@ -15346,7 +14326,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 var a = t("../../../common/config/Config"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/event/CommonEvent"), l = t("../../../common/net/GameSender"), p = t("../../../sdk/SdkManager"), u = t("../../defines/Macros"), d = t("./UIView"), h = cc._decorator, f = h.ccclass, m = (h.property, 
-h.menu), _ = function(t) {
+h.menu), g = function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
@@ -15444,7 +14424,7 @@ this.exitGameToHall();
 };
 return r([ f, m("Quick公共组件/GameView") ], e);
 }(d.default);
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../common/config/Config": "Config",
@@ -16044,15 +15024,15 @@ u && dispatch(s.ComponentGameEvent.GameList_update);
 Log.e("json is error");
 }
 if (App.IsHtmlGame) i.default.showIosOpenView(c); else if (0 == r) {
-var _ = t.getGameConfig(t.curGameId.toString());
-e.gameIcons = _.gameIcons.values;
-e.colors = _.colors.values;
-e.jili = _.jili.values;
-e.gtype = _.gtype;
-e.dir = _.isL;
-t.gameRuleMaxCount = _.rule;
-t.oddUrl_Pg_MaxCount = _.oddUrl;
-var g = decodeURIComponent(o.data.resPath) + "/{0}/{1}/{2}/", y = App.zLan.string_format_args(g, e.gtype, t.curGameId, App.zLan.getLanguage());
+var g = t.getGameConfig(t.curGameId.toString());
+e.gameIcons = g.gameIcons.values;
+e.colors = g.colors.values;
+e.jili = g.jili.values;
+e.gtype = g.gtype;
+e.dir = g.isL;
+t.gameRuleMaxCount = g.rule;
+t.oddUrl_Pg_MaxCount = g.oddUrl;
+var _ = decodeURIComponent(o.data.resPath) + "/{0}/{1}/{2}/", y = App.zLan.string_format_args(_, e.gtype, t.curGameId, App.zLan.getLanguage());
 t.ruleUrlPre = y;
 var v = decodeURIComponent(o.data.resPath) + "/{0}/{1}/{2}/icon.png", b = App.zLan.string_format_args(v, e.gtype, t.curGameId, App.zLan.getLanguage());
 t.curGameIconPath = b;
@@ -17153,7 +16133,7 @@ t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o(
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var r = t("../../common/config/CmdConfig"), a = t("../../common/config/ConstString"), s = t("../../common/config/GlobalVar"), c = t("../../common/config/User"), l = t("../../common/event/CommonEvent"), p = t("../../common/net/CmdDefines"), u = t("../../common/net/CommonSender"), d = t("../../common/net/GetCmdKey"), h = t("../../common/utils/CmmUtils"), f = t("../../framework/core/net/message/JsonMessage"), m = t("../../framework/core/net/service/Handler"), _ = t("../../sdk/GameNativeConfig"), g = t("./LobbyCmd"), y = t("./LobbyService"), v = function(t) {
+var r = t("../../common/config/CmdConfig"), a = t("../../common/config/ConstString"), s = t("../../common/config/GlobalVar"), c = t("../../common/config/User"), l = t("../../common/event/CommonEvent"), p = t("../../common/net/CmdDefines"), u = t("../../common/net/CommonSender"), d = t("../../common/net/GetCmdKey"), h = t("../../common/utils/CmmUtils"), f = t("../../framework/core/net/message/JsonMessage"), m = t("../../framework/core/net/service/Handler"), g = t("../../sdk/GameNativeConfig"), _ = t("./LobbyCmd"), y = t("./LobbyService"), v = function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
@@ -17167,7 +16147,7 @@ configurable: !0
 });
 e.prototype.onLoad = function() {
 t.prototype.onLoad.call(this);
-this.onS(d.GetCmdKey(p.MainCmd.CMD_LOBBY, g.SUB_CMD_LOBBY.SERVER_GAME_LOGIN), this.loginSuccessful, f.JsonMessage);
+this.onS(d.GetCmdKey(p.MainCmd.CMD_LOBBY, _.SUB_CMD_LOBBY.SERVER_GAME_LOGIN), this.loginSuccessful, f.JsonMessage);
 this.onS(d.GetCmdKey(p.MainCmd.CMD_LOBBY, p.SUB_CMD_SYS.CMD_SYS_HEART), this.sysHurt, f.JsonMessage);
 this.onS(d.GetCmdKey(p.MainCmd.CMD_LOBBY, r.default.LabaTCP.Laba_UpDate_User), this.commonMessage, f.JsonMessage);
 this.onS(d.GetCmdKey(p.MainCmd.CMD_LOBBY, r.default.LabaTCP.CLINET_NOTICE_USER_CHANGE), this.commonMessage, f.JsonMessage);
@@ -17194,10 +16174,10 @@ dispatch(l.CommonEvent.RefreshRechageList);
 dispatch(l.HttpEvent.WithDrawUpdate);
 c.default.self.updatePlayerInfo();
 }
-} else if (e == r.default.LabaTCP.Laba_SM_ROOM_INFO_RETURN) Log.d("是否重连房间:", o); else if (e == r.default.LabaTCP.SERVER_NOTICE_USER_CHANGE) Log.d("用户信息变更或支付成功:", o); else if (e == r.default.LabaTCP.SERVER_NOTIFY_REFLUSH_GAMEHOST) ; else if (e == r.default.LabaTCP.Laba_CONNENCT_SUCC) Log.d("登录大厅成功:", o); else if (e == r.default.LabaTCP.SERVER_FORCED_OFFLINE) cc.game.emit(_.default.Event.exit_login); else if (e == r.default.LabaTCP.SERVER_SEND_CHAT_MSG) {
+} else if (e == r.default.LabaTCP.Laba_SM_ROOM_INFO_RETURN) Log.d("是否重连房间:", o); else if (e == r.default.LabaTCP.SERVER_NOTICE_USER_CHANGE) Log.d("用户信息变更或支付成功:", o); else if (e == r.default.LabaTCP.SERVER_NOTIFY_REFLUSH_GAMEHOST) ; else if (e == r.default.LabaTCP.Laba_CONNENCT_SUCC) Log.d("登录大厅成功:", o); else if (e == r.default.LabaTCP.SERVER_FORCED_OFFLINE) cc.game.emit(g.default.Event.exit_login); else if (e == r.default.LabaTCP.SERVER_SEND_CHAT_MSG) {
 Log.d("收到喇叭聊天信息:", o);
-dispatch(_.default.Event.laba_chat, o);
-} else e == r.default.LabaTCP.CLINET_NOTICE_KYC_CHANGE ? this.laba9008Message(o) : e == r.default.LabaTCP.Laba_SERVER_SYSTEM_MESSAGE ? dispatch(_.default.Event.laba_message, o) : e == r.default.LabaTCP.SERVER_CHANGE_PAY_CHANNEL && this.updatePayChannel();
+dispatch(g.default.Event.laba_chat, o);
+} else e == r.default.LabaTCP.CLINET_NOTICE_KYC_CHANGE ? this.laba9008Message(o) : e == r.default.LabaTCP.Laba_SERVER_SYSTEM_MESSAGE ? dispatch(g.default.Event.laba_message, o) : e == r.default.LabaTCP.SERVER_CHANGE_PAY_CHANNEL && this.updatePayChannel();
 };
 e.prototype.updateUserMsg = function(t) {
 var e = App.senderManager.get(u.default);
@@ -17206,7 +16186,7 @@ e.Send_Act_16(function(t) {
 c.default.self.initBindRewardInfo(t.data);
 });
 c.default.self.updateMoneyInfo();
-dispatch(_.default.Event.CLINET_NOTICE_KYC_CHANGE, t);
+dispatch(g.default.Event.CLINET_NOTICE_KYC_CHANGE, t);
 };
 e.prototype.laba9008Message = function(t) {
 if (t) switch (t.activity_id) {
@@ -17268,7 +16248,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../common/config/GlobalVar"), s = t("../common/config/User"), c = t("../common/utils/CmmUtils"), l = t("../common/utils/UIUtils"), p = t("../framework/core/ui/UIView"), u = t("../framework/defines/Decorators"), d = t("../framework/defines/Macros"), h = t("../login/other/coin_label_item"), f = t("../sdk/GameNativeConfig"), m = cc._decorator, _ = m.ccclass, g = (m.property, 
+var a = t("../common/config/GlobalVar"), s = t("../common/config/User"), c = t("../common/utils/CmmUtils"), l = t("../common/utils/UIUtils"), p = t("../framework/core/ui/UIView"), u = t("../framework/defines/Decorators"), d = t("../framework/defines/Macros"), h = t("../login/other/coin_label_item"), f = t("../sdk/GameNativeConfig"), m = cc._decorator, g = m.ccclass, _ = (m.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -17483,9 +16463,9 @@ r([ u.inject("root/top_layer/top_html/total_coins/MoneyLabel", cc.Label) ], e.pr
 r([ u.inject("root/top_layer/top_html/others/bouns/currency_label/Value", cc.Label) ], e.prototype, "bounsLabel", void 0);
 r([ u.inject("root/bottom_layer/btns/Button_bindReward/state0/Background/currency_label/coinTxt", cc.Label) ], e.prototype, "delayLabel", void 0);
 r([ u.inject("root/coins", h.default) ], e.prototype, "coinlabelitem", void 0);
-return r([ _ ], e);
+return r([ g ], e);
 }(p.default));
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../common/config/GlobalVar": "GlobalVar",
@@ -17916,109 +16896,6 @@ cc._RF.pop();
 "../help/helper": "helper",
 "../manager/ModelManager": "ModelManager"
 } ],
-HomeTipTCService_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "5a3a8rJqKNG67D5Ajzxghu5", "HomeTipTCService_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../AudioMgr"), s = t("../GameMgr"), c = cc._decorator, l = c.ccclass, p = c.property, u = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_Main = null;
-e.node_Zhezhao = null;
-e.clickType = 0;
-e.isCanClick = !1;
-e.callback_Over = null;
-e.tween_main = null;
-e.tween_Zhezhao = null;
-return e;
-}
-e.prototype.onDestroy = function() {
-this.ClearTween();
-};
-e.prototype.OpenShow = function(t) {
-var e = this;
-this.ClearTween();
-this.isCanClick = !1;
-this.callback_Over = t;
-this.node_Main.active = !0;
-this.node_Zhezhao.active = !0;
-this.node_Zhezhao.opacity = 0;
-this.node_Main.scale = 0;
-this.tween_Zhezhao = cc.tween(this.node_Zhezhao).to(.3, {
-opacity: 200
-}).start();
-this.tween_main = cc.tween(this.node_Main).delay(.3).to(.35, {
-scale: 1
-}, cc.easeBackOut()).call(function() {
-e.isCanClick = !0;
-}).start();
-};
-e.prototype.ButtonClick_Home = function() {
-if (this.isCanClick) {
-this.isCanClick = !1;
-a.default.instance.playEffect(s.AudioName.Click);
-this.clickType = 1;
-this.CloseShow();
-}
-};
-e.prototype.ButtonClick_Close = function() {
-if (this.isCanClick) {
-this.isCanClick = !1;
-a.default.instance.playEffect(s.AudioName.Click);
-this.clickType = 0;
-this.CloseShow();
-}
-};
-e.prototype.CloseShow = function() {
-var t = this;
-this.ClearTween();
-this.tween_main = cc.tween(this.node_Main).to(.3, {
-scale: 0
-}, cc.easeBackIn()).start();
-this.tween_Zhezhao = cc.tween(this.node_Zhezhao).delay(.2).to(.3, {
-opacity: 0
-}).delay(.1).call(function() {
-t.callback_Over && t.callback_Over(t.clickType);
-t.node_Main.active = !1;
-t.node_Zhezhao.active = !1;
-}).start();
-};
-e.prototype.ClearTween = function() {
-this.tween_Zhezhao && this.tween_Zhezhao.stop();
-this.tween_main && this.tween_main.stop();
-};
-r([ p(cc.Node) ], e.prototype, "node_Main", void 0);
-r([ p(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
-return r([ l ], e);
-}(cc.Component);
-o.default = u;
-cc._RF.pop();
-}, {
-"../AudioMgr": "AudioMgr",
-"../GameMgr": "GameMgr"
-} ],
 HostInfo: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "40cf2uJ++pNW4yKdnZgB1wI", "HostInfo");
@@ -18192,7 +17069,7 @@ done: !0
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var c = t("../../common/component/ZProgressbar"), l = t("../../common/config/Config"), p = t("../../common/config/ConstString"), u = t("../../common/config/GlobalVar"), d = t("../../common/config/HostInfo"), h = t("../../common/config/User"), f = t("../../common/event/CommonEvent"), m = t("../../common/net/CommonSender"), _ = t("../../common/net/HttpSender"), g = t("../../common/protocol/HeartbetJson"), y = t("../../common/utils/CmmUtils"), v = t("../../framework/componects/EventComponent"), b = t("../../framework/core/update/Update"), C = t("../../framework/defines/Enums"), w = t("../../framework/defines/Macros"), E = t("../../sdk/AppInfo"), S = t("../../sdk/GameNativeConfig"), R = t("../../sdk/SdkManager"), O = t("../net/HallHandler"), A = t("../net/LobbyService"), P = t("./CommonUIHelper"), L = cc._decorator, I = L.ccclass, N = L.property, T = function(t) {
+var c = t("../../common/component/ZProgressbar"), l = t("../../common/config/Config"), p = t("../../common/config/ConstString"), u = t("../../common/config/GlobalVar"), d = t("../../common/config/HostInfo"), h = t("../../common/config/User"), f = t("../../common/event/CommonEvent"), m = t("../../common/net/CommonSender"), g = t("../../common/net/HttpSender"), _ = t("../../common/protocol/HeartbetJson"), y = t("../../common/utils/CmmUtils"), v = t("../../framework/componects/EventComponent"), b = t("../../framework/core/update/Update"), C = t("../../framework/defines/Enums"), w = t("../../framework/defines/Macros"), E = t("../../sdk/AppInfo"), S = t("../../sdk/GameNativeConfig"), R = t("../../sdk/SdkManager"), O = t("../net/HallHandler"), A = t("../net/LobbyService"), P = t("./CommonUIHelper"), L = cc._decorator, I = L.ccclass, N = L.property, T = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -18340,7 +17217,7 @@ var t = App.serviceManager.get(A.LobbyService, !0);
 App.handlerManager.get(O.default);
 if (!t.isConnected) {
 t.initIP_PORT(d.HostInfo.URL_Laba_Server_ip, d.HostInfo.URL_Laba_Server_prot, d.HostInfo.URL_Laba_Server_ws);
-t.heartbeat = g.HeartbeatJson;
+t.heartbeat = _.HeartbeatJson;
 t.reconnectHandler.enabled = !0;
 t.maxEnterBackgroundTime = l.Config.MIN_INBACKGROUND_TIME;
 t.connect();
@@ -18468,9 +17345,9 @@ Log.w(JSON.stringify(t));
 0 == t.log ? App.logger.level = C.LogLevel.NONE : App.logger.level = C.LogLevel.ALL;
 u.GlobalVar.cusUrl = t.cusUrl;
 App.storage.setItem(S.default.Key.PhoneId, t.pwdtoken);
-_.default.skey = t.skey;
-_.default.uid = t.uid;
-App.storage.setItem(p.ConstString.userId, _.default.uid);
+g.default.skey = t.skey;
+g.default.uid = t.uid;
+App.storage.setItem(p.ConstString.userId, g.default.uid);
 App.storage.setItem(p.ConstString.enableAutoLogin, !0);
 this.initIndex = 0;
 this.sender.Send_InitHall(function(t) {
@@ -19441,7 +18318,7 @@ done: !0
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var s = t("../../aesres/aesres"), c = t("../../framework/core/net/http/Http"), l = t("../../framework/core/net/http/HttpClient"), p = t("../../framework/core/net/service/Sender"), u = t("../../framework/defines/Macros"), d = t("../../sdk/AppInfo"), h = t("../../sdk/SdkManager"), f = t("../config/ConstString"), m = t("../config/GlobalVar"), _ = t("../config/HostInfo"), g = t("../enum/GlobalEnum"), y = t("../utils/CmmUtils"), v = function(t) {
+var s = t("../../aesres/aesres"), c = t("../../framework/core/net/http/Http"), l = t("../../framework/core/net/http/HttpClient"), p = t("../../framework/core/net/service/Sender"), u = t("../../framework/defines/Macros"), d = t("../../sdk/AppInfo"), h = t("../../sdk/SdkManager"), f = t("../config/ConstString"), m = t("../config/GlobalVar"), g = t("../config/HostInfo"), _ = t("../enum/GlobalEnum"), y = t("../utils/CmmUtils"), v = function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
@@ -19482,29 +18359,29 @@ return e;
 e.prototype.SendPostHttp = function(t, e, o, n, i, r) {
 var a = this;
 void 0 === o && (o = !0);
-void 0 === n && (n = g.GlobalEnum.HttpUrlType.Hall);
+void 0 === n && (n = _.GlobalEnum.HttpUrlType.Hall);
 o && App.uiLoading.show();
 return new Promise(function(s) {
 var p = new l.HttpPackage();
 switch (n) {
-case g.GlobalEnum.HttpUrlType.Login:
-p.data.url = _.HostInfo.URL_Login_Server;
+case _.GlobalEnum.HttpUrlType.Login:
+p.data.url = g.HostInfo.URL_Login_Server;
 break;
 
-case g.GlobalEnum.HttpUrlType.Hall:
-p.data.url = _.HostInfo.URL_Hall_Server;
+case _.GlobalEnum.HttpUrlType.Hall:
+p.data.url = g.HostInfo.URL_Hall_Server;
 break;
 
-case g.GlobalEnum.HttpUrlType.Game:
+case _.GlobalEnum.HttpUrlType.Game:
 p.data.url = m.GlobalVar.game_http_url;
 break;
 
-case g.GlobalEnum.HttpUrlType.ShareGift:
-p.data.url = _.HostInfo.agentUrl;
+case _.GlobalEnum.HttpUrlType.ShareGift:
+p.data.url = g.HostInfo.agentUrl;
 break;
 
-case g.GlobalEnum.HttpUrlType.Activity:
-p.data.url = _.HostInfo.URL_Activity_Server;
+case _.GlobalEnum.HttpUrlType.Activity:
+p.data.url = g.HostInfo.URL_Activity_Server;
 }
 p.data.isAutoAttachCurrentTime = !1;
 p.data.type = c.Http.Type.POST;
@@ -19514,7 +18391,7 @@ p.params = a.addCommonParam(t);
 var f = i;
 f || (f = function(t) {
 o && App.uiLoading.hide();
-if (n != g.GlobalEnum.HttpUrlType.Game || m.GlobalVar.isGameing) {
+if (n != _.GlobalEnum.HttpUrlType.Game || m.GlobalVar.isGameing) {
 switch (t.type) {
 case c.Http.ErrorType.TimeOut:
 App.alert.show({
@@ -20550,20 +19427,20 @@ this._setChildrenAlongAxis(t, c.Orientation.Vertical, this.adapter.isHorizontal)
 };
 e.prototype._calcAlongAxis = function(t, e, o) {
 for (var n = e == c.Orientation.Horizontal ? this.horizontal : this.vertical, i = this._getControlSize(e), r = this._getControlScale(e), a = this._getForceExpandSize(e), s = n, l = n, p = 0, u = o != (e == c.Orientation.Vertical), d = this._getLayoutList(t.models), h = 0; h < d.length; h++) {
-var f = d[h], m = this._getChildSizes(f, e, i, a), _ = m.min, g = m.preferred, y = m.flexible;
+var f = d[h], m = this._getChildSizes(f, e, i, a), g = m.min, _ = m.preferred, y = m.flexible;
 if (r) {
 var v = f.scale[this._getAxis(e)];
-_ *= v;
 g *= v;
+_ *= v;
 y *= v;
 }
 if (u) {
-s = Math.max(_ + n, s);
-l = Math.max(g + n, l);
+s = Math.max(g + n, s);
+l = Math.max(_ + n, l);
 p = Math.max(y, p);
 } else {
-s += _ + this.spacing;
-l += g + this.spacing;
+s += g + this.spacing;
+l += _ + this.spacing;
 p += y;
 }
 }
@@ -20585,8 +19462,8 @@ return t == c.Orientation.Horizontal ? this.forceExpandWidth : this.forceExpandH
 };
 e.prototype._setChildrenAlongAxis = function(t, e, o) {
 var n = t.size[this._getAxis(e)], i = this._getControlSize(e), r = this._getControlScale(e), a = this._getForceExpandSize(e), s = this._getAlignmentOnAxis(e), p = this._getLayoutList(t.models), u = o != (e == c.Orientation.Vertical), d = this.reverseArrangement ? p.length - 1 : 0, h = this.reverseArrangement ? 0 : p.length, f = this.reverseArrangement ? -1 : 1, m = this._getAxis(e);
-if (u) for (var _ = n - (e == c.Orientation.Horizontal ? this.horizontal : this.vertical), g = d; this.reverseArrangement ? g >= h : g < h; g += f) {
-var y = p[g], v = this._getChildSizes(y, e, i, a), b = v.min, C = v.preferred, w = v.flexible, E = r ? y.scale[m] : 1, S = l.Helper.clamp(_, b, w > 0 ? n : C), R = this._getStartOffset(t, e, S * E);
+if (u) for (var g = n - (e == c.Orientation.Horizontal ? this.horizontal : this.vertical), _ = d; this.reverseArrangement ? _ >= h : _ < h; _ += f) {
+var y = p[_], v = this._getChildSizes(y, e, i, a), b = v.min, C = v.preferred, w = v.flexible, E = r ? y.scale[m] : 1, S = l.Helper.clamp(g, b, w > 0 ? n : C), R = this._getStartOffset(t, e, S * E);
 if (i) this._setChildAlongAxisWithScale(t, y, e, R, E, S); else {
 var O = (S - y.size[m]) * s;
 O *= E;
@@ -20597,8 +19474,8 @@ var A = e == c.Orientation.Horizontal ? this.left : this.top, P = 0, L = n - thi
 L > 0 && (0 == this._getTotalFlexibleSize(t, e) ? A = this._getStartOffset(t, e, this._getTotalPreferredSize(t, e) - (e == c.Orientation.Horizontal ? this.horizontal : this.vertical)) : this._getTotalFlexibleSize(t, e) > 0 && (P = L / this._getTotalFlexibleSize(t, e)));
 var I = 0;
 this._getTotalMinSize(t, e) != this._getTotalPreferredSize(t, e) && (I = l.Helper.clamp01((n - this._getTotalMinSize(t, e)) / (this._getTotalPreferredSize(t, e) - this._getTotalMinSize(t, e))));
-for (g = d; this.reverseArrangement ? g >= h : g < h; g += f) {
-var N = p[g], T = this._getChildSizes(N, e, i, a), M = (b = T.min, C = T.preferred, 
+for (_ = d; this.reverseArrangement ? _ >= h : _ < h; _ += f) {
+var N = p[_], T = this._getChildSizes(N, e, i, a), M = (b = T.min, C = T.preferred, 
 w = T.flexible, E = r ? N.scale[m] : 1, l.Helper.lerp(b, C, I));
 M += w * P;
 if (i) this._setChildAlongAxisWithScale(t, N, e, A, E, M); else {
@@ -20825,379 +19702,6 @@ cc._RF.pop();
 }, {
 "../../framework/componects/EventComponent": "EventComponent",
 "../event/CommonEvent": "CommonEvent"
-} ],
-LevelLayoutMgr_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "9809548KpRLzqsfTUIa1gX0", "LevelLayoutMgr_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../Model/LevelModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.prefab_levels = [];
-return e;
-}
-e.prototype.CreateLevel = function(t) {
-this.node.destroyAllChildren();
-var e = cc.instantiate(this.prefab_levels[t]);
-e.parent = this.node;
-return e.getComponent(a.default).controler;
-};
-r([ l(cc.Prefab) ], e.prototype, "prefab_levels", void 0);
-return r([ c ], e);
-}(cc.Component);
-o.default = p;
-cc._RF.pop();
-}, {
-"../Model/LevelModel_A": "LevelModel_A"
-} ],
-LevelManager_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "188fdN13iBM0IxMRQdbxi6s", "LevelManager_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../GameMgr"), s = cc._decorator, c = s.ccclass, l = (s.property, function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.configData = null;
-e.curPlayLevel = 1;
-e.finishLevel = 0;
-e.tween_Content = null;
-return e;
-}
-o = e;
-e.prototype.onLoad = function() {
-o.instance = this;
-this.InitConfigData();
-this.Callback_ChooseLevel(1);
-};
-e.prototype.start = function() {};
-e.prototype.Callback_ChooseLevel = function(t) {
-this.curPlayLevel = t;
-var e = this.configData.levels[t - 1];
-dispatch(a.MyGameEvent_A.ChooseLevel, e);
-};
-e.prototype.InitConfigData = function() {
-this.configData = {
-levels: [ {
-id: 0,
-reelId: 2,
-reel: [ 5, 3 ],
-targetId: [ 3 ],
-maxLive: 2e3,
-reward: 800,
-ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
-dropWeights: [ 1, 1, 2, 2, 3, 3, 4, 4, 5, 5 ],
-lines: [ [ 0, 3, 6, 9, 12 ], [ 1, 4, 7, 10, 13 ], [ 2, 5, 8, 11, 14 ], [ 0, 4, 8, 10, 12 ], [ 2, 4, 6, 10, 14 ], [ 0, 3, 7, 11, 14 ], [ 2, 5, 7, 9, 12 ], [ 1, 3, 7, 11, 13 ], [ 1, 5, 7, 9, 14 ] ],
-betRate: [ [ 180, 540, 1200 ], [ 90, 270, 900 ], [ 45, 90, 600 ], [ 36, 45, 240 ], [ 27, 36, 180 ], [ 18, 30, 120 ], [ 9, 27, 90 ], [ 6, 24, 60 ], [ 3, 15, 45 ], [ 3, 6, 9 ] ]
-} ]
-};
-};
-var o;
-e.instance = null;
-return o = r([ c ], e);
-}(cc.Component));
-o.default = l;
-cc._RF.pop();
-}, {
-"../GameMgr": "GameMgr"
-} ],
-LevelModel_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "125a2+T3fxMUb7nXpCFgYYt", "LevelModel_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../core/newRoll/ZRollControler"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.controler = null;
-e.node_LinePrenet = null;
-e.node_LineModel = null;
-e.sizeX = 154;
-e.sizeY = 168;
-return e;
-}
-e.prototype.Init = function() {};
-r([ l(a.default) ], e.prototype, "controler", void 0);
-r([ l(cc.Node) ], e.prototype, "node_LinePrenet", void 0);
-r([ l(cc.Node) ], e.prototype, "node_LineModel", void 0);
-return r([ c ], e);
-}(cc.Component);
-o.default = p;
-cc._RF.pop();
-}, {
-"../../../core/newRoll/ZRollControler": "ZRollControler"
-} ],
-LineItemSize: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "c4533x7Qu9F6JXsWxsJ6I8l", "LineItemSize");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.centerNode = null;
-return e;
-}
-e.prototype.setSize = function(t) {
-var e = this.centerNode.getContentSize();
-this.centerNode.setContentSize(e.width, t);
-};
-r([ c(cc.Node) ], e.prototype, "centerNode", void 0);
-return r([ s ], e);
-}(cc.Component);
-o.default = l;
-cc._RF.pop();
-}, {} ],
-LineItem: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "1dca08aqw5JmLKCG7sKv/Gh", "LineItem");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("./BaseLineItem "), s = t("./LineItemSize"), c = cc._decorator, l = c.ccclass, p = (c.property, 
-function(t) {
-i(e, t);
-function e() {
-return null !== t && t.apply(this, arguments) || this;
-}
-e.prototype.init = function(t) {
-this.scale = t.scale;
-this.poses = [];
-for (var e = 0; e < t.tempPoses.length; e++) this.poses.push(t.tempPoses[e] + e * t.numY);
-this.fixedPoses = t.lineMgr.lineFixedPos;
-this.head = t.lineMgr.head;
-this.center = t.lineMgr.center;
-this.end = t.lineMgr.end;
-this.instancePrefab();
-this.hide();
-};
-e.prototype.show = function() {
-this.node.active = !0;
-};
-e.prototype.hide = function() {
-this.node.active = !1;
-};
-e.prototype.instancePrefab = function() {
-for (var t, e, o = 0, n = [], i = 0; i < this.poses.length; i++) {
-var r = this.poses[i], a = this.fixedPoses[r], c = App.utils.localConvertWorldPointAR(a), l = App.utils.worldConvertLocalPointAR(this.node.parent, c), p = null;
-if (0 == i) e = p = cc.instantiate(this.head); else if (i == this.poses.length - 1) {
-(p = cc.instantiate(this.end)).parent = this.node;
-p.position = l;
-var u = cc.instantiate(this.center);
-o = cc.Vec2.distance(t, c);
-o /= this.scale;
-u.getComponent(s.default).setSize(o);
-u.parent = this.node;
-u.position = l;
-n.push(u);
-} else {
-p = cc.instantiate(this.center);
-o = cc.Vec2.distance(t, c);
-o /= this.scale;
-p.getComponent(s.default).setSize(o);
-n.push(p);
-}
-p.parent = this.node;
-p.position = l;
-t = c;
-}
-for (i = 0; i < n.length; i++) {
-var d = n[i], h = e.position.sub(d.position).normalize(), f = 180 * Math.atan2(h.y, h.x) / Math.PI;
-d.angle = f;
-e = d;
-}
-};
-return r([ l ], e);
-}(a.default));
-o.default = p;
-cc._RF.pop();
-}, {
-"./BaseLineItem ": "BaseLineItem ",
-"./LineItemSize": "LineItemSize"
-} ],
-LineMgr: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "9ac79VJNwpOi6k1mB4/P3CJ", "LineMgr");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("./BaseLineMgr"), s = t("./LineItem"), c = cc._decorator, l = c.ccclass, p = c.property, u = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.lineData = null;
-e.head = null;
-e.center = null;
-e.end = null;
-return e;
-}
-e.prototype.init = function(t, e) {
-this.config = t;
-var o = cc.find("linePos", this.node);
-this.lineFixedPos = o.children;
-var n = cc.find("lines", this.node), i = cc.find("lines/line", this.node);
-this.lines = [];
-i.active = !1;
-for (var r = 0; r < t.lineCount; r++) {
-var a = cc.instantiate(i);
-a.parent = n;
-a.position = cc.Vec3.ZERO;
-a.zIndex = r;
-this.lines.push(a.getComponent(s.default));
-}
-for (r = 0; r < this.lines.length; r++) this.lines[r].init({
-lineMgr: this,
-tempPoses: this.lineData.json[r],
-numY: this.config.numY,
-scale: e
-});
-};
-e.prototype.showRewardLine = function(t) {
-this.lines[t].show();
-};
-e.prototype.showRewardLines = function(t) {
-this.lineAnims_None(t);
-};
-e.prototype.lineAnims_None = function(t) {
-for (var e = 0; e < t.length; e++) {
-var o = t[e];
-this.lines[o].show();
-}
-};
-r([ p(cc.JsonAsset) ], e.prototype, "lineData", void 0);
-r([ p(cc.Prefab) ], e.prototype, "head", void 0);
-r([ p(cc.Prefab) ], e.prototype, "center", void 0);
-r([ p(cc.Prefab) ], e.prototype, "end", void 0);
-return r([ l ], e);
-}(a.default);
-o.default = u;
-cc._RF.pop();
-}, {
-"./BaseLineMgr": "BaseLineMgr",
-"./LineItem": "LineItem"
 } ],
 List: [ function(t, e, o) {
 "use strict";
@@ -21644,65 +20148,6 @@ cc._RF.pop();
 }, {
 "./ItemRender": "ItemRender"
 } ],
-LoadingGameService_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "14289zEH8dOPIQOxhX3C2Cg", "LoadingGameService_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_main = null;
-e.node_zhezhao = null;
-e.sprite_Progress = null;
-e.tween_Progress = null;
-return e;
-}
-e.prototype.OpenShow = function() {
-var t = this;
-this.tween_Progress && this.tween_Progress.stop();
-this.sprite_Progress.fillRange = 0;
-this.node_main.active = !0;
-this.node_zhezhao.active = !0;
-this.tween_Progress = cc.tween(this.sprite_Progress).to(2, {
-fillRange: 1
-}).call(function() {
-t.CloseShow();
-}).start();
-};
-e.prototype.CloseShow = function() {
-this.node_main.active = !1;
-this.node_zhezhao.active = !1;
-};
-r([ c(cc.Node) ], e.prototype, "node_main", void 0);
-r([ c(cc.Node) ], e.prototype, "node_zhezhao", void 0);
-r([ c(cc.Sprite) ], e.prototype, "sprite_Progress", void 0);
-return r([ s ], e);
-}(cc.Component);
-o.default = l;
-cc._RF.pop();
-}, {} ],
 Loading: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "bb305D9F5lGI6TgHkSWfCvt", "Loading");
@@ -21992,7 +20437,7 @@ done: !0
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var c = t("console"), l = t("../../framework/componects/EventComponent"), p = t("../../framework/defines/Enums"), u = t("../../sdk/AppInfo"), d = t("../../sdk/SdkManager"), h = t("../event/CommonEvent"), f = t("../utils/CmmUtils"), m = t("../../login/view/LoginView"), _ = cc._decorator, g = _.ccclass, y = _.property, v = function(t) {
+var c = t("console"), l = t("../../framework/componects/EventComponent"), p = t("../../framework/defines/Enums"), u = t("../../sdk/AppInfo"), d = t("../../sdk/SdkManager"), h = t("../event/CommonEvent"), f = t("../utils/CmmUtils"), m = t("../../login/view/LoginView"), g = cc._decorator, _ = g.ccclass, y = g.property, v = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -22202,7 +20647,7 @@ e.firstAutoPlay = !0;
 e.isPlaying = !1;
 e.isStoping = !1;
 r([ y(cc.Node) ], e.prototype, "clickBtn", void 0);
-return o = r([ g ], e);
+return o = r([ _ ], e);
 }(l.default);
 o.default = v;
 cc._RF.pop();
@@ -22516,7 +20961,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../common/config/GlobalVar"), s = t("../../common/config/User"), c = t("../../common/enum/GlobalEnum"), l = t("../../common/event/CommonEvent"), p = t("../../common/utils/UIUtils"), u = t("../../framework/core/ui/GameView"), d = t("../../framework/defines/Macros"), h = t("../../sdk/SdkManager"), f = t("../../vcode/scripts/mian/VertialRoot"), m = cc._decorator, _ = m.ccclass, g = (m.property, 
+var a = t("../../common/config/GlobalVar"), s = t("../../common/config/User"), c = t("../../common/enum/GlobalEnum"), l = t("../../common/event/CommonEvent"), p = t("../../common/utils/UIUtils"), u = t("../../framework/core/ui/GameView"), d = t("../../framework/defines/Macros"), h = t("../../sdk/SdkManager"), f = t("../../vcode/scripts/mian/VertialRoot"), m = cc._decorator, g = m.ccclass, _ = (m.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -22604,9 +21049,9 @@ this.verticalRoot && this.verticalRoot.showEventMask();
 var o;
 e.instance = null;
 e.isShowing = !1;
-return o = r([ _ ], e);
+return o = r([ g ], e);
 }(u.default));
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../common/config/GlobalVar": "GlobalVar",
@@ -22618,72 +21063,6 @@ cc._RF.pop();
 "../../framework/defines/Macros": "Macros",
 "../../sdk/SdkManager": "SdkManager",
 "../../vcode/scripts/mian/VertialRoot": "VertialRoot"
-} ],
-Login: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "1bc65AnotxDTr4x34sIE3ah", "Login");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/utils/RandomUtil"), s = t("../../../scripts/framework/componects/EventComponent"), c = t("../../../scripts/framework/core/ui/UIManager"), l = t("../../../scripts/framework/defines/Enums"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.play = null;
-e.progress = null;
-e.bar = null;
-return e;
-}
-e.prototype.addEvents = function() {
-var t = this;
-this.onN(this.play, l.NodeEvent.click, function() {
-t.loading();
-});
-c.UIManager.newGameTest();
-};
-e.prototype.loading = function() {
-var t = this;
-this.play.active = !1;
-this.progress.active = !0;
-this.bar.fillRange = 0;
-cc.tween(this.bar).to(a.RandomUtil.randomFRange(1, 2), {
-fillRange: 1
-}).call(function() {
-t.progress.active = !1;
-cc.director.loadScene("slots");
-}).start();
-};
-r([ d(cc.Node) ], e.prototype, "play", void 0);
-r([ d(cc.Node) ], e.prototype, "progress", void 0);
-r([ d(cc.Sprite) ], e.prototype, "bar", void 0);
-return r([ u ], e);
-}(s.default);
-o.default = h;
-cc._RF.pop();
-}, {
-"../../../scripts/common/utils/RandomUtil": "RandomUtil",
-"../../../scripts/framework/componects/EventComponent": "EventComponent",
-"../../../scripts/framework/core/ui/UIManager": "UIManager",
-"../../../scripts/framework/defines/Enums": "Enums"
 } ],
 Macros: [ function(t, e, o) {
 "use strict";
@@ -23185,7 +21564,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/net/CommonSender"), d = t("../../../common/utils/CmmUtils"), h = t("../../../framework/core/ui/UIView"), f = t("../../../framework/defines/Decorators"), m = t("../../../framework/defines/Enums"), _ = t("../../../sdk/AppInfo"), g = t("../../../sdk/SdkManager"), y = t("../CommonUIHelper"), v = cc._decorator, b = v.ccclass, C = (v.property, 
+var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/net/CommonSender"), d = t("../../../common/utils/CmmUtils"), h = t("../../../framework/core/ui/UIView"), f = t("../../../framework/defines/Decorators"), m = t("../../../framework/defines/Enums"), g = t("../../../sdk/AppInfo"), _ = t("../../../sdk/SdkManager"), y = t("../CommonUIHelper"), v = cc._decorator, b = v.ccclass, C = (v.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -23263,10 +21642,10 @@ e.prototype.initUIEvent = function() {
 var t = this;
 this.onN(this.Button_guest, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-_.default.showCustomService();
+g.default.showCustomService();
 });
 this.onN(this.tipsBtn, m.NodeEvent.click, function() {
-g.default.openUrl(t.telegram);
+_.default.openUrl(t.telegram);
 });
 this.onN(this.Button_close, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
@@ -23425,7 +21804,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/event/CommonEvent"), l = t("../../../common/net/CommonSender"), p = t("../../../common/utils/CmmUtils"), u = t("../../../framework/core/ui/UIView"), d = t("../../../framework/defines/Decorators"), h = t("../../../framework/defines/Enums"), f = t("../../../sdk/SdkManager"), m = t("../CommonUIHelper"), _ = cc._decorator, g = _.ccclass, y = (_.property, 
+var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/event/CommonEvent"), l = t("../../../common/net/CommonSender"), p = t("../../../common/utils/CmmUtils"), u = t("../../../framework/core/ui/UIView"), d = t("../../../framework/defines/Decorators"), h = t("../../../framework/defines/Enums"), f = t("../../../sdk/SdkManager"), m = t("../CommonUIHelper"), g = cc._decorator, _ = g.ccclass, y = (g.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -23565,7 +21944,7 @@ r([ d.inject("left/bindBtn", cc.Node) ], e.prototype, "bindBtn", void 0);
 r([ d.inject("left/bindBtn/label", cc.Label) ], e.prototype, "bindLabel", void 0);
 r([ d.inject("left/bindBtn/state0", cc.Node) ], e.prototype, "state0", void 0);
 r([ d.inject("left/bindBtn/state1", cc.Node) ], e.prototype, "state1", void 0);
-return r([ g ], e);
+return r([ _ ], e);
 }(u.default));
 o.default = y;
 cc._RF.pop();
@@ -23606,7 +21985,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/net/CommonSender"), d = t("../../../common/utils/CmmUtils"), h = t("../../../framework/core/ui/UIView"), f = t("../../../framework/defines/Decorators"), m = t("../../../framework/defines/Enums"), _ = t("../../../sdk/GameNativeConfig"), g = t("../CommonUIHelper"), y = cc._decorator, v = y.ccclass, b = (y.property, 
+var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/net/CommonSender"), d = t("../../../common/utils/CmmUtils"), h = t("../../../framework/core/ui/UIView"), f = t("../../../framework/defines/Decorators"), m = t("../../../framework/defines/Enums"), g = t("../../../sdk/GameNativeConfig"), _ = t("../CommonUIHelper"), y = cc._decorator, v = y.ccclass, b = (y.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -23686,7 +22065,7 @@ break;
 e.prototype.initUIEvent = function() {
 var t = this;
 this.onD(p.HttpEvent.updateBindCardAcount, this.refreshBind.bind(this));
-this.onD(_.default.Event.update_money, this.updatePlayerInfo.bind(this));
+this.onD(g.default.Event.update_money, this.updatePlayerInfo.bind(this));
 this.onN(this.close_btn, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 t.close();
@@ -23708,7 +22087,7 @@ App.globalAudio.playButtonClick();
 t.onClickWithdraw();
 });
 this.onN(this.HistroyButton, m.NodeEvent.click, function() {
-g.default.showRecordWeb(1);
+_.default.showRecordWeb(1);
 });
 this.onN(this.bindBtn, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
@@ -24607,470 +22986,6 @@ cc._RF.pop();
 "./ScrollManager": "ScrollManager",
 "./ViewManager": "ViewManager"
 } ],
-PayLineItem_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "f7308k6JiVPGIGULOa3rxVf", "PayLineItem_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("./PayLineModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.layout_ = null;
-e.payLineModel = [];
-return e;
-}
-e.prototype.Init = function(t, e, o, n, i, r, a) {
-this.layout_.spacingX = t;
-for (var s = 0; s < this.payLineModel.length; s++) {
-var c = this.payLineModel[s];
-if (s < a.length) {
-c.node.active = !0;
-c.Init(n[s], i, r[s], e, o, a[s]);
-} else c.node.active = !1;
-}
-};
-r([ l(cc.Layout) ], e.prototype, "layout_", void 0);
-r([ l(a.default) ], e.prototype, "payLineModel", void 0);
-return r([ c ], e);
-}(cc.Component);
-o.default = p;
-cc._RF.pop();
-}, {
-"./PayLineModel_A": "PayLineModel_A"
-} ],
-PayLineModel_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "d8b2eljvrlJW4OprZuaiISs", "PayLineModel_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.label_Id = null;
-e.node_GeziPre = null;
-e.node_GeziLayout = null;
-e.normalSize = 58;
-return e;
-}
-e.prototype.Init = function(t, e, o, n, i, r) {
-this.label_Id.string = t + "";
-this.node_GeziLayout.height = 20 * (i[1] - 3) + this.normalSize;
-this.node_GeziLayout.destroyAllChildren();
-for (var a = 0; a < n; a++) {
-var s = cc.instantiate(this.node_GeziPre);
-s.parent = this.node_GeziLayout;
-r.indexOf(a) >= 0 ? s.color = o : s.color = e;
-}
-};
-r([ c(cc.Label) ], e.prototype, "label_Id", void 0);
-r([ c(cc.Node) ], e.prototype, "node_GeziPre", void 0);
-r([ c(cc.Node) ], e.prototype, "node_GeziLayout", void 0);
-return r([ s ], e);
-}(cc.Component);
-o.default = l;
-cc._RF.pop();
-}, {} ],
-PayLinesPanel: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "20ed6sPKsxOV4j9X5zJHjU2", "PayLinesPanel");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/event/CommonEvent"), s = t("./AudioMgr"), c = t("./Model/PayLineItem_A"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_Zhezhao = null;
-e.node_main = null;
-e.node_CloseBtn = null;
-e.node_Grid = null;
-e.node_Item = null;
-e.label_LineCountTip = null;
-e.color_Di = null;
-e.color_Lines = [];
-e.config_jianju = [ 66, 36, 10 ];
-e.tween_Move = null;
-return e;
-}
-e.prototype.InitData = function(t) {
-this.node_Grid.destroyAllChildren();
-var e = t.lines.length, o = this.config_jianju[0], n = t.reel[0] * t.reel[1];
-this.label_LineCountTip.string = "There are " + e + " fixed paylines.";
-if (3 == e) {
-o = this.config_jianju[0];
-var i = [ 1, 2, 3 ], r = [ this.color_Lines[0], this.color_Lines[1], this.color_Lines[2] ];
-(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
-(s = h.getComponent(c.default)).Init(o, n, t.reel, i, this.color_Di, r, t.lines);
-} else if (7 == e) {
-o = this.config_jianju[1];
-for (var a = 0; a < 2; a++) {
-(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
-var s = h.getComponent(c.default);
-if (0 == a) {
-i = [ 1, 2, 3 ], r = [ this.color_Lines[0], this.color_Lines[1], this.color_Lines[2] ];
-var l = [ t.lines[0], t.lines[1], t.lines[2] ];
-s.Init(o, n, t.reel, i, this.color_Di, r, l);
-} else {
-i = [ 4, 5, 6, 7 ], r = [ this.color_Lines[3], this.color_Lines[4], this.color_Lines[5], this.color_Lines[6] ], 
-l = [ t.lines[3], t.lines[4], t.lines[5], t.lines[6] ];
-s.Init(o, n, t.reel, i, this.color_Di, r, l);
-}
-}
-} else if (9 == e) {
-o = this.config_jianju[0];
-var p = 0;
-for (a = 0; a < 3; a++) {
-(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
-s = h.getComponent(c.default), i = [], r = [], l = [];
-for (var u = 0; u < 3; u++) {
-i.push(p + 1);
-r.push(this.color_Lines[p]);
-l.push(t.lines[p]);
-p++;
-}
-s.Init(o, n, t.reel, i, this.color_Di, r, l);
-}
-} else {
-o = this.config_jianju[2];
-var d = e / 5;
-for (p = 0, a = 0; a < d; a++) {
-var h;
-(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
-for (s = h.getComponent(c.default), i = [], r = [], l = [], u = 0; u < 5; u++) {
-i.push(p + 1);
-r.push(this.color_Lines[p % this.color_Lines.length]);
-l.push(t.lines[p]);
-p++;
-}
-s.Init(o, n, t.reel, i, this.color_Di, r, l);
-}
-}
-};
-e.prototype.OpenShow = function() {
-var t = this;
-dispatch(a.CommonEvent.EventMaskAll, 1);
-this.tween_Move && this.tween_Move.stop();
-this.node_main.height = this.node.height;
-this.node_CloseBtn.active = !1;
-this.node_Zhezhao.active = !0;
-this.node_main.active = !0;
-this.node_main.position = cc.v3(0, -this.node_main.height, 0);
-this.tween_Move = cc.tween(this.node_main).to(.3, {
-position: cc.v3(0, 0, 0)
-}).delay(.2).call(function() {
-t.node_CloseBtn.active = !0;
-}).start();
-};
-e.prototype.CloseShow = function() {
-this.node_Zhezhao.active = !1;
-this.node_main.active = !1;
-};
-e.prototype.ButtonClick_Close = function() {
-var t = this;
-s.default.instance.playEffect("click");
-dispatch(a.CommonEvent.EventMaskAll, 1);
-this.tween_Move && this.tween_Move.stop();
-this.tween_Move = cc.tween(this.node_main).to(.3, {
-position: cc.v3(0, -this.node_main.height, 0)
-}).call(function() {
-t.CloseShow();
-}).start();
-};
-r([ u(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
-r([ u(cc.Node) ], e.prototype, "node_main", void 0);
-r([ u(cc.Node) ], e.prototype, "node_CloseBtn", void 0);
-r([ u(cc.Node) ], e.prototype, "node_Grid", void 0);
-r([ u(cc.Node) ], e.prototype, "node_Item", void 0);
-r([ u(cc.Label) ], e.prototype, "label_LineCountTip", void 0);
-r([ u(cc.Color) ], e.prototype, "color_Di", void 0);
-r([ u(cc.Color) ], e.prototype, "color_Lines", void 0);
-return r([ p ], e);
-}(cc.Component);
-o.default = d;
-cc._RF.pop();
-}, {
-"../../../scripts/common/event/CommonEvent": "CommonEvent",
-"./AudioMgr": "AudioMgr",
-"./Model/PayLineItem_A": "PayLineItem_A"
-} ],
-PayTabelPanel: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "e416fJrPw5IarwlJYlcLyMl", "PayTabelPanel");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/event/CommonEvent"), s = t("./AudioMgr"), c = t("./GameMgr"), l = t("./Model/PayTableItem_A"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_Zhezhao = null;
-e.node_main = null;
-e.node_CloseBtn = null;
-e.node_Parent = null;
-e.node_PayTabelItem = null;
-e.tween_Move = null;
-return e;
-}
-e.prototype.start = function() {};
-e.prototype.InitData = function(t, e) {
-this.node_Parent.destroyAllChildren();
-var o = Math.floor(t.ele.length / 2), n = !1;
-if (t.ele.length % 2 == 1) {
-o += 1;
-n = !0;
-}
-for (var i = 0, r = 0; r < o; r++) {
-var a = cc.instantiate(this.node_PayTabelItem);
-a.parent = this.node_Parent;
-var s = a.getComponent(l.default), c = [], p = [];
-if (0 == r) if (n) {
-c.push(e[t.ele[i] - 1]);
-p.push(t.betRate[i]);
-i++;
-} else {
-c.push(e[t.ele[i] - 1]);
-p.push(t.betRate[i]);
-i++;
-c.push(e[t.ele[i] - 1]);
-p.push(t.betRate[i]);
-i++;
-} else {
-c.push(e[t.ele[i] - 1]);
-p.push(t.betRate[i]);
-i++;
-c.push(e[t.ele[i] - 1]);
-p.push(t.betRate[i]);
-i++;
-}
-s.SetData(c, p);
-}
-};
-e.prototype.OpenShow = function() {
-var t = this;
-dispatch(a.CommonEvent.EventMaskAll, 1);
-this.tween_Move && this.tween_Move.stop();
-this.node_main.height = this.node.height;
-this.node_CloseBtn.active = !1;
-this.node_Zhezhao.active = !0;
-this.node_main.active = !0;
-this.node_main.position = cc.v3(0, -this.node_main.height, 0);
-this.tween_Move = cc.tween(this.node_main).to(.3, {
-position: cc.v3(0, 0, 0)
-}).delay(.2).call(function() {
-t.node_CloseBtn.active = !0;
-}).start();
-};
-e.prototype.CloseShow = function() {
-this.node_Zhezhao.active = !1;
-this.node_main.active = !1;
-};
-e.prototype.ButtonClick_Close = function() {
-var t = this;
-s.default.instance.playEffect(c.AudioName.Click);
-dispatch(a.CommonEvent.EventMaskAll, 1);
-this.tween_Move && this.tween_Move.stop();
-this.tween_Move = cc.tween(this.node_main).to(.3, {
-position: cc.v3(0, -this.node_main.height, 0)
-}).call(function() {
-t.CloseShow();
-}).start();
-};
-r([ d(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
-r([ d(cc.Node) ], e.prototype, "node_main", void 0);
-r([ d(cc.Node) ], e.prototype, "node_CloseBtn", void 0);
-r([ d(cc.Node) ], e.prototype, "node_Parent", void 0);
-r([ d(cc.Node) ], e.prototype, "node_PayTabelItem", void 0);
-return r([ u ], e);
-}(cc.Component);
-o.default = h;
-cc._RF.pop();
-}, {
-"../../../scripts/common/event/CommonEvent": "CommonEvent",
-"./AudioMgr": "AudioMgr",
-"./GameMgr": "GameMgr",
-"./Model/PayTableItem_A": "PayTableItem_A"
-} ],
-PayTableItem_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "c6365uTDu5PtKKYvnHcCLto", "PayTableItem_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("./PayTableModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.payTabelModels = [];
-return e;
-}
-e.prototype.SetData = function(t, e) {
-for (var o = 0; o < this.payTabelModels.length; o++) {
-var n = this.payTabelModels[o];
-if (o < t.length) {
-n.node.active = !0;
-n.SetData(t[o], e[o]);
-} else n.node.active = !1;
-}
-};
-r([ l(a.default) ], e.prototype, "payTabelModels", void 0);
-return r([ c ], e);
-}(cc.Component);
-o.default = p;
-cc._RF.pop();
-}, {
-"./PayTableModel_A": "PayTableModel_A"
-} ],
-PayTableModel_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "d2be94Qtw1J74kvz/VkJ3Zd", "PayTableModel_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_Muls = [];
-e.label_Muls = [];
-e.sprite_Icon = null;
-return e;
-}
-e.prototype.SetData = function(t, e) {
-this.sprite_Icon.spriteFrame = t;
-for (var o = 0; o < this.node_Muls.length; o++) {
-this.node_Muls[o];
-if (o < e.length) {
-this.node_Muls[o].active = !0;
-this.label_Muls[o].string = e[o] + "";
-} else this.node_Muls[o].active = !1;
-}
-};
-r([ c(cc.Node) ], e.prototype, "node_Muls", void 0);
-r([ c(cc.Label) ], e.prototype, "label_Muls", void 0);
-r([ c(cc.Sprite) ], e.prototype, "sprite_Icon", void 0);
-return r([ s ], e);
-}(cc.Component);
-o.default = l;
-cc._RF.pop();
-}, {} ],
 PhoneQuhao_Item: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "f1204OJHE1AzpOvznDz9xGh", "PhoneQuhao_Item");
@@ -25662,7 +23577,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/config/User"), l = t("../../../common/net/CommonSender"), p = t("../../../framework/core/ui/UIView"), u = t("../../../framework/defines/Decorators"), d = t("../../../framework/defines/Enums"), h = t("../../../sdk/SdkManager"), f = t("../../../zgameCommon/GameCommonUIHelper"), m = t("../CommonUIHelper"), _ = cc._decorator, g = _.ccclass, y = (_.property, 
+var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/config/User"), l = t("../../../common/net/CommonSender"), p = t("../../../framework/core/ui/UIView"), u = t("../../../framework/defines/Decorators"), d = t("../../../framework/defines/Enums"), h = t("../../../sdk/SdkManager"), f = t("../../../zgameCommon/GameCommonUIHelper"), m = t("../CommonUIHelper"), g = cc._decorator, _ = g.ccclass, y = (g.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -25879,7 +23794,7 @@ show: !0
 });
 };
 r([ u.inject("Background/Button_close", cc.Node) ], e.prototype, "Button_close", void 0);
-return r([ g ], e);
+return r([ _ ], e);
 }(p.default));
 o.default = y;
 cc._RF.pop();
@@ -26103,7 +24018,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/config/User"), l = t("../../../common/net/CommonSender"), p = t("../../../common/utils/CmmUtils"), u = t("../../../framework/core/ui/UIView"), d = t("../../../framework/defines/Decorators"), h = t("../../../framework/defines/Enums"), f = t("../../../sdk/AppInfo"), m = cc._decorator, _ = m.ccclass, g = (m.property, 
+var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/config/User"), l = t("../../../common/net/CommonSender"), p = t("../../../common/utils/CmmUtils"), u = t("../../../framework/core/ui/UIView"), d = t("../../../framework/defines/Decorators"), h = t("../../../framework/defines/Enums"), f = t("../../../sdk/AppInfo"), m = cc._decorator, g = m.ccclass, _ = (m.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -26200,9 +24115,9 @@ r([ d.inject("Background/spit/last", cc.Node) ], e.prototype, "lastBtn", void 0)
 r([ d.inject("Background/spit/next", cc.Node) ], e.prototype, "nextBtn", void 0);
 r([ d.inject("Background/spit/curSpitValue", cc.RichText) ], e.prototype, "curSpitValue", void 0);
 r([ d.inject("Background/bg/id", cc.Label) ], e.prototype, "idName", void 0);
-return r([ _ ], e);
+return r([ g ], e);
 }(u.default));
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../common/component/UIContainer": "UIContainer",
@@ -26721,191 +24636,6 @@ t.CacheData = i;
 })(o.Resource || (o.Resource = {}));
 cc._RF.pop();
 }, {} ],
-Reward_YouWin_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "a70e1Mi76RFbavGaEKRdbAA", "Reward_YouWin_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../../scripts/common/utils/CmmUtils"), s = t("../AudioMgr"), c = t("../GameMgr"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_Main = null;
-e.node_Zhezhao = null;
-e.label_Score = null;
-e.ani_Guang = null;
-e.node_Btn_Skip = null;
-e.curShowGold = 0;
-e.curTarReward = 0;
-e.callback_Over = null;
-e.audioID_bigwin = -1;
-e.tween_Main = null;
-e.tween_Zhezhao = null;
-e.tween_Gold = null;
-e.tween_ClaimBtn = null;
-e.tween_RewardX2Btn = null;
-e.tween_DelayShowBtn = null;
-return e;
-}
-e.prototype.onDestroy = function() {
-this.ClearTween();
-};
-e.prototype.OpenShow = function(t, e, o) {
-var n = this;
-s.default.instance.PauseMusic();
-this.audioID_bigwin = s.default.instance.playEffect(c.AudioName.Bigwin);
-this.ClearTween();
-this.callback_Over = o;
-this.curTarReward = t;
-this.goldInfo = {
-gold: 0
-};
-this.label_Score.string = "0";
-this.node_Main.active = !0;
-this.node_Zhezhao.active = !0;
-this.node_Main.scale = 0;
-this.node_Zhezhao.opacity = 0;
-this.node_Btn_Skip.active = !1;
-this.ani_Guang && this.ani_Guang.stop();
-this.tween_Zhezhao = cc.tween(this.node_Zhezhao).to(.3, {
-opacity: 150
-}).start();
-this.tween_Main = cc.tween(this.node_Main).delay(.3).to(.3, {
-scale: 1
-}, cc.easeBackOut()).call(function() {
-n.ani_Guang && n.ani_Guang.play();
-n.node_Btn_Skip.active = !0;
-}).start();
-var i = 4;
-e > 2 && (i = 6);
-this.tween_Gold = cc.tween(this.goldInfo).delay(.6).to(i, {
-gold: t
-}, {
-onUpdate: function() {
-n.curShowGold = n.goldInfo.gold;
-n.ShowGold();
-}
-}).call(function() {
-n.curShowGold = n.curTarReward;
-n.ShowGold();
-s.default.instance.StopEffect_audioID(n.audioID_bigwin);
-s.default.instance.playEffect(c.AudioName.BigwinEnd);
-n.node_Btn_Skip.active = !1;
-}).delay(.5).call(function() {}).start();
-};
-e.prototype.SetRewardX2 = function(t) {
-var e = this;
-this.tween_DelayShowBtn && this.tween_DelayShowBtn.stop();
-if (t) {
-this.goldInfo = {
-gold: this.curTarReward
-};
-var o = 2 * this.curTarReward;
-this.tween_Gold = cc.tween(this.goldInfo).delay(.4).to(2, {
-gold: o
-}, {
-onUpdate: function() {
-e.curShowGold = e.goldInfo.gold;
-e.ShowGold();
-}
-}).call(function() {
-e.curShowGold = o;
-e.curTarReward = o;
-e.ShowGold();
-}).delay(3).call(function() {
-e.PlayHideAni();
-}).start();
-} else App.tips.show("Failed to claim. The advertisement viewing time is insufficient.");
-};
-e.prototype.ButtonClick_Skip = function() {
-this.ClearTween();
-this.node_Btn_Skip.active = !1;
-s.default.instance.StopEffect_audioID(this.audioID_bigwin);
-s.default.instance.playEffect(c.AudioName.BigwinEnd);
-this.curShowGold = this.curTarReward;
-this.ShowGold();
-this.ShowClaimBtn();
-};
-e.prototype.ButtonClick_Claim = function() {
-s.default.instance.playEffect(c.AudioName.Click);
-s.default.instance.StopEffect_audioID(this.audioID_bigwin);
-this.PlayHideAni();
-};
-e.prototype.ButtonClick_RewardX2 = function() {
-s.default.instance.playEffect(c.AudioName.Click);
-s.default.instance.StopEffect_audioID(this.audioID_bigwin);
-this.tween_DelayShowBtn && this.tween_DelayShowBtn.stop();
-this.delayToShowBtn = {
-value: 0
-};
-};
-e.prototype.CloseShow = function() {
-this.node_Main.active = !1;
-this.node_Zhezhao.active = !1;
-};
-e.prototype.PlayHideAni = function() {
-var t = this;
-this.ClearTween();
-this.tween_Main = cc.tween(this.node_Main).to(.35, {
-scale: 0
-}, cc.easeBackIn()).start();
-this.tween_Zhezhao = cc.tween(this.node_Zhezhao).delay(.2).to(.3, {
-opacity: 0
-}).delay(.2).call(function() {
-s.default.instance.ResumeMusic();
-if (t.callback_Over) {
-t.callback_Over(t.curShowGold);
-t.callback_Over = null;
-}
-t.CloseShow();
-}).start();
-};
-e.prototype.ShowClaimBtn = function() {};
-e.prototype.ShowRewardX2Btn = function() {};
-e.prototype.ShowGold = function() {
-this.label_Score.string = a.CmmUtils.NumberToHallString(this.curShowGold, !0);
-};
-e.prototype.ClearTween = function() {
-this.tween_Main && this.tween_Main.stop();
-this.tween_Zhezhao && this.tween_Zhezhao.stop();
-this.tween_Gold && this.tween_Gold.stop();
-this.tween_ClaimBtn && this.tween_ClaimBtn.stop();
-this.tween_RewardX2Btn && this.tween_RewardX2Btn.stop();
-};
-r([ u(cc.Node) ], e.prototype, "node_Main", void 0);
-r([ u(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
-r([ u(cc.Label) ], e.prototype, "label_Score", void 0);
-r([ u(cc.Animation) ], e.prototype, "ani_Guang", void 0);
-r([ u(cc.Node) ], e.prototype, "node_Btn_Skip", void 0);
-return r([ p ], e);
-}(cc.Component);
-o.default = d;
-cc._RF.pop();
-}, {
-"../../../../scripts/common/utils/CmmUtils": "CmmUtils",
-"../AudioMgr": "AudioMgr",
-"../GameMgr": "GameMgr"
-} ],
 RichTxtHander: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "c3145fymDhP6bmlOBKsTcBi", "RichTxtHander");
@@ -26948,158 +24678,6 @@ cc._RF.pop();
 "../../sdk/SdkManager": "SdkManager",
 "../utils/CmmUtils": "CmmUtils"
 } ],
-RollElement: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "886b8ppVGJMGaUU4NnsNa6n", "RollElement");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../scripts/common/enum/GlobalEnum"), s = t("./ElementState/ElementState"), c = cc._decorator, l = c.ccclass, p = c.property, u = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.defautl = a.GlobalEnum.ElementState.Normal;
-return e;
-}
-e.prototype.init = function(t) {
-this.rollConfig = t;
-this.elementIns = [];
-for (var e = this.node.children, o = 0; o < e.length; o++) this.elementIns.push(e[o].getComponent(s.default));
-for (o = 0; o < this.elementIns.length; o++) this.elementIns[o].init(t);
-};
-e.prototype.setDefault = function() {
-this.setState(this.defautl);
-};
-e.prototype.setState = function(t) {
-this.curElement ? this.curElement.show(t) : console.error("没有钙元素" + t);
-};
-e.prototype.setRes = function(t) {
-for (var e = 0; e < this.elementIns.length; e++) this.elementIns[e].hide();
-this.curElement = this.elementIns[t];
-this.rollConfig.turnType ? this.curElement.show(a.GlobalEnum.ElementState.BlurTrun) : this.curElement.show(a.GlobalEnum.ElementState.Turn);
-};
-r([ p({
-type: cc.Enum(a.GlobalEnum.ElementState)
-}) ], e.prototype, "defautl", void 0);
-return r([ l ], e);
-}(cc.Component);
-o.default = u;
-cc._RF.pop();
-}, {
-"../../scripts/common/enum/GlobalEnum": "GlobalEnum",
-"./ElementState/ElementState": "ElementState"
-} ],
-RulePanel: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "c54fd1ga11KxKTz83xjE9b4", "RulePanel");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/event/CommonEvent"), s = t("./AudioMgr"), c = t("./GameMgr"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_Zhezhao = null;
-e.node_main = null;
-e.node_CloseBtn = null;
-e.label_Layout = null;
-e.label_PayLines = null;
-e.label_Symbols = null;
-e.label_BetType = null;
-e.tween_Move = null;
-return e;
-}
-e.prototype.start = function() {};
-e.prototype.InitData = function(t) {
-this.label_Layout.string = "Layout: " + t.reel[0] + " reels x " + t.reel[1] + " rows";
-this.label_PayLines.string = "Paylines: Fixed " + t.lines.length + " lines";
-this.label_Symbols.string = "Symbols: " + t.ele.length + " regular symbols (no wild or scatter)";
-this.label_BetType.string = "Bet Type: TotalBet = Line Bet x " + t.lines.length;
-};
-e.prototype.OpenShow = function() {
-var t = this;
-dispatch(a.CommonEvent.EventMaskAll, 1);
-this.tween_Move && this.tween_Move.stop();
-this.node_main.height = this.node.height;
-this.node_CloseBtn.active = !1;
-this.node_Zhezhao.active = !0;
-this.node_main.active = !0;
-this.node_main.position = cc.v3(0, -this.node_main.height, 0);
-this.tween_Move = cc.tween(this.node_main).to(.3, {
-position: cc.v3(0, 0, 0)
-}).delay(.2).call(function() {
-t.node_CloseBtn.active = !0;
-}).start();
-};
-e.prototype.CloseShow = function() {
-this.node_Zhezhao.active = !1;
-this.node_main.active = !1;
-};
-e.prototype.ButtonClick_Close = function() {
-var t = this;
-s.default.instance.playEffect(c.AudioName.Click);
-dispatch(a.CommonEvent.EventMaskAll, 1);
-this.tween_Move && this.tween_Move.stop();
-this.tween_Move = cc.tween(this.node_main).to(.3, {
-position: cc.v3(0, -this.node_main.height, 0)
-}).call(function() {
-t.CloseShow();
-}).start();
-};
-r([ u(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
-r([ u(cc.Node) ], e.prototype, "node_main", void 0);
-r([ u(cc.Node) ], e.prototype, "node_CloseBtn", void 0);
-r([ u(cc.Label) ], e.prototype, "label_Layout", void 0);
-r([ u(cc.Label) ], e.prototype, "label_PayLines", void 0);
-r([ u(cc.Label) ], e.prototype, "label_Symbols", void 0);
-r([ u(cc.Label) ], e.prototype, "label_BetType", void 0);
-return r([ p ], e);
-}(cc.Component);
-o.default = d;
-cc._RF.pop();
-}, {
-"../../../scripts/common/event/CommonEvent": "CommonEvent",
-"./AudioMgr": "AudioMgr",
-"./GameMgr": "GameMgr"
-} ],
 ScrollAdapter: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "a7f19svYitFBaPKRI1PgCQJ", "ScrollAdapter");
@@ -27126,7 +24704,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.DefaultHolder = o.DefaultView = o.ScrollAdapter = void 0;
-var a = t("../define/enum"), s = t("../help/helper"), c = t("../manager/CenterManager"), l = t("../manager/LayoutManager"), p = t("../manager/ModelManager"), u = t("../manager/PageViewManager"), d = t("../manager/ReleaseManager"), h = t("../manager/ScrollManager"), f = t("../manager/ViewManager"), m = t("./Holder"), _ = t("./View"), g = cc._decorator, y = g.ccclass, v = g.property, b = function(t) {
+var a = t("../define/enum"), s = t("../help/helper"), c = t("../manager/CenterManager"), l = t("../manager/LayoutManager"), p = t("../manager/ModelManager"), u = t("../manager/PageViewManager"), d = t("../manager/ReleaseManager"), h = t("../manager/ScrollManager"), f = t("../manager/ViewManager"), m = t("./Holder"), g = t("./View"), _ = cc._decorator, y = _.ccclass, v = _.property, b = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -27280,7 +24858,7 @@ e.prototype.onDisable = function() {
 this.adapter.node.emit(a.ViewEvent.DISABLE, this);
 };
 return e;
-}(_.View);
+}(g.View);
 o.DefaultView = C;
 var w = function(t) {
 i(e, t);
@@ -27355,7 +24933,7 @@ t[t.ON_SCROLL_TO_GROUPINDEX_AFTER = 9] = "ON_SCROLL_TO_GROUPINDEX_AFTER";
 t[t.ON_SCROLL_TO_MODELINDEX_BEFOR = 10] = "ON_SCROLL_TO_MODELINDEX_BEFOR";
 t[t.ON_SCROLL_TO_MODELINDEX_AFTER = 11] = "ON_SCROLL_TO_MODELINDEX_AFTER";
 })(a || (a = {}));
-var _ = function(t) {
+var g = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -28136,7 +25714,7 @@ tooltip: "嵌套时，当子元素的ScrollView拖动方向和当前拖动方向
 }) ], e.prototype, "nestedMaxThreshold", void 0);
 return r([ h("ScrollManager") ], e);
 }(s.Manager);
-o.ScrollManager = _;
+o.ScrollManager = g;
 cc._RF.pop();
 }, {
 "../abstract/Manager": "Manager",
@@ -29722,269 +27300,6 @@ cc._RF.pop();
 "../socket/ServerConnector": "ServerConnector",
 "./Process": "Process"
 } ],
-SetPanel: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "b4715CRKXZCuoj6+RORRMjq", "SetPanel");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/framework/componects/EventComponent"), s = t("../../../scripts/framework/defines/Enums"), c = t("../../../scripts/sdk/SdkManager"), l = t("./AudioMgr"), p = t("./PayLinesPanel"), u = t("./PayTabelPanel"), d = cc._decorator, h = d.ccclass, f = d.property, m = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_main = null;
-e.close = null;
-e.soundOpne = null;
-e.soudnclose = null;
-e.exit = null;
-e.soundBtn = null;
-e.payTableBtn = null;
-e.payLinesBtn = null;
-e.payTablePanel = null;
-e.payLinesPanel = null;
-return e;
-}
-e.prototype.onEnable = function() {
-this.node_main.scale = 0;
-cc.tween(this.node_main).to(.5, {
-scale: 1
-}, {
-easing: "backOut"
-}).start();
-};
-e.prototype.OpenShow = function() {};
-e.prototype.addEvents = function() {
-var t = this;
-this.onN(this.close, s.NodeEvent.click, function() {
-l.default.instance.playEffect("click");
-t.node.active = !1;
-c.default.showInterstitial();
-});
-this.onN(this.exit, s.NodeEvent.click, function() {
-l.default.instance.playEffect("click");
-t.node.active = !1;
-cc.director.loadScene("login");
-c.default.showInterstitial();
-});
-this.onN(this.soundBtn, s.NodeEvent.click, function() {
-l.default.instance.playEffect("click");
-var e = App.storage.getItem("soundState", !0);
-e = !e;
-App.storage.setItem("soundState", e);
-t.refreshSoundState();
-c.default.showInterstitial();
-});
-this.onN(this.payTableBtn, s.NodeEvent.click, function() {
-l.default.instance.playEffect("click");
-t.payTablePanel.OpenShow();
-});
-this.onN(this.payLinesBtn, s.NodeEvent.click, function() {
-l.default.instance.playEffect("click");
-t.payLinesPanel.OpenShow();
-});
-this.refreshSoundState();
-};
-e.prototype.refreshSoundState = function() {
-var t = App.storage.getItem("soundState", !0);
-this.soundOpne.active = t;
-this.soudnclose.active = !t;
-l.default.instance.setSoundState(t);
-};
-r([ f(cc.Node) ], e.prototype, "node_main", void 0);
-r([ f(cc.Node) ], e.prototype, "close", void 0);
-r([ f(cc.Node) ], e.prototype, "soundOpne", void 0);
-r([ f(cc.Node) ], e.prototype, "soudnclose", void 0);
-r([ f(cc.Node) ], e.prototype, "exit", void 0);
-r([ f(cc.Node) ], e.prototype, "soundBtn", void 0);
-r([ f(cc.Node) ], e.prototype, "payTableBtn", void 0);
-r([ f(cc.Node) ], e.prototype, "payLinesBtn", void 0);
-r([ f(u.default) ], e.prototype, "payTablePanel", void 0);
-r([ f(p.default) ], e.prototype, "payLinesPanel", void 0);
-return r([ h ], e);
-}(a.default);
-o.default = m;
-cc._RF.pop();
-}, {
-"../../../scripts/framework/componects/EventComponent": "EventComponent",
-"../../../scripts/framework/defines/Enums": "Enums",
-"../../../scripts/sdk/SdkManager": "SdkManager",
-"./AudioMgr": "AudioMgr",
-"./PayLinesPanel": "PayLinesPanel",
-"./PayTabelPanel": "PayTabelPanel"
-} ],
-SettingChooseTC_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "f55b7RiQBtKx6KBp0n6TZTa", "SettingChooseTC_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../../scripts/sdk/SdkManager"), s = t("../AudioMgr"), c = t("../GameMgr"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_main = null;
-e.node_zhezhao = null;
-e.soundOpne = null;
-e.soudnclose = null;
-e.clickType = 0;
-e.tween_Main = null;
-return e;
-}
-e.prototype.onEnable = function() {};
-e.prototype.onDestroy = function() {
-this.tween_Main && this.tween_Main.stop();
-};
-e.prototype.OpenShow = function() {
-this.tween_Main && this.tween_Main.stop();
-this.node_main.active = !0;
-this.node_zhezhao.active = !0;
-this.node_main.scale = 0;
-this.tween_Main = cc.tween(this.node_main).to(.35, {
-scale: 1
-}, cc.easeBackOut()).start();
-};
-e.prototype.CloseShow = function() {
-var t = this;
-this.tween_Main && this.tween_Main.stop();
-this.tween_Main = cc.tween(this.node_main).to(.35, {
-scale: 0
-}, cc.easeBackIn()).delay(.1).call(function() {
-if (0 == t.clickType) a.default.showInterstitial(); else {
-cc.director.loadScene("login");
-a.default.showInterstitial();
-}
-t.node_main.active = !1;
-t.node_zhezhao.active = !1;
-}).start();
-};
-e.prototype.onLoad = function() {
-this.refreshSoundState();
-};
-e.prototype.ButtonClick_Close = function() {
-s.default.instance.playEffect(c.AudioName.Click);
-this.clickType = 0;
-this.CloseShow();
-};
-e.prototype.ButtonClick_Exit = function() {
-s.default.instance.playEffect(c.AudioName.Click);
-this.clickType = 1;
-this.CloseShow();
-};
-e.prototype.ButtonClick_SoundBtn = function() {
-s.default.instance.playEffect(c.AudioName.Click);
-var t = App.storage.getItem("soundState", !0);
-t = !t;
-App.storage.setItem("soundState", t);
-this.refreshSoundState();
-a.default.showInterstitial();
-};
-e.prototype.refreshSoundState = function() {
-var t = App.storage.getItem("soundState", !0);
-this.soundOpne.active = t;
-this.soudnclose.active = !t;
-s.default.instance.setSoundState(t);
-};
-r([ u(cc.Node) ], e.prototype, "node_main", void 0);
-r([ u(cc.Node) ], e.prototype, "node_zhezhao", void 0);
-r([ u(cc.Node) ], e.prototype, "soundOpne", void 0);
-r([ u(cc.Node) ], e.prototype, "soudnclose", void 0);
-return r([ p ], e);
-}(cc.Component);
-o.default = d;
-cc._RF.pop();
-}, {
-"../../../../scripts/sdk/SdkManager": "SdkManager",
-"../AudioMgr": "AudioMgr",
-"../GameMgr": "GameMgr"
-} ],
-SimpleLineMgr: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "13fc2LEGmxDva4k5aJaQgvo", "SimpleLineMgr");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("./BaseLineItem "), s = t("./BaseLineMgr"), c = cc._decorator, l = c.ccclass, p = (c.property, 
-function(t) {
-i(e, t);
-function e() {
-return null !== t && t.apply(this, arguments) || this;
-}
-e.prototype.init = function() {
-this.lines = this.node.getComponentsInChildren(a.default);
-};
-e.prototype.showRewardLine = function(t) {
-this.lines[t].show();
-};
-e.prototype.showRewardLines = function() {};
-e.prototype.hide = function() {
-for (var t = 0; t < this.lines.length; t++) this.lines[t].hide();
-};
-e.prototype.lineAnims_None = function() {};
-return r([ l ], e);
-}(s.default));
-o.default = p;
-cc._RF.pop();
-}, {
-"./BaseLineItem ": "BaseLineItem ",
-"./BaseLineMgr": "BaseLineMgr"
-} ],
 SingletonT: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "9e9fct02ElIbrDDB2qZrYRN", "SingletonT");
@@ -30113,79 +27428,6 @@ cc._RF.pop();
 }, {
 "./SingletonT": "SingletonT"
 } ],
-SlotJudge: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "6eb22jbiYNJ4qMIUYt9aJMr", "SlotJudge");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-o.awardLines_Config = void 0;
-o.awardLines_Config = [ [ 0, 6, 12, 18, 24 ], [ 1, 7, 13, 19, 25 ], [ 2, 8, 14, 20, 26 ], [ 3, 9, 15, 21, 27 ], [ 4, 10, 16, 22, 28 ], [ 5, 11, 17, 23, 29 ], [ 0, 7, 14, 21, 28 ], [ 1, 8, 15, 22, 29 ], [ 5, 10, 15, 20, 25 ], [ 4, 9, 14, 19, 24 ], [ 1, 7, 14, 19, 25 ], [ 4, 10, 15, 22, 28 ], [ 2, 8, 13, 20, 26 ], [ 3, 9, 16, 21, 27 ], [ 2, 9, 16, 21, 26 ], [ 3, 8, 13, 18, 23 ], [ 0, 6, 13, 18, 24 ], [ 5, 11, 14, 23, 29 ], [ 1, 8, 14, 20, 25 ], [ 4, 9, 15, 21, 28 ], [ 0, 7, 13, 19, 24 ], [ 5, 10, 16, 22, 29 ], [ 1, 8, 15, 20, 25 ], [ 4, 9, 14, 19, 28 ], [ 2, 7, 12, 19, 26 ], [ 3, 10, 17, 22, 27 ], [ 1, 6, 14, 20, 28 ], [ 4, 11, 15, 21, 23 ], [ 2, 9, 15, 22, 29 ], [ 3, 8, 14, 19, 24 ], [ 0, 7, 15, 21, 29 ], [ 5, 10, 14, 18, 24 ], [ 1, 8, 16, 22, 28 ], [ 4, 9, 13, 19, 25 ], [ 2, 7, 15, 21, 27 ], [ 3, 8, 14, 20, 26 ], [ 0, 8, 16, 20, 28 ], [ 5, 9, 13, 19, 23 ], [ 1, 6, 12, 18, 25 ], [ 4, 11, 17, 23, 28 ], [ 2, 7, 13, 21, 27 ], [ 3, 9, 15, 19, 25 ], [ 0, 7, 13, 21, 29 ], [ 5, 10, 14, 20, 24 ], [ 1, 7, 13, 19, 27 ], [ 4, 8, 14, 20, 26 ], [ 2, 8, 15, 22, 29 ], [ 3, 9, 14, 19, 24 ], [ 0, 8, 14, 22, 28 ], [ 5, 9, 15, 21, 25 ] ];
-var n = [ [ 400, 2400, 6400 ], [ 360, 2e3, 5600 ], [ 320, 1600, 5e3 ], [ 240, 1200, 3600 ], [ 200, 1e3, 3200 ], [ 160, 800, 2e3 ], [ 100, 400, 1200 ], [ 80, 320, 800 ], [ 50, 200, 500 ], [ 20, 80, 240 ], [ 10, 40, 200 ], [ 4, 20, 100 ] ], i = function() {
-function t() {}
-t.getSymbol = function(t, e) {
-var o = e % 6;
-return t[Math.floor(e / 6)][o];
-};
-t.checkAwards = function(t, e) {
-for (var i = this, r = {
-awardline: [],
-awardPos: [],
-awardType: 0,
-score: 0
-}, a = new Set(), s = 0; s < o.awardLines_Config.length; s++) {
-for (var c = o.awardLines_Config[s], l = c.map(function(e) {
-return i.getSymbol(t, e);
-}), p = l[0], u = 1, d = 1; d < l.length && l[d] === p; d++) u++;
-if (u >= 3) {
-r.awardline.push(s);
-for (var h = 0; h < u; h++) a.add(c[h]);
-var f = n[p][u - 3];
-r.score += .02 * e * f;
-}
-}
-if (r.score > 0) {
-var m = r.score / e;
-r.awardType = m < 1 ? 1 : m < 3 ? 2 : 3;
-} else r.awardType = 0;
-r.awardPos = Array.from(a).sort(function(t, e) {
-return t - e;
-});
-return {
-awardResult: r,
-value: t
-};
-};
-return t;
-}();
-o.default = i;
-cc._RF.pop();
-}, {} ],
-SlotsDataUtil: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "fbe21A0B65CPaCsn6Ox0i3o", "SlotsDataUtil");
-var n = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var i = cc._decorator, r = i.ccclass, a = (i.property, function() {
-function t() {}
-t.prototype.getWildMultiple = function() {
-for (var t = this.initDesk.wildMultiple.split(";"), e = [], o = 0; o < t.length; o++) {
-var n = t[o];
-e.push(Number.parseInt(n));
-}
-return e;
-};
-return n([ r ], t);
-}());
-o.default = a;
-cc._RF.pop();
-}, {} ],
 SmoothScrollView: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "7bd5e8D7KNMl49wsA3MzNJ0", "SmoothScrollView");
@@ -30249,101 +27491,6 @@ return r([ s ], e);
 o.default = c;
 cc._RF.pop();
 }, {} ],
-SpinePlayState: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "1d3c07xkA9FYJebfCW8c7Mp", "SpinePlayState");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("./BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
-function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.spine = null;
-return e;
-}
-e.prototype.init = function() {
-this.spine || (this.spine = this.node.getComponentInChildren(sp.Skeleton));
-};
-e.prototype.show = function() {
-this.init();
-this.node.active = !0;
-};
-e.prototype.hide = function() {
-this.init();
-this.node.active = !1;
-};
-return r([ c ], e);
-}(a.default));
-o.default = l;
-cc._RF.pop();
-}, {
-"./BaseAnimState": "BaseAnimState"
-} ],
-SpritePlayState: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "2393cCIwE9Aq5Scs7SotJ0Y", "SpritePlayState");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("./BaseAnimState"), s = cc._decorator, c = s.ccclass, l = (s.property, 
-function(t) {
-i(e, t);
-function e() {
-return null !== t && t.apply(this, arguments) || this;
-}
-e.prototype.show = function() {
-this.node.active = !0;
-};
-e.prototype.hide = function() {
-this.node.active = !1;
-};
-return r([ c ], e);
-}(a.default));
-o.default = l;
-cc._RF.pop();
-}, {
-"./BaseAnimState": "BaseAnimState"
-} ],
 StageData: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "ea9ee6ybWdE2q6pbGPmMeIm", "StageData");
@@ -30650,64 +27797,6 @@ cc._RF.pop();
 "../../framework/componects/EventComponent": "EventComponent",
 "../../framework/defines/Enums": "Enums",
 "./GrayNodeColor": "GrayNodeColor"
-} ],
-TAtlasPlayState: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "503c8zqKqtHDaWpEIYeuO+l", "TAtlasPlayState");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/UVAnimation/TAtlasPlay_Init"), s = t("./BaseAnimState"), c = cc._decorator, l = c.ccclass, p = (c.property, 
-function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.tAtlasPlay = null;
-return e;
-}
-e.prototype.init = function() {
-if (!this.tAtlasPlay) {
-this.tAtlasPlay = this.node.getComponent(a.default);
-this.tAtlasPlay.customInit();
-}
-};
-e.prototype.show = function(e) {
-t.prototype.show.call(this, e);
-this.init();
-this.node.active = !0;
-console.error("播放动画:" + this.tAtlasPlay);
-this.tAtlasPlay.playRun();
-};
-e.prototype.hide = function() {
-this.init();
-this.node.active = !1;
-};
-return r([ l ], e);
-}(s.default));
-o.default = p;
-cc._RF.pop();
-}, {
-"../../../scripts/common/UVAnimation/TAtlasPlay_Init": "TAtlasPlay_Init",
-"./BaseAnimState": "BaseAnimState"
 } ],
 TAtlasPlay_Init: [ function(t, e, o) {
 "use strict";
@@ -31426,75 +28515,6 @@ cc._RF.pop();
 }, {
 "../../common/event/CommonEvent": "CommonEvent",
 "../../framework/componects/EventComponent": "EventComponent"
-} ],
-TUVPlayState: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "03364yl5etApo3kFIG+6D7T", "TUVPlayState");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/UVAnimation/TUVPlay"), s = t("./BaseAnimState"), c = cc._decorator, l = c.ccclass, p = (c.property, 
-function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.anim = null;
-return e;
-}
-e.prototype.init = function() {
-if (!this.anim) {
-this.anim = this.node.getComponentInChildren(a.default);
-this.rewardNode = this.anim.node;
-}
-};
-e.prototype.show = function(e) {
-var o = this;
-t.prototype.show.call(this, e);
-this.init();
-e.rewardParent && this.scheduleOnce(function() {
-var t = App.utils.localConvertWorldPointAR(o.rewardNode), n = App.utils.worldConvertLocalPointAR(e.rewardParent, t);
-o.rewardNode.setParent(e.rewardParent);
-e.rewardParentOrginScale || 0 == e.rewardParentOrginScale ? o.rewardNode.scale = e.rewardParentOrginScale : o.rewardNode.scale = 1;
-o.rewardNode.position = cc.v3(n);
-}, .32);
-this.anim.playRun();
-this.node.active = !0;
-};
-e.prototype.hide = function() {
-this.init();
-if (this.rewardNode && this.rewardNode.parent != this.node) {
-this.rewardNode.setParent(this.node);
-this.rewardNode.scale = 1;
-this.rewardNode.position = cc.Vec3.ZERO;
-}
-this.node.active = !1;
-};
-return r([ l ], e);
-}(s.default));
-o.default = p;
-cc._RF.pop();
-}, {
-"../../../scripts/common/UVAnimation/TUVPlay": "TUVPlay",
-"./BaseAnimState": "BaseAnimState"
 } ],
 TUVPlay_Init: [ function(t, e, o) {
 "use strict";
@@ -32252,152 +29272,6 @@ return r([ s ], e);
 o.default = l;
 cc._RF.pop();
 }, {} ],
-TaskModel_A: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "e32bbv8kyBJh6iYqrpBvXvC", "TaskModel_A");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../../scripts/common/utils/RandomUtil"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_ani = null;
-e.tween_Ani = null;
-return e;
-}
-e.prototype.onDestroy = function() {
-this.ClearTween();
-};
-e.prototype.Init = function() {
-this.ClearTween();
-this.node_ani.scale = 0;
-this.tween_Ani = cc.tween(this.node_ani).delay(.5).to(.5, {
-scale: 1
-}, cc.easeBackOut()).start();
-};
-e.prototype.PlayBeGongji = function(t) {
-this.ClearTween();
-this.tween_Ani = t ? cc.tween(this.node_ani).to(.05, {
-position: cc.v3(-2, 2, 0)
-}).to(.05, {
-position: cc.v3(2, 2, 0)
-}).to(.05, {
-position: cc.v3(-2, -2, 0)
-}).to(.05, {
-position: cc.v3(2, -2, 0)
-}).to(.05, {
-position: cc.v3(-2, 2, 0)
-}).to(.05, {
-position: cc.v3(2, 2, 0)
-}).to(.05, {
-position: cc.v3(-2, -2, 0)
-}).to(.05, {
-position: cc.v3(2, -2, 0)
-}).to(.05, {
-position: cc.v3(-2, 2, 0)
-}).to(.05, {
-position: cc.v3(2, 2, 0)
-}).to(.05, {
-position: cc.v3(-2, -2, 0)
-}).to(.05, {
-position: cc.v3(2, -2, 0)
-}).to(.05, {
-position: cc.v3(-2, 2, 0)
-}).to(.05, {
-position: cc.v3(2, 2, 0)
-}).to(.05, {
-position: cc.v3(-2, -2, 0)
-}).to(.05, {
-position: cc.v3(2, -2, 0)
-}).to(.05, {
-position: cc.v3(-2, 2, 0)
-}).to(.05, {
-position: cc.v3(1, 1, 0)
-}).to(.05, {
-position: cc.v3(-1, -1, 0)
-}).to(.05, {
-position: cc.v3(0, 0, 0)
-}).start() : cc.tween(this.node_ani).to(.1, {
-position: cc.v3(0, 20, 0),
-angle: a.RandomUtil.randomFRange(-5, 5)
-}).to(.05, {
-position: cc.v3(0, 18, 0),
-angle: a.RandomUtil.randomFRange(-3, 3)
-}).to(.05, {
-position: cc.v3(0, 16, 0),
-angle: a.RandomUtil.randomFRange(-3, 3)
-}).to(.1, {
-position: cc.v3(2, 5, 0),
-angle: a.RandomUtil.randomFRange(-3, 3)
-}).to(.05, {
-position: cc.v3(-2, 2, 0),
-angle: a.RandomUtil.randomFRange(-1, 1)
-}).to(.05, {
-position: cc.v3(2, 2, 0),
-angle: a.RandomUtil.randomFRange(-1, 1)
-}).to(.05, {
-position: cc.v3(-2, -2, 0),
-angle: 0
-}).to(.05, {
-position: cc.v3(2, -2, 0)
-}).to(.05, {
-position: cc.v3(-2, 2, 0)
-}).to(.05, {
-position: cc.v3(2, 2, 0)
-}).to(.05, {
-position: cc.v3(-2, -2, 0)
-}).to(.05, {
-position: cc.v3(2, -2, 0)
-}).to(.05, {
-position: cc.v3(-2, 2, 0)
-}).to(.05, {
-position: cc.v3(2, 2, 0)
-}).to(.05, {
-position: cc.v3(-2, -2, 0)
-}).to(.05, {
-position: cc.v3(2, -2, 0)
-}).to(.05, {
-position: cc.v3(-2, 2, 0)
-}).to(.05, {
-position: cc.v3(1, 1, 0)
-}).to(.05, {
-position: cc.v3(-1, -1, 0)
-}).to(.05, {
-position: cc.v3(0, 0, 0),
-angle: 0
-}).start();
-};
-e.prototype.ClearTween = function() {
-this.tween_Ani && this.tween_Ani.stop();
-};
-r([ l(cc.Node) ], e.prototype, "node_ani", void 0);
-return r([ c ], e);
-}(cc.Component);
-o.default = p;
-cc._RF.pop();
-}, {
-"../../../../scripts/common/utils/RandomUtil": "RandomUtil"
-} ],
 TaskOfflineView: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "d98daBJOHVEr5xyiX0o8S6M", "TaskOfflineView");
@@ -32423,7 +29297,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/event/CommonEvent"), l = t("../../../common/net/CommonSender"), p = t("../../../framework/core/ui/UIView"), u = t("../../../framework/defines/Decorators"), d = t("../../../framework/defines/Enums"), h = t("../../../zgameCommon/GameCommonUIHelper"), f = cc._decorator, m = f.ccclass, _ = (f.property, 
+var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/event/CommonEvent"), l = t("../../../common/net/CommonSender"), p = t("../../../framework/core/ui/UIView"), u = t("../../../framework/defines/Decorators"), d = t("../../../framework/defines/Enums"), h = t("../../../zgameCommon/GameCommonUIHelper"), f = cc._decorator, m = f.ccclass, g = (f.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -32551,7 +29425,7 @@ show: !0
 r([ u.inject("Background/Button_close", cc.Node) ], e.prototype, "Button_close", void 0);
 return r([ m ], e);
 }(p.default));
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../common/component/UIContainer": "UIContainer",
@@ -33074,7 +29948,7 @@ this.remote.clear();
 return t;
 }();
 o.ViewDynamicLoadData = m;
-var _ = function() {
+var g = function() {
 function t() {
 this.isLoaded = !1;
 this.status = s.ViewStatus.WAITTING_NONE;
@@ -33108,7 +29982,7 @@ this.doFinish(t, e, o);
 this.doGet(t, e, o);
 };
 return t;
-}(), g = function() {
+}(), _ = function() {
 function t() {
 this.isResident = !0;
 this.module = null;
@@ -33195,7 +30069,7 @@ i.status = s.ViewStatus.WAITTING_NONE;
 t.preload || t.isRoot;
 i.finishCb.push(o);
 } else {
-(i = new _()).loadData.name = n;
+(i = new g()).loadData.name = n;
 var r = t.type.getPrefabUrl(), c = e.parsePrefabUrl(r);
 i.isPreload = t.preload;
 i.isPrefab = c.isPrefab;
@@ -33240,7 +30114,7 @@ i.doCallback(null, n, "打开界面异常");
 o(null);
 var a = "";
 t.name && (a = t.name);
-App.tips.show("加载界面" + a + "失败，请重试");
+App.tips.show("Load " + a + " failed, please retry");
 });
 } else {
 i.info = new l.Resource.Info();
@@ -33472,7 +30346,7 @@ cc.audioEngine.stopMusic();
 t.module = "【UI管理器】";
 return t;
 }();
-o.UIManager = g;
+o.UIManager = _;
 cc._RF.pop();
 }, {
 "../../../common/config/Config": "Config",
@@ -36169,7 +33043,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/ConstString"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/net/HttpSender"), d = t("../../../../common/utils/UIUtils"), h = t("../../../../framework/core/ui/UIView"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/view/CommonUIHelper"), _ = t("../../../../sdk/GameNativeConfig"), g = t("../../../../sdk/SdkManager"), y = cc._decorator, v = y.ccclass, b = (y.property, 
+var a = t("../../../../common/config/ConstString"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/net/HttpSender"), d = t("../../../../common/utils/UIUtils"), h = t("../../../../framework/core/ui/UIView"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/view/CommonUIHelper"), g = t("../../../../sdk/GameNativeConfig"), _ = t("../../../../sdk/SdkManager"), y = cc._decorator, v = y.ccclass, b = (y.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -36203,7 +33077,7 @@ this.refresh();
 };
 e.prototype.addEvents = function() {
 this.onD(l.ComponentGameEvent.UpdateSelfHeadIcon, this.GetHeadIcon.bind(this));
-this.onD(_.default.Event.update_money, this.refresh.bind(this));
+this.onD(g.default.Event.update_money, this.refresh.bind(this));
 this.onD(l.HttpEvent.UpdateAddPhoneInfo, this.updateBindBtn.bind(this));
 };
 e.prototype.initNode = function() {
@@ -36237,7 +33111,7 @@ m.default.showChangeName();
 });
 this.onN(this.idBtn, f.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-g.default.setClipboardContent(u.default.uid.toString());
+_.default.setClipboardContent(u.default.uid.toString());
 });
 this.onN(this.mobileBtn, f.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
@@ -36709,7 +33583,7 @@ done: !0
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var c = t("../../../../common/config/GlobalVar"), l = t("../../../../common/config/User"), p = t("../../../../common/event/CommonEvent"), u = t("../../../../common/net/CommonSender"), d = t("../../../../common/utils/CmmUtils"), h = t("../../../../framework/core/ui/UIView"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/other/PhoneQuhao_Item"), _ = t("../../../../login/view/bind/bind_verification_item"), g = t("../../../../login/view/HotUpdate"), y = t("../../../../sdk/GameNativeConfig"), v = cc._decorator, b = v.ccclass, C = (v.property, 
+var c = t("../../../../common/config/GlobalVar"), l = t("../../../../common/config/User"), p = t("../../../../common/event/CommonEvent"), u = t("../../../../common/net/CommonSender"), d = t("../../../../common/utils/CmmUtils"), h = t("../../../../framework/core/ui/UIView"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/other/PhoneQuhao_Item"), g = t("../../../../login/view/bind/bind_verification_item"), _ = t("../../../../login/view/HotUpdate"), y = t("../../../../sdk/GameNativeConfig"), v = cc._decorator, b = v.ccclass, C = (v.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -36835,7 +33709,7 @@ this.fac_resendOtp = cc.find("bindType/MobileMethod/OTP", this.fac).getComponent
 this.fac_Button_Code = cc.find("bindType/MobileMethod/Button_Code", this.fac);
 this.fac_OTPTips = cc.find("bindType/Edit_OTP/OTPTips", this.fac).getComponent(cc.RichText);
 this.fac_resendLabel = cc.find("bindType/MobileMethod/OTP", this.fac).getComponent(cc.RichText);
-this.verification_item = cc.find("hmVerification", this.fac).getComponent(_.default);
+this.verification_item = cc.find("hmVerification", this.fac).getComponent(g.default);
 this.node_PhoneError = cc.find("root/content/force/forgot/bindType/Edit_Account/check/error", this.node);
 this.node_PhoneRight = cc.find("root/content/force/forgot/bindType/Edit_Account/check/right", this.node);
 this.node_PhoneError2 = cc.find("root/content/force/forgotAndrecharge/bindType/Edit_Account/check/error", this.node);
@@ -36946,7 +33820,7 @@ App.tips.show(App.zLan.getString(10292));
 o.close();
 var e = App.storage.getItem(y.default.Key.PhoneId);
 d.CmmUtils.stringNotEmpty(e) && c.GlobalVar.setPhonePwtoken(t.data.phone, e, t.data.country);
-g.default.SetCountryCode(t.data.country);
+_.default.SetCountryCode(t.data.country);
 App.OfflineMode || o.sender.Send_Act_15();
 }, t, e);
 return [ 2 ];
@@ -37253,7 +34127,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/ConstString"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../common/utils/CmmUtils"), u = t("../../../../common/utils/UIUtils"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Decorators"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/other/change_avatar_item"), _ = t("../../../../sdk/GameNativeConfig"), g = t("../../../../sdk/SdkManager"), y = cc._decorator, v = y.ccclass, b = (y.property, 
+var a = t("../../../../common/config/ConstString"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../common/utils/CmmUtils"), u = t("../../../../common/utils/UIUtils"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Decorators"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/other/change_avatar_item"), g = t("../../../../sdk/GameNativeConfig"), _ = t("../../../../sdk/SdkManager"), y = cc._decorator, v = y.ccclass, b = (y.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -37292,12 +34166,12 @@ App.globalAudio.playButtonClick();
 t.onClickSubmit();
 });
 this.onN(this.Button_Custom, f.NodeEvent.click, function() {
-g.default.openPhoto();
+_.default.openPhoto();
 });
 this.onD(c.CommonEvent.ChoosePhoto, function(e) {
 App.storage.setItem(a.ConstString.headIcon_base64Str, e);
 p.CmmUtils.sendGameEvent(c.GameEventName.event_change_avatar);
-dispatch(_.default.Event.update_money);
+dispatch(g.default.Event.update_money);
 t.close();
 });
 };
@@ -37462,7 +34336,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Decorators"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/view/CommonUIHelper"), _ = t("../../../../sdk/GameNativeConfig"), g = t("../../../../sdk/SdkManager"), y = cc._decorator, v = y.ccclass, b = (y.property, 
+var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Decorators"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/view/CommonUIHelper"), g = t("../../../../sdk/GameNativeConfig"), _ = t("../../../../sdk/SdkManager"), y = cc._decorator, v = y.ccclass, b = (y.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -37552,7 +34426,7 @@ this.label_exchage = cc.find("bg/label_exchage", this.exchage).getComponent(cc.R
 };
 e.prototype.addEvents = function() {
 this.onD(l.ComponentGameEvent.EditorBox_changeEnded, this.EditorBox_changeEnded.bind(this));
-this.onD(_.default.Event.update_money, this.updateRightInfo.bind(this));
+this.onD(g.default.Event.update_money, this.updateRightInfo.bind(this));
 this.onD(l.CommonEvent.RefreshRechageList, this.receiveByServer.bind(this));
 this.onD(l.HttpEvent.ChangePayChannel, this.updateByServer.bind(this));
 };
@@ -37564,7 +34438,7 @@ t.close();
 });
 this.onN(this.kyc, f.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-g.default.openUrl(s.GlobalVar.kycUrl);
+_.default.openUrl(s.GlobalVar.kycUrl);
 });
 this.onN(this.record, f.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
@@ -37572,7 +34446,7 @@ m.default.showRecordWeb(0);
 });
 this.onN(this.hao, f.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-g.default.openUrl(t.helpUrl);
+_.default.openUrl(t.helpUrl);
 });
 this.onN(this.clear, f.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
@@ -37984,7 +34858,7 @@ done: !0
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var c = t("../../../../common/component/GrayNodeColor"), l = t("../../../../common/component/UIContainer"), p = t("../../../../common/config/GlobalVar"), u = t("../../../../common/config/User"), d = t("../../../../common/net/CommonSender"), h = t("../../../../common/utils/CmmUtils"), f = t("../../../../framework/core/ui/UIView"), m = t("../../../../framework/defines/Enums"), _ = t("../../../../login/view/CommonUIHelper"), g = t("../../../../sdk/GameNativeConfig"), y = t("../../../../zgameCommon/GameCommonUIHelper"), v = t("../../../../common/event/CommonEvent"), b = t("../../../../framework/defines/Macros"), C = t("../../../../common/utils/UIUtils"), w = cc._decorator, E = w.ccclass, S = (w.property, 
+var c = t("../../../../common/component/GrayNodeColor"), l = t("../../../../common/component/UIContainer"), p = t("../../../../common/config/GlobalVar"), u = t("../../../../common/config/User"), d = t("../../../../common/net/CommonSender"), h = t("../../../../common/utils/CmmUtils"), f = t("../../../../framework/core/ui/UIView"), m = t("../../../../framework/defines/Enums"), g = t("../../../../login/view/CommonUIHelper"), _ = t("../../../../sdk/GameNativeConfig"), y = t("../../../../zgameCommon/GameCommonUIHelper"), v = t("../../../../common/event/CommonEvent"), b = t("../../../../framework/defines/Macros"), C = t("../../../../common/utils/UIUtils"), w = cc._decorator, E = w.ccclass, S = (w.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -38085,7 +34959,7 @@ this.lightEffectAnim = cc.find("VDailySignInView_root/reward/lights", this.node)
 };
 e.prototype.addEvents = function() {
 var t = this;
-this.onD(g.default.Event.CLINET_NOTICE_KYC_CHANGE, function() {
+this.onD(_.default.Event.CLINET_NOTICE_KYC_CHANGE, function() {
 t.refreshSign();
 });
 };
@@ -38147,7 +35021,7 @@ t.getComponent(cc.Animation).play(null, 0);
 t.targetOff(this);
 var n = e.index + 1;
 t.zIndex = n;
-for (var i = e.data, r = i[0], a = i[1], s = 1 == this._sign_data.sign[e.index], l = this._sign_data.vip[e.index], d = 1 == this._sign_data.monthly[e.index] && !s, f = this._sign_data.day + 1, _ = l > u.default.self.data.viplevel, g = cc.find("root/showBg", t), y = cc.find("root/shouzhi", t), v = t.getComponent(cc.Button), b = cc.find("root/coinIcon", t), C = cc.find("root/currency_label/Value", t).getComponent(c.default), w = cc.find("root/dayTxt", t).getComponent(c.default), E = cc.find("root/dayTxt", t).getComponent(cc.Label), S = cc.find("root/currency_label/Value", t).getComponent(cc.Label), R = cc.find("root/complete", t), O = cc.find("root/lock", t), A = cc.find("root/daily_vip/vip_label", t).getComponent(cc.Label), P = b.children, L = 0; L < P.length; L++) P[L].active = !1;
+for (var i = e.data, r = i[0], a = i[1], s = 1 == this._sign_data.sign[e.index], l = this._sign_data.vip[e.index], d = 1 == this._sign_data.monthly[e.index] && !s, f = this._sign_data.day + 1, g = l > u.default.self.data.viplevel, _ = cc.find("root/showBg", t), y = cc.find("root/shouzhi", t), v = t.getComponent(cc.Button), b = cc.find("root/coinIcon", t), C = cc.find("root/currency_label/Value", t).getComponent(c.default), w = cc.find("root/dayTxt", t).getComponent(c.default), E = cc.find("root/dayTxt", t).getComponent(cc.Label), S = cc.find("root/currency_label/Value", t).getComponent(cc.Label), R = cc.find("root/complete", t), O = cc.find("root/lock", t), A = cc.find("root/daily_vip/vip_label", t).getComponent(cc.Label), P = b.children, L = 0; L < P.length; L++) P[L].active = !1;
 var I = n;
 I > 1 && (I -= 1);
 E.string = App.zLan.getString(1131, I);
@@ -38158,8 +35032,8 @@ P[r].active = !0;
 A.string = "V" + l;
 A.node.parent.color = h.CmmUtils.colorOfString(this.colors[l]);
 O.active = d;
-if (_) {
-g.active = !1;
+if (g) {
+_.active = !1;
 y.active = !1;
 w.setGray(!1);
 v.interactable = !0;
@@ -38168,7 +35042,7 @@ this.onN(t, m.NodeEvent.click, function() {
 App.tips.show(App.zLan.getString(20188, l));
 });
 } else if (s) {
-g.active = !1;
+_.active = !1;
 y.active = !1;
 w.setGray(!0);
 C.setGray(!1);
@@ -38176,7 +35050,7 @@ this.onN(t, m.NodeEvent.click, function() {
 App.tips.show(App.zLan.getString(20162));
 });
 } else if (n > f) {
-g.active = !1;
+_.active = !1;
 y.active = !1;
 w.setGray(!1);
 C.setGray(!1);
@@ -38186,7 +35060,7 @@ App.tips.show(App.zLan.getString(20163));
 } else {
 v.interactable = !0;
 y.active = !0;
-g.active = !0;
+_.active = !0;
 w.setGray(!0);
 C.setGray(!0);
 this.onN(t, m.NodeEvent.click, function() {
@@ -38221,7 +35095,7 @@ o.refreshSign();
 dispatch(v.CommonEvent.RefreshRechageList);
 }
 }, t);
-} else _.default.showBindMobile();
+} else g.default.showBindMobile();
 };
 e.prototype.refreshRewards = function() {
 var t = this.args.data2;
@@ -38440,7 +35314,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/GraySprites"), s = t("../../../../common/component/UIContainer"), c = t("../../../../common/component/ZProgressbar"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../common/utils/UIUtils"), h = t("../../../../framework/core/ui/UIView"), f = t("../../../../framework/defines/Enums"), m = t("../../../../framework/defines/Macros"), _ = t("../../../../login/view/CommonUIHelper"), g = t("../../../../zgameCommon/GameCommonUIHelper"), y = t("../other/VDailyTaskWheel"), v = cc._decorator, b = v.ccclass, C = (v.property, 
+var a = t("../../../../common/component/GraySprites"), s = t("../../../../common/component/UIContainer"), c = t("../../../../common/component/ZProgressbar"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../common/utils/UIUtils"), h = t("../../../../framework/core/ui/UIView"), f = t("../../../../framework/defines/Enums"), m = t("../../../../framework/defines/Macros"), g = t("../../../../login/view/CommonUIHelper"), _ = t("../../../../zgameCommon/GameCommonUIHelper"), y = t("../other/VDailyTaskWheel"), v = cc._decorator, b = v.ccclass, C = (v.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -38677,7 +35551,7 @@ type: t.type,
 value: t.val,
 position: o
 });
-g.default.showHallReward({
+_.default.showHallReward({
 data: e,
 show: !0
 });
@@ -38792,7 +35666,7 @@ break;
 
 case 2:
 App.globalAudio.playAddCash();
-_.default.showVRechargeView();
+g.default.showVRechargeView();
 break;
 
 case 3:
@@ -38816,7 +35690,7 @@ break;
 
 case 8:
 App.globalAudio.playButtonClick();
-_.default.show7SignDays();
+g.default.show7SignDays();
 }
 };
 return r([ b ], e);
@@ -39152,7 +36026,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/SwitchBtns"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Enums"), d = t("../../../../zgameCommon/GameCommonUIHelper"), h = t("../email/VEmailScrollList"), f = t("../email/VNoticeScrollList"), m = cc._decorator, _ = m.ccclass, g = (m.property, 
+var a = t("../../../../common/component/SwitchBtns"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Enums"), d = t("../../../../zgameCommon/GameCommonUIHelper"), h = t("../email/VEmailScrollList"), f = t("../email/VNoticeScrollList"), m = cc._decorator, g = m.ccclass, _ = (m.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -39457,9 +36331,9 @@ e.prototype.onClickBack = function() {};
 e.prototype.onClick_CloseDetails = function() {
 this.emailConentBg.active = !1;
 };
-return r([ _ ], e);
+return r([ g ], e);
 }(p.default));
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../../common/component/SwitchBtns": "SwitchBtns",
@@ -39497,7 +36371,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Enums"), f = t("../../../../login/view/CommonUIHelper"), m = cc._decorator, _ = m.ccclass, g = (m.property, 
+var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Enums"), f = t("../../../../login/view/CommonUIHelper"), m = cc._decorator, g = m.ccclass, _ = (m.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -39593,7 +36467,7 @@ e.prototype.updateList = function(t) {
 this.list.initData(t, this.createListFun.bind(this));
 };
 e.prototype.createListFun = function(t, e) {
-var o = cc.find("bg1", t), n = cc.find("bg2", t), i = cc.find("green", t), r = cc.find("red", t), a = cc.find("selected", t), c = cc.find("bg1/Cash/layout/Label_cash", t).getComponent(cc.Label), l = cc.find("bg2/Cash/layout/Label_cash", t).getComponent(cc.Label), p = cc.find("layout/Bonus", t), d = cc.find("layout/Bonus/layout/Label", t).getComponent(cc.Label), f = cc.find("layout/Delay", t), m = cc.find("layout/Delay/layout/Label", t).getComponent(cc.Label), _ = cc.find("layout/jackpot", t), g = cc.find("layout/jackpot/Label", t).getComponent(cc.Label), y = cc.find("layout/VIP", t), v = cc.find("layout/VIP/Label", t).getComponent(cc.Label), b = cc.find("layout/Delay/spit", t), C = cc.find("layout/jackpot/spit", t), w = cc.find("layout/VIP/spit", t);
+var o = cc.find("bg1", t), n = cc.find("bg2", t), i = cc.find("green", t), r = cc.find("red", t), a = cc.find("selected", t), c = cc.find("bg1/Cash/layout/Label_cash", t).getComponent(cc.Label), l = cc.find("bg2/Cash/layout/Label_cash", t).getComponent(cc.Label), p = cc.find("layout/Bonus", t), d = cc.find("layout/Bonus/layout/Label", t).getComponent(cc.Label), f = cc.find("layout/Delay", t), m = cc.find("layout/Delay/layout/Label", t).getComponent(cc.Label), g = cc.find("layout/jackpot", t), _ = cc.find("layout/jackpot/Label", t).getComponent(cc.Label), y = cc.find("layout/VIP", t), v = cc.find("layout/VIP/Label", t).getComponent(cc.Label), b = cc.find("layout/Delay/spit", t), C = cc.find("layout/jackpot/spit", t), w = cc.find("layout/VIP/spit", t);
 i.active = 1 == e.data.show;
 r.active = 2 == e.data.show;
 if (1 == e.data.show) {
@@ -39617,16 +36491,16 @@ p.active = !0;
 d.string = e.data.addBonus;
 } else p.active = !1;
 if (e.data.jackpot > 0) {
-_.active = !0;
-g.string = e.data.jackpot;
-} else _.active = !1;
+g.active = !0;
+_.string = e.data.jackpot;
+} else g.active = !1;
 if (e.data.vip > 0) {
 y.active = !0;
 v.string = e.data.vip;
 } else y.active = !1;
 b.active = p.active;
 C.active = p.active || f.active;
-w.active = _.active || p.active || f.active;
+w.active = g.active || p.active || f.active;
 if (e.index == this.curSelectIndex) {
 a.active = !0;
 this.moneyLabel.string = s.GlobalVar.costMoney_Symbol + u.CmmUtils.NumberToKString_AllCountryM(e.data.cash);
@@ -39649,9 +36523,9 @@ var n = t[o];
 }
 return e;
 };
-return r([ _ ], e);
+return r([ g ], e);
 }(d.default));
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../../common/component/UIContainer": "UIContainer",
@@ -39689,7 +36563,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/GrayNodeColor"), s = t("../../../../common/component/SwitchBtnItem"), c = t("../../../../common/component/UIContainer"), l = t("../../../../common/config/GlobalVar"), p = t("../../../../common/config/User"), u = t("../../../../common/net/CommonSender"), d = t("../../../../framework/defines/Enums"), h = t("../../../../login/view/CommonUIHelper"), f = cc._decorator, m = f.ccclass, _ = f.property, g = function(t) {
+var a = t("../../../../common/component/GrayNodeColor"), s = t("../../../../common/component/SwitchBtnItem"), c = t("../../../../common/component/UIContainer"), l = t("../../../../common/config/GlobalVar"), p = t("../../../../common/config/User"), u = t("../../../../common/net/CommonSender"), d = t("../../../../framework/defines/Enums"), h = t("../../../../login/view/CommonUIHelper"), f = cc._decorator, m = f.ccclass, g = f.property, _ = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -39728,19 +36602,19 @@ e.prototype.updateList = function(t) {
 this.list.initData(t, this.createListFun.bind(this));
 };
 e.prototype.createListFun = function(t, e) {
-var o = e.data.addDelay + e.data.addBonus + e.data.addCash + e.data.cash, n = cc.find("bg1", t), i = cc.find("bg2", t), r = cc.find("selected", t), s = cc.find("Rate/Label_rate", t).getComponent(cc.Label), c = cc.find("Label_Cost", t).getComponent(cc.Label), p = cc.find("Label_Cost", t).getComponent(a.default), u = cc.find("Layout/Cash/Label_cash", t).getComponent(cc.Label), h = cc.find("Layout/ExtraCash", t), f = cc.find("Layout/ExtraCash/ExtraCash/Label_extraCash", t).getComponent(cc.Label), m = cc.find("Layout/Bonus", t), _ = cc.find("Layout/Bonus/Bonus/Label_bonus", t).getComponent(cc.Label), g = cc.find("Layout/DelayCash", t), y = cc.find("Layout/DelayCash/DelayCash/Label_delayCash", t).getComponent(cc.Label), v = cc.find("Layout/TotalGet/Label_Total", t).getComponent(cc.Label);
+var o = e.data.addDelay + e.data.addBonus + e.data.addCash + e.data.cash, n = cc.find("bg1", t), i = cc.find("bg2", t), r = cc.find("selected", t), s = cc.find("Rate/Label_rate", t).getComponent(cc.Label), c = cc.find("Label_Cost", t).getComponent(cc.Label), p = cc.find("Label_Cost", t).getComponent(a.default), u = cc.find("Layout/Cash/Label_cash", t).getComponent(cc.Label), h = cc.find("Layout/ExtraCash", t), f = cc.find("Layout/ExtraCash/ExtraCash/Label_extraCash", t).getComponent(cc.Label), m = cc.find("Layout/Bonus", t), g = cc.find("Layout/Bonus/Bonus/Label_bonus", t).getComponent(cc.Label), _ = cc.find("Layout/DelayCash", t), y = cc.find("Layout/DelayCash/DelayCash/Label_delayCash", t).getComponent(cc.Label), v = cc.find("Layout/TotalGet/Label_Total", t).getComponent(cc.Label);
 n.active = e.index <= 2;
 i.active = e.index > 2;
 v.string = l.GlobalVar.money_symbol + o;
 c.string = l.GlobalVar.money_symbol + e.data.cash;
 p.setGray(e.index > 2);
 if (e.data.addDelay > 0) {
-g.active = !0;
+_.active = !0;
 y.string = l.GlobalVar.money_symbol + e.data.addDelay;
-} else g.active = !1;
+} else _.active = !1;
 if (e.data.addBonus > 0) {
 m.active = !0;
-_.string = l.GlobalVar.money_symbol + e.data.addBonus;
+g.string = l.GlobalVar.money_symbol + e.data.addBonus;
 } else m.active = !1;
 if (e.data.addCash > 0) {
 h.active = !0;
@@ -39759,12 +36633,12 @@ e.prototype.clickItem = function(t) {
 this.curSelectIndex = t;
 this.list.refresh();
 };
-r([ _(c.default) ], e.prototype, "list", void 0);
-r([ _(cc.Node) ], e.prototype, "btn", void 0);
-r([ _(cc.Label) ], e.prototype, "moneyLabel", void 0);
+r([ g(c.default) ], e.prototype, "list", void 0);
+r([ g(cc.Node) ], e.prototype, "btn", void 0);
+r([ g(cc.Label) ], e.prototype, "moneyLabel", void 0);
 return r([ m ], e);
 }(s.default);
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../../common/component/GrayNodeColor": "GrayNodeColor",
@@ -39801,7 +36675,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../common/utils/CmmUtils"), u = t("../../../../framework/componects/EventComponent"), d = t("../../../../framework/defines/Enums"), h = t("../../../../login/view/CommonUIHelper"), f = t("../../../../zgameCommon/GameCommonUIHelper"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../common/utils/CmmUtils"), u = t("../../../../framework/componects/EventComponent"), d = t("../../../../framework/defines/Enums"), h = t("../../../../login/view/CommonUIHelper"), f = t("../../../../zgameCommon/GameCommonUIHelper"), m = cc._decorator, g = m.ccclass, _ = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -39917,18 +36791,18 @@ this.addcrash.active = !0;
 e.prototype.updateFreeMoney = function() {
 this.TimeSecond();
 };
-r([ g(cc.Button) ], e.prototype, "btn", void 0);
-r([ g(cc.Node) ], e.prototype, "delayIcon", void 0);
-r([ g(cc.Label) ], e.prototype, "delayMoney", void 0);
-r([ g(cc.Label) ], e.prototype, "delayMoney2", void 0);
-r([ g(cc.Label) ], e.prototype, "delayTime", void 0);
-r([ g(cc.Node) ], e.prototype, "enableGet", void 0);
-r([ g(cc.Node) ], e.prototype, "addcrash", void 0);
-r([ g(cc.Animation) ], e.prototype, "freeLimitTips", void 0);
-r([ g(cc.Label) ], e.prototype, "freeTips", void 0);
-r([ g(cc.Node) ], e.prototype, "acc", void 0);
-r([ g(cc.RichText) ], e.prototype, "accTxt", void 0);
-return r([ _ ], e);
+r([ _(cc.Button) ], e.prototype, "btn", void 0);
+r([ _(cc.Node) ], e.prototype, "delayIcon", void 0);
+r([ _(cc.Label) ], e.prototype, "delayMoney", void 0);
+r([ _(cc.Label) ], e.prototype, "delayMoney2", void 0);
+r([ _(cc.Label) ], e.prototype, "delayTime", void 0);
+r([ _(cc.Node) ], e.prototype, "enableGet", void 0);
+r([ _(cc.Node) ], e.prototype, "addcrash", void 0);
+r([ _(cc.Animation) ], e.prototype, "freeLimitTips", void 0);
+r([ _(cc.Label) ], e.prototype, "freeTips", void 0);
+r([ _(cc.Node) ], e.prototype, "acc", void 0);
+r([ _(cc.RichText) ], e.prototype, "accTxt", void 0);
+return r([ g ], e);
 }(u.default);
 o.default = y;
 cc._RF.pop();
@@ -39968,7 +36842,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/event/CommonEvent"), c = t("../../../../common/net/CommonSender"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Decorators"), d = t("../../../../framework/defines/Enums"), h = t("../game/VGamelist"), f = cc._decorator, m = f.ccclass, _ = (f.property, 
+var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/event/CommonEvent"), c = t("../../../../common/net/CommonSender"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Decorators"), d = t("../../../../framework/defines/Enums"), h = t("../game/VGamelist"), f = cc._decorator, m = f.ccclass, g = (f.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -40058,7 +36932,7 @@ r([ u.inject("main/spit/next", cc.Node) ], e.prototype, "nextBtn", void 0);
 r([ u.inject("main/spit/curSpitValue", cc.RichText) ], e.prototype, "curSpitValue", void 0);
 return r([ m ], e);
 }(p.default));
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../../common/config/GlobalVar": "GlobalVar",
@@ -40327,7 +37201,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/componects/UpdatePosFollows"), d = t("../../../../login/gamelist/GamePlayerCount"), h = t("../../../../login/view/CommonUIHelper"), f = cc._decorator, m = f.ccclass, _ = f.property, g = function(t) {
+var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/componects/UpdatePosFollows"), d = t("../../../../login/gamelist/GamePlayerCount"), h = t("../../../../login/view/CommonUIHelper"), f = cc._decorator, m = f.ccclass, g = f.property, _ = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -40484,26 +37358,26 @@ this.jackpot1.string = l.CmmUtils.NumberToHallString(this._jackPoints[0].jackpot
 };
 var o;
 e.oneClick = !0;
-r([ _(cc.SpriteFrame) ], e.prototype, "defaultSpriteLoading", void 0);
-r([ _(cc.Sprite) ], e.prototype, "changshang", void 0);
-r([ _(cc.Node) ], e.prototype, "snode", void 0);
-r([ _(cc.Node) ], e.prototype, "hot", void 0);
-r([ _(cc.Node) ], e.prototype, "new", void 0);
-r([ _(cc.Node) ], e.prototype, "notopen", void 0);
-r([ _(cc.Node) ], e.prototype, "comingsoon", void 0);
-r([ _(cc.Sprite) ], e.prototype, "gameIcon", void 0);
-r([ _(cc.Button) ], e.prototype, "btn", void 0);
-r([ _(cc.Label) ], e.prototype, "jackpot1", void 0);
-r([ _(cc.Node) ], e.prototype, "jackpotVer", void 0);
-r([ _(cc.Node) ], e.prototype, "volatility", void 0);
-r([ _(cc.Node) ], e.prototype, "volatilityBg", void 0);
-r([ _(cc.Label) ], e.prototype, "volatilityLabel", void 0);
-r([ _(cc.Label) ], e.prototype, "gameName", void 0);
-r([ _(u.default) ], e.prototype, "nameFlollow", void 0);
-r([ _(d.default) ], e.prototype, "gamePlayerCount", void 0);
+r([ g(cc.SpriteFrame) ], e.prototype, "defaultSpriteLoading", void 0);
+r([ g(cc.Sprite) ], e.prototype, "changshang", void 0);
+r([ g(cc.Node) ], e.prototype, "snode", void 0);
+r([ g(cc.Node) ], e.prototype, "hot", void 0);
+r([ g(cc.Node) ], e.prototype, "new", void 0);
+r([ g(cc.Node) ], e.prototype, "notopen", void 0);
+r([ g(cc.Node) ], e.prototype, "comingsoon", void 0);
+r([ g(cc.Sprite) ], e.prototype, "gameIcon", void 0);
+r([ g(cc.Button) ], e.prototype, "btn", void 0);
+r([ g(cc.Label) ], e.prototype, "jackpot1", void 0);
+r([ g(cc.Node) ], e.prototype, "jackpotVer", void 0);
+r([ g(cc.Node) ], e.prototype, "volatility", void 0);
+r([ g(cc.Node) ], e.prototype, "volatilityBg", void 0);
+r([ g(cc.Label) ], e.prototype, "volatilityLabel", void 0);
+r([ g(cc.Label) ], e.prototype, "gameName", void 0);
+r([ g(u.default) ], e.prototype, "nameFlollow", void 0);
+r([ g(d.default) ], e.prototype, "gamePlayerCount", void 0);
 return o = r([ m ], e);
 }(p.default);
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../../common/config/GlobalVar": "GlobalVar",
@@ -40540,7 +37414,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/event/CommonEvent"), c = t("../../../../common/utils/CmmUtils"), l = t("../../../../common/utils/UIUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/defines/Enums"), d = t("../../../../framework/defines/Macros"), h = t("./VGameitem"), f = t("./VMainEvent"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/event/CommonEvent"), c = t("../../../../common/utils/CmmUtils"), l = t("../../../../common/utils/UIUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/defines/Enums"), d = t("../../../../framework/defines/Macros"), h = t("./VGameitem"), f = t("./VMainEvent"), m = cc._decorator, g = m.ccclass, _ = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -40661,12 +37535,12 @@ if (e > 0) for (var o = 0; o < e; o++) t.push({
 stype: 2
 });
 };
-r([ g(a.default) ], e.prototype, "uiContainer", void 0);
-r([ g(cc.Layout) ], e.prototype, "content", void 0);
-r([ g(cc.Node) ], e.prototype, "homeBack", void 0);
-r([ g(cc.ScrollView) ], e.prototype, "scroll", void 0);
-r([ g(cc.Node) ], e.prototype, "label_name_parent", void 0);
-return r([ _ ], e);
+r([ _(a.default) ], e.prototype, "uiContainer", void 0);
+r([ _(cc.Layout) ], e.prototype, "content", void 0);
+r([ _(cc.Node) ], e.prototype, "homeBack", void 0);
+r([ _(cc.ScrollView) ], e.prototype, "scroll", void 0);
+r([ _(cc.Node) ], e.prototype, "label_name_parent", void 0);
+return r([ g ], e);
 }(p.default);
 o.default = y;
 cc._RF.pop();
@@ -40706,7 +37580,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/ConstString"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../framework/componects/EventComponent"), u = t("./VGamelist"), d = t("./VGameType"), h = t("./VMainEvent"), f = t("./VMoreGame"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+var a = t("../../../../common/config/ConstString"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../framework/componects/EventComponent"), u = t("./VGamelist"), d = t("./VGameType"), h = t("./VMainEvent"), f = t("./VMoreGame"), m = cc._decorator, g = m.ccclass, _ = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -40859,12 +37733,12 @@ dispatch(h.VMainEvent.VMainEvent_load_more);
 }, 2);
 }
 };
-r([ g(d.default) ], e.prototype, "gametype", void 0);
-r([ g(u.default) ], e.prototype, "gameList", void 0);
-r([ g(cc.ScrollView) ], e.prototype, "scroll", void 0);
-r([ g(f.default) ], e.prototype, "moreGame", void 0);
-r([ g(cc.Layout) ], e.prototype, "content", void 0);
-return r([ _ ], e);
+r([ _(d.default) ], e.prototype, "gametype", void 0);
+r([ _(u.default) ], e.prototype, "gameList", void 0);
+r([ _(cc.ScrollView) ], e.prototype, "scroll", void 0);
+r([ _(f.default) ], e.prototype, "moreGame", void 0);
+r([ _(cc.Layout) ], e.prototype, "content", void 0);
+return r([ g ], e);
 }(p.default);
 o.default = y;
 cc._RF.pop();
@@ -41097,7 +37971,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/view/CommonUIHelper"), h = t("../../../../sdk/SdkManager"), f = t("../../../../zgameCommon/GameCommonUIHelper"), m = cc._decorator, _ = m.ccclass, g = (m.property, 
+var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/view/CommonUIHelper"), h = t("../../../../sdk/SdkManager"), f = t("../../../../zgameCommon/GameCommonUIHelper"), m = cc._decorator, g = m.ccclass, _ = (m.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -41273,9 +38147,9 @@ t.refreshInfo();
 }
 });
 };
-return r([ _ ], e);
+return r([ g ], e);
 }(p.default));
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../../common/config/GlobalVar": "GlobalVar",
@@ -41313,7 +38187,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/utils/CmmUtils"), l = t("../../../../common/utils/UIUtils"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Decorators"), d = t("../../../../framework/defines/Macros"), h = t("../../../../login/other/coin_label_item"), f = cc._decorator, m = f.ccclass, _ = (f.property, 
+var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/utils/CmmUtils"), l = t("../../../../common/utils/UIUtils"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Decorators"), d = t("../../../../framework/defines/Macros"), h = t("../../../../login/other/coin_label_item"), f = cc._decorator, m = f.ccclass, g = (f.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -41522,7 +38396,7 @@ r([ u.inject("root/monthExtra", cc.Node) ], e.prototype, "monthExtra", void 0);
 r([ u.inject("root/monthExtra/value", cc.Label) ], e.prototype, "monthExtraValue", void 0);
 return r([ m ], e);
 }(p.default));
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../../common/config/GlobalVar": "GlobalVar",
@@ -41645,7 +38519,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/GrayBtn"), s = t("../../../common/component/SwitchBtnItem"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/utils/CmmUtils"), u = t("../../../framework/defines/Enums"), d = t("../../other/vip2_item"), h = t("../CommonUIHelper"), f = cc._decorator, m = f.ccclass, _ = (f.property, 
+var a = t("../../../common/component/GrayBtn"), s = t("../../../common/component/SwitchBtnItem"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/utils/CmmUtils"), u = t("../../../framework/defines/Enums"), d = t("../../other/vip2_item"), h = t("../CommonUIHelper"), f = cc._decorator, m = f.ccclass, g = (f.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -41889,7 +38763,7 @@ h.default.showVipTips2(App.zLan.getString(10153));
 };
 return r([ m ], e);
 }(s.default));
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../common/component/GrayBtn": "GrayBtn",
@@ -42186,7 +39060,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/ConstString"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/laba/laba_item"), h = t("../../../../login/view/CommonUIHelper"), f = t("../../../../sdk/GameNativeConfig"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+var a = t("../../../../common/config/ConstString"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/laba/laba_item"), h = t("../../../../login/view/CommonUIHelper"), f = t("../../../../sdk/GameNativeConfig"), m = cc._decorator, g = m.ccclass, _ = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -42292,17 +39166,17 @@ if (i.gameId == this.gotoGameId) return i;
 }
 return null;
 };
-r([ g(cc.Prefab) ], e.prototype, "itemPrefab", void 0);
-r([ g(cc.Widget) ], e.prototype, "widget", void 0);
-r([ g(cc.Node) ], e.prototype, "root", void 0);
-r([ g(cc.Node) ], e.prototype, "node_NormalParent", void 0);
-r([ g(cc.Node) ], e.prototype, "node_Move", void 0);
-r([ g(cc.Sprite) ], e.prototype, "sprite_Head", void 0);
-r([ g(cc.Label) ], e.prototype, "label_PlayerName", void 0);
-r([ g(cc.Label) ], e.prototype, "label_PlayerID", void 0);
-r([ g(cc.RichText) ], e.prototype, "richText_TitleName", void 0);
-r([ g(cc.Label) ], e.prototype, "label_WinMoney", void 0);
-return r([ _ ], e);
+r([ _(cc.Prefab) ], e.prototype, "itemPrefab", void 0);
+r([ _(cc.Widget) ], e.prototype, "widget", void 0);
+r([ _(cc.Node) ], e.prototype, "root", void 0);
+r([ _(cc.Node) ], e.prototype, "node_NormalParent", void 0);
+r([ _(cc.Node) ], e.prototype, "node_Move", void 0);
+r([ _(cc.Sprite) ], e.prototype, "sprite_Head", void 0);
+r([ _(cc.Label) ], e.prototype, "label_PlayerName", void 0);
+r([ _(cc.Label) ], e.prototype, "label_PlayerID", void 0);
+r([ _(cc.RichText) ], e.prototype, "richText_TitleName", void 0);
+r([ _(cc.Label) ], e.prototype, "label_WinMoney", void 0);
+return r([ g ], e);
 }(p.default);
 o.default = y;
 cc._RF.pop();
@@ -42769,7 +39643,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/view/CommonUIHelper"), h = cc._decorator, f = h.ccclass, m = h.property, _ = function(t) {
+var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/view/CommonUIHelper"), h = cc._decorator, f = h.ccclass, m = h.property, g = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -42843,7 +39717,7 @@ r([ m(cc.Node) ], e.prototype, "down_btn", void 0);
 r([ m(cc.Node) ], e.prototype, "new_app_btn", void 0);
 return r([ f ], e);
 }(p.default);
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../../common/config/GlobalVar": "GlobalVar",
@@ -42879,7 +39753,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/net/CommonSender"), l = t("../../../../framework/componects/EventComponent"), p = t("../../../../framework/defines/Enums"), u = t("./VGamelist"), d = t("./VMainEvent"), h = cc._decorator, f = h.ccclass, m = h.property, _ = function(t) {
+var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/net/CommonSender"), l = t("../../../../framework/componects/EventComponent"), p = t("../../../../framework/defines/Enums"), u = t("./VGamelist"), d = t("./VMainEvent"), h = cc._decorator, f = h.ccclass, m = h.property, g = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -42987,7 +39861,7 @@ r([ m(cc.Layout) ], e.prototype, "content", void 0);
 r([ m(cc.ScrollView) ], e.prototype, "typeScroll", void 0);
 return r([ f ], e);
 }(l.default);
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../../common/component/UIContainer": "UIContainer",
@@ -43347,7 +40221,7 @@ return n;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var s = t("../../../../common/component/UIContainer"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Enums"), d = t("../../../../sdk/AppInfo"), h = t("../viewItem/paycard_select_item"), f = t("../viewItem/paycard_input_item"), m = t("../../../../common/net/CommonSender"), _ = cc._decorator, g = _.ccclass, y = (_.property, 
+var s = t("../../../../common/component/UIContainer"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Enums"), d = t("../../../../sdk/AppInfo"), h = t("../viewItem/paycard_select_item"), f = t("../viewItem/paycard_input_item"), m = t("../../../../common/net/CommonSender"), g = cc._decorator, _ = g.ccclass, y = (g.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -43517,7 +40391,7 @@ dispatch(c.HttpEvent.updateBindCardAcount, t.data.transferId);
 }, t);
 };
 e.prototype.click = function() {};
-return r([ g ], e);
+return r([ _ ], e);
 }(p.default));
 o.default = y;
 cc._RF.pop();
@@ -43557,7 +40431,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/User"), s = t("../../../../common/event/CommonEvent"), c = t("../../../../common/net/CommonSender"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Decorators"), d = t("../../../../framework/defines/Enums"), h = t("../../../../login/other/exchange_Item"), f = t("../../../../login/view/CommonUIHelper"), m = t("../../../../zgameCommon/GameCommonUIHelper"), _ = cc._decorator, g = _.ccclass, y = (_.property, 
+var a = t("../../../../common/config/User"), s = t("../../../../common/event/CommonEvent"), c = t("../../../../common/net/CommonSender"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/core/ui/UIView"), u = t("../../../../framework/defines/Decorators"), d = t("../../../../framework/defines/Enums"), h = t("../../../../login/other/exchange_Item"), f = t("../../../../login/view/CommonUIHelper"), m = t("../../../../zgameCommon/GameCommonUIHelper"), g = cc._decorator, _ = g.ccclass, y = (g.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -43762,7 +40636,7 @@ r([ u.inject("FitRoot/root/Bonus/btn_collect/Label", cc.Label) ], e.prototype, "
 r([ u.inject("FitRoot/root/Exchange/Layout", cc.Node) ], e.prototype, "node_Layout_Exchange", void 0);
 r([ u.inject("FitRoot/root/Bonus/acc", cc.Node) ], e.prototype, "acc", void 0);
 r([ u.inject("FitRoot/root/Bonus/acc/label", cc.RichText) ], e.prototype, "accLabel", void 0);
-return o = r([ g ], e);
+return o = r([ _ ], e);
 }(p.default));
 o.default = y;
 cc._RF.pop();
@@ -43803,7 +40677,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../../common/component/AutoScaleShow"), s = t("../../../../../common/config/ConstString"), c = t("../../../../../common/config/GlobalVar"), l = t("../../../../../common/config/User"), p = t("../../../../../common/event/CommonEvent"), u = t("../../../../../common/net/HttpSender"), d = t("../../../../../common/utils/CmmUtils"), h = t("../../../../../common/utils/UIUtils"), f = t("../../../../../framework/componects/EventComponent"), m = t("../../../../../framework/defines/Enums"), _ = t("../../../../../login/view/CommonUIHelper"), g = t("../../../../../sdk/GameNativeConfig"), y = cc._decorator, v = y.ccclass, b = y.property, C = function(t) {
+var a = t("../../../../../common/component/AutoScaleShow"), s = t("../../../../../common/config/ConstString"), c = t("../../../../../common/config/GlobalVar"), l = t("../../../../../common/config/User"), p = t("../../../../../common/event/CommonEvent"), u = t("../../../../../common/net/HttpSender"), d = t("../../../../../common/utils/CmmUtils"), h = t("../../../../../common/utils/UIUtils"), f = t("../../../../../framework/componects/EventComponent"), m = t("../../../../../framework/defines/Enums"), g = t("../../../../../login/view/CommonUIHelper"), _ = t("../../../../../sdk/GameNativeConfig"), y = cc._decorator, v = y.ccclass, b = y.property, C = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -43828,7 +40702,7 @@ e.hor2_winnings = null;
 return e;
 }
 e.prototype.addEvents = function() {
-this.onD(g.default.Event.update_money, this.refreshPlayerInfo.bind(this));
+this.onD(_.default.Event.update_money, this.refreshPlayerInfo.bind(this));
 this.onD(p.CommonEvent.ClearLoginToken, this.refreshPlayerInfo.bind(this));
 this.onD(p.ComponentGameEvent.UpdateSelfHeadIcon, this.GetHeadIcon.bind(this));
 };
@@ -43840,35 +40714,35 @@ this.refresh();
 e.prototype.initUIEvent = function() {
 this.onN(this.addCrashBtn, m.NodeEvent.click, function() {
 App.globalAudio.playAddCash();
-_.default.showVRechargeView();
+g.default.showVRechargeView();
 });
 this.onN(this.widthdrawBtn, m.NodeEvent.click, function() {
 App.globalAudio.playAddCash();
-_.default.showWithdraw();
+g.default.showWithdraw();
 });
 this.onN(this.login_btn, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-_.default.showBindMobile();
+g.default.showBindMobile();
 });
 this.onN(this.register_btn, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-_.default.showRegisterView(1);
+g.default.showRegisterView(1);
 });
 this.onN(this.hor1_deposited, m.NodeEvent.click, function() {
 App.globalAudio.playAddCash();
-_.default.showVRechargeView();
+g.default.showVRechargeView();
 });
 this.onN(this.hor4_bonus, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-_.default.showBounsView();
+g.default.showBounsView();
 });
 this.onN(this.hor2_winnings, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-_.default.showWithdraw();
+g.default.showWithdraw();
 });
 this.onN(this.info_btn, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-_.default.showVAccountSecurityView();
+g.default.showVAccountSecurityView();
 });
 };
 e.prototype.refresh = function() {
@@ -43975,7 +40849,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/ZProgressbarNoMask"), s = t("../../../../common/config/ConstString"), c = t("../../../../common/config/GlobalVar"), l = t("../../../../common/config/User"), p = t("../../../../common/event/CommonEvent"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../common/utils/UIUtils"), h = t("../../../../framework/componects/EventComponent"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/view/CommonUIHelper"), _ = cc._decorator, g = _.ccclass, y = _.property, v = function(t) {
+var a = t("../../../../common/component/ZProgressbarNoMask"), s = t("../../../../common/config/ConstString"), c = t("../../../../common/config/GlobalVar"), l = t("../../../../common/config/User"), p = t("../../../../common/event/CommonEvent"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../common/utils/UIUtils"), h = t("../../../../framework/componects/EventComponent"), f = t("../../../../framework/defines/Enums"), m = t("../../../../login/view/CommonUIHelper"), g = cc._decorator, _ = g.ccclass, y = g.property, v = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -44048,7 +40922,7 @@ r([ y(cc.Node) ], e.prototype, "monthCard", void 0);
 r([ y(cc.Node) ], e.prototype, "normaldBg", void 0);
 r([ y(cc.Node) ], e.prototype, "vipColor", void 0);
 r([ y(cc.Node) ], e.prototype, "bindBtn", void 0);
-return r([ g ], e);
+return r([ _ ], e);
 }(h.default);
 o.default = v;
 cc._RF.pop();
@@ -44254,7 +41128,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/net/CommonSender"), c = t("../../../../common/utils/CmmUtils"), l = t("../../../../framework/core/ui/UIView"), p = t("../../../../framework/defines/Decorators"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/other/draw_record_item"), h = t("../../../../login/other/topup_record_item"), f = t("../../../../sdk/AppInfo"), m = cc._decorator, _ = m.ccclass, g = (m.property, 
+var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/net/CommonSender"), c = t("../../../../common/utils/CmmUtils"), l = t("../../../../framework/core/ui/UIView"), p = t("../../../../framework/defines/Decorators"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/other/draw_record_item"), h = t("../../../../login/other/topup_record_item"), f = t("../../../../sdk/AppInfo"), m = cc._decorator, g = m.ccclass, _ = (m.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -44411,9 +41285,9 @@ r([ p.inject("FitRoot/Background/DrawScrollView/view/content", a.default) ], e.p
 r([ p.inject("FitRoot/bottom/spit/last", cc.Node) ], e.prototype, "lastBtn", void 0);
 r([ p.inject("FitRoot/bottom/spit/next", cc.Node) ], e.prototype, "nextBtn", void 0);
 r([ p.inject("FitRoot/bottom/spit/curSpitValue", cc.RichText) ], e.prototype, "curSpitValue", void 0);
-return r([ _ ], e);
+return r([ g ], e);
 }(l.default));
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../../common/component/UIContainer": "UIContainer",
@@ -44451,7 +41325,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/GrayNodeColor"), s = t("../../../../common/component/LayoutUpdate"), c = t("../../../../common/component/UIContainer"), l = t("../../../../common/config/GlobalVar"), p = t("../../../../common/config/User"), u = t("../../../../common/net/CommonSender"), d = t("../../../../common/utils/CmmUtils"), h = t("../../../../framework/core/ui/UIView"), f = t("../../../../framework/defines/Enums"), m = t("../../../../sdk/SdkManager"), _ = cc._decorator, g = _.ccclass, y = (_.property, 
+var a = t("../../../../common/component/GrayNodeColor"), s = t("../../../../common/component/LayoutUpdate"), c = t("../../../../common/component/UIContainer"), l = t("../../../../common/config/GlobalVar"), p = t("../../../../common/config/User"), u = t("../../../../common/net/CommonSender"), d = t("../../../../common/utils/CmmUtils"), h = t("../../../../framework/core/ui/UIView"), f = t("../../../../framework/defines/Enums"), m = t("../../../../sdk/SdkManager"), g = cc._decorator, _ = g.ccclass, y = (g.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -44648,7 +41522,7 @@ this.page = this.args.page;
 this.tpage = this.args.tpage;
 this.updateType0List(this.args.list);
 };
-return r([ g ], e);
+return r([ _ ], e);
 }(h.default));
 o.default = y;
 cc._RF.pop();
@@ -44689,7 +41563,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/GrayNodeColor"), s = t("../../../../common/component/UIContainer"), c = t("../../../../common/config/GlobalVar"), l = t("../../../../common/config/User"), p = t("../../../../common/event/CommonEvent"), u = t("../../../../common/net/CommonSender"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Enums"), f = t("../../../../login/other/PhoneQuhao_Item"), m = t("../../../../login/view/bind/register_account_item"), _ = t("../../../../login/view/HotUpdate"), g = cc._decorator, y = g.ccclass, v = (g.property, 
+var a = t("../../../../common/component/GrayNodeColor"), s = t("../../../../common/component/UIContainer"), c = t("../../../../common/config/GlobalVar"), l = t("../../../../common/config/User"), p = t("../../../../common/event/CommonEvent"), u = t("../../../../common/net/CommonSender"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Enums"), f = t("../../../../login/other/PhoneQuhao_Item"), m = t("../../../../login/view/bind/register_account_item"), g = t("../../../../login/view/HotUpdate"), _ = cc._decorator, y = _.ccclass, v = (_.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -44772,7 +41646,7 @@ e.prototype.GoogleLogin = function(t) {
 var e = this;
 Log.e("xxxxxxxxxxxxxxxxxxxxxxxgoogle" + t);
 this.sender.Send_AutoRegister(function(t) {
-_.default.LoingCallBack(t.data);
+g.default.LoingCallBack(t.data);
 App.tips.show(App.zLan.getString(1111));
 e.close();
 }).then(function(t) {
@@ -45515,7 +42389,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/Config"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../framework/componects/EventComponent"), h = t("../../../../framework/defines/Enums"), f = cc._decorator, m = f.ccclass, _ = f.property, g = function(t) {
+var a = t("../../../../common/config/Config"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../framework/componects/EventComponent"), h = t("../../../../framework/defines/Enums"), f = cc._decorator, m = f.ccclass, g = f.property, _ = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -45571,17 +42445,17 @@ this.progressBar_system && (this.progressBar_system.progress = t);
 this.unCompleted.active = this.curCoin < this.total;
 this.completed.active = this.curCoin >= this.total;
 };
-r([ _(cc.Label) ], e.prototype, "label_TotalCoin", void 0);
-r([ _(cc.Label) ], e.prototype, "totalCoin2", void 0);
-r([ _(cc.RichText) ], e.prototype, "percent", void 0);
-r([ _(cc.Node) ], e.prototype, "unCompleted", void 0);
-r([ _(cc.Node) ], e.prototype, "completed", void 0);
-r([ _(cc.Node) ], e.prototype, "withdrawBtn", void 0);
-r([ _(cc.Node) ], e.prototype, "hasGet", void 0);
-r([ _(cc.ProgressBar) ], e.prototype, "progressBar_system", void 0);
+r([ g(cc.Label) ], e.prototype, "label_TotalCoin", void 0);
+r([ g(cc.Label) ], e.prototype, "totalCoin2", void 0);
+r([ g(cc.RichText) ], e.prototype, "percent", void 0);
+r([ g(cc.Node) ], e.prototype, "unCompleted", void 0);
+r([ g(cc.Node) ], e.prototype, "completed", void 0);
+r([ g(cc.Node) ], e.prototype, "withdrawBtn", void 0);
+r([ g(cc.Node) ], e.prototype, "hasGet", void 0);
+r([ g(cc.ProgressBar) ], e.prototype, "progressBar_system", void 0);
 return r([ m ], e);
 }(d.default);
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../../common/config/Config": "Config",
@@ -45618,7 +42492,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../../common/component/GrayNodeColor"), s = t("../../../../../common/component/SwitchBtns"), c = t("../../../../../common/component/UIContainer"), l = t("../../../../../common/config/GlobalVar"), p = t("../../../../../common/config/User"), u = t("../../../../../common/event/CommonEvent"), d = t("../../../../../common/net/CommonSender"), h = t("../../../../../common/utils/CmmUtils"), f = t("../../../../../framework/core/ui/UIView"), m = t("../../../../../framework/defines/Enums"), _ = t("../../../../../zgameCommon/GameCommonUIHelper"), g = cc._decorator, y = g.ccclass, v = (g.property, 
+var a = t("../../../../../common/component/GrayNodeColor"), s = t("../../../../../common/component/SwitchBtns"), c = t("../../../../../common/component/UIContainer"), l = t("../../../../../common/config/GlobalVar"), p = t("../../../../../common/config/User"), u = t("../../../../../common/event/CommonEvent"), d = t("../../../../../common/net/CommonSender"), h = t("../../../../../common/utils/CmmUtils"), f = t("../../../../../framework/core/ui/UIView"), m = t("../../../../../framework/defines/Enums"), g = t("../../../../../zgameCommon/GameCommonUIHelper"), _ = cc._decorator, y = _.ccclass, v = (_.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -45774,7 +42648,7 @@ type: 1,
 value: e.data,
 position: n
 });
-_.default.showHallReward({
+g.default.showHallReward({
 data: i,
 show: !0
 });
@@ -45831,7 +42705,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Enums"), f = t("../../../../login/view/CommonUIHelper"), m = t("../../../../sdk/GameNativeConfig"), _ = cc._decorator, g = _.ccclass, y = (_.property, 
+var a = t("../../../../common/component/UIContainer"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../common/utils/CmmUtils"), d = t("../../../../framework/core/ui/UIView"), h = t("../../../../framework/defines/Enums"), f = t("../../../../login/view/CommonUIHelper"), m = t("../../../../sdk/GameNativeConfig"), g = cc._decorator, _ = g.ccclass, y = (g.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -46064,7 +42938,7 @@ this.label_limitTitle.string = App.zLan.getString(20194) + " : ";
 this.label_limitValue.string = this.args.leftAmts;
 this.label_limitCount.string = App.zLan.getString(20195) + " : " + this.args.leftTime;
 };
-return r([ g ], e);
+return r([ _ ], e);
 }(d.default));
 o.default = y;
 cc._RF.pop();
@@ -46722,7 +43596,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("console"), s = t("../../../../common/component/AutoScaleShow"), c = t("../../../../common/component/UIContainer"), l = t("../../../../common/config/ConstString"), p = t("../../../../common/config/GlobalVar"), u = t("../../../../common/config/User"), d = t("../../../../common/event/CommonEvent"), h = t("../../../../common/net/CommonSender"), f = t("../../../../common/utils/CmmUtils"), m = t("../../../../framework/core/ui/UIView"), _ = t("../../../../framework/defines/Decorators"), g = t("../../../../framework/defines/Enums"), y = t("../../../../login/view/CommonUIHelper"), v = t("../../../../sdk/AppInfo"), b = t("../other/VBindingCardItem"), C = cc._decorator, w = C.ccclass, E = (C.property, 
+var a = t("console"), s = t("../../../../common/component/AutoScaleShow"), c = t("../../../../common/component/UIContainer"), l = t("../../../../common/config/ConstString"), p = t("../../../../common/config/GlobalVar"), u = t("../../../../common/config/User"), d = t("../../../../common/event/CommonEvent"), h = t("../../../../common/net/CommonSender"), f = t("../../../../common/utils/CmmUtils"), m = t("../../../../framework/core/ui/UIView"), g = t("../../../../framework/defines/Decorators"), _ = t("../../../../framework/defines/Enums"), y = t("../../../../login/view/CommonUIHelper"), v = t("../../../../sdk/AppInfo"), b = t("../other/VBindingCardItem"), C = cc._decorator, w = C.ccclass, E = (C.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -46843,54 +43717,54 @@ e.prototype.addEvents = function() {
 var t = this;
 this.onD(d.HttpEvent.WithDrawUpdate, this.updateByServer.bind(this));
 this.onD(d.HttpEvent.updateBindCardAcount, this.refreshBind.bind(this));
-this.onN(this.infoBtn, g.NodeEvent.click, function() {
+this.onN(this.infoBtn, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 y.default.showWithdrawVipInfo();
 });
-this.onN(this.taxInfoBtn, g.NodeEvent.click, function() {
+this.onN(this.taxInfoBtn, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 f.CmmUtils.popTips(App.zLan.getString(20168), !0);
 });
-this.onN(this.betInfoBtn, g.NodeEvent.click, function() {
+this.onN(this.betInfoBtn, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 y.default.showWithdrawVipInfo2();
 });
-this.onN(this.Button_guest, g.NodeEvent.click, function() {
+this.onN(this.Button_guest, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 v.default.showCustomService();
 });
-this.onN(this.Button_close, g.NodeEvent.click, function() {
+this.onN(this.Button_close, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 App.globalAudio.resumeMusic();
 t.close();
 });
-this.onN(this.Button_Withdraw.node, g.NodeEvent.click, function() {
+this.onN(this.Button_Withdraw.node, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 t.Button_Withdraw.interactable = !1;
 t.onClickWithdraw();
 });
-this.onN(this.HistroyButton, g.NodeEvent.click, function() {
+this.onN(this.HistroyButton, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 y.default.showRecordWeb(1);
 });
-this.onN(this.bindingAddBtn, g.NodeEvent.click, function() {
+this.onN(this.bindingAddBtn, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 var e = {};
 e.map = t.accTypeMap;
 e.accType = t.defualtWiththdrawTypeId;
 y.default.showBindWidthdrawInfo(e);
 });
-this.onN(this.withdraw_amount_clearBtn, g.NodeEvent.click, function() {
+this.onN(this.withdraw_amount_clearBtn, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 t.clearWithdrawEditBox();
 t.chooseContainer.refresh();
 });
-this.onN(this.withdraw_amount_clearBtn_game, g.NodeEvent.click, function() {
+this.onN(this.withdraw_amount_clearBtn_game, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 t.clearWithdrawEditBox_game();
 t.chooseContainer_game.refresh();
 });
-this.onN(this.modifyBtn, g.NodeEvent.click, function() {
+this.onN(this.modifyBtn, _.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 var e = {};
 e.map = t.accTypeMap;
@@ -47268,8 +44142,8 @@ if (e.data.value == this.curSelectPrice) {
 n.active = !0;
 this.drawBalance = this.curSelectPrice;
 } else n.active = !1;
-t.off(g.NodeEvent.click);
-t.on(g.NodeEvent.click, function() {
+t.off(_.NodeEvent.click);
+t.on(_.NodeEvent.click, function() {
 if (i.active) App.tips.show(App.zLan.getString(10192, e.data.vipLimit)); else {
 o.curSelectPrice = e.data.value;
 o.LocalToGold(o.curSelectPrice);
@@ -47292,8 +44166,8 @@ if (e.data.value == this.curSelectPrice_game) {
 n.active = !0;
 this.drawBalance_game = this.curSelectPrice_game;
 } else n.active = !1;
-t.off(g.NodeEvent.click);
-t.on(g.NodeEvent.click, function() {
+t.off(_.NodeEvent.click);
+t.on(_.NodeEvent.click, function() {
 if (i.active) App.tips.show(App.zLan.getString(10192, e.data.vipLimit)); else {
 o.curSelectPrice_game = e.data.value;
 o.GoldToLocal(o.curSelectPrice_game);
@@ -47400,17 +44274,17 @@ var e = t / this.serverData.gameScale;
 this.drawBalance = Number(f.CmmUtils.saveDecimal(2, e.toString(), !1));
 }
 };
-r([ _.inject("FitRoot/top/Button_close", cc.Node) ], e.prototype, "Button_close", void 0);
-r([ _.inject("FitRoot/top/Button_guest", cc.Node) ], e.prototype, "Button_guest", void 0);
-r([ _.inject("FitRoot/center/scroll/view/content/BindInfo/Title/stateBtn", cc.Node) ], e.prototype, "bindingAddBtn", void 0);
-r([ _.inject("FitRoot/center/scroll/view/content/BindInfo/Title/modifyBtn", cc.Node) ], e.prototype, "modifyBtn", void 0);
-r([ _.inject("FitRoot/center/scroll/view/content/BindInfo/showCard", cc.Node) ], e.prototype, "node_showCard", void 0);
-r([ _.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/ScrollView", cc.Node) ], e.prototype, "node_showCardScrollView", void 0);
-r([ _.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/ScrollView/view", cc.Node) ], e.prototype, "node_showCardView", void 0);
-r([ _.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/ScrollView/scrollBar", cc.Node) ], e.prototype, "node_showCardScrollBar", void 0);
-r([ _.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/ScrollView/view/content", cc.Node) ], e.prototype, "node_bindingCardParent", void 0);
-r([ _.inject("FitRoot/center/scroll/view/content/BindInfo/prefab/BindingCardItem", cc.Node) ], e.prototype, "node_bindingCardItem", void 0);
-r([ _.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/noLabel_tip", cc.Node) ], e.prototype, "node_NoBinding", void 0);
+r([ g.inject("FitRoot/top/Button_close", cc.Node) ], e.prototype, "Button_close", void 0);
+r([ g.inject("FitRoot/top/Button_guest", cc.Node) ], e.prototype, "Button_guest", void 0);
+r([ g.inject("FitRoot/center/scroll/view/content/BindInfo/Title/stateBtn", cc.Node) ], e.prototype, "bindingAddBtn", void 0);
+r([ g.inject("FitRoot/center/scroll/view/content/BindInfo/Title/modifyBtn", cc.Node) ], e.prototype, "modifyBtn", void 0);
+r([ g.inject("FitRoot/center/scroll/view/content/BindInfo/showCard", cc.Node) ], e.prototype, "node_showCard", void 0);
+r([ g.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/ScrollView", cc.Node) ], e.prototype, "node_showCardScrollView", void 0);
+r([ g.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/ScrollView/view", cc.Node) ], e.prototype, "node_showCardView", void 0);
+r([ g.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/ScrollView/scrollBar", cc.Node) ], e.prototype, "node_showCardScrollBar", void 0);
+r([ g.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/ScrollView/view/content", cc.Node) ], e.prototype, "node_bindingCardParent", void 0);
+r([ g.inject("FitRoot/center/scroll/view/content/BindInfo/prefab/BindingCardItem", cc.Node) ], e.prototype, "node_bindingCardItem", void 0);
+r([ g.inject("FitRoot/center/scroll/view/content/BindInfo/showCard/noLabel_tip", cc.Node) ], e.prototype, "node_NoBinding", void 0);
 return r([ w ], e);
 }(m.default));
 o.default = E;
@@ -47690,7 +44564,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/event/CommonEvent"), c = t("../../../../common/net/CommonSender"), l = t("../../../../framework/core/ui/UIView"), p = t("../../../../framework/defines/Enums"), u = t("../../../../login/other/coin_label_item"), d = t("../../../../sdk/SdkManager"), h = t("../../../../zgameCommon/GameCommonUIHelper"), f = cc._decorator, m = f.ccclass, _ = (f.property, 
+var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/event/CommonEvent"), c = t("../../../../common/net/CommonSender"), l = t("../../../../framework/core/ui/UIView"), p = t("../../../../framework/defines/Enums"), u = t("../../../../login/other/coin_label_item"), d = t("../../../../sdk/SdkManager"), h = t("../../../../zgameCommon/GameCommonUIHelper"), f = cc._decorator, m = f.ccclass, g = (f.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -47780,7 +44654,7 @@ value: e.reward
 };
 return r([ m ], e);
 }(l.default));
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../../common/config/GlobalVar": "GlobalVar",
@@ -47888,7 +44762,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/SwitchBtnItem"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/utils/UIUtils"), d = t("../../../framework/componects/EventComponent"), h = t("../../../login/view/CommonUIHelper"), f = t("../../../login/view/HotUpdate"), m = t("../../../sdk/AppInfo"), _ = t("../../../sdk/SdkManager"), g = cc._decorator, y = g.ccclass, v = (g.property, 
+var a = t("../../../common/component/SwitchBtnItem"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/utils/UIUtils"), d = t("../../../framework/componects/EventComponent"), h = t("../../../login/view/CommonUIHelper"), f = t("../../../login/view/HotUpdate"), m = t("../../../sdk/AppInfo"), g = t("../../../sdk/SdkManager"), _ = cc._decorator, y = _.ccclass, v = (_.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -48005,8 +44879,8 @@ c.GlobalVar.hallFoceUpdateStatus = 0;
 e.prototype.openWebView = function(t, e) {
 if (m.default.isAndroid) {
 if (m.default.isSupportBackHome()) {
-1 == e.dir && _.default.setOrientation_p(!0);
-2 == e.dir ? _.default.openUrl(t) : _.default.openWebView(t);
+1 == e.dir && g.default.setOrientation_p(!0);
+2 == e.dir ? g.default.openUrl(t) : g.default.openWebView(t);
 }
 } else h.default.showIosOpenView(t);
 };
@@ -48038,7 +44912,7 @@ text: c.GlobalVar.forceUpdateTips,
 confirmString: App.zLan.getString(1002),
 title: App.zLan.getString(20212),
 confirmCb: function() {
-_.default.openUrl(c.GlobalVar.forceUpdateUrl);
+g.default.openUrl(c.GlobalVar.forceUpdateUrl);
 },
 cancelCb: function() {},
 confirm_not: !0
@@ -48050,7 +44924,7 @@ text: c.GlobalVar.forceUpdateTips,
 confirmString: App.zLan.getString(1002),
 title: App.zLan.getString(20212),
 confirmCb: function() {
-_.default.openUrl(c.GlobalVar.forceUpdateUrl);
+g.default.openUrl(c.GlobalVar.forceUpdateUrl);
 },
 confirm_not: !0
 });
@@ -48147,7 +45021,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.ViewManager = void 0;
-var a, s = t("../abstract/Group"), c = t("../abstract/Manager"), l = t("../abstract/View"), p = t("../define/enum"), u = t("../help/helper"), d = t("./ModelManager"), h = t("./ScrollManager"), f = cc._decorator, m = f.ccclass, _ = f.property;
+var a, s = t("../abstract/Group"), c = t("../abstract/Manager"), l = t("../abstract/View"), p = t("../define/enum"), u = t("../help/helper"), d = t("./ModelManager"), h = t("./ScrollManager"), f = cc._decorator, m = f.ccclass, g = f.property;
 (function(t) {
 t[t.ON_SCROLL = 0] = "ON_SCROLL";
 t[t.ON_LATEUPDATE = 1] = "ON_LATEUPDATE";
@@ -48159,7 +45033,7 @@ t[t.ON_CHANGED_OVERFLOWHEADER = 6] = "ON_CHANGED_OVERFLOWHEADER";
 t[t.ON_RESET_ALL_STATE = 7] = "ON_RESET_ALL_STATE";
 t[t.ON_CHANGED_SPACING = 8] = "ON_CHANGED_SPACING";
 })(a || (a = {}));
-var g = function(t) {
+var _ = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -48370,17 +45244,17 @@ h += f.size[this.adapter.mainAxis] + this.spacing;
 f.internal_setPosition(this._cacheHeadePosition[this.adapter.mainAxis]);
 }
 for (var m = d - 1; m >= 0; m--) {
-var _ = this._groups[m];
-this._calcMainAxisPosition(_, f, p.MagneticDirection.Header);
-h += _.size[this.adapter.mainAxis] + this.spacing;
-f = _;
+var g = this._groups[m];
+this._calcMainAxisPosition(g, f, p.MagneticDirection.Header);
+h += g.size[this.adapter.mainAxis] + this.spacing;
+f = g;
 }
 f = this._groups[d];
 for (m = d + 1; m < this.groupLength; m++) {
-_ = this._groups[m];
-this._calcMainAxisPosition(_, f, p.MagneticDirection.Footer);
-h += _.size[this.adapter.mainAxis] + this.spacing;
-f = _;
+g = this._groups[m];
+this._calcMainAxisPosition(g, f, p.MagneticDirection.Footer);
+h += g.size[this.adapter.mainAxis] + this.spacing;
+f = g;
 }
 h -= this.spacing;
 this._virtualSize = Math.max(0, h);
@@ -48885,88 +45759,88 @@ var t = this.adapter.isHorizontal ? -this.adapter.multiplier : this.adapter.mult
 return this.magneticDirection == p.MagneticDirection.Footer ? this.footer ? Math.max(0, this.adapter.mainAxisSize - this.adapter.mainAxisPadding - this.getVisibleMainAxisSize()) * t : this.adapter.mainAxisSize * t : 0;
 };
 e.Event = a;
-r([ _({
+r([ g({
 type: p.ArrangeAxis
 }) ], e.prototype, "_arrangeAxis", void 0);
-r([ _({
+r([ g({
 type: p.ArrangeAxis,
 tooltip: "主轴方向的排列方式\n        Start: 从上到下、从左到右\n        End: 从下到上、从右到左"
 }) ], e.prototype, "arrangeAxis", null);
-r([ _({
+r([ g({
 type: p.StretchDirection,
 tooltip: "当元素的尺寸、缩放改变时，受影响的其他元素应该如何计算新的位置\n        Auto: 以可视区域中心为起点，所有其他元素向两边延伸\n        Center: 以当前变化的元素为起点，所有其他元素向两边延伸\n        Header: 以当前变化的元素和它头部的所有元素向头部延伸\n        Footer: 以当前变化的元素和它尾部的所有元素向尾部延伸"
 }) ], e.prototype, "stretchDirection", void 0);
-r([ _({
+r([ g({
 range: [ 0, 1 ],
 slide: !0,
 step: .01,
 tooltip: "当元素移动到可视区域外偏移多少时才进行回收\n        比如元素的尺寸为100，当元素超出可视范围 100+100*0.3 时就会被回收\n        没有特殊需求时，默认值即可"
 }) ], e.prototype, "overflowOffset", void 0);
-r([ _({
+r([ g({
 range: [ 0, 1 ],
 slide: !0,
 step: .01,
 tooltip: "此值会影响填充元素的时机\n        没有特殊需求时，默认值即可"
 }) ], e.prototype, "enterOffset", void 0);
-r([ _() ], e.prototype, "_spacing", void 0);
-r([ _({
+r([ g() ], e.prototype, "_spacing", void 0);
+r([ g({
 tooltip: "主轴方向元素的间隙"
 }) ], e.prototype, "spacing", null);
-r([ _({
+r([ g({
 group: {
 id: "padding",
 name: "padding"
 }
 }) ], e.prototype, "left", void 0);
-r([ _({
+r([ g({
 group: {
 id: "padding",
 name: "padding"
 }
 }) ], e.prototype, "right", void 0);
-r([ _({
+r([ g({
 group: {
 id: "padding",
 name: "padding"
 }
 }) ], e.prototype, "top", void 0);
-r([ _({
+r([ g({
 group: {
 id: "padding",
 name: "padding"
 }
 }) ], e.prototype, "bottom", void 0);
-r([ _({
+r([ g({
 tooltip: "磁性停靠\n        开启后，会在增加数据时，根据设置进行自动滚动到顶部或底部"
 }) ], e.prototype, "magnetic", void 0);
-r([ _({
+r([ g({
 type: p.MagneticDirection,
 visible: function() {
 return this.magnetic;
 },
 tooltip: "停靠的方向"
 }) ], e.prototype, "magneticDirection", void 0);
-r([ _({
+r([ g({
 visible: function() {
 return this.magnetic;
 },
 tooltip: "停靠动画的时长"
 }) ], e.prototype, "magneticDuration", void 0);
-r([ _({
+r([ g({
 visible: function() {
 return this.magnetic;
 },
 tooltip: "默认情况下，仅当添加数据时才会触发停靠\n        当开启时，元素的尺寸改变时,也会否触发停靠"
 }) ], e.prototype, "magneticSizeChanges", void 0);
-r([ _({
+r([ g({
 tooltip: "头部循环"
 }) ], e.prototype, "loopHeader", void 0);
-r([ _({
+r([ g({
 tooltip: "尾部循环"
 }) ], e.prototype, "loopFooter", void 0);
 return r([ m("ViewManager") ], e);
 }(c.Manager);
-o.ViewManager = g;
+o.ViewManager = _;
 cc._RF.pop();
 }, {
 "../abstract/Group": "Group",
@@ -49846,7 +46720,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/net/CommonSender"), d = t("../../../common/utils/CmmUtils"), h = t("../../../framework/core/ui/UIView"), f = t("../../../framework/defines/Decorators"), m = t("../../../framework/defines/Enums"), _ = t("../../../sdk/AppInfo"), g = t("../CommonUIHelper"), y = cc._decorator, v = y.ccclass, b = (y.property, 
+var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/net/CommonSender"), d = t("../../../common/utils/CmmUtils"), h = t("../../../framework/core/ui/UIView"), f = t("../../../framework/defines/Decorators"), m = t("../../../framework/defines/Enums"), g = t("../../../sdk/AppInfo"), _ = t("../CommonUIHelper"), y = cc._decorator, v = y.ccclass, b = (y.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -49925,7 +46799,7 @@ e.prototype.initUIEvent = function() {
 var t = this;
 this.onN(this.Button_guest, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-_.default.showCustomService();
+g.default.showCustomService();
 });
 this.onN(this.Button_close, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
@@ -49933,7 +46807,7 @@ t.close();
 });
 this.onN(this.HistroyButton, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-g.default.showRecordsOfflineView();
+_.default.showRecordsOfflineView();
 });
 this.onN(this.check_close, m.NodeEvent.click, function() {
 t.checkNode.active = !1;
@@ -50314,854 +47188,6 @@ cc._RF.pop();
 }, {
 console: 8
 } ],
-ZRollAction: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "d4c54KvmCNENKQscCCULmZ1", "ZRollAction");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/enum/GlobalEnum"), s = t("../../../scripts/common/utils/RandomUtil"), c = t("./ZRollElement"), l = cc._decorator, p = l.ccclass, u = (l.property, 
-function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.endElements = [];
-e.result = null;
-e.isRolling = !1;
-e.speed = 2e3;
-e.dtTime = .02;
-e.curRollRunType = a.GlobalEnum.RollRunType.Normal;
-e.curRollElementsConfig = [];
-return e;
-}
-e.prototype.initData = function(t, e, o, n, i) {
-var r = this;
-this.accelerateDelayTime = 0;
-this.nextRollAction = n;
-this.rollIndex = t;
-this.rollConfig = e;
-this.speed = e.speed;
-this.fixedSpeed = e.speed;
-this.name = e.name;
-this.interval = e.interval || 0;
-this.randomMin = e.randomIconRange ? e.randomIconRange.x : 0;
-this.randomMax = e.randomIconRange ? e.randomIconRange.y : e.elementCount;
-this.view = i;
-this.elements = [];
-this.lockedEndElements = [];
-this.node.destroyAllChildren();
-this.maxNumY = e.numY + 2;
-this.halfCount = e.numY / 2 - .5;
-this.tempHalfCount = this.maxNumY / 2 - .5;
-for (var a = 0; a < this.maxNumY; a++) {
-var s = cc.instantiate(o);
-s.name = "element" + a;
-this.node.addChild(s);
-s.position = cc.v3(0, (this.tempHalfCount - a) * s.getContentSize().height, 0);
-var l = s.getComponent(c.default);
-l.resetPostion = s.position;
-l.index = a;
-l.rollIndex = this.rollIndex;
-l.finish = !1;
-this.elements.push(l);
-a > 0 && a < this.maxNumY - 1 && this.lockedEndElements.push(l);
-}
-this.elementCount = this.elements.length;
-this.elements.forEach(function(t) {
-0 == t.index ? t.lastElement = r.elements[r.elementCount - 1] : t.lastElement = r.elements[t.index - 1];
-t.index == r.elementCount - 1 ? t.nextElement = r.elements[0] : t.nextElement = r.elements[t.index + 1];
-});
-this.sizeY = this.elements[0].node.getContentSize().height;
-this.minY = this.elements[this.elementCount - 1].node.position.y;
-this.maxY = this.elements[0].node.position.y;
-this.isRolling = !1;
-this.result = new Array();
-this.halfUp = (this.halfCount + 1) * this.sizeY;
-this.halfDown = -this.halfUp;
-for (a = 0; a < this.elements.length; a++) this.elements[a].init(e);
-this.randomAllElement();
-for (a = 0; a < this.elements.length; a++) this.elements[a].setDefault();
-this.isLocked = !1;
-};
-e.prototype.setLock = function(t) {
-if (this.isLocked != t) {
-this.isLocked = t;
-if (this.isLocked) {
-this.endElements = [];
-for (var e = this.lockedEndElements.length - 1; e >= 0; e--) this.endElements.push(this.lockedEndElements[e]);
-this.resetPosition();
-}
-}
-};
-e.prototype.setLockElement = function(t) {
-for (var e = 0; e < this.endElements.length; e++) this.endElements[e].setResNorml(t[e]);
-};
-e.prototype.startRoll = function() {
-var t = this;
-if (!this.isLocked) {
-for (var e = 0; e < this.elements.length; e++) {
-var o = this.elements[e];
-o.finish = !1;
-cc.Tween.stopAllByTarget(o.node);
-}
-this.endElements = [];
-this.speed = this.rollConfig.speed;
-this.speed = this.fixedSpeed;
-this.accelerateDelayTime = 0;
-if (this.view.isCheckCallback_StartRoll && this.rollConfig.rollStartCB) {
-this.view.isCheckCallback_StartRoll = !1;
-this.rollConfig.rollStartCB(this.name);
-}
-switch (this.rollConfig.inEase) {
-case 1:
-this.inBack(function() {
-t.isRolling = !0;
-t.rollConfig.rollEaseFinishCB && t.rollConfig.rollEaseFinishCB(t.name, t.rollIndex);
-});
-break;
-
-default:
-this.isRolling = !0;
-this.rollConfig.rollEaseFinishCB && this.rollConfig.rollEaseFinishCB(this.name, this.rollIndex);
-}
-}
-};
-e.prototype.sotpRoll = function(t) {
-t && this.inBackTween && this.inBackTween.stop();
-this.result = this.view.results[this.rollIndex];
-if (this.isLocked) {
-this.result.reverse();
-for (var e = 0; e < this.endElements.length; e++) (r = this.endElements[e]).setResNorml(this.result[e].index);
-this.nextRollAction && this.nextRollAction.sotpRoll(!1);
-} else {
-this.isRolling = !1;
-var o = [];
-for (e = 0; e < this.elements.length; e++) {
-(r = this.elements[e]).setState(a.GlobalEnum.ElementState.Normal);
-r.node.y < this.minY && o.push(r);
-}
-1 == o.length ? this.resetElement(o[0]) : o.length > 1 && this.overSpeedResetElement(o);
-for (e = 0; e < this.elements.length; e++) (r = this.elements[e]).node.y >= this.halfUp && this.endElements.push(r);
-this.endElements.sort(function(t, e) {
-return t.node.y - e.node.y;
-});
-var n = this.endElements.length - this.rollConfig.numY;
-if (n > 0) for (e = 0; e < n; e++) this.endElements.pop(); else if (n < 0) {
-n = -n;
-for (e = 0; e < n; e++) if (0 == this.endElements.length) {
-this.resetPosition();
-this.endElements.push(this.elements[0]);
-} else {
-var i = this.endElements[this.endElements.length - 1].lastElement;
-this.endElements.push(i);
-}
-}
-this.result.reverse();
-for (e = 0; e < this.endElements.length; e++) {
-var r;
-(r = this.endElements[e]).setResNorml(this.result[e].index);
-if (0 == e) {
-r.targetPos = this.result[e].isEmpty ? cc.v2(0, -this.sizeY / 2 + (1 - this.halfCount) * this.sizeY) : cc.v2(0, -this.sizeY * this.halfCount);
-r.finish = !0;
-}
-}
-this.setToFixedPos(t);
-}
-};
-e.prototype.setSpeed = function(t) {
-this.speed = t;
-};
-e.prototype.startAccelerateBack = function() {
-this.rollConfig.rollAccelerateStartCB && this.rollConfig.rollAccelerateStartCB(this.rollIndex);
-};
-e.prototype.setAccelerateSpeed = function(t, e) {
-if (this.nextRollAction) {
-this.nextRollAction.speed = t;
-this.nextRollAction.startAccelerateBack();
-this.accelerateDelayTime = e;
-}
-};
-e.prototype.stopAnim = function() {
-if (this.elements) for (var t = 0; t < this.elements.length; t++) this.elements[t] && this.elements[t].setState(a.GlobalEnum.ElementState.Normal);
-};
-e.prototype.setToFixedPos = function(t) {
-for (var e = 0; e < this.endElements.length; e++) {
-var o = this.endElements[e];
-if (o.finish) {
-this.moveToTargetPos(o, t);
-return;
-}
-}
-};
-e.prototype.moveToTargetPos = function(t, e) {
-var o = this, n = t.node.y;
-cc.Tween.stopAllByTarget(t.node);
-var i = "backOut";
-this.rollConfig.stopEaseStr && (i = this.rollConfig.stopEaseStr);
-cc.tween(t.node).to(.3, {
-position: cc.v3(0, t.targetPos.y, 0)
-}, {
-easing: i,
-onUpdate: function() {
-var e = n - t.node.y;
-n = t.node.y;
-o.moveOtherElements(e, t, t.index, !0);
-}
-}).call(function() {
-t.nextElement.node.y = t.node.y - o.sizeY;
-o.rollConfig.gameFinishEndCB && o.rollConfig.gameFinishEndCB(o.rollIndex);
-}).start();
-this.scheduleOnce(function() {
-o.rollConfig.rollFinishCB(e, o.rollIndex);
-e || o.nextRollAction && (o.accelerateDelayTime > 0 ? o.scheduleOnce(function() {
-o.nextRollAction.sotpRoll(!1);
-}, o.accelerateDelayTime) : o.nextRollAction.sotpRoll(!1));
-}, this.interval);
-};
-e.prototype.moveOtherElements = function(t, e) {
-for (var o = 0; o < this.elements.length; o++) e != (i = this.elements[o]) && (i.node.y = i.node.y - t);
-var n = [];
-for (o = 0; o < this.elements.length; o++) {
-var i;
-(i = this.elements[o]).node.y < this.minY && n.push(i);
-}
-1 == n.length ? this.resetElement(n[0]) : n.length > 1 && this.overSpeedResetElement(n);
-};
-e.prototype.randomAllElement = function() {
-for (var t = 0; t < this.elements.length; t++) {
-var e = this.elements[t], o = 0;
-if (this.rollConfig.elementRange_Init) {
-var n = this.rollConfig.elementRange_Init[this.rollIndex];
-o = n[s.RandomUtil.randomRange(0, n.length)] - 1;
-} else o = s.RandomUtil.randomRange(this.randomMin, this.randomMax);
-e.setRes(o);
-}
-};
-e.prototype.randomAllElementByBetIndex = function() {};
-e.prototype.customUpdate = function() {
-this.isRolling && this.updateElementPos();
-};
-e.prototype.updateElementPos = function() {
-for (var t = this.dtTime * this.speed, e = 0; e < this.elements.length; e++) (n = this.elements[e]).node.y = n.node.y - t;
-var o = [];
-for (e = 0; e < this.elements.length; e++) {
-var n;
-(n = this.elements[e]).node.y < this.minY && o.push(n);
-}
-1 == o.length ? this.resetElement(o[0]) : o.length > 1 && this.overSpeedResetElement(o);
-};
-e.prototype.resetElement = function(t) {
-t.node.y = this.sizeY + t.nextElement.node.y;
-this.resetByElement(t);
-};
-e.prototype.setCurRollElementConfig = function(t) {
-this.curRollElementsConfig = [];
-this.curRollRunType = t;
-switch (t) {
-case a.GlobalEnum.RollRunType.Normal:
-if (this.rollConfig.elementRange_Run) {
-var e = this.rollConfig.elementRange_Run[this.rollIndex];
-if (this.rollConfig.elementRangeRate) for (var o = 0; o < e.length; o++) for (var n = e[o], i = 0; i < this.rollConfig.elementRangeRate[n - 1]; i++) this.curRollElementsConfig.push(n); else this.curRollElementsConfig = e;
-}
-break;
-
-case a.GlobalEnum.RollRunType.Free:
-var r = this.rollConfig.elementRange_Run_Free[this.rollIndex];
-if (this.rollConfig.elementRangeRate) for (o = 0; o < r.length; o++) for (n = r[o], 
-i = 0; i < this.rollConfig.elementRangeRate[n - 1]; i++) this.curRollElementsConfig.push(n); else this.curRollElementsConfig = r;
-break;
-
-case a.GlobalEnum.RollRunType.Respin:
-var s = this.rollConfig.elementRange_Run_Respin[this.rollIndex];
-if (this.rollConfig.elementRangeRate) for (o = 0; o < s.length; o++) for (n = s[o], 
-i = 0; i < this.rollConfig.elementRangeRate[n - 1]; i++) this.curRollElementsConfig.push(n); else this.curRollElementsConfig = s;
-}
-};
-e.prototype.resetByElement = function(t) {
-if (this.isRolling) {
-var e;
-e = this.curRollElementsConfig.length > 0 ? this.curRollElementsConfig[s.RandomUtil.randomRange(0, this.curRollElementsConfig.length)] - 1 : s.RandomUtil.randomRange(this.randomMin, this.randomMax);
-t.setRes(e);
-}
-};
-e.prototype.overSpeedResetElement = function(t) {
-if (t.length == this.elementCount) {
-var e = this.getMinYElement(t);
-e.node.y = this.maxY;
-this.resetByElement(e);
-this.resetMinByElement(e, e.index);
-} else {
-var o = this.getMaxYElement(this.elements), n = this.getMaxYElement(t);
-this.resetMaxByElement(o, n.index);
-}
-};
-e.prototype.resetMinByElement = function(t, e) {
-if (t.nextElement.index != e) {
-t.nextElement.node.y = t.node.y - this.sizeY;
-this.resetByElement(t.nextElement);
-this.resetMinByElement(t.nextElement, e);
-}
-};
-e.prototype.resetMaxByElement = function(t, e) {
-if (t.lastElement.index != e) {
-t.lastElement.node.y = t.node.y + this.sizeY;
-this.resetByElement(t.lastElement);
-this.resetMaxByElement(t.lastElement, e);
-}
-};
-e.prototype.getMinYElement = function(t) {
-for (var e = Number.MAX_SAFE_INTEGER, o = -1, n = 0; n < t.length; n++) if (t[n].node.y < e) {
-o = n;
-e = t[n].node.y;
-}
-return t[o];
-};
-e.prototype.getMaxYElement = function(t) {
-for (var e = -Number.MAX_SAFE_INTEGER, o = -1, n = 0; n < t.length; n++) if (t[n].node.y > e) {
-o = n;
-e = t[n].node.y;
-}
-return t[o];
-};
-e.prototype.inBack = function(t) {
-var e = this;
-this.inBackTween && this.inBackTween.stop();
-var o = this.elements[0];
-o.targetPos = cc.v2(0, o.node.position.y + 120);
-var n = o.node.y;
-this.inBackTween = cc.tween(o.node).to(.2, {
-position: cc.v3(0, o.targetPos.y, 0)
-}, {
-easing: "backIn",
-onUpdate: function() {
-var t = n - o.node.y;
-n = o.node.y;
-e.moveOtherElements(t, o, o.index, !0);
-}
-}).call(function() {
-t();
-}).start();
-};
-e.prototype.resetPosition = function() {
-for (var t = 0; t < this.elements.length; t++) this.elements[t].resetPos();
-};
-e.prototype.setExtraFunction = function(t) {
-for (var e = 0; e < this.elements.length; e++) this.elements[e].setExtraFunction(t);
-};
-return r([ p ], e);
-}(cc.Component));
-o.default = u;
-cc._RF.pop();
-}, {
-"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
-"../../../scripts/common/utils/RandomUtil": "RandomUtil",
-"./ZRollElement": "ZRollElement"
-} ],
-ZRollControler: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "befa8QtdYtKDp8F1uAoLJTu", "ZRollControler");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/enum/GlobalEnum"), s = t("./ZRollAction"), c = cc._decorator, l = c.ccclass, p = c.property, u = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.prefab = null;
-e.rollActions = [];
-e.isCheckCallback_StartRoll = !0;
-return e;
-}
-e.prototype.onLoad = function() {
-this.schedule(this.customUpdate.bind(this), .015, cc.macro.REPEAT_FOREVER);
-};
-e.prototype.initRollAcionts = function() {
-for (var t = this.node.children, e = 0; e < t.length; e++) this.rollActions.push(t[e].getComponent(s.default));
-};
-e.prototype.initData = function(t) {
-this.rollConfig = t;
-0 == this.rollActions.length && this.initRollAcionts();
-for (var e = 0; e < this.rollActions.length; e++) {
-var o = this.rollActions[e + 1];
-this.rollActions[e].initData(e, t, this.prefab, o, this);
-}
-this.setRollRunType(a.GlobalEnum.RollRunType.Normal);
-};
-e.prototype.setRollRunType = function(t) {
-for (var e = 0; e < this.rollActions.length; e++) this.rollActions[e].setCurRollElementConfig(t);
-};
-e.prototype.getUnlockedCount = function() {
-for (var t = 0, e = 0; e < this.rollActions.length; e++) this.rollActions[e].isLocked || t++;
-return t;
-};
-e.prototype.setLocked = function(t) {
-this.rollActions[t].setLock(!0);
-};
-e.prototype.setLockElement = function(t, e) {
-this.rollActions[t].stopAnim();
-this.rollActions[t].setLockElement(e);
-};
-e.prototype.setUnLocked = function(t) {
-this.rollActions[t].setLock(!1);
-};
-e.prototype.resetUnLocked = function() {
-for (var t = 0; t < this.rollActions.length; t++) this.rollActions[t].setLock(!1);
-};
-e.prototype.getRollAction = function(t) {
-return this.rollActions[t];
-};
-e.prototype.getRollAction_All = function() {
-return this.rollActions;
-};
-e.prototype.startRoll = function(t) {
-var e = this;
-void 0 === t && (t = 0);
-this.isCheckCallback_StartRoll = !0;
-if (t > 0) {
-var o = this.rollActions.length - 2, n = 0;
-this.rollActions[n].stopAnim();
-this.rollActions[n].startRoll();
-n++;
-o >= 0 && this.schedule(function() {
-e.rollActions[n].stopAnim();
-e.rollActions[n].startRoll();
-n++;
-}, t, o);
-} else for (var i = 0; i < this.rollActions.length; i++) {
-this.rollActions[i].stopAnim();
-this.rollActions[i].startRoll();
-}
-};
-e.prototype.resetAllElementState = function() {
-for (var t = 0; t < this.rollActions.length; t++) this.rollActions[t].stopAnim();
-};
-e.prototype.setAllElement = function() {
-for (var t = 0; t < this.rollActions.length; t++) this.rollActions[t];
-};
-e.prototype.setAllElementExtra = function(t) {
-for (var e = 0; e < this.rollActions.length; e++) this.rollActions[e].setExtraFunction(t);
-};
-e.prototype.initResult = function(t) {
-this.results = t;
-};
-e.prototype.quickStopRoll = function() {
-for (var t = 0; t < this.rollActions.length; t++) this.rollActions[t].sotpRoll(!0);
-};
-e.prototype.stopRoll = function() {
-this.rollActions[0].sotpRoll(!1);
-};
-e.prototype.stopUnlockRoll = function() {
-for (var t = 0; t < this.rollActions.length; t++) {
-var e = this.rollActions[t];
-if (!e.isLocked) {
-e.sotpRoll(!1);
-return;
-}
-}
-};
-e.prototype.starAccelerate = function(t, e) {
-this.rollActions[t].setAccelerateSpeed(this.rollConfig.accelerate, e);
-};
-e.prototype.playEndAnim = function(t, e) {
-for (var o = [], n = 0; n < this.rollActions.length; n++) for (var i = this.rollActions[n], r = i.endElements.length - 1; r >= 0; r--) {
-var a = i.endElements[r];
-o.push(a);
-}
-for (n = 0; n < t.length; n++) o[t[n]].setState(e[n]);
-};
-e.prototype.getEndNodes = function() {
-for (var t = [], e = 0; e < this.rollActions.length; e++) for (var o = this.rollActions[e], n = o.endElements.length - 1; n >= 0; n--) {
-var i = o.endElements[n];
-t.push(i);
-}
-return t;
-};
-e.prototype.getEndNodesByIndex = function(t) {
-for (var e = [], o = this.rollActions[t], n = o.endElements.length - 1; n >= 0; n--) {
-var i = o.endElements[n];
-e.push(i);
-}
-return e;
-};
-e.prototype.getElementNodes = function() {
-for (var t = [], e = 0; e < this.rollActions.length; e++) for (var o = this.rollActions[e], n = o.elements.length - 1; n >= 0; n--) {
-var i = o.elements[n];
-t.push(i);
-}
-return t;
-};
-e.prototype.getElementNodesByIndex = function(t) {
-for (var e = [], o = this.rollActions[t], n = o.elements.length - 1; n >= 0; n--) {
-var i = o.elements[n];
-e.push(i);
-}
-return e;
-};
-e.prototype.getElementNodes_TopToBottom = function() {
-for (var t = [], e = 0; e < this.rollActions.length; e++) for (var o = this.getElementNodesByIndex_TopToBottom(e), n = 0; n < o.length; n++) {
-var i = o[n];
-t.push(i);
-}
-return t;
-};
-e.prototype.getElementNodesByIndex_TopToBottom = function(t) {
-for (var e = [], o = this.rollActions[t], n = o.elements.length - 1; n >= 0; n--) {
-var i = o.elements[n];
-e.push(i);
-}
-for (var r = e.length, a = 1; a < r; a++) {
-var s = e[a];
-for (n = a - 1; n >= 0 && e[n].node.position.y > s.node.position.y; ) {
-e[n + 1] = e[n];
---n;
-}
-e[n + 1] = s;
-}
-return e.reverse();
-};
-e.prototype.customUpdate = function(t) {
-for (var e = 0; e < this.rollActions.length; e++) this.rollActions[e].customUpdate(t);
-};
-r([ p(cc.Prefab) ], e.prototype, "prefab", void 0);
-return r([ l ], e);
-}(cc.Component);
-o.default = u;
-cc._RF.pop();
-}, {
-"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
-"./ZRollAction": "ZRollAction"
-} ],
-ZRollElement: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "f949bCiDfBC/KN7H+/yqUqH", "ZRollElement");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/enum/GlobalEnum"), s = t("../ElementState/ElementState"), c = t("../ElementState/ExtraState"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.resetPostion = cc.Vec3.ZERO;
-e.defautl = a.GlobalEnum.ElementState.Normal;
-return e;
-}
-e.prototype.init = function(t) {
-this.extraState = this.node.getComponentInChildren(c.default);
-this.extraState && this.extraState.init(t);
-this.rollConfig = t;
-this.elementIns = [];
-for (var e = this.node.children, o = 0; o < e.length; o++) {
-var n = e[o].getComponent(s.default);
-n && this.elementIns.push(n);
-}
-for (o = 0; o < this.elementIns.length; o++) this.elementIns[o].init(t);
-};
-e.prototype.resetPos = function() {
-this.node.position = this.resetPostion;
-};
-e.prototype.setDefault = function() {
-this.setState(this.defautl);
-};
-e.prototype.setExtraFunction = function(t) {
-for (var e = 0; e < this.elementIns.length; e++) this.elementIns[e].setExtraFunction(t);
-};
-e.prototype.setState = function(t) {
-this.curElement ? this.curElement.show(t) : console.error("没有钙元素" + t);
-this.extraState && (a.GlobalEnum.ElementState.Reward == t ? this.rollConfig.rewardExtraEffect && this.extraState.show() : this.extraState.hide());
-};
-e.prototype.setRes = function(t) {
-this.elementIndex = t;
-this.elementValue = this.elementIndex + 1;
-for (var e = 0; e < this.elementIns.length; e++) this.elementIns[e].hide();
-this.curElement = this.elementIns[t];
-this.rollConfig.turnType ? this.curElement.show(a.GlobalEnum.ElementState.BlurTrun) : this.curElement.show(a.GlobalEnum.ElementState.Turn);
-};
-e.prototype.setResNorml = function(t) {
-this.elementIndex = t;
-this.elementValue = this.elementIndex + 1;
-for (var e = 0; e < this.elementIns.length; e++) this.elementIns[e].hide();
-this.curElement = this.elementIns[t];
-this.curElement.show(a.GlobalEnum.ElementState.Normal);
-};
-e.prototype.getCurElementStateNode = function() {
-for (var t = 0; t < this.elementIns.length; t++) if (this.elementIns[t].node.active) return this.elementIns[t];
-};
-r([ u({
-type: cc.Enum(a.GlobalEnum.ElementState)
-}) ], e.prototype, "defautl", void 0);
-return r([ p ], e);
-}(cc.Component);
-o.default = d;
-cc._RF.pop();
-}, {
-"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
-"../ElementState/ElementState": "ElementState",
-"../ElementState/ExtraState": "ExtraState"
-} ],
-ZRollMgr: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "187c1smehRCsqimymocNih6", "ZRollMgr");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/enum/GlobalEnum"), s = t("../../../scripts/framework/componects/EventComponent"), c = t("../Line/BaseLineMgr"), l = t("./ZRollControler"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.rollControler = null;
-e.lineMgr = null;
-e.animNode = null;
-e.accelerateEffects = [];
-return e;
-}
-e.prototype.initData = function(t) {
-this.mainRollConfig = {
-speed: 2e3,
-accelerate: 3e3,
-numY: 3,
-lineCount: 5,
-easeTime: .3,
-elementCount: 11,
-rewardParentOrginScale: 1,
-name: "roll",
-interval: .15,
-turnType: 1,
-stopTime: 1.55,
-inEase: 1,
-rollStartCB: this.rollStartCB.bind(this),
-rollEaseFinishCB: this.rollEaseFinishCB.bind(this),
-rollFinishCB: this.rollFinishCB.bind(this),
-rollAccelerateStartCB: this.rollAccelerateStartCB.bind(this)
-};
-if (t) {
-this.mainRollConfig.speed = t.speed;
-this.mainRollConfig.accelerate = t.accelerate;
-this.mainRollConfig.numY = t.numY;
-this.mainRollConfig.easeTime = t.easeTime;
-this.mainRollConfig.lineCount = t.lineCount;
-this.mainRollConfig.elementCount = t.elementCount;
-this.mainRollConfig.name = t.name;
-this.mainRollConfig.interval = t.interval;
-this.mainRollConfig.turnType = t.turnType;
-this.mainRollConfig.stopTime = t.stopTime;
-this.mainRollConfig.inEase = t.inEase;
-this.mainRollConfig.rewardExtraEffect = t.rewardExtraEffect;
-this.mainRollConfig.rewardParent = this.animNode;
-this.mainRollConfig.rewardParentOrginScale = t.rewardParentOrginScale;
-this.mainRollConfig.betIndex = t.betIndex;
-t.numY_EveryReel && (this.mainRollConfig.numY_EveryReel = t.numY_EveryReel);
-this.mainRollConfig.fixedParent1 = t.fixedParent1;
-this.mainRollConfig.fixedParent2 = t.fixedParent2;
-this.mainRollConfig.fixedParent3 = t.fixedParent3;
-t.elementRange_Init && (this.mainRollConfig.elementRange_Init = t.elementRange_Init);
-t.elementRange_Run && (this.mainRollConfig.elementRange_Run = t.elementRange_Run);
-t.elementRange_Run_Free && (this.mainRollConfig.elementRange_Run_Free = t.elementRange_Run_Free);
-t.elementRange_Run_Respin && (this.mainRollConfig.elementRange_Run_Respin = t.elementRange_Run_Respin);
-t.elementFixed_Run && (this.mainRollConfig.elementFixed_Run = t.elementFixed_Run);
-t.rollStartCB && (this.mainRollConfig.rollStartCB = t.rollStartCB);
-t.rollEaseFinishCB && (this.mainRollConfig.rollEaseFinishCB = t.rollEaseFinishCB);
-t.rollFinishCB && (this.mainRollConfig.rollFinishCB = t.rollFinishCB);
-t.rollAccelerateStartCB && (this.mainRollConfig.rollAccelerateStartCB = t.rollAccelerateStartCB);
-t.rollStopAudioCB && (this.mainRollConfig.rollStopAudioCB = t.rollStopAudioCB);
-t.gameFinishEndCB && (this.mainRollConfig.gameFinishEndCB = t.gameFinishEndCB);
-}
-this.lineMgr && this.lineMgr.init(this.mainRollConfig, this.node.scale);
-this.rollControler.initData(this.mainRollConfig);
-};
-e.prototype.startRoll = function(t) {
-void 0 === t && (t = 0);
-this.rollControler.startRoll(0);
-};
-e.prototype.starDelaytRoll = function(t) {
-void 0 === t && (t = 0);
-this.rollControler.startRoll(t);
-};
-e.prototype.initResult = function(t) {
-this.results = t.results;
-this.awardPos = t.awardPos;
-this.awardline = t.awardline;
-this.rollControler.initResult(t.results);
-};
-e.prototype.quickStopRoll = function() {
-this.rollControler.quickStopRoll();
-};
-e.prototype.stopRoll = function() {
-this.rollControler.stopRoll();
-};
-e.prototype.stopUnlockRoll = function() {
-this.rollControler.stopUnlockRoll();
-};
-e.prototype.resetAllElementState = function() {
-this.rollControler.resetAllElementState();
-};
-e.prototype.setAllElement = function(t) {
-this.rollControler.setAllElement(t);
-};
-e.prototype.setAllElementExtra = function(t) {
-this.rollControler.setAllElementExtra(t);
-};
-e.prototype.getUnlockCount = function() {
-return this.rollControler.getUnlockedCount();
-};
-e.prototype.playEndAnim = function() {
-this.rollControler.playEndAnim(this.awardPos, this.getStates());
-};
-e.prototype.setLocked = function(t) {
-this.rollControler.setLocked(t);
-};
-e.prototype.setLockedElement = function(t, e) {
-this.rollControler.setLockElement(t, e);
-};
-e.prototype.setUnLocked = function(t) {
-for (var e = 0; e < t.length; e++) {
-var o = t[e];
-this.rollControler.setUnLocked(o);
-}
-};
-e.prototype.resetUnLocked = function() {
-this.rollControler.resetUnLocked();
-};
-e.prototype.getEndNodes = function() {
-return this.rollControler.getEndNodes();
-};
-e.prototype.getEndNodesByIndex = function(t) {
-return this.rollControler.getEndNodesByIndex(t);
-};
-e.prototype.getIndexEndNodesByValue = function(t, e) {
-for (var o = this.rollControler.getEndNodesByIndex(t), n = [], i = 0; i < o.length; i++) {
-var r = o[i];
-r.elementValue == e && n.push(r);
-}
-return n;
-};
-e.prototype.getEndNodesByValue = function(t) {
-for (var e = this.rollControler.getEndNodes(), o = [], n = 0; n < e.length; n++) {
-var i = e[n];
-i.elementValue == t && o.push(i);
-}
-return o;
-};
-e.prototype.starAccelerate = function(t, e) {
-this.rollControler.starAccelerate(t, e);
-};
-e.prototype.getRollAction = function(t) {
-return this.rollControler.getRollAction(t);
-};
-e.prototype.showRewardLines = function(t) {
-this.lineMgr && this.awardline && this.awardline.length > 0 && this.lineMgr.showRewardLines(this.awardline, t);
-};
-e.prototype.hideLines = function() {
-this.lineMgr && this.lineMgr.hide();
-};
-e.prototype.rollStartCB = function() {
-this.curSpinIndex = -1;
-};
-e.prototype.rollAccelerateStartCB = function() {};
-e.prototype.rollEaseFinishCB = function() {};
-e.prototype.rollFinishCB = function(t, e) {
-this.curSpinIndex = e;
-this.mainRollConfig.numY;
-};
-e.prototype.awardStep1 = function() {
-if (this.awardPos.length > 0) {
-this.showRewardLines(a.GlobalEnum.LinesShowType.None);
-this.playEndAnim();
-}
-};
-e.prototype.getStates = function() {
-for (var t = [], e = this.awardPos, o = 0; o < e.length; o++) t.push(a.GlobalEnum.ElementState.Reward);
-return t;
-};
-r([ d(l.default) ], e.prototype, "rollControler", void 0);
-r([ d(c.default) ], e.prototype, "lineMgr", void 0);
-r([ d(cc.Node) ], e.prototype, "animNode", void 0);
-r([ d(cc.Node) ], e.prototype, "accelerateEffects", void 0);
-return r([ u ], e);
-}(s.default);
-o.default = h;
-cc._RF.pop();
-}, {
-"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
-"../../../scripts/framework/componects/EventComponent": "EventComponent",
-"../Line/BaseLineMgr": "BaseLineMgr",
-"./ZRollControler": "ZRollControler"
-} ],
 activityMain: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "27649DhqMdB0LRHJTBnYix8", "activityMain");
@@ -51515,7 +47541,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../../common/component/UIContainer"), s = t("../../../../../common/config/GlobalVar"), c = t("../../../../../common/event/CommonEvent"), l = t("../../../../../common/net/CommonSender"), p = t("../../../../../common/utils/UIUtils"), u = t("../../../../../framework/componects/EventComponent"), d = t("../../../../../framework/defines/Enums"), h = t("../../../../../login/view/CommonUIHelper"), f = t("./agent_self_rank"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+var a = t("../../../../../common/component/UIContainer"), s = t("../../../../../common/config/GlobalVar"), c = t("../../../../../common/event/CommonEvent"), l = t("../../../../../common/net/CommonSender"), p = t("../../../../../common/utils/UIUtils"), u = t("../../../../../framework/componects/EventComponent"), d = t("../../../../../framework/defines/Enums"), h = t("../../../../../login/view/CommonUIHelper"), f = t("./agent_self_rank"), m = cc._decorator, g = m.ccclass, _ = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -51706,8 +47732,8 @@ this.selfItem.node.active = !0;
 e.prototype.onDisable = function() {
 this.selfItem.node.active = !1;
 };
-r([ g(f.default) ], e.prototype, "selfItem", void 0);
-return r([ _ ], e);
+r([ _(f.default) ], e.prototype, "selfItem", void 0);
+return r([ g ], e);
 }(u.default);
 o.default = y;
 cc._RF.pop();
@@ -51747,7 +47773,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../../common/config/GlobalVar"), s = t("../../../../../common/event/CommonEvent"), c = t("../../../../../common/net/CommonSender"), l = t("../../../../../common/net/HttpSender"), p = t("../../../../../common/utils/CmmUtils"), u = t("../../../../../common/utils/UIUtils"), d = t("../../../../../framework/componects/EventComponent"), h = t("../../../../../framework/defines/Enums"), f = cc._decorator, m = f.ccclass, _ = f.property, g = function(t) {
+var a = t("../../../../../common/config/GlobalVar"), s = t("../../../../../common/event/CommonEvent"), c = t("../../../../../common/net/CommonSender"), l = t("../../../../../common/net/HttpSender"), p = t("../../../../../common/utils/CmmUtils"), u = t("../../../../../common/utils/UIUtils"), d = t("../../../../../framework/componects/EventComponent"), h = t("../../../../../framework/defines/Enums"), f = cc._decorator, m = f.ccclass, g = f.property, _ = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -51796,17 +47822,17 @@ e.rank > 0 ? this.rank.string = e.rank : this.rank.string = "--";
 u.default.loadHead_Self(this.headIcon, !0);
 this.updateBtn(e);
 };
-r([ _(cc.Button) ], e.prototype, "rewardBtn", void 0);
-r([ _(cc.Label) ], e.prototype, "rewardLabel", void 0);
-r([ _(cc.Label) ], e.prototype, "rank", void 0);
-r([ _(cc.Label) ], e.prototype, "idLabel", void 0);
-r([ _(cc.Label) ], e.prototype, "pointLabel", void 0);
-r([ _(cc.Sprite) ], e.prototype, "headIcon", void 0);
-r([ _(cc.Label) ], e.prototype, "withdrawLabel", void 0);
-r([ _(cc.Node) ], e.prototype, "rewardBg", void 0);
+r([ g(cc.Button) ], e.prototype, "rewardBtn", void 0);
+r([ g(cc.Label) ], e.prototype, "rewardLabel", void 0);
+r([ g(cc.Label) ], e.prototype, "rank", void 0);
+r([ g(cc.Label) ], e.prototype, "idLabel", void 0);
+r([ g(cc.Label) ], e.prototype, "pointLabel", void 0);
+r([ g(cc.Sprite) ], e.prototype, "headIcon", void 0);
+r([ g(cc.Label) ], e.prototype, "withdrawLabel", void 0);
+r([ g(cc.Node) ], e.prototype, "rewardBg", void 0);
 return r([ m ], e);
 }(d.default);
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../../../common/config/GlobalVar": "GlobalVar",
@@ -52002,7 +48028,7 @@ done: !0
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var c = t("../../../common/component/WidthProgress"), l = t("../../../common/event/CommonEvent"), p = t("../../../common/utils/CmmUtils"), u = t("../../../framework/core/ui/GameView"), d = t("../../../framework/core/update/Update"), h = t("../../../framework/defines/Macros"), f = t("../../../sdk/AppInfo"), m = cc._decorator, _ = m.ccclass, g = (m.property, 
+var c = t("../../../common/component/WidthProgress"), l = t("../../../common/event/CommonEvent"), p = t("../../../common/utils/CmmUtils"), u = t("../../../framework/core/ui/GameView"), d = t("../../../framework/core/update/Update"), h = t("../../../framework/defines/Macros"), f = t("../../../sdk/AppInfo"), m = cc._decorator, g = m.ccclass, _ = (m.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -52148,9 +48174,9 @@ App.globalAudio.updateCurGameAudio();
 e.prototype.backHall = function() {
 App.entryManager.enterBundle(h.Macro.BUNDLE_RESOURCES);
 };
-return r([ _ ], e);
+return r([ g ], e);
 }(u.default));
-o.default = g;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../common/component/WidthProgress": "WidthProgress",
@@ -52499,7 +48525,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/event/CommonEvent"), s = t("../../../common/utils/UIUtils"), c = t("../../../framework/core/ui/UIView"), l = t("../../../framework/defines/Macros"), p = t("../../../sdk/SdkManager"), u = t("../CommonUIHelper"), d = t("../LoginView"), h = t("./base_first_loading"), f = cc._decorator, m = f.ccclass, _ = (f.property, 
+var a = t("../../../common/event/CommonEvent"), s = t("../../../common/utils/UIUtils"), c = t("../../../framework/core/ui/UIView"), l = t("../../../framework/defines/Macros"), p = t("../../../sdk/SdkManager"), u = t("../CommonUIHelper"), d = t("../LoginView"), h = t("./base_first_loading"), f = cc._decorator, m = f.ccclass, g = (f.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -52542,7 +48568,7 @@ this.close();
 };
 return r([ m ], e);
 }(c.default));
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../common/event/CommonEvent": "CommonEvent",
@@ -52811,7 +48837,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../common/component/ZProgressbar"), s = t("../../common/config/GlobalVar"), c = t("../../common/event/CommonEvent"), l = t("../../common/net/CommonSender"), p = t("../../common/utils/CmmUtils"), u = t("../../framework/componects/EventComponent"), d = t("../../sdk/AppInfo"), h = t("../../sdk/SdkManager"), f = t("../../zgameCommon/GameCommonUIHelper"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+var a = t("../../common/component/ZProgressbar"), s = t("../../common/config/GlobalVar"), c = t("../../common/event/CommonEvent"), l = t("../../common/net/CommonSender"), p = t("../../common/utils/CmmUtils"), u = t("../../framework/componects/EventComponent"), d = t("../../sdk/AppInfo"), h = t("../../sdk/SdkManager"), f = t("../../zgameCommon/GameCommonUIHelper"), m = cc._decorator, g = m.ccclass, _ = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -52945,29 +48971,29 @@ this.leftTime < 0 && this.leftTime;
 }
 }
 };
-r([ g(cc.Label) ], e.prototype, "time", void 0);
-r([ g(cc.Label) ], e.prototype, "money", void 0);
-r([ g(cc.Label) ], e.prototype, "label_Gold_game", void 0);
-r([ g(cc.Label) ], e.prototype, "pid", void 0);
-r([ g([ cc.Node ]) ], e.prototype, "status", void 0);
-r([ g(cc.Label) ], e.prototype, "account", void 0);
-r([ g(cc.Label) ], e.prototype, "account_type", void 0);
-r([ g(cc.Label) ], e.prototype, "code", void 0);
-r([ g(cc.Node) ], e.prototype, "other", void 0);
-r([ g(cc.Node) ], e.prototype, "buttom", void 0);
-r([ g(cc.Node) ], e.prototype, "dragBtn", void 0);
-r([ g(cc.Node) ], e.prototype, "dragIcon", void 0);
-r([ g(cc.Node) ], e.prototype, "btnBg", void 0);
-r([ g(a.default) ], e.prototype, "progress", void 0);
-r([ g(cc.Label) ], e.prototype, "progressLabel", void 0);
-r([ g(cc.Node) ], e.prototype, "reward", void 0);
-r([ g(cc.Node) ], e.prototype, "rewardBtn", void 0);
-r([ g(cc.Node) ], e.prototype, "downBtn", void 0);
-r([ g(cc.Label) ], e.prototype, "tips", void 0);
-r([ g(cc.Label) ], e.prototype, "rewardLabel", void 0);
-r([ g(cc.Label) ], e.prototype, "downTime", void 0);
-r([ g(cc.Node) ], e.prototype, "help", void 0);
-return r([ _ ], e);
+r([ _(cc.Label) ], e.prototype, "time", void 0);
+r([ _(cc.Label) ], e.prototype, "money", void 0);
+r([ _(cc.Label) ], e.prototype, "label_Gold_game", void 0);
+r([ _(cc.Label) ], e.prototype, "pid", void 0);
+r([ _([ cc.Node ]) ], e.prototype, "status", void 0);
+r([ _(cc.Label) ], e.prototype, "account", void 0);
+r([ _(cc.Label) ], e.prototype, "account_type", void 0);
+r([ _(cc.Label) ], e.prototype, "code", void 0);
+r([ _(cc.Node) ], e.prototype, "other", void 0);
+r([ _(cc.Node) ], e.prototype, "buttom", void 0);
+r([ _(cc.Node) ], e.prototype, "dragBtn", void 0);
+r([ _(cc.Node) ], e.prototype, "dragIcon", void 0);
+r([ _(cc.Node) ], e.prototype, "btnBg", void 0);
+r([ _(a.default) ], e.prototype, "progress", void 0);
+r([ _(cc.Label) ], e.prototype, "progressLabel", void 0);
+r([ _(cc.Node) ], e.prototype, "reward", void 0);
+r([ _(cc.Node) ], e.prototype, "rewardBtn", void 0);
+r([ _(cc.Node) ], e.prototype, "downBtn", void 0);
+r([ _(cc.Label) ], e.prototype, "tips", void 0);
+r([ _(cc.Label) ], e.prototype, "rewardLabel", void 0);
+r([ _(cc.Label) ], e.prototype, "downTime", void 0);
+r([ _(cc.Node) ], e.prototype, "help", void 0);
+return r([ g ], e);
 }(u.default);
 o.default = y;
 cc._RF.pop();
@@ -53541,7 +49567,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/event/CommonEvent"), s = t("../../../../common/utils/RandomUtil"), c = t("../../../../framework/core/update/Update"), l = t("../../../../sdk/AppInfo"), p = t("../../../../sdk/SdkManager"), u = t("../../LoginView"), d = t("../baseGameLoading"), h = cc._decorator, f = h.ccclass, m = h.property, _ = function(t) {
+var a = t("../../../../common/event/CommonEvent"), s = t("../../../../common/utils/RandomUtil"), c = t("../../../../framework/core/update/Update"), l = t("../../../../sdk/AppInfo"), p = t("../../../../sdk/SdkManager"), u = t("../../LoginView"), d = t("../baseGameLoading"), h = cc._decorator, f = h.ccclass, m = h.property, g = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -53700,7 +49726,7 @@ r([ m(cc.Node) ], e.prototype, "lnode", void 0);
 r([ m(cc.Node) ], e.prototype, "pnode", void 0);
 return r([ f ], e);
 }(d.default);
-o.default = _;
+o.default = g;
 cc._RF.pop();
 }, {
 "../../../../common/event/CommonEvent": "CommonEvent",
@@ -54106,7 +50132,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../common/config/ConstString"), s = t("../../common/config/GlobalVar"), c = t("../../common/event/CommonEvent"), l = t("../../common/utils/CmmUtils"), p = t("../../common/utils/UIUtils"), u = t("../../framework/componects/EventComponent"), d = t("../../sdk/GameNativeConfig"), h = t("../view/CommonUIHelper"), f = t("./laba_item"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+var a = t("../../common/config/ConstString"), s = t("../../common/config/GlobalVar"), c = t("../../common/event/CommonEvent"), l = t("../../common/utils/CmmUtils"), p = t("../../common/utils/UIUtils"), u = t("../../framework/componects/EventComponent"), d = t("../../sdk/GameNativeConfig"), h = t("../view/CommonUIHelper"), f = t("./laba_item"), m = cc._decorator, g = m.ccclass, _ = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -54282,17 +50308,17 @@ this.tween_NormalShow = cc.tween(this.widget.node).to(.2, {
 opacity: 0
 }).start();
 };
-r([ g(cc.Node) ], e.prototype, "node_Move", void 0);
-r([ g(cc.Sprite) ], e.prototype, "sprite_Head", void 0);
-r([ g(cc.Label) ], e.prototype, "label_PlayerName", void 0);
-r([ g(cc.Label) ], e.prototype, "label_PlayerID", void 0);
-r([ g(cc.RichText) ], e.prototype, "richText_TitleName", void 0);
-r([ g(cc.Label) ], e.prototype, "label_WinMoney", void 0);
-r([ g(cc.Node) ], e.prototype, "btn_GoToGame", void 0);
-r([ g(cc.Widget) ], e.prototype, "widget", void 0);
-r([ g(cc.Node) ], e.prototype, "node_NormalParent", void 0);
-r([ g(cc.Prefab) ], e.prototype, "itemPrefab", void 0);
-return r([ _ ], e);
+r([ _(cc.Node) ], e.prototype, "node_Move", void 0);
+r([ _(cc.Sprite) ], e.prototype, "sprite_Head", void 0);
+r([ _(cc.Label) ], e.prototype, "label_PlayerName", void 0);
+r([ _(cc.Label) ], e.prototype, "label_PlayerID", void 0);
+r([ _(cc.RichText) ], e.prototype, "richText_TitleName", void 0);
+r([ _(cc.Label) ], e.prototype, "label_WinMoney", void 0);
+r([ _(cc.Node) ], e.prototype, "btn_GoToGame", void 0);
+r([ _(cc.Widget) ], e.prototype, "widget", void 0);
+r([ _(cc.Node) ], e.prototype, "node_NormalParent", void 0);
+r([ _(cc.Prefab) ], e.prototype, "itemPrefab", void 0);
+return r([ g ], e);
 }(u.default);
 o.default = y;
 cc._RF.pop();
@@ -55673,7 +51699,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/event/CommonEvent"), s = t("../../../../common/utils/CmmUtils"), c = t("../../../../common/utils/RandomUtil"), l = t("../../../../framework/core/update/Update"), p = t("../../../../framework/defines/Enums"), u = t("../../../../sdk/AppInfo"), d = t("../../../../sdk/SdkManager"), h = t("../../LoginView"), f = t("../baseGameLoading"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+var a = t("../../../../common/event/CommonEvent"), s = t("../../../../common/utils/CmmUtils"), c = t("../../../../common/utils/RandomUtil"), l = t("../../../../framework/core/update/Update"), p = t("../../../../framework/defines/Enums"), u = t("../../../../sdk/AppInfo"), d = t("../../../../sdk/SdkManager"), h = t("../../LoginView"), f = t("../baseGameLoading"), m = cc._decorator, g = m.ccclass, _ = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -55845,15 +51871,15 @@ d.default.setOrientation_p();
 h.default.instance.show();
 App.uiManager.closeExcept([ "LoginView" ]);
 };
-r([ g(cc.Sprite) ], e.prototype, "remoteSprite", void 0);
-r([ g(cc.Node) ], e.prototype, "colors", void 0);
-r([ g(cc.Node) ], e.prototype, "loading", void 0);
-r([ g(cc.Node) ], e.prototype, "percent", void 0);
-r([ g(cc.Label) ], e.prototype, "info", void 0);
-r([ g(cc.Node) ], e.prototype, "pgmask", void 0);
-r([ g(cc.Node) ], e.prototype, "startBtn", void 0);
-r([ g(cc.Label) ], e.prototype, "tips", void 0);
-return r([ _ ], e);
+r([ _(cc.Sprite) ], e.prototype, "remoteSprite", void 0);
+r([ _(cc.Node) ], e.prototype, "colors", void 0);
+r([ _(cc.Node) ], e.prototype, "loading", void 0);
+r([ _(cc.Node) ], e.prototype, "percent", void 0);
+r([ _(cc.Label) ], e.prototype, "info", void 0);
+r([ _(cc.Node) ], e.prototype, "pgmask", void 0);
+r([ _(cc.Node) ], e.prototype, "startBtn", void 0);
+r([ _(cc.Label) ], e.prototype, "tips", void 0);
+return r([ g ], e);
 }(f.default);
 o.default = y;
 cc._RF.pop();
@@ -56349,7 +52375,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/net/CommonSender"), d = t("../../../common/utils/CmmUtils"), h = t("../../../framework/componects/EventComponent"), f = t("../../../framework/defines/Enums"), m = t("../HotUpdate"), _ = t("./bind_verification_item"), g = cc._decorator, y = g.ccclass, v = g.property, b = function(t) {
+var a = t("../../../common/component/UIContainer"), s = t("../../../common/config/ConstString"), c = t("../../../common/config/GlobalVar"), l = t("../../../common/config/User"), p = t("../../../common/event/CommonEvent"), u = t("../../../common/net/CommonSender"), d = t("../../../common/utils/CmmUtils"), h = t("../../../framework/componects/EventComponent"), f = t("../../../framework/defines/Enums"), m = t("../HotUpdate"), g = t("./bind_verification_item"), _ = cc._decorator, y = _.ccclass, v = _.property, b = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -56567,7 +52593,7 @@ r([ v(cc.Label) ], e.prototype, "resendLabel", void 0);
 r([ v(cc.Node) ], e.prototype, "Button_reg", void 0);
 r([ v(cc.Label) ], e.prototype, "regLabel", void 0);
 r([ v(cc.Node) ], e.prototype, "Google_Login", void 0);
-r([ v(_.default) ], e.prototype, "verification_item", void 0);
+r([ v(g.default) ], e.prototype, "verification_item", void 0);
 return r([ y ], e);
 }(h.default);
 o.default = b;
@@ -56635,172 +52661,6 @@ return r([ s ], e);
 o.default = l;
 cc._RF.pop();
 }, {} ],
-slotsOperate: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "a3ccbpSPFlKr6SC6xdoaE2U", "slotsOperate");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../../scripts/common/event/CommonEvent"), s = t("../../../scripts/common/utils/CmmUtils"), c = t("../../../scripts/framework/componects/EventComponent"), l = t("./AudioMgr"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.node_Normal = null;
-e.node_Auto = null;
-e.label_Auto = null;
-e.betLabel = null;
-e.curCoins = null;
-e.winLabel = null;
-e.btn_Reduce = null;
-e.btn_Add = null;
-e.btn_Auto = null;
-e.btn_Rule = null;
-e.btn_Spin = null;
-e.btn_CancelAuto = null;
-e.btn_Return = null;
-e.btn_Setting = null;
-e._data = null;
-e.betValue = 1;
-e.curCoinsValue = 1e4;
-e.curBetIndex = 0;
-e.autoCount = 0;
-return e;
-}
-e.prototype.init = function(t) {
-this._data = t;
-this.SetAutoState(0);
-this.clickBetItem(0);
-this.updateCoins();
-};
-e.prototype.addEvents = function() {
-var t = this;
-this.onD(a.SdkEvent.SdkEvent_finish_video_back, function() {
-Log.d("激励视频播放完成，发放奖励");
-t.updateCoins(1e3);
-});
-};
-e.prototype.setBtnState = function(t) {
-Log.e("setBtnState = " + t);
-if (this.autoCount > 0) {
-this.btn_Spin.interactable = !1;
-this.btn_Reduce.interactable = !1;
-this.btn_Add.interactable = !1;
-this.btn_Rule.interactable = !1;
-this.btn_Auto.interactable = !1;
-this.btn_Return.interactable = !1;
-this.btn_Setting.interactable = !1;
-} else {
-this.btn_Spin.interactable = t;
-this.btn_Reduce.interactable = t;
-this.btn_Add.interactable = t;
-this.btn_Rule.interactable = t;
-this.btn_Auto.interactable = t;
-this.btn_Return.interactable = t;
-this.btn_Setting.interactable = t;
-}
-};
-e.prototype.SetAutoState = function(t) {
-this.autoCount = t;
-this.label_Auto.string = this.autoCount + "";
-if (this.autoCount > 0) {
-this.node_Auto.active = !0;
-this.node_Normal.active = !1;
-} else {
-this.node_Auto.active = !1;
-this.node_Normal.active = !0;
-}
-};
-e.prototype.ButtonClick_Spin = function() {
-l.default.instance.playEffect("spin");
-this._data && this._data.spinCallBack && this._data.spinCallBack();
-};
-e.prototype.BUttonClick_CancelAuto = function() {
-l.default.instance.playEffect("click");
-this.SetAutoState(0);
-};
-e.prototype.ButtonClick_ReduceBet = function() {
-l.default.instance.playEffect("click");
-if (this.curBetIndex > 0) {
-this.curBetIndex--;
-this.clickBetItem(this.curBetIndex);
-}
-};
-e.prototype.ButtonClick_AddBet = function() {
-l.default.instance.playEffect("click");
-if (this.curBetIndex < this._data.betValues.length - 1) {
-this.curBetIndex++;
-this.clickBetItem(this.curBetIndex);
-}
-};
-e.prototype.clickBetItem = function(t) {
-this.curBetIndex = t;
-this.betValue = this._data.betValues[t];
-this.betLabel.string = this.betValue.toString();
-this.btn_Reduce.interactable = this.curBetIndex > 0;
-this.btn_Add.interactable = this.curBetIndex < this._data.betValues.length - 1;
-};
-e.prototype.showWin = function(t) {
-this.winLabel.string = t > 0 ? s.CmmUtils.NumberToHallString(t) : "0.00";
-};
-e.prototype.isCanSpin = function() {
-return !(this.curCoinsValue < this.betValue);
-};
-e.prototype.spinUpadateCoin = function() {
-this.curCoinsValue -= this.betValue;
-App.storage.setItem("coins", this.curCoinsValue);
-this.curCoins.string = s.CmmUtils.NumberToHallString(this.curCoinsValue);
-};
-e.prototype.updateCoins = function(t) {
-if (t) {
-this.curCoinsValue += t;
-App.storage.setItem("coins", this.curCoinsValue);
-}
-this.curCoinsValue = App.storage.getItem("coins", 1e4);
-this.curCoins.string = s.CmmUtils.NumberToHallString(this.curCoinsValue);
-};
-r([ d(cc.Node) ], e.prototype, "node_Normal", void 0);
-r([ d(cc.Node) ], e.prototype, "node_Auto", void 0);
-r([ d(cc.Label) ], e.prototype, "label_Auto", void 0);
-r([ d(cc.Label) ], e.prototype, "betLabel", void 0);
-r([ d(cc.Label) ], e.prototype, "curCoins", void 0);
-r([ d(cc.Label) ], e.prototype, "winLabel", void 0);
-r([ d(cc.Button) ], e.prototype, "btn_Reduce", void 0);
-r([ d(cc.Button) ], e.prototype, "btn_Add", void 0);
-r([ d(cc.Button) ], e.prototype, "btn_Auto", void 0);
-r([ d(cc.Button) ], e.prototype, "btn_Rule", void 0);
-r([ d(cc.Button) ], e.prototype, "btn_Spin", void 0);
-r([ d(cc.Button) ], e.prototype, "btn_CancelAuto", void 0);
-r([ d(cc.Button) ], e.prototype, "btn_Return", void 0);
-r([ d(cc.Button) ], e.prototype, "btn_Setting", void 0);
-return r([ u ], e);
-}(c.default);
-o.default = h;
-cc._RF.pop();
-}, {
-"../../../scripts/common/event/CommonEvent": "CommonEvent",
-"../../../scripts/common/utils/CmmUtils": "CmmUtils",
-"../../../scripts/framework/componects/EventComponent": "EventComponent",
-"./AudioMgr": "AudioMgr"
-} ],
 slots_win_jitter: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "e3c44oQqSROMJuhd9cAm/DO", "slots_win_jitter");
@@ -57023,7 +52883,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../common/component/ZProgressbar"), s = t("../../common/config/Config"), c = t("../../common/config/GlobalVar"), l = t("../../common/config/User"), p = t("../../common/country/Country_Labels"), u = t("../../common/event/CommonEvent"), d = t("../../common/net/CommonSender"), h = t("../../common/utils/CmmUtils"), f = t("../../framework/componects/EventComponent"), m = t("../../framework/defines/Enums"), _ = cc._decorator, g = _.ccclass, y = _.property, v = function(t) {
+var a = t("../../common/component/ZProgressbar"), s = t("../../common/config/Config"), c = t("../../common/config/GlobalVar"), l = t("../../common/config/User"), p = t("../../common/country/Country_Labels"), u = t("../../common/event/CommonEvent"), d = t("../../common/net/CommonSender"), h = t("../../common/utils/CmmUtils"), f = t("../../framework/componects/EventComponent"), m = t("../../framework/defines/Enums"), g = cc._decorator, _ = g.ccclass, y = g.property, v = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -57087,7 +52947,7 @@ r([ y(cc.Node) ], e.prototype, "completed", void 0);
 r([ y(cc.Node) ], e.prototype, "withdrawBtn", void 0);
 r([ y(cc.Node) ], e.prototype, "hasGet", void 0);
 r([ y(a.default) ], e.prototype, "progressBar", void 0);
-return r([ g ], e);
+return r([ _ ], e);
 }(f.default);
 o.default = v;
 cc._RF.pop();
@@ -57206,7 +53066,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../../common/component/RedPointComponent"), s = t("../../../../../common/component/ZProgressbar"), c = t("../../../../../common/config/GlobalVar"), l = t("../../../../../common/config/User"), p = t("../../../../../common/event/CommonEvent"), u = t("../../../../../framework/componects/EventComponent"), d = t("../../../../../framework/core/update/Update"), h = t("../../../../../framework/defines/Enums"), f = t("../../../../../login/view/CommonUIHelper"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+var a = t("../../../../../common/component/RedPointComponent"), s = t("../../../../../common/component/ZProgressbar"), c = t("../../../../../common/config/GlobalVar"), l = t("../../../../../common/config/User"), p = t("../../../../../common/event/CommonEvent"), u = t("../../../../../framework/componects/EventComponent"), d = t("../../../../../framework/core/update/Update"), h = t("../../../../../framework/defines/Enums"), f = t("../../../../../login/view/CommonUIHelper"), m = cc._decorator, g = m.ccclass, _ = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -57348,19 +53208,19 @@ this._holder.alias == t && this.show(this._holder);
 };
 var o;
 e.sameClick = !0;
-r([ g(cc.SpriteFrame) ], e.prototype, "icon", void 0);
-r([ g(cc.Node) ], e.prototype, "redParent", void 0);
-r([ g(cc.Node) ], e.prototype, "noneBg", void 0);
-r([ g(cc.Node) ], e.prototype, "shouzhi", void 0);
-r([ g(cc.Node) ], e.prototype, "loading", void 0);
-r([ g(cc.Node) ], e.prototype, "more", void 0);
-r([ g(cc.Sprite) ], e.prototype, "activityIcon", void 0);
-r([ g(cc.Node) ], e.prototype, "tips", void 0);
-r([ g(cc.Node) ], e.prototype, "updateNode", void 0);
-r([ g(cc.Node) ], e.prototype, "updateProgressNode", void 0);
-r([ g(a.default) ], e.prototype, "redSys", void 0);
-r([ g(s.default) ], e.prototype, "progressFiLL", void 0);
-return o = r([ _ ], e);
+r([ _(cc.SpriteFrame) ], e.prototype, "icon", void 0);
+r([ _(cc.Node) ], e.prototype, "redParent", void 0);
+r([ _(cc.Node) ], e.prototype, "noneBg", void 0);
+r([ _(cc.Node) ], e.prototype, "shouzhi", void 0);
+r([ _(cc.Node) ], e.prototype, "loading", void 0);
+r([ _(cc.Node) ], e.prototype, "more", void 0);
+r([ _(cc.Sprite) ], e.prototype, "activityIcon", void 0);
+r([ _(cc.Node) ], e.prototype, "tips", void 0);
+r([ _(cc.Node) ], e.prototype, "updateNode", void 0);
+r([ _(cc.Node) ], e.prototype, "updateProgressNode", void 0);
+r([ _(a.default) ], e.prototype, "redSys", void 0);
+r([ _(s.default) ], e.prototype, "progressFiLL", void 0);
+return o = r([ g ], e);
 }(u.default);
 o.default = y;
 cc._RF.pop();
@@ -57512,7 +53372,7 @@ done: !0
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var c = t("../../../../common/component/SwitchBtnItem"), l = t("../../../../common/config/ConstString"), p = t("../../../../common/config/GlobalVar"), u = t("../../../../common/config/User"), d = t("../../../../common/event/CommonEvent"), h = t("../../../../common/net/HttpSender"), f = t("../../../../common/utils/CmmUtils"), m = t("../../../../framework/defines/Enums"), _ = t("../../../../login/net/HallHandler"), g = t("../../../../login/net/LobbyService"), y = t("../../../../login/other/task_anim_labels"), v = t("../../../../login/view/CommonUIHelper"), b = t("../../../../sdk/AppInfo"), C = t("../../../../sdk/GameNativeConfig"), w = t("../game/VGamemain"), E = t("../other/VADPage"), S = t("../other/VPlayerMessage"), R = cc._decorator, O = R.ccclass, A = (R.property, 
+var c = t("../../../../common/component/SwitchBtnItem"), l = t("../../../../common/config/ConstString"), p = t("../../../../common/config/GlobalVar"), u = t("../../../../common/config/User"), d = t("../../../../common/event/CommonEvent"), h = t("../../../../common/net/HttpSender"), f = t("../../../../common/utils/CmmUtils"), m = t("../../../../framework/defines/Enums"), g = t("../../../../login/net/HallHandler"), _ = t("../../../../login/net/LobbyService"), y = t("../../../../login/other/task_anim_labels"), v = t("../../../../login/view/CommonUIHelper"), b = t("../../../../sdk/AppInfo"), C = t("../../../../sdk/GameNativeConfig"), w = t("../game/VGamemain"), E = t("../other/VADPage"), S = t("../other/VPlayerMessage"), R = cc._decorator, O = R.ccclass, A = (R.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -57718,8 +53578,8 @@ this.loginNode.active || this.playerMessage.updateInfo();
 };
 e.prototype.clearLoginToken = function() {
 this.login_btn.active = !0;
-App.serviceManager.get(g.LobbyService, !0).close(!0);
-App.handlerManager.destory(_.default);
+App.serviceManager.get(_.LobbyService, !0).close(!0);
+App.handlerManager.destory(g.default);
 App.storage.removeItem(l.ConstString.userId);
 h.default.uid = "0";
 p.GlobalVar.isLogin = !1;
@@ -58077,4 +53937,4 @@ return n([ r ], t);
 o.default = a;
 cc._RF.pop();
 }, {} ]
-}, {}, [ "Application", "MainController", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "AudioMgr", "GameMgr", "Login", "ChooseLevelModel_A", "LevelModel_A", "PayLineItem_A", "PayLineModel_A", "PayTableItem_A", "PayTableModel_A", "TaskModel_A", "PayLinesPanel", "PayTabelPanel", "RulePanel", "AutoService_A", "HomeTipTCService_A", "LevelLayoutMgr_A", "LevelManager_A", "LoadingGameService_A", "Reward_YouWin_A", "SettingChooseTC_A", "SetPanel", "SlotJudge", "slotsOperate", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "LoginEntry", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
+}, {}, [ "Application", "MainController", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "LoginEntry", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
