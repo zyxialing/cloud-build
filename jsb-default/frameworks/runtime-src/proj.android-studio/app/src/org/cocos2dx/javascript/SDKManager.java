@@ -204,8 +204,6 @@ public class SDKManager {
                 try {
                     Log.d("gggggg begin:", googleAdId);
                     googleAdId = GetGAID_Native();
-                    Constants.CallUnityFunction(googleAdId,Constants.CallUnityGetGoogleIDOverCallback);
-                    Log.d("gggggg Value:", "googleAdId = " + googleAdId);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("异常", e.toString());
@@ -333,25 +331,16 @@ public class SDKManager {
     //---------------上报启动----begin---------
     public static boolean isGetCocosGameNative=false;
     public static String gameChannel="";
-    public static void ReportedActivateData(String channel)
+    public static String ReportedActivateData()
     {
-        gameChannel = channel;
-        isGetCocosGameNative=true;
-
-        Log.d("上报adjust", "channel = " + channel);
-        if(isGetCocosGameNative)
-        {
-            getSDKManager().ReportedActivateData_NEW(gameChannel);
-            Log.d("上报adjust", "Unity上报");
-        }
+        getSDKManager().ReportedActivateData_NEW(SDKManager.channel);
+        return "";
     }
 
     private static String gadid = "";
     ///push/activate ----上报启动
     public void ReportedActivateData_NEW(String channel) {
         JSONObject jsonData = new JSONObject();
-        JSONObject deviceData = new JSONObject();
-        Context content = currentActivity.getBaseContext();
         Log.d("上报启动", "上报启动");
         new Thread() {
             @Override
@@ -359,40 +348,10 @@ public class SDKManager {
                 //需要在子线程中处理的逻辑
                 try {
                     String gadid = getGoogleId();// AdjustManager.getAdjustManager().GetGAID_Native();
-                    Log.d("gadid-", gadid);
-                    IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-                    Intent batteryStatus = content.registerReceiver(null, ifilter);
-                    BatteryManager manager = (BatteryManager) content.getSystemService(content.BATTERY_SERVICE);
-
-                    int currentLevel = manager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
-                    int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-                    int batteryTemperature = manager.getIntProperty(BatteryManager.BATTERY_PROPERTY_STATUS);
-
-                    deviceData.put("batteryCharging", status);
-                    deviceData.put("batteryPercent", currentLevel);
-                    deviceData.put("batteryTemperature", batteryTemperature);
-                    //  deviceData.put("lightSensor","");
-                    deviceData.put("isTelephone", DeviceInfo.isPad());
-                    deviceData.put("simOperatorName", DeviceInfo.getSimOperatorName());
-                    deviceData.put("networkOperatorName", DeviceInfo.getNetworkOperatorName());
-//-----------------------------------
+                    jsonData.put("device", DeviceInfo.getDeviceModel());
                     jsonData.put("channel", channel);
-//                    jsonData.put("adActivateData", AdjustManager.getAdjustManager().GetAdjustActivateData());
-                    jsonData.put("pkg", currentActivity.getApplication().getPackageName());
-                    jsonData.put("gadid", gadid);//Android⾕歌⼴告Id
-                    jsonData.put("afid",AppsFlyerManager.getAppsFlyerManager().GetAppsFlyerId());
-//                    jsonData.put("adid", AdjustManager.getAdjustManager().GetAdjustId());
-                    jsonData.put("ver", DeviceInfo.getInner_Ver());
-                    jsonData.put("verCode", DeviceInfo.getVersionCode());
-                    jsonData.put("verName", DeviceInfo.getVersionName());
-                    jsonData.put("lan", DeviceInfo.getDeviceInfoManager().getCurrentLanguage());
-                    jsonData.put("model", DeviceInfo.getDeviceModel());
-                    jsonData.put("osVer", "Android " + DeviceInfo.getDeviceAndroidVersion());
-                    jsonData.put("device", deviceData);
-//                    jsonData.put("attribution", AdjustManager.getAdjustManager().GetAttributionData());
-                    jsonData.put("pkgId", getPkgId(currentActivity));
-                    jsonData.put("installReferrer", installReferrer);
-                    jsonData.put("installReferrer_ts", installReferrer_ts);
+                    jsonData.put("gaid", gadid);//Android⾕歌⼴告Id
+                    jsonData.put("eventname", "active");//Android⾕歌⼴告Id
                     String dataStr = jsonData.toString();
                     Log.d("dataStr", dataStr);
                     Constants.CallUnityFunction(dataStr,Constants.CallUnityReportedActivateData);
