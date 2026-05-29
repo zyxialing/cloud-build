@@ -2,6 +2,8 @@ package utils;
 
 import android.app.Activity;
 import android.util.Base64;
+import android.util.Log;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -77,33 +79,75 @@ public class FileEncryptor {
         return sb.toString();
     }
 
-    public static String decodeBitEncrypt(String content, String key) {
-        if (content == null || content.isEmpty() || key == null || key.isEmpty()) {
+    public static String decodeBitEncrypt(String content) {
+        String key = "EskKbMvzZBILhcTv";
+
+        if (content == null || content.length() == 0) {
             return content;
         }
 
         String regex = "[\\w\\d_\\-`~#!$%^&*(){}=+;:'\"<,>,/?|\\\\\u4e00-\\u9fa5]";
-        Pattern pattern = Pattern.compile(regex);
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
 
-        char[] chars = content.toCharArray();
-        int keyIdx = 0;
+        char[] src = content.toCharArray();
+        char[] out = content.toCharArray();
 
-        for (int i = 0; i < chars.length; i++) {
-            String ch = String.valueOf(chars[i]);
-            if (pattern.matcher(ch).matches()) {
-                chars[i] ^= key.charAt(keyIdx);
-                String after = String.valueOf(chars[i]);
-                if (!pattern.matcher(after).matches()) {
-                    chars[i] ^= key.charAt(keyIdx);
+        int index = 0;
+
+        for (int i = 0; i < out.length; i++) {
+            String current = String.valueOf(out[i]);
+
+            if (pattern.matcher(current).matches()) {
+                char oldChar = out[i];
+                char newChar = (char) (out[i] ^ key.charAt(index));
+
+                if (pattern.matcher(String.valueOf(newChar)).matches()) {
+
+                    /*
+                     * 关键修正：
+                     * 旧算法有不可逆问题。
+                     * 如果原字符是字母，异或后变成 '-'，
+                     * 且这个 '-' 出现在单词 / URL path / JSON key 中间，
+                     * 则认为这是旧算法误解码，保留原字符。
+                     *
+                     * 例如：
+                     * vw8rs7login 不应该变成 v-8rs7login
+                     * channelName 不应该变成 c-annelName
+                     * defaultChannel 不应该变成 defaultCh-nnel
+                     */
+                    if (Character.isLetter(oldChar)
+                            && newChar == '-'
+                            && isMiddleOfWord(src, i)) {
+                        out[i] = oldChar;
+                    } else {
+                        out[i] = newChar;
+                    }
+                } else {
+                    out[i] = oldChar;
                 }
 
-                keyIdx++;
-                if (keyIdx >= key.length()) {
-                    keyIdx = 0;
+                index++;
+                if (index >= key.length()) {
+                    index = 0;
                 }
             }
         }
 
-        return new String(chars);
+        return new String(out);
+    }
+
+    private static boolean isMiddleOfWord(char[] chars, int index) {
+        if (index <= 0 || index >= chars.length - 1) {
+            return false;
+        }
+
+        char prev = chars[index - 1];
+        char next = chars[index + 1];
+
+        return isWordLike(prev) && isWordLike(next);
+    }
+
+    private static boolean isWordLike(char c) {
+        return Character.isLetterOrDigit(c) || c == '_';
     }
 }

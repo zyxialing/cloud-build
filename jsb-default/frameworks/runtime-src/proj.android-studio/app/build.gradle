@@ -5,12 +5,12 @@ apply plugin: 'com.android.application'
 //apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    namespace "com.herself.studio"   // 👈 这里加
+    namespace "com.hotfiregj.game5104008"   // 👈 这里加
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion PROP_BUILD_TOOLS_VERSION
     ndkVersion = PROP_BUILD_ndk
     defaultConfig {
-        applicationId "com.herself.studio"
+        applicationId "com.hotfiregj.game5104008"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1

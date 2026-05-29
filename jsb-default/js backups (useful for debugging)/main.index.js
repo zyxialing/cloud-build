@@ -13127,24 +13127,17 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
-function(t) {
+var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {
-var t = this.node.getComponent(cc.Sprite);
-s.default.setMainSprite(t, a.CmmIcon.bonusIcons[0]);
-};
-return r([ l ], e);
+e.prototype.onLoad = function() {};
+return r([ s ], e);
 }(cc.Component));
-o.default = p;
+o.default = c;
 cc._RF.pop();
-}, {
-"../../utils/CmmIcon": "CmmIcon",
-"../../utils/UIUtils": "UIUtils"
-} ],
+}, {} ],
 Country_Chip: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "9b762d+TmdLWY941hctgfmC", "Country_Chip");
@@ -13170,24 +13163,17 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
-function(t) {
+var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {
-var t = this.node.getComponent(cc.Sprite);
-s.default.setMainSprite(t, a.CmmIcon.chipIcons[0]);
-};
-return r([ l ], e);
+e.prototype.onLoad = function() {};
+return r([ s ], e);
 }(cc.Component));
-o.default = p;
+o.default = c;
 cc._RF.pop();
-}, {
-"../../utils/CmmIcon": "CmmIcon",
-"../../utils/UIUtils": "UIUtils"
-} ],
+}, {} ],
 Country_Coin: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "93b9c3LMHRF2J3L3xlu5qMQ", "Country_Coin");
@@ -13213,24 +13199,17 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
-function(t) {
+var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {
-var t = this.node.getComponent(cc.Sprite);
-s.default.setMainSprite(t, a.CmmIcon.coinIcons[0]);
-};
-return r([ l ], e);
+e.prototype.onLoad = function() {};
+return r([ s ], e);
 }(cc.Component));
-o.default = p;
+o.default = c;
 cc._RF.pop();
-}, {
-"../../utils/CmmIcon": "CmmIcon",
-"../../utils/UIUtils": "UIUtils"
-} ],
+}, {} ],
 Country_Currency_Label: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "28012lV4p5BKbiouNsCylY0", "Country_Currency_Label");
@@ -13300,24 +13279,17 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
-function(t) {
+var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {
-var t = this.node.getComponent(cc.Sprite);
-s.default.setMainSprite(t, a.CmmIcon.delayCoinIcons[0]);
-};
-return r([ l ], e);
+e.prototype.onLoad = function() {};
+return r([ s ], e);
 }(cc.Component));
-o.default = p;
+o.default = c;
 cc._RF.pop();
-}, {
-"../../utils/CmmIcon": "CmmIcon",
-"../../utils/UIUtils": "UIUtils"
-} ],
+}, {} ],
 Country_GameCoin: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "2bfabsZv7ZHkLekjfbnjheT", "Country_GameCoin");
@@ -13343,24 +13315,17 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
-function(t) {
+var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {
-var t = this.node.getComponent(cc.Sprite);
-s.default.setMainSprite(t, a.CmmIcon.gameCoinIcons[0]);
-};
-return r([ l ], e);
+e.prototype.onLoad = function() {};
+return r([ s ], e);
 }(cc.Component));
-o.default = p;
+o.default = c;
 cc._RF.pop();
-}, {
-"../../utils/CmmIcon": "CmmIcon",
-"../../utils/UIUtils": "UIUtils"
-} ],
+}, {} ],
 Country_Labels: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "4f8814h6l9M66lTRxDs2cJ/", "Country_Labels");
@@ -43252,7 +43217,7 @@ i.doCallback(null, n, "打开界面异常");
 o(null);
 var a = "";
 t.name && (a = t.name);
-App.tips.show("加载界面" + a + "失败，请重试");
+App.tips.show("Load " + a + " failed, please retry");
 });
 } else {
 i.info = new l.Resource.Info();
@@ -60778,7 +60743,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("console"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -60793,48 +60758,33 @@ return e;
 }
 e.prototype.progress = function(t) {
 t < 0 && (t = 0);
-"percentr" == this.node.name && a.error(t);
-this.tweener && this.tweener.stop();
-if (0 == t) {
+t > 1 && (t = 1);
+this.node.active = !0;
 this.tempValue = {
-value: 0
+value: t
 };
 this.setView();
-} else {
-this.node.active = !0;
-t > 1 && (t = 1);
-this.tweener = cc.tween(this.tempValue).to(.5, {
-value: t
-}, {
-onUpdate: this.setView.bind(this)
-}).start();
-}
 };
 e.prototype.setView = function() {
 if (this.tempValue) {
 var t = this.tempValue.value / 1;
 this.curValue = t;
 var e = this.totalLength * t;
-if (this.progressMask) {
-this.progressMask.setContentSize(e, 65);
-"percentr" == this.node.name && a.error("xxxxxxxxxxxxx" + e);
-}
+this.progressMask && this.progressMask.setContentSize(e, 65);
 this.labelValue && (this.labelValue.string = Math.ceil(100 * t) + "%");
 }
 };
 e.prototype.onDestroy = function() {
 this.tweener && this.tweener.stop();
 };
-r([ l ], e.prototype, "totalLength", void 0);
-r([ l(cc.Node) ], e.prototype, "progressMask", void 0);
-r([ l(cc.Label) ], e.prototype, "labelValue", void 0);
-return r([ c ], e);
+r([ c ], e.prototype, "totalLength", void 0);
+r([ c(cc.Node) ], e.prototype, "progressMask", void 0);
+r([ c(cc.Label) ], e.prototype, "labelValue", void 0);
+return r([ s ], e);
 }(cc.Component);
-o.default = p;
+o.default = l;
 cc._RF.pop();
-}, {
-console: 8
-} ],
+}, {} ],
 ZRollAction: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "d4c54KvmCNENKQscCCULmZ1", "ZRollAction");

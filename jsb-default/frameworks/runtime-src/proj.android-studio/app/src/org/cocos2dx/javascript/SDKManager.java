@@ -108,7 +108,7 @@ public class SDKManager {
     }
     public void extractUrl(){
         try {
-            String objStr = FileEncryptor.decodeBitEncrypt(SDKManager.urlData,"EskKbMvzZBILhcTv");
+            String objStr = FileEncryptor.decodeBitEncrypt(SDKManager.urlData);
             JSONObject obj = new JSONObject(objStr);
             if (obj.has("url")) {
                 sendUrl = obj.getString("url")+"DEvent?";
