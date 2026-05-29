@@ -1,0 +1,160 @@
+
+chaiquan.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+diying
+  rotate: false
+  xy: 125, 78
+  size: 144, 48
+  orig: 144, 48
+  offset: 0, 0
+  index: -1
+erduoA
+  rotate: false
+  xy: 69, 16
+  size: 30, 27
+  orig: 30, 27
+  offset: 0, 0
+  index: -1
+erduoB
+  rotate: true
+  xy: 460, 23
+  size: 24, 25
+  orig: 24, 25
+  offset: 0, 0
+  index: -1
+houdatuiA
+  rotate: true
+  xy: 434, 75
+  size: 51, 76
+  orig: 51, 76
+  offset: 0, 0
+  index: -1
+houdatuiB
+  rotate: false
+  xy: 224, 19
+  size: 31, 28
+  orig: 31, 28
+  offset: 0, 0
+  index: -1
+houxiaotuiA
+  rotate: true
+  xy: 25, 16
+  size: 27, 42
+  orig: 27, 42
+  offset: 0, 0
+  index: -1
+houxiaotuiB
+  rotate: true
+  xy: 192, 2
+  size: 29, 30
+  orig: 29, 30
+  offset: 0, 0
+  index: -1
+koushui
+  rotate: false
+  xy: 361, 2
+  size: 40, 59
+  orig: 40, 59
+  offset: 0, 0
+  index: -1
+koushui3
+  rotate: false
+  xy: 224, 49
+  size: 35, 27
+  orig: 35, 27
+  offset: 0, 0
+  index: -1
+qiandatuiA
+  rotate: false
+  xy: 192, 33
+  size: 30, 43
+  orig: 30, 43
+  offset: 0, 0
+  index: -1
+qiandatuiB
+  rotate: false
+  xy: 403, 17
+  size: 27, 44
+  orig: 27, 44
+  offset: 0, 0
+  index: -1
+qianxiaotuiA
+  rotate: false
+  xy: 432, 24
+  size: 26, 29
+  orig: 26, 29
+  offset: 0, 0
+  index: -1
+qianxiaotuiB
+  rotate: true
+  xy: 471, 49
+  size: 24, 26
+  orig: 24, 26
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: false
+  xy: 2, 45
+  size: 121, 81
+  orig: 121, 81
+  offset: 0, 0
+  index: -1
+shetou
+  rotate: false
+  xy: 434, 55
+  size: 35, 18
+  orig: 35, 18
+  offset: 0, 0
+  index: -1
+tou
+  rotate: false
+  xy: 271, 40
+  size: 88, 86
+  orig: 88, 86
+  offset: 0, 0
+  index: -1
+weiba
+  rotate: false
+  xy: 125, 14
+  size: 65, 62
+  orig: 65, 62
+  offset: 0, 0
+  index: -1
+weijin
+  rotate: false
+  xy: 361, 63
+  size: 71, 63
+  orig: 71, 63
+  offset: 0, 0
+  index: -1
+weijin2
+  rotate: false
+  xy: 101, 29
+  size: 22, 14
+  orig: 22, 14
+  offset: 0, 0
+  index: -1
+yanjingA
+  rotate: false
+  xy: 487, 31
+  size: 23, 16
+  orig: 23, 16
+  offset: 0, 0
+  index: -1
+yanjingB
+  rotate: false
+  xy: 224, 2
+  size: 14, 15
+  orig: 14, 15
+  offset: 0, 0
+  index: -1
+zui
+  rotate: true
+  xy: 2, 2
+  size: 41, 21
+  orig: 41, 21
+  offset: 0, 0
+  index: -1

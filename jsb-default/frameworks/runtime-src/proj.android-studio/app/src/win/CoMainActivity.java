@@ -29,7 +29,6 @@ import org.cocos2dx.javascript.SDKConfig;
 import org.cocos2dx.javascript.SDKManager;
 import org.cocos2dx.javascript.SDKWrapper;
 import org.cocos2dx.javascript.androidSDK.AppsFlyerSDK.AppsFlyerManager;
-//import org.cocos2dx.javascript.androidSDK.Adjust.AdjustManager;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
@@ -45,13 +44,9 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Date;
-
-import kotlin.text.Charsets;
 import utils.FileEncryptor;
 import utils.MusicPicker;
 import utils.PhotoAgent;

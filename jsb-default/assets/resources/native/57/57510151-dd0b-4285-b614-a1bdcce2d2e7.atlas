@@ -1,0 +1,13 @@
+
+an_zz_lv.png
+size: 92,216
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+zz_lv
+  rotate: false
+  xy: 2, 2
+  size: 88, 212
+  orig: 91, 212
+  offset: 2, 0
+  index: -1

@@ -1,0 +1,62 @@
+
+wenzi.png
+size: 364,174
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Blind1
+  rotate: false
+  xy: 255, 30
+  size: 76, 29
+  orig: 76, 29
+  offset: 0, 0
+  index: -1
+Blindx2
+  rotate: true
+  xy: 283, 66
+  size: 106, 29
+  orig: 106, 29
+  offset: 0, 0
+  index: -1
+Chaal1
+  rotate: false
+  xy: 255, 2
+  size: 79, 26
+  orig: 79, 26
+  offset: 0, 0
+  index: -1
+Chaalx2
+  rotate: true
+  xy: 255, 61
+  size: 111, 26
+  orig: 111, 26
+  offset: 0, 0
+  index: -1
+Show2
+  rotate: true
+  xy: 336, 3
+  size: 80, 26
+  orig: 80, 26
+  offset: 0, 0
+  index: -1
+Side Show2
+  rotate: true
+  xy: 224, 28
+  size: 144, 29
+  orig: 144, 29
+  offset: 0, 0
+  index: -1
+guang2
+  rotate: true
+  xy: 314, 85
+  size: 87, 36
+  orig: 87, 36
+  offset: 0, 0
+  index: -1
+vs_x
+  rotate: true
+  xy: 2, 4
+  size: 168, 220
+  orig: 187, 241
+  offset: 7, 7
+  index: -1

@@ -1,0 +1,118 @@
+
+chabei.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+beishen
+  rotate: false
+  xy: 321, 66
+  size: 56, 52
+  orig: 56, 52
+  offset: 0, 0
+  index: -1
+beishen2
+  rotate: false
+  xy: 125, 2
+  size: 51, 19
+  orig: 51, 19
+  offset: 0, 0
+  index: -1
+beishen3
+  rotate: false
+  xy: 379, 66
+  size: 56, 52
+  orig: 56, 52
+  offset: 0, 0
+  index: -1
+beiyuan1
+  rotate: false
+  xy: 437, 94
+  size: 54, 24
+  orig: 54, 24
+  offset: 0, 0
+  index: -1
+beiyuan2
+  rotate: false
+  xy: 437, 68
+  size: 54, 24
+  orig: 54, 24
+  offset: 0, 0
+  index: -1
+chabao
+  rotate: false
+  xy: 178, 13
+  size: 15, 8
+  orig: 15, 8
+  offset: 0, 0
+  index: -1
+chabao2
+  rotate: false
+  xy: 257, 43
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+chahu
+  rotate: false
+  xy: 2, 14
+  size: 121, 104
+  orig: 121, 104
+  offset: 0, 0
+  index: -1
+chashui
+  rotate: true
+  xy: 493, 74
+  size: 44, 12
+  orig: 44, 12
+  offset: 0, 0
+  index: -1
+chashui1
+  rotate: true
+  xy: 201, 66
+  size: 52, 58
+  orig: 52, 58
+  offset: 0, 0
+  index: -1
+chashui2
+  rotate: true
+  xy: 261, 66
+  size: 52, 58
+  orig: 52, 58
+  offset: 0, 0
+  index: -1
+chashui3
+  rotate: false
+  xy: 188, 23
+  size: 21, 37
+  orig: 21, 37
+  offset: 0, 0
+  index: -1
+chaye
+  rotate: false
+  xy: 2, 3
+  size: 20, 9
+  orig: 20, 9
+  offset: 0, 0
+  index: -1
+diezi
+  rotate: false
+  xy: 125, 62
+  size: 74, 56
+  orig: 74, 56
+  offset: 0, 0
+  index: -1
+reqi
+  rotate: false
+  xy: 125, 23
+  size: 61, 37
+  orig: 61, 37
+  offset: 0, 0
+  index: -1
+xian
+  rotate: true
+  xy: 211, 44
+  size: 20, 44
+  orig: 20, 44
+  offset: 0, 0
+  index: -1

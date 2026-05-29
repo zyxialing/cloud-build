@@ -1,0 +1,62 @@
+
+pingdiguo.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+lian
+  rotate: false
+  xy: 164, 61
+  size: 99, 77
+  orig: 99, 77
+  offset: 0, 0
+  index: -1
+pingdiguo1
+  rotate: true
+  xy: 149, 140
+  size: 82, 154
+  orig: 82, 154
+  offset: 0, 0
+  index: -1
+pingdiguo2
+  rotate: true
+  xy: 2, 22
+  size: 69, 160
+  orig: 69, 160
+  offset: 0, 0
+  index: -1
+pingdiguo3
+  rotate: true
+  xy: 305, 139
+  size: 83, 152
+  orig: 83, 152
+  offset: 0, 0
+  index: -1
+pingdiguo4
+  rotate: false
+  xy: 2, 93
+  size: 145, 129
+  orig: 145, 129
+  offset: 0, 0
+  index: -1
+tx1
+  rotate: false
+  xy: 459, 178
+  size: 48, 44
+  orig: 48, 44
+  offset: 0, 0
+  index: -1
+tx2
+  rotate: true
+  xy: 164, 2
+  size: 57, 66
+  orig: 57, 66
+  offset: 0, 0
+  index: -1
+xingxing1
+  rotate: false
+  xy: 265, 109
+  size: 30, 29
+  orig: 30, 29
+  offset: 0, 0
+  index: -1

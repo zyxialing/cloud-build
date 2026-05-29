@@ -1,0 +1,55 @@
+
+winner.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+WINNER
+  rotate: false
+  xy: 0, 1
+  size: 127, 34
+  orig: 127, 34
+  offset: 0, 0
+  index: -1
+WINNER_di2
+  rotate: false
+  xy: 129, 6
+  size: 70, 29
+  orig: 70, 29
+  offset: 0, 0
+  index: -1
+WINNER_xin
+  rotate: true
+  xy: 314, 201
+  size: 54, 53
+  orig: 56, 56
+  offset: 1, 2
+  index: -1
+g_X
+  rotate: true
+  xy: 201, 0
+  size: 120, 108
+  orig: 120, 120
+  offset: 0, 9
+  index: -1
+winner_gx
+  rotate: false
+  xy: 311, 25
+  size: 95, 95
+  orig: 97, 97
+  offset: 1, 1
+  index: -1
+winner_gx2
+  rotate: false
+  xy: 180, 122
+  size: 132, 133
+  orig: 146, 146
+  offset: 6, 7
+  index: -1
+xg3
+  rotate: true
+  xy: 0, 37
+  size: 218, 178
+  orig: 228, 188
+  offset: 6, 6
+  index: -1

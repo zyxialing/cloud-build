@@ -1,0 +1,160 @@
+
+game start.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cm_da
+  rotate: true
+  xy: 0, 24
+  size: 232, 212
+  orig: 236, 214
+  offset: 2, 2
+  index: -1
+gamestart_g01
+  rotate: true
+  xy: 56, 2
+  size: 20, 47
+  orig: 21, 48
+  offset: 0, 1
+  index: -1
+gamestart_g02
+  rotate: false
+  xy: 701, 206
+  size: 36, 50
+  orig: 37, 51
+  offset: 0, 0
+  index: -1
+gamestart_g03
+  rotate: false
+  xy: 543, 88
+  size: 40, 52
+  orig: 43, 54
+  offset: 1, 1
+  index: -1
+gamestart_g04
+  rotate: true
+  xy: 684, 6
+  size: 37, 51
+  orig: 40, 51
+  offset: 2, 0
+  index: -1
+gamestart_g05
+  rotate: false
+  xy: 393, 69
+  size: 38, 71
+  orig: 43, 77
+  offset: 3, 5
+  index: -1
+gamestart_g06
+  rotate: false
+  xy: 661, 151
+  size: 38, 105
+  orig: 39, 106
+  offset: 0, 1
+  index: -1
+gamestart_g07
+  rotate: true
+  xy: 433, 85
+  size: 55, 108
+  orig: 58, 110
+  offset: 1, 1
+  index: -1
+gamestart_g08
+  rotate: true
+  xy: 300, 7
+  size: 56, 109
+  orig: 58, 110
+  offset: 1, 1
+  index: -1
+gamestart_g09
+  rotate: false
+  xy: 638, 33
+  size: 44, 107
+  orig: 47, 108
+  offset: 1, 0
+  index: -1
+gamestart_g10
+  rotate: false
+  xy: 585, 32
+  size: 51, 108
+  orig: 52, 109
+  offset: 1, 1
+  index: -1
+gamestart_g12
+  rotate: false
+  xy: 684, 45
+  size: 35, 104
+  orig: 37, 106
+  offset: 1, 1
+  index: -1
+gamestart_g13
+  rotate: false
+  xy: 542, 29
+  size: 38, 54
+  orig: 41, 58
+  offset: 1, 1
+  index: -1
+gamestart_g14
+  rotate: false
+  xy: 214, 6
+  size: 41, 57
+  orig: 43, 58
+  offset: 1, 1
+  index: -1
+gamestart_g15
+  rotate: false
+  xy: 257, 6
+  size: 41, 57
+  orig: 44, 59
+  offset: 2, 1
+  index: -1
+gamestart_g16
+  rotate: false
+  xy: 411, 11
+  size: 40, 56
+  orig: 42, 58
+  offset: 1, 1
+  index: -1
+gamestart_g17
+  rotate: true
+  xy: 0, 0
+  size: 22, 54
+  orig: 22, 55
+  offset: 0, 0
+  index: -1
+gamestart_g18
+  rotate: true
+  xy: 105, 7
+  size: 15, 49
+  orig: 16, 53
+  offset: 1, 1
+  index: -1
+xin
+  rotate: false
+  xy: 453, 0
+  size: 87, 83
+  orig: 92, 92
+  offset: 4, 1
+  index: -1
+zi_game start
+  rotate: true
+  xy: 214, 65
+  size: 191, 91
+  orig: 255, 127
+  offset: 64, 0
+  index: -1
+zi_game start2
+  rotate: true
+  xy: 307, 82
+  size: 174, 84
+  orig: 255, 127
+  offset: 0, 43
+  index: -1
+zi_game start_g
+  rotate: false
+  xy: 393, 142
+  size: 266, 114
+  orig: 266, 114
+  offset: 0, 0
+  index: -1

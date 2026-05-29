@@ -1,0 +1,27 @@
+
+xianhua.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+xianhua
+  rotate: false
+  xy: 2, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+xingguang
+  rotate: false
+  xy: 156, 179
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+xuanguang
+  rotate: false
+  xy: 2, 54
+  size: 152, 175
+  orig: 152, 175
+  offset: 0, 0
+  index: -1

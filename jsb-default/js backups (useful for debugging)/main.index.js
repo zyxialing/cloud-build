@@ -75,6 +75,268 @@ cc._RF.pop();
 "../../sdk/AppInfo": "AppInfo",
 "./EventComponent": "EventComponent"
 } ],
+ActiviryItem: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "bbdceGN2CxFgLf8QWboMcdg", "ActiviryItem");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/component/RedPointComponent"), s = t("../../common/config/GlobalVar"), c = t("../../common/config/User"), l = t("../../common/event/CommonEvent"), p = t("../../common/utils/CmmUtils"), u = t("../../framework/componects/EventComponent"), d = t("../../framework/core/update/Update"), h = t("../../framework/defines/Enums"), f = t("../view/CommonUIHelper"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.redParent = null;
+e.loading = null;
+e.more = null;
+e.activityIcon = null;
+e.tips = null;
+e.updateNode = null;
+e.updateProgressNode = null;
+e.redSys = null;
+e.progressFiLL = null;
+e.progressTxt = null;
+e.btn = null;
+e._holder = null;
+return e;
+}
+o = e;
+e.prototype.onLoad = function() {
+t.prototype.onLoad.call(this);
+this.onD(l.HotEvent.DownProgress, this.updateProgress);
+this.onD(l.HotEvent.DownComplete, this.updateComplete);
+this.onD(l.HotEvent.DownGameFail, this.downFreshFail);
+};
+e.prototype.addEvents = function() {
+var t = this;
+this.btn = this.node.getComponent(cc.Button);
+this.onN(this.node, h.NodeEvent.click, this.onClick.bind(this));
+this.onD(l.Hall_Event.acitvity_mask_name, function(e) {
+e && e == t._holder.data.alias && t.scheduleOnce(function() {
+var e = App.utils.localConvertWorldPointAR(t.node);
+dispatch(l.Hall_Event.acitvity_mask_name2, e);
+}, .22);
+});
+};
+e.prototype.show = function(t) {
+var e = this;
+this._holder = t;
+var o = this._holder.data.actImg;
+this.redSys.refreshModule("act_" + this._holder.data.id);
+this.redParent.active = !1;
+if (o) {
+this.redParent.active = !0;
+this.btn.interactable = !0;
+this.more.active = !1;
+this._curPath = o;
+this.loading.active = !0;
+App.asset.remote.loadImage_fixed(o, !0).then(function(t) {
+if (t && e.activityIcon && e._curPath == t.url) {
+e.activityIcon.spriteFrame = t.sprite;
+e.loading.active = !1;
+}
+});
+if (1 != this._holder.data.actType) {
+this.initHotUpdateView();
+return;
+}
+this.updateNode.active = !1;
+} else {
+this.more.active = !0;
+this.updateNode.active = !1;
+}
+};
+e.prototype.initHotUpdateView = function() {
+if (this.updateNode) if (App.updateManager.getStatus(this._holder.data.alias) == d.Update.Status.UP_TO_DATE) {
+this.updateNode.active = !1;
+this.updateProgressNode.active = !1;
+this.tips.active = !0;
+} else {
+this.updateNode.active = !0;
+this.updateProgressNode.active = !1;
+this.tips.active = !0;
+}
+};
+e.prototype.onClick = function() {
+if (o.sameClick && this._holder.data.alias) if (1 != this._holder.data.actType) {
+o.sameClick = !1;
+this.scheduleOnce(function() {
+o.sameClick = !0;
+}, .5);
+App.globalAudio.playButtonClick();
+if (App.updateManager.getStatus(this._holder.data.alias) == d.Update.Status.UP_TO_DATE) this._holder.data.vip > c.default.self.data.viplevel ? App.tips.show(App.zLan.getString(10192, this._holder.data.vip)) : App.entryManager.enterBundle(this._holder.data.alias); else {
+this.updateNode.active = !0;
+this.updateProgressNode.active = !0;
+this.progressTxt.string = p.CmmUtils.precentString(0);
+this.progressFiLL.fillRange = 0;
+this.curprogress = 0;
+this.tips.active = !1;
+if (!s.GlobalVar.downList.has(this._holder.data.alias)) {
+s.GlobalVar.downList.set(this._holder.data.alias, 0);
+if (s.GlobalVar.downList.size <= s.GlobalVar.maxDown) {
+s.GlobalVar.downList.set(this._holder.data.alias, 1);
+App.entryManager.enterBundle(this._holder.data.alias);
+}
+}
+this.btn && (this.btn.interactable = !1);
+}
+} else {
+App.globalAudio.playButtonClick();
+f.default.showActivityId(this._holder.data.id, function() {
+dispatch(l.Hall_Event.activity_close);
+});
+}
+};
+e.prototype.updateProgress = function(t) {
+var e = t.bundle;
+if (e == this._holder.data.alias) {
+var o = t.info.progress;
+this.curprogress > o ? o = this.curprogress : this.curprogress = o;
+if (this._holder.data.alias == e) {
+this.updateNode.active = !0;
+this.tips.active = !1;
+this.updateProgressNode.active = !0;
+this.progressTxt.string = p.CmmUtils.precentString(o);
+this.progressFiLL.fillRange = -o;
+}
+}
+};
+e.prototype.updateComplete = function(t) {
+if (this._holder.data.alias == t) {
+this.updateProgressNode.active = !1;
+this.updateNode.active = !1;
+this.btn && (this.btn.interactable = !0);
+}
+};
+e.prototype.downFreshFail = function(t) {
+this._holder.data.alias == t && this.show(this._holder);
+};
+var o;
+e.sameClick = !0;
+r([ g(cc.Node) ], e.prototype, "redParent", void 0);
+r([ g(cc.Node) ], e.prototype, "loading", void 0);
+r([ g(cc.Node) ], e.prototype, "more", void 0);
+r([ g(cc.Sprite) ], e.prototype, "activityIcon", void 0);
+r([ g(cc.Node) ], e.prototype, "tips", void 0);
+r([ g(cc.Node) ], e.prototype, "updateNode", void 0);
+r([ g(cc.Node) ], e.prototype, "updateProgressNode", void 0);
+r([ g(a.default) ], e.prototype, "redSys", void 0);
+r([ g(cc.Sprite) ], e.prototype, "progressFiLL", void 0);
+r([ g(cc.Label) ], e.prototype, "progressTxt", void 0);
+return o = r([ _ ], e);
+}(u.default);
+o.default = y;
+cc._RF.pop();
+}, {
+"../../common/component/RedPointComponent": "RedPointComponent",
+"../../common/config/GlobalVar": "GlobalVar",
+"../../common/config/User": "User",
+"../../common/event/CommonEvent": "CommonEvent",
+"../../common/utils/CmmUtils": "CmmUtils",
+"../../framework/componects/EventComponent": "EventComponent",
+"../../framework/core/update/Update": "Update",
+"../../framework/defines/Enums": "Enums",
+"../view/CommonUIHelper": "CommonUIHelper"
+} ],
+ActivityScrollList: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "555259Bg0lMO6Z4anGKChly", "ActivityScrollList");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/event/CommonEvent"), s = t("../../zgameCommon/adapter/abstract/Holder"), c = t("../../zgameCommon/adapter/abstract/ScrollAdapter"), l = t("../../zgameCommon/adapter/abstract/View"), p = t("./ActiviryItem"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.bigPrefab = null;
+return e;
+}
+e.prototype.getPrefab = function() {
+return this.bigPrefab;
+};
+e.prototype.getView = function() {
+return new m(this);
+};
+e.prototype.getHolder = function(t, e) {
+return new _(t, e, this);
+};
+e.prototype.initList = function(t, e) {
+this.modelManager.insert(t);
+dispatch(a.Hall_Event.acitvity_mask_name, e);
+};
+r([ h(cc.Node) ], e.prototype, "bigPrefab", void 0);
+return r([ d ], e);
+}(c.ScrollAdapter);
+o.default = f;
+var m = function(t) {
+i(e, t);
+function e() {
+return null !== t && t.apply(this, arguments) || this;
+}
+e.prototype.onVisible = function() {};
+e.prototype.onDisable = function() {};
+return e;
+}(l.View), _ = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e._item = null;
+return e;
+}
+e.prototype.onCreated = function() {
+this._item = this.node.getComponent(p.default);
+};
+e.prototype.onVisible = function() {
+this._item.show(this);
+};
+e.prototype.onDisable = function() {};
+return e;
+}(s.Holder);
+cc._RF.pop();
+}, {
+"../../common/event/CommonEvent": "CommonEvent",
+"../../zgameCommon/adapter/abstract/Holder": "Holder",
+"../../zgameCommon/adapter/abstract/ScrollAdapter": "ScrollAdapter",
+"../../zgameCommon/adapter/abstract/View": "View",
+"./ActiviryItem": "ActiviryItem"
+} ],
 Alert: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "78052U/SxxKbaWY5cjj8G5p", "Alert");
@@ -813,7 +1075,7 @@ t.getOneLinkInviteCode = function() {
 if (App.IsHtmlGame) {
 var e, o = p.default._ios_addeeplink;
 if (o) {
-console.error("+++++++++++++++++++++++" + o);
+Log.e("+++++++++++++++++++++++" + o);
 var n = t.getIOSInviteBrowserValue("deep_link_value");
 s.CmmUtils.stringNotEmpty(n) || (n = t.getCookie("deep_link_value"));
 var r = t.getIOSInviteBrowserValue("deep_link_sub1");
@@ -1093,7 +1355,7 @@ cc.dynamicAtlasManager.maxFrameSize = 512;
 if (App.IsHtmlGame) {
 T.default.channelID = L.default.getHtmlChannelID();
 T.default.httpId = L.default.getHttpId();
-}
+} else T.default.UploadInstallData();
 t.prototype.init.call(this);
 this.updateConfig();
 this.entryManager.delegate = new y.CmmEntry();
@@ -1224,7 +1486,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.AssetManager = void 0;
-var n = t("./Resource"), i = function() {
+var n = t("../../../common/config/GlobalVar"), i = t("../../../common/utils/CmmUtils"), r = t("./Resource"), a = function() {
 function t() {
 this._logTag = "[RemoteLoader] ";
 }
@@ -1252,55 +1514,58 @@ n(i);
 }
 });
 };
-t.prototype.loadImage_fixed = function(t, e, o) {
-var n = this;
-return new Promise(function(i) {
-if (null == t || null == t || t.length <= 0) i(null); else {
+t.prototype.loadImage_fixed = function(t, e, o, r) {
+var a = r;
+i.CmmUtils.stringNotEmpty(a) || (a = n.GlobalVar.curGameAlias);
+Log.d("图片加载:" + a + ":::::::" + t);
+var s = this;
+return new Promise(function(n) {
+if (null == t || null == t || t.length <= 0) n(null); else {
 if (e) {
-var r = App.cache.remoteCaches.getSpriteFrame(t);
-if (r && r.data) {
-i({
+var i = App.cache.remoteCaches.getSpriteFrame(t);
+if (i && i.data) {
+n({
 url: t,
-sprite: r.data,
+sprite: i.data,
 compare: o
 });
 return;
 }
 App.cache.remoteCaches.remove(t);
 } else App.cache.remoteCaches.remove(t);
-n._loadRemoteRes(t, cc.Texture2D, e).then(function(e) {
-var n = App.cache.remoteCaches.get(t);
-if (e && n) {
-n.data = e;
-n.data.name = t;
-var r = App.cache.remoteCaches.setSpriteFrame(t, n.data);
-i({
+s._loadRemoteRes(t, cc.Texture2D, e).then(function(e) {
+var i = App.cache.remoteCaches.get(t);
+if (e && i) {
+i.data = e;
+i.data.name = t;
+var r = App.cache.remoteCaches.setSpriteFrame(t, i.data);
+App.cache.remoteCaches.setBundle(t, a);
+n({
 url: t,
 sprite: r,
 compare: o
 });
-} else i(null);
+} else n(null);
 });
 }
 });
 };
 t.prototype._loadRemoteRes = function(t, e) {
-"http://192.168.31.102/nh5/loading/0/47/0/1.png" == t && Log.e("debug 47");
 return new Promise(function(o) {
-var i = App.cache.remoteCaches.get(t);
-if (i) i.isLoaded ? o(i.data) : i.finishCb.push(o); else {
-(i = new n.Resource.CacheData()).info.resourceType = n.Resource.Type.Remote;
-i.info.type = e;
-App.cache.remoteCaches.set(t, i);
+var n = App.cache.remoteCaches.get(t);
+if (n) n.isLoaded ? o(n.data) : n.finishCb.push(o); else {
+(n = new r.Resource.CacheData()).info.resourceType = r.Resource.Type.Remote;
+n.info.type = e;
+App.cache.remoteCaches.set(t, n);
 cc.assetManager.loadRemote(t, function(t, e) {
-if (i) {
-i.isLoaded = !0;
+if (n) {
+n.isLoaded = !0;
 if (e) {
-i.data = e;
-i.data.addRef();
+n.data = e;
+n.data.addRef();
 }
-i.doFinish(e);
-o(i.data);
+n.doFinish(e);
+o(n.data);
 }
 });
 }
@@ -1308,11 +1573,11 @@ o(i.data);
 };
 t.prototype.update = function() {};
 return t;
-}(), r = function() {
+}(), s = function() {
 function t() {
 this.isResident = !0;
 this.module = null;
-this._remote = new i();
+this._remote = new a();
 }
 Object.defineProperty(t.prototype, "remote", {
 get: function() {
@@ -1324,45 +1589,45 @@ configurable: !0
 t.prototype.getBundle = function(t) {
 return App.bundleManager.getBundle(t);
 };
-t.prototype.load = function(t, e, o, i, r) {
+t.prototype.load = function(t, e, o, n, i) {
 var a = App.cache.get(t, e);
 if (a) {
-a.isLoaded ? r(a) : a.finishCb.push(r);
-a.status = n.Resource.CacheStatus.NONE;
+a.isLoaded ? i(a) : a.finishCb.push(i);
+a.status = r.Resource.CacheStatus.NONE;
 } else {
-(a = new n.Resource.CacheData()).info.url = e;
+(a = new r.Resource.CacheData()).info.url = e;
 a.info.type = o;
 a.info.bundle = t;
 App.cache.set(t, e, a);
 var s = this.getBundle(t);
 if (!s) {
 var c = new Error(this.module + " " + t + " 没有加载，请先加载");
-this._onLoadComplete(a, r, c, null);
+this._onLoadComplete(a, i, c, null);
 return;
 }
 var l = s.get(e, o);
-l ? this._onLoadComplete(a, r, null, l) : i ? s.load(e, o, i, this._onLoadComplete.bind(this, a, r)) : s.load(e, o, this._onLoadComplete.bind(this, a, r));
+l ? this._onLoadComplete(a, i, null, l) : n ? s.load(e, o, n, this._onLoadComplete.bind(this, a, i)) : s.load(e, o, this._onLoadComplete.bind(this, a, i));
 }
 };
-t.prototype._onLoadComplete = function(t, e, o, i) {
+t.prototype._onLoadComplete = function(t, e, o, n) {
 t.isLoaded = !0;
-var r = t;
+var i = t;
 if (o) {
 App.SingleGame || Log.e(this.module + "加载资源失败:" + t.info.url + " 原因:" + (o.message ? o.message : "未知"));
 t.data = null;
-r.data = null;
+i.data = null;
 App.cache.remove(t.info.bundle, t.info.url);
 e(t);
 } else {
-t.data = i;
-r.data = i;
+t.data = n;
+i.data = n;
 e(t);
 }
-t.doFinish(r);
-t.doGet(r.data);
-if (t.status == n.Resource.CacheStatus.WAITTING_FOR_RELEASE && t.data) {
-t.status = n.Resource.CacheStatus.NONE;
-var a = new n.Resource.Info();
+t.doFinish(i);
+t.doGet(i.data);
+if (t.status == r.Resource.CacheStatus.WAITTING_FOR_RELEASE && t.data) {
+t.status = r.Resource.CacheStatus.NONE;
+var a = new r.Resource.Info();
 a.url = t.info.url;
 a.type = t.info.type;
 a.data = t.data;
@@ -1370,23 +1635,23 @@ a.bundle = t.info.bundle;
 this.releaseAsset(a);
 }
 };
-t.prototype.loadDir = function(t, e, o, i, r) {
+t.prototype.loadDir = function(t, e, o, n, i) {
 var a = App.cache.get(t, e);
 if (a) {
-a.isLoaded ? r(a) : a.finishCb.push(r);
-a.status = n.Resource.CacheStatus.NONE;
+a.isLoaded ? i(a) : a.finishCb.push(i);
+a.status = r.Resource.CacheStatus.NONE;
 } else {
-(a = new n.Resource.CacheData()).info.url = e;
+(a = new r.Resource.CacheData()).info.url = e;
 a.info.type = o;
 a.info.bundle = t;
 App.cache.set(t, e, a);
 var s = this.getBundle(t);
 if (!s) {
 var c = new Error(this.module + " " + t + " 没有加载，请先加载");
-this._onLoadComplete(a, r, c, null);
+this._onLoadComplete(a, i, c, null);
 return;
 }
-i ? s.loadDir(e, o, i, this._onLoadComplete.bind(this, a, r)) : s.loadDir(e, o, this._onLoadComplete.bind(this, a, r));
+n ? s.loadDir(e, o, n, this._onLoadComplete.bind(this, a, i)) : s.loadDir(e, o, this._onLoadComplete.bind(this, a, i));
 }
 };
 t.prototype.LoadTxt = function(t, e, o, n) {
@@ -1409,7 +1674,7 @@ if (e.isInvalid) return;
 if (e.isLoaded) {
 if (e.info.retain) return;
 App.cache.removeWithInfo(t);
-} else e.status = n.Resource.CacheStatus.WAITTING_FOR_RELEASE;
+} else e.status = r.Resource.CacheStatus.WAITTING_FOR_RELEASE;
 }
 };
 t.prototype.retainAsset = function(t) {
@@ -1422,19 +1687,21 @@ if (Array.isArray(e.data)) for (var o = 0; o < e.data.length; o++) e.data[o] && 
 }
 };
 t.prototype.addPersistAsset = function(t, e, o) {
-var i = new n.Resource.Info();
-i.url = t;
-i.data = e;
-i.bundle = o;
-i.retain = !0;
-this.retainAsset(i);
+var n = new r.Resource.Info();
+n.url = t;
+n.data = e;
+n.bundle = o;
+n.retain = !0;
+this.retainAsset(n);
 };
 t.module = "【AssetManager】";
 return t;
 }();
-o.AssetManager = r;
+o.AssetManager = s;
 cc._RF.pop();
 }, {
+"../../../common/config/GlobalVar": "GlobalVar",
+"../../../common/utils/CmmUtils": "CmmUtils",
 "./Resource": "Resource"
 } ],
 AudioComponent: [ function(t, e, o) {
@@ -1764,10 +2031,9 @@ e.prototype.playCustomEffect = function(t, e, o) {
 var n = this;
 void 0 === o && (o = !1);
 return new Promise(function(i) {
-if (n.audioData.isEffectOn) App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(r) {
-if (r) {
-App.asset.addPersistAsset(t, r, e);
-n.audioData.curEffectId = cc.audioEngine.playEffect(r, o);
+if (n.audioData.isEffectOn) App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(e) {
+if (e) {
+n.audioData.curEffectId = cc.audioEngine.playEffect(e, o);
 i(n.audioData.curEffectId);
 } else {
 p.default.instance && (n.audioData.curEffectId = p.default.instance.playEffect(t, o));
@@ -1991,6 +2257,136 @@ cc._RF.pop();
 "../../framework/defines/Macros": "Macros",
 "../event/SlotsFrameEvent": "SlotsFrameEvent"
 } ],
+AutoService_Base_Bingo: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "7189aWLGP9GQZ5xNWnBKZtK", "AutoService_Base_Bingo");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/config/GlobalVar"), s = t("../../common/event/CommonEvent"), c = t("../../common/utils/CmmUtils"), l = t("../../framework/defines/Macros"), p = t("../BingoDictoryTable"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Main = null;
+e.node_Zhezhao = null;
+e.node_Move = null;
+e.label_Balance = null;
+e.label_BetValue = null;
+e.label_win = null;
+e.color_Count_Normal = null;
+e.color_Count_Select = null;
+e.label_Counts = [];
+e.node_Mask_Autobtn = null;
+e.hidePos = cc.v3(0, -500, 0);
+e.autoCounts_Config = [ 10, 30, 50, 80, 1e3 ];
+e.autoCount = 0;
+e.tween_Move = null;
+return e;
+}
+e.prototype.OpenShow = function(t) {
+dispatch(s.CommonEvent.EventMaskAll, .5);
+this.label_Balance.string = c.CmmUtils.NumberForceAddCurrencyString(c.CmmUtils.NumberToHallString(a.GlobalVar.curMoney, !0));
+this.label_BetValue.string = c.CmmUtils.NumberForceAddCurrencyString(c.CmmUtils.NumberToHallString(t.betValue, !0));
+this.label_win.string = c.CmmUtils.NumberForceAddCurrencyString(c.CmmUtils.NumberToHallString(t.win, !0));
+this.node_Mask_Autobtn.active = !0;
+for (var e = 0; e < this.label_Counts.length; e++) this.label_Counts[e].node.color = this.color_Count_Normal;
+this.tween_Move && this.tween_Move.stop();
+this.node_Move.position = this.hidePos;
+this.node_Zhezhao.active = !0;
+this.node_Main.active = !0;
+this.tween_Move = cc.tween(this.node_Move).to(.3, {
+position: cc.v3(0, 0, 0)
+}).start();
+};
+e.prototype.CloseShow = function() {
+var t = this;
+dispatch(s.CommonEvent.EventMaskAll, .5);
+this.tween_Move && this.tween_Move.stop();
+this.tween_Move = cc.tween(this.node_Move).to(.3, {
+position: this.hidePos
+}).call(function() {
+t.node_Main.active = !1;
+t.node_Zhezhao.active = !1;
+}).start();
+};
+e.prototype.ButtonClick_Close = function() {
+App.globalAudio.playBundleEffect("slots_common/sounds/pg/menu_icon_press", l.Macro.BUNDLE_RESOURCES);
+dispatch(p.BingoDictoryTable.Bingo_Event.AutoService_Close);
+this.CloseShow();
+};
+e.prototype.ButtonClick_Count0 = function() {
+this.SetSelectAutoCount(0);
+};
+e.prototype.ButtonClick_Count1 = function() {
+this.SetSelectAutoCount(1);
+};
+e.prototype.ButtonClick_Count2 = function() {
+this.SetSelectAutoCount(2);
+};
+e.prototype.ButtonClick_Count3 = function() {
+this.SetSelectAutoCount(3);
+};
+e.prototype.ButtonClick_Count4 = function() {
+this.SetSelectAutoCount(4);
+};
+e.prototype.ButtonClick_StartAutoSpin = function() {
+var t = this;
+App.globalAudio.playBundleEffect("slots_common/sounds/pg/menu_icon_press", l.Macro.BUNDLE_RESOURCES);
+this.CloseShow();
+this.scheduleOnce(function() {
+dispatch(p.BingoDictoryTable.Bingo_Event.AutoService_Confirm, t.autoCount);
+}, .3);
+};
+e.prototype.SetSelectAutoCount = function(t) {
+App.globalAudio.playBundleEffect("slots_common/sounds/pg/menu_icon_press", l.Macro.BUNDLE_RESOURCES);
+this.autoCount = this.autoCounts_Config[t];
+Log.e("Select Auto Count = " + this.autoCount);
+for (var e = 0; e < this.label_Counts.length; e++) {
+this.label_Counts[e].node.color = t == e ? this.color_Count_Select : this.color_Count_Normal;
+}
+this.node_Mask_Autobtn.active = !1;
+};
+r([ h(cc.Node) ], e.prototype, "node_Main", void 0);
+r([ h(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
+r([ h(cc.Node) ], e.prototype, "node_Move", void 0);
+r([ h(cc.Label) ], e.prototype, "label_Balance", void 0);
+r([ h(cc.Label) ], e.prototype, "label_BetValue", void 0);
+r([ h(cc.Label) ], e.prototype, "label_win", void 0);
+r([ h(cc.Color) ], e.prototype, "color_Count_Normal", void 0);
+r([ h(cc.Color) ], e.prototype, "color_Count_Select", void 0);
+r([ h(cc.Label) ], e.prototype, "label_Counts", void 0);
+r([ h(cc.Node) ], e.prototype, "node_Mask_Autobtn", void 0);
+r([ h ], e.prototype, "hidePos", void 0);
+return r([ d ], e);
+}(cc.Component);
+o.default = f;
+cc._RF.pop();
+}, {
+"../../common/config/GlobalVar": "GlobalVar",
+"../../common/event/CommonEvent": "CommonEvent",
+"../../common/utils/CmmUtils": "CmmUtils",
+"../../framework/defines/Macros": "Macros",
+"../BingoDictoryTable": "BingoDictoryTable"
+} ],
 AutoUpdateScaleShow: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "06eaatFRdRHVq8B10n/a2zc", "AutoUpdateScaleShow");
@@ -2039,6 +2435,151 @@ this.targetNode.scale = t;
 r([ c(cc.Node) ], e.prototype, "targetNode", void 0);
 r([ c(cc.Float) ], e.prototype, "maxSize", void 0);
 return r([ s ], e);
+}(cc.Component);
+o.default = l;
+cc._RF.pop();
+}, {} ],
+BLightAnimationManager_Bingo: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "c5347MtUqdJOY27mL/vwKbO", "BLightAnimationManager_Bingo");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.gameController = null;
+e.time = 0;
+e.m_PlayTime_Award = 2;
+e.m_Frequency_AwardFast = .4;
+e.m_Frequency_AwardNormal = .6;
+e.m_Frequency_Award = .6;
+e.m_IsRun_Award = !1;
+e.m_Count_Award = 0;
+e.m_Callback_AwardBingoCard = null;
+e.m_Callback_AwardOverBingoCard = null;
+e.m_Frequency_PreAward = 1;
+e.m_IsRun_PreAward = !1;
+e.m_IsCanStopPreAward = !1;
+e.m_Count_PreAward = 0;
+e.m_Callback_PreAwardBingoCard = null;
+e.m_Callback_PreAwardWinType = null;
+return e;
+}
+o = e;
+e.prototype.onLoad = function() {
+o.instance = this;
+};
+e.prototype.start = function() {
+this.StopAward();
+this.StopPreAward();
+};
+e.prototype.onDestroy = function() {
+this.SetCallback_AwardBingoCard(null, null);
+this.SetCallback_PreAwardBingoCard(null);
+this.SetCallback_PreAwardWinType(null);
+this.StopAward();
+this.StopPreAward();
+};
+e.prototype.update = function(t) {
+this.time += t;
+this.m_IsRun_Award && this.CheckAnimation_Award();
+this.m_IsRun_PreAward && this.CheckAnimation_PreAward();
+};
+e.prototype.SetFrequency_Award = function() {
+this.m_Frequency_Award = this.gameController.isFast ? this.m_Frequency_AwardFast : this.m_Frequency_AwardNormal;
+};
+e.prototype.Frequency_Award = function() {
+return this.m_Frequency_Award;
+};
+e.prototype.SetCallback_AwardBingoCard = function(t, e) {
+this.m_Callback_AwardBingoCard = t;
+this.m_Callback_AwardOverBingoCard = e;
+};
+e.prototype.PlayAward = function() {
+Log.e("---------PlayAward-");
+this.SetFrequency_Award();
+this.m_LastTime_Award = this.time;
+this.m_Count_Award = 0;
+this.m_IsRun_Award = !0;
+};
+e.prototype.StopAward = function() {
+this.m_IsRun_Award = !1;
+this.m_Count_Award = 0;
+};
+e.prototype.CheckAnimation_Award = function() {
+if (this.m_LastTime_Award + this.m_Frequency_Award / 2 < this.time) {
+this.m_LastTime_Award = this.time;
+this.m_Count_Award++;
+this.m_Count_Award % 2 == 0 ? null != this.m_Callback_AwardBingoCard && this.m_Callback_AwardBingoCard(!1) : null != this.m_Callback_AwardBingoCard && this.m_Callback_AwardBingoCard(!0);
+if (this.m_Count_Award == 2 * this.m_PlayTime_Award) {
+this.StopAward();
+null != this.m_Callback_AwardOverBingoCard && this.m_Callback_AwardOverBingoCard();
+}
+}
+};
+e.prototype.SetCallback_PreAwardBingoCard = function(t) {
+this.m_Callback_PreAwardBingoCard = t;
+};
+e.prototype.SetCallback_PreAwardWinType = function(t) {
+this.m_Callback_PreAwardWinType = t;
+};
+e.prototype.PlayPreAward = function() {
+this.m_LastTime_PreAward = this.time;
+this.m_Count_PreAward = 0;
+this.m_IsRun_PreAward = !0;
+this.m_IsCanStopPreAward = !1;
+};
+e.prototype.StopPreAward = function() {
+this.m_IsRun_PreAward = !1;
+this.m_Count_PreAward = 0;
+this.m_IsCanStopPreAward = !1;
+};
+e.prototype.StopPreAward_OverGame = function() {
+this.m_IsCanStopPreAward = !0;
+};
+e.prototype.CheckAnimation_PreAward = function() {
+if (this.m_LastTime_PreAward + this.m_Frequency_PreAward / 2 < this.time) {
+this.m_LastTime_PreAward = this.time;
+this.m_Count_PreAward++;
+if (this.m_Count_PreAward % 2 == 0) {
+null != this.m_Callback_PreAwardBingoCard && this.m_Callback_PreAwardBingoCard(!1);
+null != this.m_Callback_PreAwardWinType && this.m_Callback_PreAwardWinType(!1);
+} else {
+null != this.m_Callback_PreAwardBingoCard && this.m_Callback_PreAwardBingoCard(!0);
+null != this.m_Callback_PreAwardWinType && this.m_Callback_PreAwardWinType(!0);
+this.m_IsCanStopPreAward && this.StopPreAward();
+}
+}
+};
+var o;
+e.instance = null;
+r([ c(cc.Integer) ], e.prototype, "m_PlayTime_Award", void 0);
+r([ c(cc.Float) ], e.prototype, "m_Frequency_AwardFast", void 0);
+r([ c(cc.Float) ], e.prototype, "m_Frequency_AwardNormal", void 0);
+r([ c(cc.Float) ], e.prototype, "m_Frequency_Award", void 0);
+r([ c(cc.Float) ], e.prototype, "m_Frequency_PreAward", void 0);
+return o = r([ s ], e);
 }(cc.Component);
 o.default = l;
 cc._RF.pop();
@@ -3672,6 +4213,1229 @@ cc._RF.pop();
 "../Net": "Net",
 "./Message": "Message"
 } ],
+BingoAutoSpinMenuService: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "ef936TI33NCX7upYvFUYOgz", "BingoAutoSpinMenuService");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/utils/CmmAudio"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.mainNode = null;
+e.countsConfig = [];
+e.label_Count = [];
+e.playGameBtnService = null;
+return e;
+}
+e.prototype.Init = function() {
+for (var t = 0; t < this.label_Count.length; t++) this.label_Count[t].string = this.countsConfig[t].toString();
+};
+e.prototype.OpenShow = function() {
+this.Init();
+this.mainNode.active = !0;
+};
+e.prototype.ButtonClick_Choose = function(t, e) {
+var o = Number.parseInt(e);
+App.globalAudio.playHallEffect(a.CmmAudio.common_slots_yx_buttonClick);
+this.playGameBtnService.SetAutoCount(this.countsConfig[o]);
+this.CloseShow();
+};
+e.prototype.SetResultChoose = function(t) {
+this.playGameBtnService.SetAutoCount(this.countsConfig[t]);
+this.CloseShow();
+};
+e.prototype.ButtonClick_CancelAuto = function() {
+this.CloseShow();
+this.playGameBtnService.buttonClick_CancelAuto();
+};
+e.prototype.CloseShow = function() {
+this.mainNode.active = !1;
+};
+r([ l(cc.Node) ], e.prototype, "mainNode", void 0);
+r([ l({
+type: cc.Integer
+}) ], e.prototype, "countsConfig", void 0);
+r([ l(cc.Label) ], e.prototype, "label_Count", void 0);
+return r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"../../common/utils/CmmAudio": "CmmAudio"
+} ],
+BingoBetService: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "9753cLK4xJJG6FqfPp60w0L", "BingoBetService");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/config/GlobalVar"), s = t("../../common/utils/CmmAudio"), c = t("../../common/utils/CmmUtils"), l = t("../../common/UVAnimation/TUVPlay"), p = t("../BingoDictoryTable"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.m_Label_Bet = null;
+e.m_Label_TotalBet = null;
+e.m_AddBtObj_zhezhao = null;
+e.m_ReduceBtObj_zhezhao = null;
+e.m_Obj_Playing = null;
+e.m_Obj_PlayingAddZhezhao = null;
+e.m_Obj_PlayingReduceZhezhao = null;
+e.m_Obj_MaxBet = null;
+e.m_Obj_MaxBetBtn_Zhezhao = null;
+e.m_Obj_MaxBetSign = null;
+e.m_UvPlay_MaxBet = null;
+e.m_BingoOperate = null;
+return e;
+}
+e.prototype.Init = function(t) {
+this.m_BingoOperate = t;
+this.SetShow_HadMaxBet(!0);
+};
+e.prototype.UpdateBet = function() {
+this.ShowButtonCheck();
+};
+e.prototype.ShowButtonCheck = function() {
+this.ShowBetValue();
+this.SetTip_NotEnoughGold();
+this.ShowButtonCheck_AddChoseStyle();
+};
+e.prototype.SetShow_HadMaxBet = function(t) {
+this.m_Obj_MaxBet.active = t;
+};
+e.prototype.ShowBetValue = function() {
+var t = this.m_BingoOperate.bingoGameController.openBingoCardCount * this.m_BingoOperate.bingoGameController.SingleBet(), e = this.m_BingoOperate.bingoGameController.SingleBet();
+this.m_Label_TotalBet.string = c.CmmUtils.NumberForceAddCurrencyString(c.CmmUtils.NumberToHallString(t, a.GlobalVar.isShowSymbol_OurSlots));
+this.m_Label_Bet.string = c.CmmUtils.NumberForceAddCurrencyString(c.CmmUtils.NumberToHallString(e, a.GlobalVar.isShowSymbol_OurSlots));
+};
+e.prototype.ShowButtonCheck_AddChoseStyle = function() {
+var t = this.m_BingoOperate.curBetIndex == this.m_BingoOperate.maxBetIndex, e = 0 == this.m_BingoOperate.curBetIndex;
+this.SetShowBtn_Max(t);
+this.SetShowBtn_Add(t);
+this.SetShowBtn_Reduce(e);
+if (this.m_BingoOperate.bingoGameController.gameState != p.BingoDictoryTable.GameStyle.Sleep && this.m_BingoOperate.bingoGameController.gameState != p.BingoDictoryTable.GameStyle.CanPlay) {
+this.SetShow_MaxBetZhezhao(!0);
+this.SetShow_AddAndReduceBtn(!0);
+} else {
+this.SetShow_MaxBetZhezhao(!1);
+this.SetShow_AddAndReduceBtn(!1);
+}
+};
+e.prototype.PlayMaxBetEffect = function() {
+App.globalAudio.playHallEffect(s.CmmAudio.common_addMax);
+if (null != this.m_UvPlay_MaxBet) {
+this.m_UvPlay_MaxBet.node.active = !0;
+this.m_UvPlay_MaxBet.playRun();
+}
+};
+e.prototype.LevelMaxBetEffect = function() {
+App.globalAudio.playHallEffect(s.CmmAudio.common_reduceMaxBet);
+};
+e.prototype.FinishEvent_MaxBetEffect = function() {
+null != this.m_UvPlay_MaxBet && (this.m_UvPlay_MaxBet.node.active = !1);
+};
+e.prototype.ButtonClick_MaxBet = function() {
+if (this.m_BingoOperate.curBetIndex < this.m_BingoOperate.maxBetIndex) {
+this.PlayMaxBetEffect();
+this.m_BingoOperate.curBetIndex = this.m_BingoOperate.maxBetIndex;
+this.m_BingoOperate.bingoOperateData.callBack_Show(this.m_BingoOperate.curBetIndex);
+}
+this.ShowButtonCheck();
+};
+e.prototype.ButtonClick_Add = function() {
+this.m_BingoOperate.curBetIndex < this.m_BingoOperate.maxBetIndex - 1 && App.globalAudio.playHallEffect(s.CmmAudio.common_add_01);
+if (this.m_BingoOperate.curBetIndex < this.m_BingoOperate.maxBetIndex) {
+this.m_BingoOperate.curBetIndex++;
+this.m_BingoOperate.bingoOperateData.callBack_Show(this.m_BingoOperate.curBetIndex);
+this.ShowButtonCheck();
+this.m_BingoOperate.curBetIndex == this.m_BingoOperate.maxBetIndex && this.PlayMaxBetEffect();
+} else {
+this.m_BingoOperate.curBetIndex = this.m_BingoOperate.maxBetIndex;
+this.m_BingoOperate.bingoOperateData.callBack_Show(this.m_BingoOperate.curBetIndex);
+this.ShowButtonCheck();
+}
+};
+e.prototype.ButtonClick_Reduce = function() {
+this.m_BingoOperate.curBetIndex < this.m_BingoOperate.maxBetIndex && App.globalAudio.playHallEffect(s.CmmAudio.common_reduce_01);
+if (this.m_BingoOperate.curBetIndex > 0) {
+this.m_BingoOperate.curBetIndex == this.m_BingoOperate.maxBetIndex && this.LevelMaxBetEffect();
+this.m_BingoOperate.curBetIndex--;
+this.m_BingoOperate.curBetIndex > this.m_BingoOperate.maxBetIndex && (this.m_BingoOperate.curBetIndex = this.m_BingoOperate.maxBetIndex);
+this.m_BingoOperate.bingoOperateData.callBack_Show(this.m_BingoOperate.curBetIndex);
+this.ShowButtonCheck();
+}
+};
+e.prototype.SetShow_MaxBetZhezhao = function(t) {
+this.m_BingoOperate.curBetIndex == this.m_BingoOperate.maxBetIndex ? this.m_Obj_MaxBetBtn_Zhezhao.active = !0 : this.m_Obj_MaxBetBtn_Zhezhao.active = t;
+};
+e.prototype.SetShow_AddAndReduceBtn = function(t) {
+this.m_Obj_Playing.active = t;
+};
+e.prototype.SetShowBtn_Add = function(t) {
+this.m_AddBtObj_zhezhao.active = t;
+this.m_Obj_PlayingAddZhezhao.active = !t;
+};
+e.prototype.SetShowBtn_Reduce = function(t) {
+this.m_ReduceBtObj_zhezhao.active = t;
+this.m_Obj_PlayingReduceZhezhao.active = !t;
+};
+e.prototype.SetShowBtn_Max = function(t) {
+this.m_Obj_MaxBetSign.active = t;
+};
+e.prototype.SetTip_NotEnoughGold = function() {};
+r([ h(cc.Label) ], e.prototype, "m_Label_Bet", void 0);
+r([ h(cc.Label) ], e.prototype, "m_Label_TotalBet", void 0);
+r([ h(cc.Node) ], e.prototype, "m_AddBtObj_zhezhao", void 0);
+r([ h(cc.Node) ], e.prototype, "m_ReduceBtObj_zhezhao", void 0);
+r([ h(cc.Node) ], e.prototype, "m_Obj_Playing", void 0);
+r([ h(cc.Node) ], e.prototype, "m_Obj_PlayingAddZhezhao", void 0);
+r([ h(cc.Node) ], e.prototype, "m_Obj_PlayingReduceZhezhao", void 0);
+r([ h(cc.Node) ], e.prototype, "m_Obj_MaxBet", void 0);
+r([ h(cc.Node) ], e.prototype, "m_Obj_MaxBetBtn_Zhezhao", void 0);
+r([ h(cc.Node) ], e.prototype, "m_Obj_MaxBetSign", void 0);
+r([ h(l.default) ], e.prototype, "m_UvPlay_MaxBet", void 0);
+return r([ d ], e);
+}(cc.Component);
+o.default = f;
+cc._RF.pop();
+}, {
+"../../common/UVAnimation/TUVPlay": "TUVPlay",
+"../../common/config/GlobalVar": "GlobalVar",
+"../../common/utils/CmmAudio": "CmmAudio",
+"../../common/utils/CmmUtils": "CmmUtils",
+"../BingoDictoryTable": "BingoDictoryTable"
+} ],
+BingoButtonsService: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "a1bd9J0sA9N8oBPZpD+0rWo", "BingoButtonsService");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../BingoDictoryTable"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.m_Obj_HelpBtn_Zhezhao = null;
+e.m_Obj_ChangeBingoCardBtn_Zhezhao = null;
+e.m_Obj_TurboBtn = null;
+e.m_Obj_TurboBtn_Cance = null;
+e.m_Obj_TurboBtn_Zhezhao = null;
+e.node_TurboMask_on = null;
+e.node_TurboMask_off = null;
+e.ani_OpenQuickStop = null;
+e.m_IsPlayAudio_Turbo = !1;
+e.m_Callback_ChangeBingoCard = null;
+e.m_Callback_Turbo = null;
+e.m_BingoOperate = null;
+return e;
+}
+e.prototype.Init = function(t) {
+this.m_BingoOperate = t;
+this.SetShow_HelpBtn(!1);
+this.SetShow_ChangeBingoCardBtnZhezhao(!0);
+this.SetState_CanTurbo(!0);
+this.SetShow_TurboBtnZhezhao(!0);
+};
+e.prototype.ShowButtonCheck = function() {
+if (this.m_BingoOperate.bingoGameController.gameState == a.BingoDictoryTable.GameStyle.Sleep || this.m_BingoOperate.bingoGameController.gameState == a.BingoDictoryTable.GameStyle.CanPlay) {
+this.SetShow_TurboBtnZhezhao(!1);
+this.SetShow_ChangeBingoCardBtnZhezhao(!1);
+this.SetShow_HelpBtn(!0);
+} else {
+this.SetShow_TurboBtnZhezhao(!0);
+this.SetShow_ChangeBingoCardBtnZhezhao(!0);
+this.SetShow_HelpBtn(!1);
+}
+};
+e.prototype.SetShow_HelpBtn = function(t) {
+this.m_Obj_HelpBtn_Zhezhao.active = !t;
+};
+e.prototype.SetShow_ChangeBingoCardBtnZhezhao = function(t) {
+this.m_Obj_ChangeBingoCardBtn_Zhezhao.active = t;
+};
+e.prototype.SetShow_TurboBtnZhezhao = function(t) {
+this.m_Obj_TurboBtn_Zhezhao.active = t;
+};
+e.prototype.SetState_CanTurbo = function(t) {
+this.m_Obj_TurboBtn.active = t;
+this.m_Obj_TurboBtn_Cance.active = !t;
+this.node_TurboMask_off.active = t;
+this.node_TurboMask_on.active = !t;
+};
+e.prototype.ButtonClick_Help = function() {
+this.m_BingoOperate.bingoOperateData.callBack_Help && this.m_BingoOperate.bingoOperateData.callBack_Help();
+};
+e.prototype.ButtonClick_ChangeBingoCard = function() {
+this.m_BingoOperate.bingoOperateData.callBack_ChangeBingoCard && this.m_BingoOperate.bingoOperateData.callBack_ChangeBingoCard();
+};
+e.prototype.ButtonClik_Turbo = function() {
+this.SetState_CanTurbo(!1);
+this.ani_OpenQuickStop.play();
+this.m_BingoOperate.bingoOperateData.callBack_SetTurbo && this.m_BingoOperate.bingoOperateData.callBack_SetTurbo(!0);
+};
+e.prototype.ButtonClick_UnTurbo = function() {
+this.SetState_CanTurbo(!0);
+this.m_BingoOperate.bingoOperateData.callBack_SetTurbo && this.m_BingoOperate.bingoOperateData.callBack_SetTurbo(!1);
+};
+r([ l(cc.Node) ], e.prototype, "m_Obj_HelpBtn_Zhezhao", void 0);
+r([ l(cc.Node) ], e.prototype, "m_Obj_ChangeBingoCardBtn_Zhezhao", void 0);
+r([ l(cc.Node) ], e.prototype, "m_Obj_TurboBtn", void 0);
+r([ l(cc.Node) ], e.prototype, "m_Obj_TurboBtn_Cance", void 0);
+r([ l(cc.Node) ], e.prototype, "m_Obj_TurboBtn_Zhezhao", void 0);
+r([ l(cc.Node) ], e.prototype, "node_TurboMask_on", void 0);
+r([ l(cc.Node) ], e.prototype, "node_TurboMask_off", void 0);
+r([ l(cc.Animation) ], e.prototype, "ani_OpenQuickStop", void 0);
+return r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"../BingoDictoryTable": "BingoDictoryTable"
+} ],
+BingoDataUtil: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "08450WxCSpLYagsovf9BpN/", "BingoDataUtil");
+var n = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var i = cc._decorator, r = i.ccclass, a = (i.property, function() {
+function t() {}
+return n([ r ], t);
+}());
+o.default = a;
+cc._RF.pop();
+}, {} ],
+BingoDictoryTable: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "21935+uAphKgq8HLG74lOb9", "BingoDictoryTable");
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+o.BingoDictoryTable = void 0;
+(function(t) {
+(function(t) {
+t[t.Sleep = 0] = "Sleep";
+t[t.CanPlay = 1] = "CanPlay";
+t[t.WaitResult = 2] = "WaitResult";
+t[t.Playing = 3] = "Playing";
+t[t.EndPlay = 4] = "EndPlay";
+t[t.AwardEnd = 5] = "AwardEnd";
+t[t.CannotPlay = 6] = "CannotPlay";
+})(t.GameStyle || (t.GameStyle = {}));
+(function(t) {
+t.AutoService_Confirm = "Bingo_AutoService_Confirm";
+t.AutoService_Close = "Bingo_AutoService_Close";
+})(t.Bingo_Event || (t.Bingo_Event = {}));
+})(o.BingoDictoryTable || (o.BingoDictoryTable = {}));
+cc._RF.pop();
+}, {} ],
+BingoGameController: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "ecf93gbpxBMa5SrlcsXODIi", "BingoGameController");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../Animation/BLightAnimationManager_Bingo"), s = t("../BingoDictoryTable"), c = cc._decorator, l = c.ccclass, p = c.property, u = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.m_ConfigJsonAsset = null;
+e.maxCount_Extra = 10;
+e.label_Balance = null;
+e.gameView = null;
+e.lastCard = "";
+e.isFast = !1;
+e.openBingoCardCount = 1;
+e.totalAwardBingo = 0;
+e.isAuto = !1;
+e.isNextCanExtra = !1;
+e.bingoCardGroup = 4;
+e.curBetIndex = 0;
+e.totalWonGold = 0;
+e.chaneWonGold = 0;
+e.curBottomShowTotalWin = 0;
+e.isAwardBingo = !1;
+e.gameState = s.BingoDictoryTable.GameStyle.Sleep;
+e.isGaming = !1;
+e.isExtraPlay = !1;
+e.isExtraPlaying = !1;
+e.nextPrice_Extra = 0;
+e.nextIndex_Extra = 0;
+e.freeIndex_Extra = 0;
+return e;
+}
+e.prototype.getMyBingoConfig = function() {
+return this.m_ConfigJsonAsset.json;
+};
+e.prototype.init = function() {
+a.default.instance.gameController = this;
+};
+e.prototype.SingleBet = function() {
+return this.gameView.bingoData.initDesk.betValues[this.curBetIndex] / this.bingoCardGroup;
+};
+e.prototype.NeedTotalBet = function() {
+return this.SingleBet() * this.openBingoCardCount;
+};
+r([ p(cc.JsonAsset) ], e.prototype, "m_ConfigJsonAsset", void 0);
+r([ p(cc.Integer) ], e.prototype, "maxCount_Extra", void 0);
+r([ p(cc.Label) ], e.prototype, "label_Balance", void 0);
+return r([ l ], e);
+}(cc.Component);
+o.default = u;
+cc._RF.pop();
+}, {
+"../Animation/BLightAnimationManager_Bingo": "BLightAnimationManager_Bingo",
+"../BingoDictoryTable": "BingoDictoryTable"
+} ],
+BingoOperate: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "24949UIgcVJOa/7sxLCkruy", "BingoOperate");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../framework/componects/EventComponent"), s = t("../BingoDictoryTable"), c = t("./BingoBetService"), l = t("./BingoButtonsService"), p = t("./BingoPlayGameBtnService"), u = t("./BingoWinService"), d = cc._decorator, h = d.ccclass, f = d.property, m = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.betService = null;
+e.buttonService = null;
+e.playGameBtnService = null;
+e.winService = null;
+e.curAutoNum = 0;
+e.bingoGameController = null;
+return e;
+}
+e.prototype.onLoad = function() {
+var t = this;
+this.onD(s.BingoDictoryTable.Bingo_Event.AutoService_Confirm, function(e) {
+t.playGameBtnService.SetAutoCount(e);
+});
+this.onD(s.BingoDictoryTable.Bingo_Event.AutoService_Close, function() {
+t.playGameBtnService.CloseAuto();
+});
+};
+e.prototype.start = function() {};
+e.prototype.initData = function(t, e) {
+this.bingoOperateData = t;
+this.bingoGameController = e;
+this.maxBetIndex = this.bingoOperateData.betValues.length - 1;
+this.curBetIndex = this.bingoOperateData.curBetIndex;
+this.playGameBtnService.Init(this);
+this.betService.Init(this);
+this.winService.Init(this);
+this.buttonService.Init(this);
+this.UpdateBet();
+};
+e.prototype.isEnableAutoPlay = function() {
+return this.isAuto;
+};
+e.prototype.reduceAutoNum = function() {};
+e.prototype.closeAuto = function() {};
+e.prototype.UpdateBet = function() {
+this.betService.UpdateBet();
+};
+e.prototype.UpdateState_AfterJoinGame = function() {
+this.UpdateBet();
+this.buttonService.SetShow_HelpBtn(!0);
+this.buttonService.ShowButtonCheck();
+this.playGameBtnService.ShowButtonCheck();
+};
+e.prototype.UpdateBtnState = function() {
+this.playGameBtnService.ShowButtonCheck();
+this.UpdateBet();
+this.buttonService.ShowButtonCheck();
+};
+r([ f(c.default) ], e.prototype, "betService", void 0);
+r([ f(l.default) ], e.prototype, "buttonService", void 0);
+r([ f(p.default) ], e.prototype, "playGameBtnService", void 0);
+r([ f(u.default) ], e.prototype, "winService", void 0);
+return r([ h ], e);
+}(a.default);
+o.default = m;
+cc._RF.pop();
+}, {
+"../../framework/componects/EventComponent": "EventComponent",
+"../BingoDictoryTable": "BingoDictoryTable",
+"./BingoBetService": "BingoBetService",
+"./BingoButtonsService": "BingoButtonsService",
+"./BingoPlayGameBtnService": "BingoPlayGameBtnService",
+"./BingoWinService": "BingoWinService"
+} ],
+BingoPlayGameBtnService: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "d00d7vyHX9P+p1AhZbJrpFK", "BingoPlayGameBtnService");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/config/GlobalVar"), s = t("../../common/utils/CmmUtils"), c = t("../../framework/defines/Macros"), l = t("../../login/view/CommonUIHelper"), p = t("../BingoDictoryTable"), u = t("./AutoService_Base_Bingo"), d = cc._decorator, h = d.ccclass, f = d.property, m = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.m_Obj_ScaleXuli = null;
+e.m_BtnObj_HuiPlay = null;
+e.m_BtnObj_Play = null;
+e.m_BtnObj_Auto = null;
+e.m_BtnObj_OpenAuto = null;
+e.m_MaskBtnObj_OpenAuto = null;
+e.m_BtnObj_CancelAuto = null;
+e.m_BtnObj_Extra = null;
+e.m_BtnObj_HuiExtra = null;
+e.m_IsUseExtra = !1;
+e.m_Obj_Collect = null;
+e.m_Obj_CollectZhezhao = null;
+e.m_Label_Auto = null;
+e.m_Label_Costs = [];
+e.m_NeedTime_LongClick = 1.2;
+e.autoService = null;
+e.m_BingoOperate = null;
+return e;
+}
+e.prototype.Init = function(t) {
+this.m_BingoOperate = t;
+};
+e.prototype.ShowButtonCheck = function() {
+if (this.m_BingoOperate.bingoGameController.isExtraPlay) if (this.m_IsUseExtra) {
+this.SetShow_Auto(!1);
+this.SetShow_Extra(!0);
+this.SetShow_Collect(!0);
+this.SetShow_NotCanPlay(!1);
+this.SetShow_PlayGame(!1);
+} else {
+this.SetShow_Auto(!1);
+this.SetShow_Collect(!0);
+this.SetShow_NotCanPlay(!0);
+this.SetShow_PlayGame(!1);
+} else if (this.m_BingoOperate.bingoGameController.isAuto) {
+this.SetShow_Auto(!0);
+this.SetShow_Extra(!1);
+this.SetShow_Collect(!1);
+this.SetShow_NotCanPlay(!1);
+this.SetShow_PlayGame(!1);
+this.checkAutoBegin();
+} else if (this.m_BingoOperate.bingoGameController.gameState != p.BingoDictoryTable.GameStyle.Sleep) if (this.m_BingoOperate.bingoGameController.gameState != p.BingoDictoryTable.GameStyle.CanPlay) if (this.m_BingoOperate.bingoGameController.gameState != p.BingoDictoryTable.GameStyle.WaitResult) {
+this.SetShow_NotCanPlay(!0);
+this.SetShow_Auto(!1);
+this.SetShow_Extra(!1);
+this.SetShow_Collect(!1);
+this.SetShow_PlayGame(!1);
+} else {
+this.SetShow_NotCanPlay(!0);
+this.SetShow_Auto(!1);
+this.SetShow_Extra(!1);
+this.SetShow_Collect(!1);
+this.SetShow_PlayGame(!1);
+} else {
+this.SetShow_NotCanPlay(!1);
+this.SetShow_Auto(!1);
+this.SetShow_Extra(!1);
+this.SetShow_Collect(!1);
+this.SetShow_PlayGame(!0);
+} else {
+this.SetShow_NotCanPlay(!0);
+this.SetShow_Auto(!1);
+this.SetShow_Extra(!1);
+this.SetShow_Collect(!1);
+this.SetShow_PlayGame(!1);
+}
+};
+e.prototype.SetShow_Auto = function(t) {
+this.m_BtnObj_Auto.active = t;
+this.m_BtnObj_CancelAuto.active = t;
+this.m_BtnObj_OpenAuto.active = !t;
+t ? this.m_Label_Auto.string = this.m_BingoOperate.curAutoNum.toString() : this.m_BingoOperate.bingoGameController.gameState >= p.BingoDictoryTable.GameStyle.WaitResult ? this.m_MaskBtnObj_OpenAuto.active = !0 : this.m_MaskBtnObj_OpenAuto.active = !1;
+};
+e.prototype.SetShow_NotCanPlay = function(t) {
+this.m_BtnObj_HuiPlay.active = t;
+};
+e.prototype.SetShow_Extra = function(t) {
+if (t) {
+this.m_BtnObj_Extra.active = !this.m_BingoOperate.bingoGameController.isExtraPlaying;
+this.m_BtnObj_HuiExtra.active = this.m_BingoOperate.bingoGameController.isExtraPlaying;
+this.SetExtraCost();
+} else {
+this.m_BtnObj_Extra.active = t;
+this.m_BtnObj_HuiExtra.active = t;
+}
+};
+e.prototype.SetShow_Collect = function(t) {
+this.m_Obj_Collect.active = t;
+t && (this.m_Obj_CollectZhezhao.active = this.m_BingoOperate.bingoGameController.isExtraPlaying);
+this.m_BingoOperate.betService.SetShow_HadMaxBet(!t);
+};
+e.prototype.SetShow_PlayGame = function(t) {
+this.m_BtnObj_Play.active = t;
+};
+e.prototype.SetExtraCost = function() {
+if (0 == this.m_BingoOperate.bingoGameController.nextPrice_Extra) for (var t = 0; t < this.m_Label_Costs.length; t++) this.m_Label_Costs[t].string = App.zLan.getBundleString(2700002); else for (t = 0; t < this.m_Label_Costs.length; t++) this.m_Label_Costs[t].string = s.CmmUtils.NumberToHallString(this.m_BingoOperate.bingoGameController.nextPrice_Extra);
+};
+e.prototype.ButtonClick_Collect = function() {
+this.m_BingoOperate.bingoOperateData.callBack_Collect && this.m_BingoOperate.bingoOperateData.callBack_Collect();
+};
+e.prototype.ButtonClick_Extra = function() {
+this.m_BingoOperate.bingoOperateData.callBack_Extra && this.m_BingoOperate.bingoOperateData.callBack_Extra();
+};
+e.prototype.ButtonClick_PlayGame = function() {
+App.globalAudio.playBundleEffect("sound/loca_yx_spin", c.Macro.BUNDLE_Loca);
+this.checkMoneyEnough() && this.beginSpin_Send();
+};
+e.prototype.SetShowXuliObj = function() {};
+e.prototype.SetAutoCount = function(t) {
+if (this.checkMoneyEnough()) {
+this.m_BingoOperate.bingoGameController.isAuto = !0;
+this.m_BingoOperate.curAutoNum = t;
+this.ShowButtonCheck();
+this.beginSpin_Send();
+} else {
+this.m_BingoOperate.bingoGameController.isAuto = !1;
+this.ShowButtonCheck();
+}
+};
+e.prototype.SetButtonClick2_CancelAuto = function() {
+this.SetShow_PlayGame(!0);
+this.SetShow_Auto(!1);
+this.m_BingoOperate.bingoGameController.isAuto = !1;
+this.m_BingoOperate.curAutoNum = 0;
+};
+e.prototype.CancelAuto_HadExtra = function() {
+this.m_BingoOperate.bingoGameController.isAuto = !1;
+this.m_BingoOperate.curAutoNum = 0;
+};
+e.prototype.ButtonClick_OpenAuto = function() {
+App.globalAudio.playBundleEffect("sound/loca_yx_spin", c.Macro.BUNDLE_Loca);
+var t = {
+betValue: this.m_BingoOperate.bingoGameController.NeedTotalBet(),
+win: this.m_BingoOperate.winService.m_LastGold
+};
+this.autoService.OpenShow(t);
+};
+e.prototype.buttonClick_CancelAuto = function() {
+App.globalAudio.playBundleEffect("sound/loca_yx_spin", c.Macro.BUNDLE_Loca);
+this.CloseAuto();
+};
+e.prototype.CloseAuto = function() {
+this.m_BingoOperate.bingoGameController.isAuto = !1;
+this.m_BingoOperate.curAutoNum = 0;
+this.ShowButtonCheck();
+};
+e.prototype.checkAutoContinue = function() {
+if (this.m_BingoOperate.curAutoNum <= -1) this.m_Label_Auto.string = "∞"; else {
+1 == this.m_BingoOperate.curAutoNum && this.buttonClick_CancelAuto();
+this.m_BingoOperate.curAutoNum--;
+this.m_Label_Auto.string = this.m_BingoOperate.curAutoNum + "";
+}
+};
+e.prototype.checkAutoBegin = function() {
+if (this.m_BingoOperate.bingoGameController.isAuto && this.m_BingoOperate.bingoGameController.gameState == p.BingoDictoryTable.GameStyle.CanPlay) if (this.checkMoneyEnough()) this.beginSpin_Send(); else {
+this.m_BingoOperate.bingoGameController.isAuto = !1;
+this.ShowButtonCheck();
+}
+};
+e.prototype.beginSpin_Send = function() {
+if (this.m_BingoOperate.bingoGameController.gameState == p.BingoDictoryTable.GameStyle.CanPlay) {
+this.m_BingoOperate.bingoGameController.gameState = p.BingoDictoryTable.GameStyle.WaitResult;
+this.ShowButtonCheck();
+this.m_BingoOperate.bingoGameController.isAuto && this.checkAutoContinue();
+this.m_BingoOperate.bingoOperateData.callBack_Play();
+}
+};
+e.prototype.checkMoneyEnough = function() {
+return !l.default.isNeedShowRecharge(this.m_BingoOperate.bingoGameController.NeedTotalBet(), a.GlobalVar.curMoney);
+};
+r([ f(cc.Node) ], e.prototype, "m_Obj_ScaleXuli", void 0);
+r([ f(cc.Node) ], e.prototype, "m_BtnObj_HuiPlay", void 0);
+r([ f(cc.Node) ], e.prototype, "m_BtnObj_Play", void 0);
+r([ f(cc.Node) ], e.prototype, "m_BtnObj_Auto", void 0);
+r([ f(cc.Node) ], e.prototype, "m_BtnObj_OpenAuto", void 0);
+r([ f(cc.Node) ], e.prototype, "m_MaskBtnObj_OpenAuto", void 0);
+r([ f(cc.Node) ], e.prototype, "m_BtnObj_CancelAuto", void 0);
+r([ f(cc.Node) ], e.prototype, "m_BtnObj_Extra", void 0);
+r([ f(cc.Node) ], e.prototype, "m_BtnObj_HuiExtra", void 0);
+r([ f(cc.Boolean) ], e.prototype, "m_IsUseExtra", void 0);
+r([ f(cc.Node) ], e.prototype, "m_Obj_Collect", void 0);
+r([ f(cc.Node) ], e.prototype, "m_Obj_CollectZhezhao", void 0);
+r([ f(cc.Label) ], e.prototype, "m_Label_Auto", void 0);
+r([ f(cc.Label) ], e.prototype, "m_Label_Costs", void 0);
+r([ f(cc.Float) ], e.prototype, "m_NeedTime_LongClick", void 0);
+r([ f(u.default) ], e.prototype, "autoService", void 0);
+return r([ h ], e);
+}(cc.Component);
+o.default = m;
+cc._RF.pop();
+}, {
+"../../common/config/GlobalVar": "GlobalVar",
+"../../common/utils/CmmUtils": "CmmUtils",
+"../../framework/defines/Macros": "Macros",
+"../../login/view/CommonUIHelper": "CommonUIHelper",
+"../BingoDictoryTable": "BingoDictoryTable",
+"./AutoService_Base_Bingo": "AutoService_Base_Bingo"
+} ],
+BingoView: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "52b80HIR9FOPYwAqK7DeKVS", "BingoView");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+o.BingoEvent = void 0;
+var a, s = t("../../common/config/Config"), c = t("../../common/config/GlobalVar"), l = t("../../common/event/CommonEvent"), p = t("../../common/net/GameSender"), u = t("../../common/utils/CmmUtils"), d = t("../../framework/core/ui/GameView"), h = t("../../framework/defines/Decorators"), f = t("../../framework/defines/Macros"), m = t("../../sdk/GameNativeConfig"), _ = t("../../zgameCommon/GameHelpView"), g = t("../../zgameCommon/VGameHelpView"), y = t("../BingoDictoryTable"), v = t("../Bottom/BingoOperate"), b = t("../CompentController/BingoGameController"), C = t("../Data/BingoDataUtil"), w = cc._decorator, S = w.ccclass;
+w.property;
+(function(t) {
+t.bingo_BetClick = "bingo_BetClick";
+t.bingo_BetClickIndex = "bingo_BetClickIndex";
+t.bingo_ShwoCurBetIndex = "bingo_ShwoCurBetIndex";
+t.bingo_BetMaxClick = "bingo_BetMaxClick";
+})(a = o.BingoEvent || (o.BingoEvent = {}));
+var E = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.bingoOperate = null;
+e.node_gameController = null;
+e.bingoGameController = null;
+e.sender = App.senderManager.get(p.default);
+e.parm_Other_PlayGame = null;
+e.simulateGold = 0;
+return e;
+}
+e.prototype.onLoad = function() {
+var e = this;
+this.bingoGameController = this.node_gameController.getComponent(b.default);
+this.bingoConfig = this.bingoGameController.getMyBingoConfig();
+this.bingoGameController.gameView = this;
+this.bingoData = new C.default();
+c.GlobalVar.isShowSymbol_OurSlots = !0;
+t.prototype.onLoad.call(this);
+this.resetData();
+this.initNode();
+this.initConfigData();
+this.onD("SetTotalWon", function(t) {
+e.SetTotalWon(t);
+});
+dispatch(l.CommonEvent.Open_Show_Hide_laba, !0);
+};
+e.prototype.start = function() {
+var t = this;
+this.bingoSperateData && !this.bingoSperateData.editor_offJoinRequest && this.sender.Send_Join(function(e) {
+t.CallBack_Join(e);
+});
+};
+e.prototype.onDestroy = function() {
+t.prototype.onDestroy.call(this);
+App.uiManager.close("TopBannerView");
+};
+e.prototype.resetData = function() {
+this.isGetReward = !1;
+};
+e.prototype.initNode = function() {};
+e.prototype.initConfigData = function() {};
+e.prototype.showGameHelp = function(t) {
+void 0 === t && (t = !1);
+t ? App.uiManager.open({
+type: g.default,
+bundle: f.Macro.BUNDLE_RESOURCES,
+zIndex: s.ViewZOrder.UI,
+args: c.GlobalVar.curGameId
+}) : App.uiManager.open({
+type: _.default,
+bundle: f.Macro.BUNDLE_RESOURCES,
+zIndex: s.ViewZOrder.UI,
+args: c.GlobalVar.curGameId
+});
+};
+e.prototype.initGameDesk = function() {
+this.bingoSperateData.betValues = this.bingoData.initDesk.betValues;
+this.bingoSperateData.curBetIndex = this.bingoData.initDesk.betIndex;
+this.bingoGameController.curBetIndex = this.bingoData.initDesk.betIndex;
+this.bingoOperate && this.bingoSperateData && this.bingoOperate.initData(this.bingoSperateData, this.bingoGameController);
+dispatch(m.default.Event.update_topbanner_money, this.bingoData.initDesk.playerInfo.gold);
+dispatch(l.ComponentGameEvent.GrayBtns_Event, 0, !0);
+this.receiveInit();
+this.initFinish = !0;
+};
+e.prototype.receiveInit = function() {};
+e.prototype.CreateHttpRequest_Jackpot = function() {
+var t = this;
+if (this.jackPotConfig) {
+var e = this.bingoOperate.curBetIndex;
+this.sender.Send_Jackpot(function(o) {
+t.bingoData.jackpotData = o.data.jackpot;
+t.receive_JackPot(e);
+t.changeBetJackPot = !1;
+}, e);
+}
+};
+e.prototype.receive_JackPot = function() {};
+e.prototype.CallBack_Join = function(t) {
+Log.e("bingo----------------------------------------------------加入房间");
+Log.e("加入房间数据：" + JSON.stringify(t));
+this.bingoData.initDesk = t.data.initDesk;
+c.GlobalVar.guid = this.bingoData.initDesk.uid;
+c.GlobalVar.curGameId = this.bingoData.initDesk.gameId;
+var e = c.GlobalVar.guid;
+this.bingoData.initDesk.uid && (e = this.bingoData.initDesk.uid.split("_")[1]);
+c.GlobalVar.curGameId = this.bingoData.initDesk.gameId;
+Log.e("测试：guid和curGameId:http://localhost:7456/?host=" + c.GlobalVar.host + "&token=" + c.GlobalVar.token + "&uid=" + e + "&gameId=" + c.GlobalVar.curGameId);
+this.UpdateGold(this.bingoData.initDesk.playerInfo.gold);
+this.unscheduleAllCallbacks();
+this.setHeartBeat();
+this.initGameDesk();
+};
+e.prototype.setHeartBeat = function() {
+this.schedule(this.hurtBeat, c.GlobalVar.beatHurtTime, cc.macro.REPEAT_FOREVER);
+};
+e.prototype.hurtBeat = function() {
+this.sender.Send_HeartBeat(null);
+};
+e.prototype.creatHttpRequest_PlayGame = function() {
+var t = this;
+Log.e("creatHttpRequest_PlayGame");
+var e = this.bingoOperate.curBetIndex;
+dispatch(l.ComponentGameEvent.GrayBtns_Event, 0, !1);
+this.resetData();
+this.bingoOperate.isEnalbePlay = !1;
+this.sender.Send_PlayGame(function(e) {
+Log.d("-------PlayGame:" + JSON.stringify(e));
+t.bingoData.result = e.data.result;
+t.Receive_Result();
+}, e, this.parm_Other_PlayGame);
+};
+e.prototype.Receive_Result = function() {
+this.convertResult();
+this.isGetReward = !0;
+this.showResult();
+};
+e.prototype.convertResult = function() {};
+e.prototype.showResult = function() {
+this.bingoGameController.gameState = y.BingoDictoryTable.GameStyle.EndPlay;
+null != this.bingoData.result.extra ? this.bingoGameController.isNextCanExtra = !0 : this.bingoGameController.isNextCanExtra = !1;
+this.RefreshButtonChange();
+};
+e.prototype.update = function(t) {
+this.updateAuto(t);
+this.updateJackPot(t);
+};
+e.prototype.updateJackPot = function(t) {
+if (this.initFinish && this.jackPotConfig && this.jackPotConfig.switch) {
+this.jackPotConfig.curTime += t;
+if (this.jackPotConfig.curTime >= this.jackPotConfig.frequency) {
+this.CreateHttpRequest_Jackpot();
+this.jackPotConfig.curTime = 0;
+}
+}
+};
+e.prototype.updateAuto = function() {
+this.bingoOperate.isEnableAutoPlay() && this.bingoSperateData && this.bingoSperateData.callBack_Play && this.bingoSperateData.callBack_Play();
+};
+e.prototype.addEvents = function() {
+var t = this;
+this.onD(a.bingo_ShwoCurBetIndex, function() {
+if (t.jackPotConfig && t.jackPotConfig.switch) {
+t.jackPotConfig.curTime = 4.5;
+t.changeBetJackPot = !0;
+}
+});
+this.onD(l.ComponentGameEvent.Game_Exit_Event, function(e) {
+void 0 === e && (e = !1);
+t.Callback_ClickExitGame(e);
+});
+this.onD(m.default.Event.update_topbanner_money, this.updateMoney.bind(this));
+this.onD(m.default.Event.update_topbanner_add_money, this.update_topbanner_add_money.bind(this));
+this.onD(m.default.Event.update_topbanner_reduce_money, this.update_topbanner_reduce_money.bind(this));
+};
+e.prototype.updateMoney = function(t) {
+c.GlobalVar.curMoney = t;
+this.bingoGameController.label_Balance.string = u.CmmUtils.NumberForceAddCurrencyString(u.CmmUtils.NumberToHallString(t, !0));
+};
+e.prototype.update_topbanner_reduce_money = function(t) {
+c.GlobalVar.curMoney = c.GlobalVar.curMoney - t;
+this.bingoGameController.label_Balance.string = u.CmmUtils.NumberForceAddCurrencyString(u.CmmUtils.NumberToHallString(c.GlobalVar.curMoney, !0));
+};
+e.prototype.update_topbanner_add_money = function(t) {
+c.GlobalVar.curMoney = c.GlobalVar.curMoney + t;
+this.bingoGameController.label_Balance.string = u.CmmUtils.NumberForceAddCurrencyString(u.CmmUtils.NumberToHallString(c.GlobalVar.curMoney, !0));
+};
+e.prototype.RefreshButtonChange = function() {
+this.bingoOperate.UpdateBtnState();
+};
+e.prototype.GetIsContainLine = function(t, e) {
+return this.bingoConfig.patternMessages[t - 1].containLines.indexOf(e) >= 0;
+};
+e.prototype.GetTarLine = function(t) {
+for (var e = [], o = 0; o < this.bingoConfig.patternMessages[t - 1].pattern.length; o++) {
+var n = this.bingoConfig.patternMessages[t - 1].pattern[o];
+e.push(n);
+}
+return e;
+};
+e.prototype.GetPayMultiple_Group = function(t) {
+for (var e = 1, o = 0; o < this.bingoConfig.patternMessages.length; o++) {
+var n = this.bingoConfig.patternMessages[o];
+if (n.group == t) {
+e = n.pay;
+break;
+}
+}
+return e;
+};
+e.prototype.GetPayMultiple_Line = function(t) {
+for (var e = 1, o = 0; o < this.bingoConfig.patternMessages.length; o++) {
+var n = this.bingoConfig.patternMessages[o];
+if (n.id == t) {
+e = n.pay;
+break;
+}
+}
+return e;
+};
+e.prototype.GetGroup_Line = function(t) {
+return this.bingoConfig.patternMessages[t - 1].group;
+};
+e.prototype.SetOpenBingoCardCount = function(t) {
+this.bingoGameController.openBingoCardCount = t;
+null != this.bingoData.initDesk && this.bingoData.initDesk.betValues.length > 0 && this.RefreshButtonChange();
+};
+e.prototype.PlayShowCurTotalWon = function() {};
+e.prototype.GetCurExtraBallNum = function() {
+var t = -1;
+this.bingoData.result.extra.balls.length > 0 && (t = this.bingoData.result.extra.balls[this.bingoData.result.extra.balls.length - 1]);
+return t;
+};
+e.prototype.SetTotalWon = function(t) {
+this.bingoGameController.chaneWonGold = t - this.bingoGameController.totalWonGold;
+this.bingoGameController.totalWonGold = t;
+};
+e.prototype.setNowBetIndex = function(t) {
+this.bingoGameController.curBetIndex = t;
+};
+e.prototype.SetSimulatePlayGame = function() {
+var t = c.GlobalVar.curMoney;
+this.bingoGameController.isExtraPlay ? this.simulateGold = t - this.bingoGameController.nextPrice_Extra : t >= this.bingoGameController.NeedTotalBet() && (this.simulateGold = t - this.bingoGameController.NeedTotalBet());
+this.UpdateGold(this.simulateGold);
+this.RefreshButtonChange();
+};
+e.prototype.Settlement = function() {};
+e.prototype.SettlementOver = function() {};
+e.prototype.UpdateGold = function(t) {
+dispatch(m.default.Event.update_topbanner_money, t);
+};
+e.prototype.Callback_ClickExitGame = function(t) {
+var e = this;
+if (t) {
+this.sender.Send_leaveGame();
+this.exitGameToHall();
+} else {
+App.globalAudio.playBundleEffect("slots_common/sounds/pg/menu_icon_press", f.Macro.BUNDLE_RESOURCES);
+App.alert.show({
+confirmCb: function() {
+e.sender.Send_leaveGame();
+e.exitGameToHall();
+},
+cancelCb: function() {},
+confirmString: App.zLan.getString(1002),
+cancelString: App.zLan.getString(1014),
+text: App.zLan.getString(1015),
+hideX: !0
+});
+}
+};
+r([ h.inject("mask/BingoOperate", v.default) ], e.prototype, "bingoOperate", void 0);
+r([ h.inject("GameController", cc.Node) ], e.prototype, "node_gameController", void 0);
+return r([ S ], e);
+}(d.default);
+o.default = E;
+cc._RF.pop();
+}, {
+"../../common/config/Config": "Config",
+"../../common/config/GlobalVar": "GlobalVar",
+"../../common/event/CommonEvent": "CommonEvent",
+"../../common/net/GameSender": "GameSender",
+"../../common/utils/CmmUtils": "CmmUtils",
+"../../framework/core/ui/GameView": "GameView",
+"../../framework/defines/Decorators": "Decorators",
+"../../framework/defines/Macros": "Macros",
+"../../sdk/GameNativeConfig": "GameNativeConfig",
+"../../zgameCommon/GameHelpView": "GameHelpView",
+"../../zgameCommon/VGameHelpView": "VGameHelpView",
+"../BingoDictoryTable": "BingoDictoryTable",
+"../Bottom/BingoOperate": "BingoOperate",
+"../CompentController/BingoGameController": "BingoGameController",
+"../Data/BingoDataUtil": "BingoDataUtil"
+} ],
+BingoWinService: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "6c78aJnbZ1K1bDhDaJbGodQ", "BingoWinService");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/config/GlobalVar"), s = t("../../common/utils/CmmAudio"), c = t("../../common/utils/CmmUtils"), l = t("../BingoDictoryTable"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.m_Node_Guangquan = null;
+e.m_ParticleSystem_Win = null;
+e.m_ParticleSystem_Win2 = null;
+e.m_Label_Tip = null;
+e.m_Label_Win = null;
+e.m_Duration_Upto = 1.5;
+e.m_IsPlayUpto = !1;
+e.m_LastGold = 0;
+e.m_PreWinTipStrs = [ "9900002", "Good Luck", "Good Luck", "Good Luck", "Buena suerte" ];
+e.m_WinTipStrs = [ "9900001", "जीता", "WON", "GANHOU", "GANADO" ];
+e.m_NoWinTipStrs = [ "9900001", "जीता", "WON", "GANHOU", "GANADO" ];
+e.m_IsUseOwnLanguage = !0;
+e.m_BingoOperate = null;
+return e;
+}
+e.prototype.Init = function(t) {
+this.m_BingoOperate = t;
+this.m_Node_Guangquan.opacity = 0;
+this.m_LastGold = 0;
+};
+e.prototype.PlayYingguang = function(t) {
+if (t) {
+if (null != this.m_ParticleSystem_Win) {
+this.m_ParticleSystem_Win.node.active = !0;
+this.m_ParticleSystem_Win.play();
+}
+if (null != this.m_ParticleSystem_Win2) {
+this.m_ParticleSystem_Win2.node.active = !0;
+this.m_ParticleSystem_Win2.play();
+}
+App.globalAudio.playHallEffect(s.CmmAudio.common_slots_awardTure);
+this.DelayClose();
+} else {
+if (null != this.m_ParticleSystem_Win) {
+this.m_ParticleSystem_Win.stop();
+this.m_ParticleSystem_Win.node.active = !1;
+}
+if (null != this.m_ParticleSystem_Win2) {
+this.m_ParticleSystem_Win2.stop();
+this.m_ParticleSystem_Win2.node.active = !1;
+}
+}
+};
+e.prototype.DelayClose = function() {
+var t = this;
+this.scheduleOnce(function() {
+t.PlayYingguang(!1);
+}, 1.5);
+};
+e.prototype.ChangeTishi = function(t, e, o, n) {
+void 0 === o && (o = !1);
+void 0 === n && (n = 1.5);
+Log.e("gold = " + t);
+this.m_Node_Guangquan.opacity = t > 0 ? 255 : 0;
+this.m_IsPlayUpto = o;
+this.m_Duration_Upto = n;
+if (this.m_BingoOperate.bingoGameController.gameState != l.BingoDictoryTable.GameStyle.WaitResult) if (this.m_BingoOperate.bingoGameController.gameState != l.BingoDictoryTable.GameStyle.Playing) if (this.m_BingoOperate.bingoGameController.gameState != l.BingoDictoryTable.GameStyle.EndPlay) this.m_BingoOperate.bingoGameController.gameState != l.BingoDictoryTable.GameStyle.CanPlay && this.m_BingoOperate.bingoGameController.gameState != l.BingoDictoryTable.GameStyle.CannotPlay || this.ShowTishi(t, this.m_PreWinTipStrs); else if (e) {
+this.PlayYingguang(!0);
+this.ShowTishi(t, this.m_WinTipStrs);
+} else {
+this.ShowTishi(t, this.m_NoWinTipStrs);
+this.PlayYingguang(!1);
+} else {
+this.ShowTishi(t, this.m_PreWinTipStrs);
+this.PlayYingguang(!1);
+} else {
+this.ShowTishi(0, this.m_PreWinTipStrs);
+this.PlayYingguang(!1);
+}
+};
+e.prototype.ShowTishi = function(t, e) {
+var o = this, n = c.CmmUtils.stringToInt(e[0]);
+this.m_Label_Tip.string = App.zLan.getBundleString(n);
+if (this.m_IsPlayUpto) {
+var i = {
+value: this.m_LastGold
+};
+cc.tween(i).to(this.m_Duration_Upto, {
+value: t
+}, {
+onUpdate: function() {
+o.SetSpecialValue(i.value);
+}
+}).call(function() {
+o.SetSpecialValue(t);
+}).start();
+} else this.SetSpecialValue(t);
+};
+e.prototype.SetSpecialValue = function(t) {
+t = Number(c.CmmUtils.saveDecimal(2, t.toString(), a.GlobalVar.isShowSymbol_OurSlots));
+this.m_LastGold = t;
+this.m_Label_Win.string = c.CmmUtils.NumberForceAddCurrencyString(c.CmmUtils.NumberToHallString(t, a.GlobalVar.isShowSymbol_OurSlots));
+};
+r([ d(cc.Node) ], e.prototype, "m_Node_Guangquan", void 0);
+r([ d(cc.ParticleSystem3D) ], e.prototype, "m_ParticleSystem_Win", void 0);
+r([ d(cc.ParticleSystem3D) ], e.prototype, "m_ParticleSystem_Win2", void 0);
+r([ d(cc.Label) ], e.prototype, "m_Label_Tip", void 0);
+r([ d(cc.Label) ], e.prototype, "m_Label_Win", void 0);
+return r([ u ], e);
+}(cc.Component);
+o.default = h;
+cc._RF.pop();
+}, {
+"../../common/config/GlobalVar": "GlobalVar",
+"../../common/utils/CmmAudio": "CmmAudio",
+"../../common/utils/CmmUtils": "CmmUtils",
+"../BingoDictoryTable": "BingoDictoryTable"
+} ],
 BitEncrypt: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "7cabdeR6KhPb5jNmHpa30Pt", "BitEncrypt");
@@ -4713,6 +6477,12 @@ return i.data;
 }
 return null;
 };
+t.prototype.setBundle = function(t, e) {
+var o = this._caches.get(t);
+o && (o.info.bundle = e);
+var n = this._spriteFrameCaches.get(t);
+n && (n.info.bundle = e);
+};
 t.prototype.set = function(t, e) {
 e.info.url = t;
 this._caches.set(t, e);
@@ -4763,6 +6533,33 @@ e.data.decRef();
 e.info.data = e.data;
 }
 return this._caches.delete(t);
+};
+t.prototype.clearNonHall = function() {
+var t = this;
+Log.d("========== clearNonHall START ==========");
+var e = [];
+this._spriteFrameCaches.forEach(function(t, o) {
+if (t.info.bundle && "resources" !== t.info.bundle) {
+t.data instanceof cc.Asset && cc.assetManager.releaseAsset(t.data);
+e.push(o);
+}
+});
+e.forEach(function(e) {
+return t._spriteFrameCaches.delete(e);
+});
+e = [];
+this._caches.forEach(function(t, o) {
+if (t.info.bundle && "resources" !== t.info.bundle) {
+t.data instanceof cc.Asset && cc.assetManager.releaseAsset(t.data);
+e.push(o);
+}
+});
+e.forEach(function(e) {
+Log.d("图片加载：：clearNonHall remove: " + e);
+t._caches.delete(e);
+t._resMap.delete(e);
+});
+Log.d("========== clearNonHall END, cleared: " + e.length + " items ==========");
 };
 t.prototype.debug = function() {
 var t = this._spriteFrameCaches, e = this._caches, o = this._resMap;
@@ -8215,8 +10012,8 @@ if (this.cachTxts.has(o)) return this.cachTxts.get(o);
 cc.assetManager.loadRemote(o, function(t, o) {
 if (t) Log.e(t.message); else for (var n = JSON.parse(o.text), i = 0, r = Object.keys(n); i < r.length; i++) {
 var a = r[i];
-console.error(a);
-console.error(n[a]);
+Log.e(a);
+Log.e(n[a]);
 e.cachTxts.set(a, n[a]);
 }
 });
@@ -8825,13 +10622,6 @@ i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.Send_Event = function(t) {
-var e = {
-action: "DEvent",
-data: t
-};
-this.SendPostHttp(e, null, !1, p.GlobalEnum.HttpUrlType.Login);
-};
 e.prototype.Send_CheckVer = function(t) {
 var e = {
 action: "CheckVer",
@@ -10003,11 +11793,6 @@ eventName: t
 h.CmmUtils.isNull(e) || (o.args = e);
 this.SendPostHttp(o, null, !1, p.GlobalEnum.HttpUrlType.Hall);
 };
-e.prototype.Send_CheckCks = function(t) {
-this.SendPostHttp({
-action: "Cks"
-}, t, !1, p.GlobalEnum.HttpUrlType.Login);
-};
 e.module = "CommonSender";
 return e;
 }(r.default);
@@ -10143,7 +11928,7 @@ cc._RF.push(e, "0c91aF8q+tMCpJHoa5RPmTf", "CommonUIHelper");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var n = t("../../common/config/Config"), i = t("../../common/config/GlobalVar"), r = t("../../common/config/User"), a = t("../../common/net/CommonSender"), s = t("../../framework/defines/Macros"), c = t("../../sdk/AppInfo"), l = t("../../vcode/scripts/mian/view/VBindCPFView"), p = t("../../vcode/scripts/mian/view/VBindForgotPhoneView"), u = t("../../vcode/scripts/mian/view/VBindKycView"), d = t("../../vcode/scripts/mian/view/VChangeAvatarView"), h = t("../../vcode/scripts/mian/view/VChangeNameView"), f = t("../../vcode/scripts/mian/view/VDailySignInView"), m = t("../../vcode/scripts/mian/view/VEmailView"), _ = t("../../vcode/scripts/mian/view/VHtmlDownView"), g = t("../../vcode/scripts/mian/view/VIosOpenView"), y = t("../../vcode/scripts/mian/view/VNoticeView"), v = t("../../vcode/scripts/mian/view/VPayCardInfoView"), b = t("../../vcode/scripts/mian/view/VRechargeRecordsWebView"), C = t("../../vcode/scripts/mian/view/VRedeemCodeView"), w = t("../../vcode/scripts/mian/view/VResetPasswordView"), S = t("../../vcode/scripts/mian/view/VSettingView"), E = t("../../vcode/scripts/mian/view/VVipUpgradeNoticeView"), R = t("../../vcode/scripts/mian/view/VWithdrawView"), O = t("../../vcode/scripts/mian/view/VWithdrawVipInfo"), A = t("../../vcode/scripts/mian/view/activitys/VThreeSoneView"), P = t("../../zgameCommon/GameCheatView"), L = t("./loading/common_loadingView"), T = t("./loading/loading_gameView"), N = t("./offline/RecordsOfflineView"), M = t("./offline/TaskOfflineView"), I = t("../../vcode/scripts/mian/view/VBaxipaiZhaoView"), k = t("../../vcode/scripts/mian/view/VQRView"), B = t("../../vcode/scripts/mian/view/VShareView"), U = t("../../vcode/scripts/mian/view/VPurTipsView"), V = t("../../vcode/scripts/mian/view/VPiggyBankView"), D = t("../../vcode/scripts/mian/view/VVipInfoView"), G = t("../../vcode/scripts/mian/view/VRegisterInView"), j = t("../../vcode/scripts/mian/view/VGameChooseTCView"), x = t("../../vcode/scripts/mian/view/VUseCouponView"), F = t("../../vcode/scripts/mian/view/VAccountSecurityView"), H = t("../../vcode/scripts/mian/view/VIconTipsView"), z = t("./InviteWithdrawRecordsWebView"), W = t("../../vcode/scripts/mian/view/VUseGroupCodeView"), J = t("../../vcode/scripts/mian/view/VLaBaInfoView"), Y = t("../../vcode/scripts/mian/view/VChargeView"), Z = t("../../vcode/scripts/mian/view/VFirstChargeView"), K = t("../../vcode/scripts/mian/view/VGroupChargeView"), Q = t("../../vcode/scripts/mian/view/VMonthCardView"), q = t("../../vcode/scripts/mian/view/VWithdrawVipInfo2"), X = t("../../vcode/scripts/mian/view/VDailyTaskView"), $ = t("../../vcode/scripts/mian/view/VTradeView"), tt = t("../../vcode/scripts/mian/view/VWithdrawVipInfo3"), et = t("../../vcode/scripts/mian/view/VSendRecordView"), ot = t("../../vcode/scripts/mian/view/VXS2XXView"), nt = function() {
+var n = t("../../common/config/Config"), i = t("../../common/config/GlobalVar"), r = t("../../common/config/User"), a = t("../../common/net/CommonSender"), s = t("../../framework/defines/Macros"), c = t("../../sdk/AppInfo"), l = t("../../vcode/scripts/mian/view/VBindCPFView"), p = t("../../vcode/scripts/mian/view/VBindForgotPhoneView"), u = t("../../vcode/scripts/mian/view/VBindKycView"), d = t("../../vcode/scripts/mian/view/VChangeAvatarView"), h = t("../../vcode/scripts/mian/view/VChangeNameView"), f = t("../../vcode/scripts/mian/view/VDailySignInView"), m = t("../../vcode/scripts/mian/view/VEmailView"), _ = t("../../vcode/scripts/mian/view/VHtmlDownView"), g = t("../../vcode/scripts/mian/view/VIosOpenView"), y = t("../../vcode/scripts/mian/view/VNoticeView"), v = t("../../vcode/scripts/mian/view/VPayCardInfoView"), b = t("../../vcode/scripts/mian/view/VRechargeRecordsWebView"), C = t("../../vcode/scripts/mian/view/VRedeemCodeView"), w = t("../../vcode/scripts/mian/view/VResetPasswordView"), S = t("../../vcode/scripts/mian/view/VSettingView"), E = t("../../vcode/scripts/mian/view/VVipUpgradeNoticeView"), R = t("../../vcode/scripts/mian/view/VWithdrawView"), O = t("../../vcode/scripts/mian/view/VWithdrawVipInfo"), A = t("../../vcode/scripts/mian/view/activitys/VThreeSoneView"), P = t("../../zgameCommon/GameCheatView"), L = t("./loading/common_loadingView"), T = t("./loading/loading_gameView"), N = t("./offline/RecordsOfflineView"), M = t("./offline/TaskOfflineView"), I = t("../../vcode/scripts/mian/view/VBaxipaiZhaoView"), B = t("../../vcode/scripts/mian/view/VQRView"), k = t("../../vcode/scripts/mian/view/VShareView"), U = t("../../vcode/scripts/mian/view/VPurTipsView"), V = t("../../vcode/scripts/mian/view/VPiggyBankView"), D = t("../../vcode/scripts/mian/view/VVipInfoView"), G = t("../../vcode/scripts/mian/view/VRegisterInView"), j = t("../../vcode/scripts/mian/view/VGameChooseTCView"), x = t("../../vcode/scripts/mian/view/VUseCouponView"), F = t("../../vcode/scripts/mian/view/VAccountSecurityView"), H = t("../../vcode/scripts/mian/view/VIconTipsView"), z = t("./InviteWithdrawRecordsWebView"), W = t("../../vcode/scripts/mian/view/VUseGroupCodeView"), J = t("../../vcode/scripts/mian/view/VLaBaInfoView"), Y = t("../../vcode/scripts/mian/view/VChargeView"), Z = t("../../vcode/scripts/mian/view/VFirstChargeView"), Q = t("../../vcode/scripts/mian/view/VGroupChargeView"), K = t("../../vcode/scripts/mian/view/VMonthCardView"), q = t("../../vcode/scripts/mian/view/VWithdrawVipInfo2"), X = t("../../vcode/scripts/mian/view/VDailyTaskView"), $ = t("../../vcode/scripts/mian/view/VTradeView"), tt = t("../../vcode/scripts/mian/view/VWithdrawVipInfo3"), et = t("../../vcode/scripts/mian/view/VSendRecordView"), ot = t("../../vcode/scripts/mian/view/VXS2XXView"), nt = function() {
 function t() {}
 t.showVVipInfoView = function(t) {
 r.default.self.isLoginFinish ? App.uiManager.open({
@@ -10245,7 +12030,7 @@ args: t
 };
 t.showQRView = function(t) {
 App.uiManager.open({
-type: k.default,
+type: B.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI,
 args: t
@@ -10411,7 +12196,7 @@ bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI,
 args: t
 }) : App.uiManager.open({
-type: B.default,
+type: k.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI,
 args: t
@@ -10507,7 +12292,7 @@ t.showVGroupChargeView = function() {
 if (r.default.self.isLoginFinish) {
 App.globalAudio.playButtonClick();
 App.uiManager.open({
-type: K.default,
+type: Q.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -10518,7 +12303,7 @@ Log.e("9999999999999999");
 if (r.default.self.isLoginFinish) {
 App.globalAudio.playButtonClick();
 App.uiManager.open({
-type: Q.default,
+type: K.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -11342,17 +13127,24 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
+var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
+function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {};
-return r([ s ], e);
+e.prototype.onLoad = function() {
+var t = this.node.getComponent(cc.Sprite);
+s.default.setMainSprite(t, a.CmmIcon.bonusIcons[0]);
+};
+return r([ l ], e);
 }(cc.Component));
-o.default = c;
+o.default = p;
 cc._RF.pop();
-}, {} ],
+}, {
+"../../utils/CmmIcon": "CmmIcon",
+"../../utils/UIUtils": "UIUtils"
+} ],
 Country_Chip: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "9b762d+TmdLWY941hctgfmC", "Country_Chip");
@@ -11378,17 +13170,24 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
+var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
+function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {};
-return r([ s ], e);
+e.prototype.onLoad = function() {
+var t = this.node.getComponent(cc.Sprite);
+s.default.setMainSprite(t, a.CmmIcon.chipIcons[0]);
+};
+return r([ l ], e);
 }(cc.Component));
-o.default = c;
+o.default = p;
 cc._RF.pop();
-}, {} ],
+}, {
+"../../utils/CmmIcon": "CmmIcon",
+"../../utils/UIUtils": "UIUtils"
+} ],
 Country_Coin: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "93b9c3LMHRF2J3L3xlu5qMQ", "Country_Coin");
@@ -11414,17 +13213,24 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
+var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
+function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {};
-return r([ s ], e);
+e.prototype.onLoad = function() {
+var t = this.node.getComponent(cc.Sprite);
+s.default.setMainSprite(t, a.CmmIcon.coinIcons[0]);
+};
+return r([ l ], e);
 }(cc.Component));
-o.default = c;
+o.default = p;
 cc._RF.pop();
-}, {} ],
+}, {
+"../../utils/CmmIcon": "CmmIcon",
+"../../utils/UIUtils": "UIUtils"
+} ],
 Country_Currency_Label: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "28012lV4p5BKbiouNsCylY0", "Country_Currency_Label");
@@ -11494,17 +13300,24 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
+var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
+function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {};
-return r([ s ], e);
+e.prototype.onLoad = function() {
+var t = this.node.getComponent(cc.Sprite);
+s.default.setMainSprite(t, a.CmmIcon.delayCoinIcons[0]);
+};
+return r([ l ], e);
 }(cc.Component));
-o.default = c;
+o.default = p;
 cc._RF.pop();
-}, {} ],
+}, {
+"../../utils/CmmIcon": "CmmIcon",
+"../../utils/UIUtils": "UIUtils"
+} ],
 Country_GameCoin: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "2bfabsZv7ZHkLekjfbnjheT", "Country_GameCoin");
@@ -11530,17 +13343,24 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = cc._decorator, s = a.ccclass, c = (a.property, function(t) {
+var a = t("../../utils/CmmIcon"), s = t("../../utils/UIUtils"), c = cc._decorator, l = c.ccclass, p = (c.property, 
+function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
 }
-e.prototype.onLoad = function() {};
-return r([ s ], e);
+e.prototype.onLoad = function() {
+var t = this.node.getComponent(cc.Sprite);
+s.default.setMainSprite(t, a.CmmIcon.gameCoinIcons[0]);
+};
+return r([ l ], e);
 }(cc.Component));
-o.default = c;
+o.default = p;
 cc._RF.pop();
-}, {} ],
+}, {
+"../../utils/CmmIcon": "CmmIcon",
+"../../utils/UIUtils": "UIUtils"
+} ],
 Country_Labels: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "4f8814h6l9M66lTRxDs2cJ/", "Country_Labels");
@@ -12771,7 +14591,7 @@ case "hex":
 return o >>> 1;
 
 case "base64":
-return Q(t).length;
+return K(t).length;
 
 default:
 if (n) return Y(t).length;
@@ -12790,7 +14610,7 @@ if ((o >>>= 0) <= (e >>>= 0)) return "";
 t || (t = "utf8");
 for (;;) switch (t) {
 case "hex":
-return B(this, e, o);
+return k(this, e, o);
 
 case "utf8":
 case "utf-8":
@@ -12801,7 +14621,7 @@ return I(this, e, o);
 
 case "latin1":
 case "binary":
-return k(this, e, o);
+return B(this, e, o);
 
 case "base64":
 return L(this, e, o);
@@ -12974,10 +14794,10 @@ function O(t, e, o, n) {
 return R(t, e, o, n);
 }
 function A(t, e, o, n) {
-return q(Q(e), t, o, n);
+return q(K(e), t, o, n);
 }
 function P(t, e, o, n) {
-return q(K(e, t.length - o), t, o, n);
+return q(Q(e, t.length - o), t, o, n);
 }
 c.prototype.write = function(t, e, o, n) {
 if (void 0 === e) {
@@ -13096,13 +14916,13 @@ o = Math.min(t.length, o);
 for (var i = e; i < o; ++i) n += String.fromCharCode(127 & t[i]);
 return n;
 }
-function k(t, e, o) {
+function B(t, e, o) {
 var n = "";
 o = Math.min(t.length, o);
 for (var i = e; i < o; ++i) n += String.fromCharCode(t[i]);
 return n;
 }
-function B(t, e, o) {
+function k(t, e, o) {
 var n, i = t.length;
 (!e || e < 0) && (e = 0);
 (!o || o < 0 || o > i) && (o = i);
@@ -13512,7 +15332,7 @@ function Z(t) {
 for (var e = [], o = 0; o < t.length; ++o) e.push(255 & t.charCodeAt(o));
 return e;
 }
-function K(t, e) {
+function Q(t, e) {
 for (var o, n, i, r = [], a = 0; a < t.length && !((e -= 2) < 0); ++a) {
 n = (o = t.charCodeAt(a)) >> 8;
 i = o % 256;
@@ -13521,7 +15341,7 @@ r.push(n);
 }
 return r;
 }
-function Q(t) {
+function K(t) {
 return n.toByteArray(W(t));
 }
 function q(t, e, o, n) {
@@ -13775,195 +15595,6 @@ arguments[4][4][0].apply(o, arguments);
 _process: 10,
 dup: 4,
 inherits: 11
-} ],
-14: [ function(t, e) {
-var o = {
-utf8: {
-stringToBytes: function(t) {
-return o.bin.stringToBytes(unescape(encodeURIComponent(t)));
-},
-bytesToString: function(t) {
-return decodeURIComponent(escape(o.bin.bytesToString(t)));
-}
-},
-bin: {
-stringToBytes: function(t) {
-for (var e = [], o = 0; o < t.length; o++) e.push(255 & t.charCodeAt(o));
-return e;
-},
-bytesToString: function(t) {
-for (var e = [], o = 0; o < t.length; o++) e.push(String.fromCharCode(t[o]));
-return e.join("");
-}
-}
-};
-e.exports = o;
-}, {} ],
-15: [ function(t, e) {
-o = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", n = {
-rotl: function(t, e) {
-return t << e | t >>> 32 - e;
-},
-rotr: function(t, e) {
-return t << 32 - e | t >>> e;
-},
-endian: function(t) {
-if (t.constructor == Number) return 16711935 & n.rotl(t, 8) | 4278255360 & n.rotl(t, 24);
-for (var e = 0; e < t.length; e++) t[e] = n.endian(t[e]);
-return t;
-},
-randomBytes: function(t) {
-for (var e = []; t > 0; t--) e.push(Math.floor(256 * Math.random()));
-return e;
-},
-bytesToWords: function(t) {
-for (var e = [], o = 0, n = 0; o < t.length; o++, n += 8) e[n >>> 5] |= t[o] << 24 - n % 32;
-return e;
-},
-wordsToBytes: function(t) {
-for (var e = [], o = 0; o < 32 * t.length; o += 8) e.push(t[o >>> 5] >>> 24 - o % 32 & 255);
-return e;
-},
-bytesToHex: function(t) {
-for (var e = [], o = 0; o < t.length; o++) {
-e.push((t[o] >>> 4).toString(16));
-e.push((15 & t[o]).toString(16));
-}
-return e.join("");
-},
-hexToBytes: function(t) {
-for (var e = [], o = 0; o < t.length; o += 2) e.push(parseInt(t.substr(o, 2), 16));
-return e;
-},
-bytesToBase64: function(t) {
-for (var e = [], n = 0; n < t.length; n += 3) for (var i = t[n] << 16 | t[n + 1] << 8 | t[n + 2], r = 0; r < 4; r++) 8 * n + 6 * r <= 8 * t.length ? e.push(o.charAt(i >>> 6 * (3 - r) & 63)) : e.push("=");
-return e.join("");
-},
-base64ToBytes: function(t) {
-t = t.replace(/[^A-Z0-9+\/]/gi, "");
-for (var e = [], n = 0, i = 0; n < t.length; i = ++n % 4) 0 != i && e.push((o.indexOf(t.charAt(n - 1)) & Math.pow(2, -2 * i + 8) - 1) << 2 * i | o.indexOf(t.charAt(n)) >>> 6 - 2 * i);
-return e;
-}
-}, e.exports = n;
-var o, n;
-}, {} ],
-16: [ function(t, e) {
-e.exports = function(t) {
-return null != t && (o(t) || n(t) || !!t._isBuffer);
-};
-function o(t) {
-return !!t.constructor && "function" == typeof t.constructor.isBuffer && t.constructor.isBuffer(t);
-}
-function n(t) {
-return "function" == typeof t.readFloatLE && "function" == typeof t.slice && o(t.slice(0, 0));
-}
-}, {} ],
-17: [ function(t, e) {
-(function() {
-var o = t("crypt"), n = t("charenc").utf8, i = t("is-buffer"), r = t("charenc").bin, a = function(t, e) {
-t.constructor == String ? t = e && "binary" === e.encoding ? r.stringToBytes(t) : n.stringToBytes(t) : i(t) ? t = Array.prototype.slice.call(t, 0) : Array.isArray(t) || t.constructor === Uint8Array || (t = t.toString());
-for (var s = o.bytesToWords(t), c = 8 * t.length, l = 1732584193, p = -271733879, u = -1732584194, d = 271733878, h = 0; h < s.length; h++) s[h] = 16711935 & (s[h] << 8 | s[h] >>> 24) | 4278255360 & (s[h] << 24 | s[h] >>> 8);
-s[c >>> 5] |= 128 << c % 32;
-s[14 + (c + 64 >>> 9 << 4)] = c;
-var f = a._ff, m = a._gg, _ = a._hh, g = a._ii;
-for (h = 0; h < s.length; h += 16) {
-var y = l, v = p, b = u, C = d;
-l = f(l, p, u, d, s[h + 0], 7, -680876936);
-d = f(d, l, p, u, s[h + 1], 12, -389564586);
-u = f(u, d, l, p, s[h + 2], 17, 606105819);
-p = f(p, u, d, l, s[h + 3], 22, -1044525330);
-l = f(l, p, u, d, s[h + 4], 7, -176418897);
-d = f(d, l, p, u, s[h + 5], 12, 1200080426);
-u = f(u, d, l, p, s[h + 6], 17, -1473231341);
-p = f(p, u, d, l, s[h + 7], 22, -45705983);
-l = f(l, p, u, d, s[h + 8], 7, 1770035416);
-d = f(d, l, p, u, s[h + 9], 12, -1958414417);
-u = f(u, d, l, p, s[h + 10], 17, -42063);
-p = f(p, u, d, l, s[h + 11], 22, -1990404162);
-l = f(l, p, u, d, s[h + 12], 7, 1804603682);
-d = f(d, l, p, u, s[h + 13], 12, -40341101);
-u = f(u, d, l, p, s[h + 14], 17, -1502002290);
-l = m(l, p = f(p, u, d, l, s[h + 15], 22, 1236535329), u, d, s[h + 1], 5, -165796510);
-d = m(d, l, p, u, s[h + 6], 9, -1069501632);
-u = m(u, d, l, p, s[h + 11], 14, 643717713);
-p = m(p, u, d, l, s[h + 0], 20, -373897302);
-l = m(l, p, u, d, s[h + 5], 5, -701558691);
-d = m(d, l, p, u, s[h + 10], 9, 38016083);
-u = m(u, d, l, p, s[h + 15], 14, -660478335);
-p = m(p, u, d, l, s[h + 4], 20, -405537848);
-l = m(l, p, u, d, s[h + 9], 5, 568446438);
-d = m(d, l, p, u, s[h + 14], 9, -1019803690);
-u = m(u, d, l, p, s[h + 3], 14, -187363961);
-p = m(p, u, d, l, s[h + 8], 20, 1163531501);
-l = m(l, p, u, d, s[h + 13], 5, -1444681467);
-d = m(d, l, p, u, s[h + 2], 9, -51403784);
-u = m(u, d, l, p, s[h + 7], 14, 1735328473);
-l = _(l, p = m(p, u, d, l, s[h + 12], 20, -1926607734), u, d, s[h + 5], 4, -378558);
-d = _(d, l, p, u, s[h + 8], 11, -2022574463);
-u = _(u, d, l, p, s[h + 11], 16, 1839030562);
-p = _(p, u, d, l, s[h + 14], 23, -35309556);
-l = _(l, p, u, d, s[h + 1], 4, -1530992060);
-d = _(d, l, p, u, s[h + 4], 11, 1272893353);
-u = _(u, d, l, p, s[h + 7], 16, -155497632);
-p = _(p, u, d, l, s[h + 10], 23, -1094730640);
-l = _(l, p, u, d, s[h + 13], 4, 681279174);
-d = _(d, l, p, u, s[h + 0], 11, -358537222);
-u = _(u, d, l, p, s[h + 3], 16, -722521979);
-p = _(p, u, d, l, s[h + 6], 23, 76029189);
-l = _(l, p, u, d, s[h + 9], 4, -640364487);
-d = _(d, l, p, u, s[h + 12], 11, -421815835);
-u = _(u, d, l, p, s[h + 15], 16, 530742520);
-l = g(l, p = _(p, u, d, l, s[h + 2], 23, -995338651), u, d, s[h + 0], 6, -198630844);
-d = g(d, l, p, u, s[h + 7], 10, 1126891415);
-u = g(u, d, l, p, s[h + 14], 15, -1416354905);
-p = g(p, u, d, l, s[h + 5], 21, -57434055);
-l = g(l, p, u, d, s[h + 12], 6, 1700485571);
-d = g(d, l, p, u, s[h + 3], 10, -1894986606);
-u = g(u, d, l, p, s[h + 10], 15, -1051523);
-p = g(p, u, d, l, s[h + 1], 21, -2054922799);
-l = g(l, p, u, d, s[h + 8], 6, 1873313359);
-d = g(d, l, p, u, s[h + 15], 10, -30611744);
-u = g(u, d, l, p, s[h + 6], 15, -1560198380);
-p = g(p, u, d, l, s[h + 13], 21, 1309151649);
-l = g(l, p, u, d, s[h + 4], 6, -145523070);
-d = g(d, l, p, u, s[h + 11], 10, -1120210379);
-u = g(u, d, l, p, s[h + 2], 15, 718787259);
-p = g(p, u, d, l, s[h + 9], 21, -343485551);
-l = l + y >>> 0;
-p = p + v >>> 0;
-u = u + b >>> 0;
-d = d + C >>> 0;
-}
-return o.endian([ l, p, u, d ]);
-};
-a._ff = function(t, e, o, n, i, r, a) {
-var s = t + (e & o | ~e & n) + (i >>> 0) + a;
-return (s << r | s >>> 32 - r) + e;
-};
-a._gg = function(t, e, o, n, i, r, a) {
-var s = t + (e & n | o & ~n) + (i >>> 0) + a;
-return (s << r | s >>> 32 - r) + e;
-};
-a._hh = function(t, e, o, n, i, r, a) {
-var s = t + (e ^ o ^ n) + (i >>> 0) + a;
-return (s << r | s >>> 32 - r) + e;
-};
-a._ii = function(t, e, o, n, i, r, a) {
-var s = t + (o ^ (e | ~n)) + (i >>> 0) + a;
-return (s << r | s >>> 32 - r) + e;
-};
-a._blocksize = 16;
-a._digestsize = 16;
-e.exports = function(t, e) {
-if (null == t) throw new Error("Illegal argument " + t);
-var n = o.wordsToBytes(a(t, e));
-return e && e.asBytes ? n : e && e.asString ? r.bytesToString(n) : o.bytesToHex(n);
-};
-})();
-}, {
-charenc: 14,
-crypt: 15,
-"is-buffer": 16
 } ],
 DataCenter: [ function(t, e, o) {
 "use strict";
@@ -14484,6 +16115,166 @@ cc._RF.pop();
 }, {
 "../ElementAnimState/BaseAnimState": "BaseAnimState"
 } ],
+EmailItem: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "b9f54gq1lJI1I778O/9vbi+", "EmailItem");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/event/CommonEvent"), s = t("../../framework/componects/EventComponent"), c = t("../../framework/defines/Enums"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.notReadNode = null;
+e.readNode = null;
+e.titleTxt = null;
+e.timeTxt = null;
+e.emailBtn = null;
+e.gift = null;
+e._holder = null;
+return e;
+}
+e.prototype.onLoad = function() {
+var t = this;
+this.onN(this.emailBtn, c.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+t.onClickPlay();
+});
+};
+e.prototype.show = function(t) {
+this._holder = t;
+if (0 == this._holder.data.readflag) {
+this.gift.active = 0 != this._holder.data.attach;
+this.readNode.active = !1;
+this.notReadNode.active = !0;
+} else {
+this.readNode.active = !0;
+this.notReadNode.active = !1;
+}
+this.titleTxt.string = this._holder.data.title;
+this.timeTxt.string = this._holder.data.date;
+};
+e.prototype.onClickPlay = function() {
+dispatch(a.ComponentGameEvent.Common_Scroll_Item_Click, this._holder.data);
+};
+r([ u(cc.Node) ], e.prototype, "notReadNode", void 0);
+r([ u(cc.Node) ], e.prototype, "readNode", void 0);
+r([ u(cc.Label) ], e.prototype, "titleTxt", void 0);
+r([ u(cc.Label) ], e.prototype, "timeTxt", void 0);
+r([ u(cc.Node) ], e.prototype, "emailBtn", void 0);
+r([ u(cc.Node) ], e.prototype, "gift", void 0);
+return r([ p ], e);
+}(s.default);
+o.default = d;
+cc._RF.pop();
+}, {
+"../../common/event/CommonEvent": "CommonEvent",
+"../../framework/componects/EventComponent": "EventComponent",
+"../../framework/defines/Enums": "Enums"
+} ],
+EmailScrollList: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "64be14LAxJMrLsyZhAPU8yT", "EmailScrollList");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../zgameCommon/adapter/abstract/Holder"), s = t("../../zgameCommon/adapter/abstract/ScrollAdapter"), c = t("../../zgameCommon/adapter/abstract/View"), l = t("../../zgameCommon/adapter/define/enum"), p = t("./EmailItem"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.bigPrefab = null;
+return e;
+}
+e.prototype.getPrefab = function() {
+return this.bigPrefab;
+};
+e.prototype.getView = function() {
+return new m(this);
+};
+e.prototype.getHolder = function(t, e) {
+return new _(t, e, this);
+};
+e.prototype.initElement = function(t) {
+t.wrapBeforeMode = l.WrapMode.Auto;
+};
+e.prototype.initList = function(t) {
+this.modelManager.clear();
+this.modelManager.insert(t);
+};
+r([ h(cc.Prefab) ], e.prototype, "bigPrefab", void 0);
+return r([ d ], e);
+}(s.ScrollAdapter);
+o.default = f;
+var m = function(t) {
+i(e, t);
+function e() {
+return null !== t && t.apply(this, arguments) || this;
+}
+e.prototype.onVisible = function() {};
+e.prototype.onDisable = function() {};
+return e;
+}(c.View), _ = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e._item = null;
+return e;
+}
+e.prototype.onCreated = function() {
+this._item = this.node.getComponent(p.default);
+};
+e.prototype.onVisible = function() {
+this._item.show(this);
+};
+e.prototype.onDisable = function() {};
+return e;
+}(a.Holder);
+cc._RF.pop();
+}, {
+"../../zgameCommon/adapter/abstract/Holder": "Holder",
+"../../zgameCommon/adapter/abstract/ScrollAdapter": "ScrollAdapter",
+"../../zgameCommon/adapter/abstract/View": "View",
+"../../zgameCommon/adapter/define/enum": "enum",
+"./EmailItem": "EmailItem"
+} ],
 EmojiArea: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "7c3532na8pJMb1ngoT/0iee", "EmojiArea");
@@ -14904,7 +16695,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.Entry = void 0;
-var r = t("../../../common/config/GlobalVar"), a = t("../../../common/event/CommonEvent"), s = t("../../../config/ConfigMgr"), c = t("../../defines/Macros"), l = t("../asset/ResourceLoader"), p = function() {
+var r = t("../../../common/config/GlobalVar"), a = t("../../../common/event/CommonEvent"), s = t("../../../config/ConfigMgr"), c = t("../../../sdk/AppInfo"), l = t("../../../slotsframewrodk/tools/IntervalTime_Slots"), p = t("../../defines/Macros"), u = t("../asset/ResourceLoader"), d = function() {
 function t() {
 this.gameViewType = null;
 this.isMain = !1;
@@ -14913,7 +16704,7 @@ this.loader = null;
 this.node = null;
 this.isRunning = !1;
 this._gameView = null;
-this.loader = new l.default();
+this.loader = new u.default();
 }
 Object.defineProperty(t.prototype, "gameView", {
 get: function() {
@@ -14940,11 +16731,29 @@ this.openGame(t);
 t.prototype.openGame = function(t) {
 return n(this, void 0, void 0, function() {
 var e = this;
-return i(this, function() {
+return i(this, function(o) {
+switch (o.label) {
+case 0:
+return [ 4, this.load_Lan() ];
+
+case 1:
+o.sent();
+return [ 4, this.load_Lan_icon() ];
+
+case 2:
+o.sent();
+return c.default.isTestChannel() ? [ 4, l.default.init(this.bundle) ] : [ 3, 4 ];
+
+case 3:
+o.sent();
+o.label = 4;
+
+case 4:
 this.loadResources(function() {
 e.openGameView(t);
 });
 return [ 2 ];
+}
 });
 });
 };
@@ -14954,7 +16763,7 @@ return new Promise(function(e) {
 var o = "lan/" + t.bundle;
 App.asset.LoadJson(t.bundle, o, null, function(o, n) {
 if (o) {
-console.error(o.message);
+Log.e(o.message);
 e(!0);
 } else {
 var i = n.json;
@@ -14971,7 +16780,7 @@ return new Promise(function(e) {
 var o = t.bundle + "Icon", n = "lan/" + o;
 App.asset.LoadJson(t.bundle, n, null, function(t, n) {
 if (t) {
-console.error(t.message);
+Log.e(t.message);
 e(!0);
 } else {
 var i = n.json;
@@ -14992,12 +16801,14 @@ this._gameView = null;
 t.prototype.onUnloadBundle = function() {
 App.uiManager.closeBundleView(this.bundle);
 this.unloadResources();
+App.cache.removeBundle(this.bundle);
+App.cache.remoteCaches.clearNonHall();
 };
 t.prototype.unloadResources = function() {
 this.loader.unLoadResources();
 };
 t.prototype.openGameView = function(t) {
-if (this.bundle != c.Macro.BUNDLE_RESOURCES) App.uiManager.open({
+if (this.bundle != p.Macro.BUNDLE_RESOURCES) App.uiManager.open({
 type: this.gameViewType,
 bundle: this.bundle,
 args: t,
@@ -15020,12 +16831,14 @@ t.prototype.call = function() {};
 t.bundle = "";
 return t;
 }();
-o.Entry = p;
+o.Entry = d;
 cc._RF.pop();
 }, {
 "../../../common/config/GlobalVar": "GlobalVar",
 "../../../common/event/CommonEvent": "CommonEvent",
 "../../../config/ConfigMgr": "ConfigMgr",
+"../../../sdk/AppInfo": "AppInfo",
+"../../../slotsframewrodk/tools/IntervalTime_Slots": "IntervalTime_Slots",
 "../../defines/Macros": "Macros",
 "../asset/ResourceLoader": "ResourceLoader"
 } ],
@@ -15814,7 +17627,7 @@ return e;
 }
 e.prototype.start = function() {};
 e.prototype.update = function() {
-console.error(window.screen.width);
+Log.e(window.screen.width);
 };
 r([ c(cc.Label) ], e.prototype, "label", void 0);
 r([ c ], e.prototype, "text", void 0);
@@ -16603,7 +18416,7 @@ e.prototype.refresh = function() {};
 e.prototype.start = function() {
 this.list.node.active = !1;
 this.minLoading.active = !0;
-console.error(s.GlobalVar.singleGameRule);
+Log.e(s.GlobalVar.singleGameRule);
 this.showContent();
 };
 e.prototype.selectIndex = function(t) {
@@ -17496,8 +19309,8 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../common/config/Config"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/event/CommonEvent"), l = t("../../../common/net/GameSender"), p = t("../../../sdk/SdkManager"), u = t("../../defines/Macros"), d = t("./UIView"), h = cc._decorator, f = h.ccclass, m = (h.property, 
-h.menu), _ = function(t) {
+var a = t("../../../common/config/Config"), s = t("../../../common/config/GlobalVar"), c = t("../../../common/event/CommonEvent"), l = t("../../../common/net/GameSender"), p = t("../../../sdk/SdkManager"), u = t("../../../slotsframewrodk/view_common/SlotsGameRoomView"), d = t("../../../tableCommon/GameRoomView"), h = t("../../../zgameCommon/GameHelpView"), f = t("../../../zgameCommon/VGameHelpView"), m = t("../../defines/Macros"), _ = t("./UIView"), g = cc._decorator, y = g.ccclass, v = (g.property, 
+g.menu), b = function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
@@ -17506,7 +19319,7 @@ e.prototype.onLoad = function() {
 s.GlobalVar.curRoomId = 0;
 s.GlobalVar.curGameAlias = this.bundle;
 var e = this.bundle;
-if (s.GlobalVar.curGameId && e != u.Macro.BUNDLE_RESOURCES) {
+if (s.GlobalVar.curGameId && e != m.Macro.BUNDLE_RESOURCES) {
 var o = s.GlobalVar.getGameConfig(s.GlobalVar.curGameId.toString());
 o && 2 != o.gtype && App.globalAudio.updateCurGameAudio();
 s.GlobalVar.gameBackToHall = !0;
@@ -17524,15 +19337,22 @@ e.prototype.onEnterGameView = function() {
 App.entryManager.onEnterGameView(this.bundle, this);
 };
 e.prototype.onDestroy = function() {
-this.audioHelper;
+if (this.audioHelper) {
+this.audioHelper.stopMusic();
+this.audioHelper.stopAllEffects();
+}
 App.entryManager.onDestroyGameView(this.bundle, this);
 t.prototype.onDestroy.call(this);
 };
 e.prototype.exitGameToHall = function() {
 s.GlobalVar.curRoomId = 0;
+App.uiManager.isShow(f.default) && App.uiManager.close(f.default);
+App.uiManager.isShow(h.default) && App.uiManager.close(h.default);
+App.uiManager.isShow(u.default) && App.uiManager.close(u.default);
+App.uiManager.isShow(d.default) && App.uiManager.close(d.default);
 this.removeNetServer();
 if (App.SingleGame) p.default.ExitSingleGame(); else if ("LoginView" != App.gameView.className) {
-App.entryManager.enterBundle(u.Macro.BUNDLE_RESOURCES);
+App.entryManager.enterBundle(m.Macro.BUNDLE_RESOURCES);
 p.default.setOrientation_p(!0);
 }
 };
@@ -17558,10 +19378,10 @@ e.prototype.bindingNetServer = function() {};
 e.prototype.removeNetServer = function() {};
 e.prototype.playEffect_ResouceBundle = function(t, e) {
 void 0 === e && (e = !1);
-return this.audioHelper.playEffect(t, u.Macro.BUNDLE_RESOURCES, e);
+return this.audioHelper.playEffect(t, m.Macro.BUNDLE_RESOURCES, e);
 };
 e.prototype.playMusic_ResouceBundle = function(t) {
-this.audioHelper.playMusic(t, u.Macro.BUNDLE_RESOURCES, !0);
+this.audioHelper.playMusic(t, m.Macro.BUNDLE_RESOURCES, !0);
 };
 e.prototype.onBaseClickExit = function() {
 var t = this;
@@ -17593,9 +19413,9 @@ e.prototype.doBaseExitGame = function() {
 App.senderManager.get(l.default).Send_leaveGame();
 this.exitGameToHall();
 };
-return r([ f, m("Quick公共组件/GameView") ], e);
-}(d.default);
-o.default = _;
+return r([ y, v("Quick公共组件/GameView") ], e);
+}(_.default);
+o.default = b;
 cc._RF.pop();
 }, {
 "../../../common/config/Config": "Config",
@@ -17603,6 +19423,10 @@ cc._RF.pop();
 "../../../common/event/CommonEvent": "CommonEvent",
 "../../../common/net/GameSender": "GameSender",
 "../../../sdk/SdkManager": "SdkManager",
+"../../../slotsframewrodk/view_common/SlotsGameRoomView": "SlotsGameRoomView",
+"../../../tableCommon/GameRoomView": "GameRoomView",
+"../../../zgameCommon/GameHelpView": "GameHelpView",
+"../../../zgameCommon/VGameHelpView": "VGameHelpView",
 "../../defines/Macros": "Macros",
 "./UIView": "UIView"
 } ],
@@ -17855,12 +19679,11 @@ return new Promise(function(r) {
 if (e == s.Macro.BUNDLE_RESOURCES) {
 n.audioData.curMusicUrl = t;
 n.audioData.curBundle = e;
-n.audioData.isMusicOn && App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(a) {
-if (a) {
-App.asset.addPersistAsset(t, a, e);
+n.audioData.isMusicOn && App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(e) {
+if (e) {
 i.stopMusic();
 n.isPlayingMusic = !0;
-cc.audioEngine.playMusic(a, o);
+cc.audioEngine.playMusic(e, o);
 n.isPlaying = !0;
 r({
 url: t,
@@ -17887,12 +19710,11 @@ var i = this;
 return new Promise(function(r) {
 n.audioData.curMusicUrl = t;
 n.audioData.curBundle = e;
-n.audioData.isMusicOn && App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(a) {
-if (a) {
-App.asset.addPersistAsset(t, a, e);
+n.audioData.isMusicOn && App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(e) {
+if (e) {
 i.stopMusic();
 n.isPlayingMusic = !0;
-cc.audioEngine.playMusic(a, o);
+cc.audioEngine.playMusic(e, o);
 n.isPlaying = !0;
 r({
 url: t,
@@ -17923,10 +19745,9 @@ e.prototype.playEffect = function(t, e, o) {
 var n = this;
 void 0 === o && (o = !1);
 return new Promise(function(i) {
-if (e == s.Macro.BUNDLE_RESOURCES) if (n.audioData.isEffectOn) App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(r) {
-if (r) {
-App.asset.addPersistAsset(t, r, e);
-n.audioData.curEffectId = cc.audioEngine.playEffect(r, o);
+if (e == s.Macro.BUNDLE_RESOURCES) if (n.audioData.isEffectOn) App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(t) {
+if (t) {
+n.audioData.curEffectId = cc.audioEngine.playEffect(t, o);
 i(n.audioData.curEffectId);
 } else i(n.audioData.curEffectId);
 }); else {
@@ -17942,10 +19763,9 @@ e.prototype.playHallEffect = function(t, e) {
 var o = this;
 void 0 === e && (e = !1);
 return new Promise(function(n) {
-if (o.audioData.isEffectOn) App.cache.getCacheByAsync(t, cc.AudioClip, s.Macro.BUNDLE_RESOURCES).then(function(i) {
-if (i) {
-App.asset.addPersistAsset(t, i, s.Macro.BUNDLE_RESOURCES);
-o.audioData.curEffectId = cc.audioEngine.playEffect(i, e);
+if (o.audioData.isEffectOn) App.cache.getCacheByAsync(t, cc.AudioClip, s.Macro.BUNDLE_RESOURCES).then(function(t) {
+if (t) {
+o.audioData.curEffectId = cc.audioEngine.playEffect(t, e);
 n(o.audioData.curEffectId);
 } else n(o.audioData.curEffectId);
 }); else {
@@ -17958,10 +19778,9 @@ e.prototype.playBundleEffect = function(t, e, o) {
 var n = this;
 void 0 === o && (o = !1);
 return new Promise(function(i) {
-if (n.audioData.isEffectOn) App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(r) {
-if (r) {
-App.asset.addPersistAsset(t, r, e);
-n.audioData.curEffectId = cc.audioEngine.playEffect(r, o);
+if (n.audioData.isEffectOn) App.cache.getCacheByAsync(t, cc.AudioClip, e).then(function(e) {
+if (e) {
+n.audioData.curEffectId = cc.audioEngine.playEffect(e, o);
 i(n.audioData.curEffectId);
 } else {
 c.default.instance && (n.audioData.curEffectId = c.default.instance.playEffect(t, o));
@@ -18142,15 +19961,15 @@ t.curGameIconPath = c;
 t.SetGameRulesAndOddUrl();
 o.isL ? r.default.setOrientation_l() : r.default.setOrientation_p();
 i.default.showloading_gameView(o);
-} else console.error("is empty game");
+} else Log.e("is empty game");
 };
 t.gotoGame = function(e, o) {
 var n = this;
 App.globalAudio.playButtonClick();
 t.curGameId = e.gameId;
 App.senderManager.get(c.default).Send_GameUrl(function(t) {
-console.error(t.data);
-console.error(e);
+Log.e(t.data);
+Log.e(e);
 n.gotoGameByURL(e, t, o);
 }).then(function(t) {
 if (t && 0 != t.ret) try {
@@ -18326,7 +20145,7 @@ var i = o.games[n];
 this.gameListIdData.has(i.gameId) || this.gameListIdData.set(i.gameId, i);
 this.gameListNameData.has(i.gameAlias) || this.gameListNameData.set(i.gameAlias, i);
 }
-console.error("");
+Log.e("");
 };
 t.gameRoomData = function(t) {
 var e = null;
@@ -19283,6 +21102,195 @@ cc._RF.pop();
 }, {
 "../define/enum": "enum"
 } ],
+14: [ function(t, e) {
+var o = {
+utf8: {
+stringToBytes: function(t) {
+return o.bin.stringToBytes(unescape(encodeURIComponent(t)));
+},
+bytesToString: function(t) {
+return decodeURIComponent(escape(o.bin.bytesToString(t)));
+}
+},
+bin: {
+stringToBytes: function(t) {
+for (var e = [], o = 0; o < t.length; o++) e.push(255 & t.charCodeAt(o));
+return e;
+},
+bytesToString: function(t) {
+for (var e = [], o = 0; o < t.length; o++) e.push(String.fromCharCode(t[o]));
+return e.join("");
+}
+}
+};
+e.exports = o;
+}, {} ],
+15: [ function(t, e) {
+o = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", n = {
+rotl: function(t, e) {
+return t << e | t >>> 32 - e;
+},
+rotr: function(t, e) {
+return t << 32 - e | t >>> e;
+},
+endian: function(t) {
+if (t.constructor == Number) return 16711935 & n.rotl(t, 8) | 4278255360 & n.rotl(t, 24);
+for (var e = 0; e < t.length; e++) t[e] = n.endian(t[e]);
+return t;
+},
+randomBytes: function(t) {
+for (var e = []; t > 0; t--) e.push(Math.floor(256 * Math.random()));
+return e;
+},
+bytesToWords: function(t) {
+for (var e = [], o = 0, n = 0; o < t.length; o++, n += 8) e[n >>> 5] |= t[o] << 24 - n % 32;
+return e;
+},
+wordsToBytes: function(t) {
+for (var e = [], o = 0; o < 32 * t.length; o += 8) e.push(t[o >>> 5] >>> 24 - o % 32 & 255);
+return e;
+},
+bytesToHex: function(t) {
+for (var e = [], o = 0; o < t.length; o++) {
+e.push((t[o] >>> 4).toString(16));
+e.push((15 & t[o]).toString(16));
+}
+return e.join("");
+},
+hexToBytes: function(t) {
+for (var e = [], o = 0; o < t.length; o += 2) e.push(parseInt(t.substr(o, 2), 16));
+return e;
+},
+bytesToBase64: function(t) {
+for (var e = [], n = 0; n < t.length; n += 3) for (var i = t[n] << 16 | t[n + 1] << 8 | t[n + 2], r = 0; r < 4; r++) 8 * n + 6 * r <= 8 * t.length ? e.push(o.charAt(i >>> 6 * (3 - r) & 63)) : e.push("=");
+return e.join("");
+},
+base64ToBytes: function(t) {
+t = t.replace(/[^A-Z0-9+\/]/gi, "");
+for (var e = [], n = 0, i = 0; n < t.length; i = ++n % 4) 0 != i && e.push((o.indexOf(t.charAt(n - 1)) & Math.pow(2, -2 * i + 8) - 1) << 2 * i | o.indexOf(t.charAt(n)) >>> 6 - 2 * i);
+return e;
+}
+}, e.exports = n;
+var o, n;
+}, {} ],
+16: [ function(t, e) {
+e.exports = function(t) {
+return null != t && (o(t) || n(t) || !!t._isBuffer);
+};
+function o(t) {
+return !!t.constructor && "function" == typeof t.constructor.isBuffer && t.constructor.isBuffer(t);
+}
+function n(t) {
+return "function" == typeof t.readFloatLE && "function" == typeof t.slice && o(t.slice(0, 0));
+}
+}, {} ],
+17: [ function(t, e) {
+(function() {
+var o = t("crypt"), n = t("charenc").utf8, i = t("is-buffer"), r = t("charenc").bin, a = function(t, e) {
+t.constructor == String ? t = e && "binary" === e.encoding ? r.stringToBytes(t) : n.stringToBytes(t) : i(t) ? t = Array.prototype.slice.call(t, 0) : Array.isArray(t) || t.constructor === Uint8Array || (t = t.toString());
+for (var s = o.bytesToWords(t), c = 8 * t.length, l = 1732584193, p = -271733879, u = -1732584194, d = 271733878, h = 0; h < s.length; h++) s[h] = 16711935 & (s[h] << 8 | s[h] >>> 24) | 4278255360 & (s[h] << 24 | s[h] >>> 8);
+s[c >>> 5] |= 128 << c % 32;
+s[14 + (c + 64 >>> 9 << 4)] = c;
+var f = a._ff, m = a._gg, _ = a._hh, g = a._ii;
+for (h = 0; h < s.length; h += 16) {
+var y = l, v = p, b = u, C = d;
+l = f(l, p, u, d, s[h + 0], 7, -680876936);
+d = f(d, l, p, u, s[h + 1], 12, -389564586);
+u = f(u, d, l, p, s[h + 2], 17, 606105819);
+p = f(p, u, d, l, s[h + 3], 22, -1044525330);
+l = f(l, p, u, d, s[h + 4], 7, -176418897);
+d = f(d, l, p, u, s[h + 5], 12, 1200080426);
+u = f(u, d, l, p, s[h + 6], 17, -1473231341);
+p = f(p, u, d, l, s[h + 7], 22, -45705983);
+l = f(l, p, u, d, s[h + 8], 7, 1770035416);
+d = f(d, l, p, u, s[h + 9], 12, -1958414417);
+u = f(u, d, l, p, s[h + 10], 17, -42063);
+p = f(p, u, d, l, s[h + 11], 22, -1990404162);
+l = f(l, p, u, d, s[h + 12], 7, 1804603682);
+d = f(d, l, p, u, s[h + 13], 12, -40341101);
+u = f(u, d, l, p, s[h + 14], 17, -1502002290);
+l = m(l, p = f(p, u, d, l, s[h + 15], 22, 1236535329), u, d, s[h + 1], 5, -165796510);
+d = m(d, l, p, u, s[h + 6], 9, -1069501632);
+u = m(u, d, l, p, s[h + 11], 14, 643717713);
+p = m(p, u, d, l, s[h + 0], 20, -373897302);
+l = m(l, p, u, d, s[h + 5], 5, -701558691);
+d = m(d, l, p, u, s[h + 10], 9, 38016083);
+u = m(u, d, l, p, s[h + 15], 14, -660478335);
+p = m(p, u, d, l, s[h + 4], 20, -405537848);
+l = m(l, p, u, d, s[h + 9], 5, 568446438);
+d = m(d, l, p, u, s[h + 14], 9, -1019803690);
+u = m(u, d, l, p, s[h + 3], 14, -187363961);
+p = m(p, u, d, l, s[h + 8], 20, 1163531501);
+l = m(l, p, u, d, s[h + 13], 5, -1444681467);
+d = m(d, l, p, u, s[h + 2], 9, -51403784);
+u = m(u, d, l, p, s[h + 7], 14, 1735328473);
+l = _(l, p = m(p, u, d, l, s[h + 12], 20, -1926607734), u, d, s[h + 5], 4, -378558);
+d = _(d, l, p, u, s[h + 8], 11, -2022574463);
+u = _(u, d, l, p, s[h + 11], 16, 1839030562);
+p = _(p, u, d, l, s[h + 14], 23, -35309556);
+l = _(l, p, u, d, s[h + 1], 4, -1530992060);
+d = _(d, l, p, u, s[h + 4], 11, 1272893353);
+u = _(u, d, l, p, s[h + 7], 16, -155497632);
+p = _(p, u, d, l, s[h + 10], 23, -1094730640);
+l = _(l, p, u, d, s[h + 13], 4, 681279174);
+d = _(d, l, p, u, s[h + 0], 11, -358537222);
+u = _(u, d, l, p, s[h + 3], 16, -722521979);
+p = _(p, u, d, l, s[h + 6], 23, 76029189);
+l = _(l, p, u, d, s[h + 9], 4, -640364487);
+d = _(d, l, p, u, s[h + 12], 11, -421815835);
+u = _(u, d, l, p, s[h + 15], 16, 530742520);
+l = g(l, p = _(p, u, d, l, s[h + 2], 23, -995338651), u, d, s[h + 0], 6, -198630844);
+d = g(d, l, p, u, s[h + 7], 10, 1126891415);
+u = g(u, d, l, p, s[h + 14], 15, -1416354905);
+p = g(p, u, d, l, s[h + 5], 21, -57434055);
+l = g(l, p, u, d, s[h + 12], 6, 1700485571);
+d = g(d, l, p, u, s[h + 3], 10, -1894986606);
+u = g(u, d, l, p, s[h + 10], 15, -1051523);
+p = g(p, u, d, l, s[h + 1], 21, -2054922799);
+l = g(l, p, u, d, s[h + 8], 6, 1873313359);
+d = g(d, l, p, u, s[h + 15], 10, -30611744);
+u = g(u, d, l, p, s[h + 6], 15, -1560198380);
+p = g(p, u, d, l, s[h + 13], 21, 1309151649);
+l = g(l, p, u, d, s[h + 4], 6, -145523070);
+d = g(d, l, p, u, s[h + 11], 10, -1120210379);
+u = g(u, d, l, p, s[h + 2], 15, 718787259);
+p = g(p, u, d, l, s[h + 9], 21, -343485551);
+l = l + y >>> 0;
+p = p + v >>> 0;
+u = u + b >>> 0;
+d = d + C >>> 0;
+}
+return o.endian([ l, p, u, d ]);
+};
+a._ff = function(t, e, o, n, i, r, a) {
+var s = t + (e & o | ~e & n) + (i >>> 0) + a;
+return (s << r | s >>> 32 - r) + e;
+};
+a._gg = function(t, e, o, n, i, r, a) {
+var s = t + (e & n | o & ~n) + (i >>> 0) + a;
+return (s << r | s >>> 32 - r) + e;
+};
+a._hh = function(t, e, o, n, i, r, a) {
+var s = t + (e ^ o ^ n) + (i >>> 0) + a;
+return (s << r | s >>> 32 - r) + e;
+};
+a._ii = function(t, e, o, n, i, r, a) {
+var s = t + (o ^ (e | ~n)) + (i >>> 0) + a;
+return (s << r | s >>> 32 - r) + e;
+};
+a._blocksize = 16;
+a._digestsize = 16;
+e.exports = function(t, e) {
+if (null == t) throw new Error("Illegal argument " + t);
+var n = o.wordsToBytes(a(t, e));
+return e && e.asBytes ? n : e && e.asString ? r.bytesToString(n) : o.bytesToHex(n);
+};
+})();
+}, {
+charenc: 14,
+crypt: 15,
+"is-buffer": 16
+} ],
 HallHandler: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "9ea20awrx9LiIfsU1Z5aSu+", "HallHandler");
@@ -19562,7 +21570,7 @@ break;
 case 3:
 this.Button_bindReward.active = !0;
 var d = s.default.self.getFreeAmount;
-console.error(d);
+Log.e(d);
 this.delayLabel.string = a.GlobalVar.money_symbol + c.CmmUtils.NumberToHallString(d);
 l = t.value / 5;
 r = App.utils.localConvertWorldPointAR(this.delayLabel.node);
@@ -19571,7 +21579,7 @@ n.close();
 s.default.self.updateFreeMoneyInfo();
 }, function(t) {
 d += l;
-console.error(d);
+Log.e(d);
 App.globalAudio.playHallMultipleEffect("all_audio/freecoin3");
 n.delayLabel.string = a.GlobalVar.money_symbol + c.CmmUtils.NumberToHallString(d);
 t.destroy();
@@ -20283,7 +22291,7 @@ this.enterFun();
 this.refreshDataInfo();
 } else o.sender.Send_InitData(function(t) {
 var n = t.data;
-if (n && 0 == n.check_mode) if (0 != n.gameStatus) {
+if (0 != n.gameStatus) {
 u.GlobalVar.countryImgPath = n.countryImgPath;
 u.GlobalVar.initphoneQuhao(n.countrys);
 o.SetCountryCode(n.country);
@@ -20292,7 +22300,7 @@ e.updateGlobalVar(n);
 u.GlobalVar.isLogin = !0;
 } else y.CmmUtils.popTipsBack(n.closeMsg, function() {
 cc.game.restart();
-}); else R.default.showSecurityErrorAndExit();
+});
 });
 };
 e.prototype.refreshDataInfo = function() {
@@ -20509,6 +22517,7 @@ this.cRoot2 && (this.cRoot2.active = h.default.self.isMerchantPlayer);
 e.LoingCallBack = function(t) {
 var e = this;
 this.SetCountryCode(t.country);
+R.default.sendEvent("hall");
 u.GlobalVar.setPhonePwtoken(t.phone, t.pwdtoken, t.country);
 u.GlobalVar.firstLeaveTip = 0 != t.leaveTip;
 Log.w(JSON.stringify(t));
@@ -20618,7 +22627,7 @@ value: !0
 });
 var n = function() {
 function t() {}
-t.hot_version = "4.0.7";
+t.hot_version = "4.0.8";
 return t;
 }();
 o.default = n;
@@ -20828,7 +22837,7 @@ var r = p.get(n);
 t.spriteFrame = r;
 return;
 }
-console.error("xxxxxxxxxxxxxxxxxx+error url" + e);
+Log.e("xxxxxxxxxxxxxxxxxx+error url" + e);
 } else {
 for (var a = new Map(), s = new Map(), c = 0; c < this.lan0_spriteframes.length; c++) {
 var l = this.lan0_spriteframes[c];
@@ -20848,9 +22857,9 @@ t.spriteFrame = r;
 return;
 }
 }
-console.error("xxxxxxxxxxxxxxxxxx+error url" + e);
+Log.e("xxxxxxxxxxxxxxxxxx+error url" + e);
 }
-} else console.error("xxxxxxxxxxxxxxxxxx+error url" + e);
+} else Log.e("xxxxxxxxxxxxxxxxxx+error url" + e);
 };
 e.prototype.setSprite = function(t, e) {
 if (e) {
@@ -21012,7 +23021,7 @@ t.openUrlByApp = function(t) {
 var e, o = {};
 o.url = t;
 var n = JSON.stringify(o);
-console.error("window.jsBridge?.postMessage");
+Log.e("window.jsBridge?.postMessage");
 null === (e = window.jsBridge) || void 0 === e || e.postMessage("openWindow", n);
 };
 t.isJsBridge = function() {
@@ -21684,16 +23693,37 @@ return !(!t.startsWith("{") || !t.endsWith("}"));
 };
 e.prototype.postHttpResult = function(t, o, n, i, c, l, p) {
 return r(this, void 0, void 0, function() {
-var o;
-return a(this, function() {
+var r, u, h;
+return a(this, function(a) {
+switch (a.label) {
+case 0:
+if (!d.default.isTestChannel()) return [ 3, 2 ];
+if (!App.storage.getItem(f.ConstString.testCheatHideBg2, !1)) return [ 3, 2 ];
+r = App.storage.getItem(f.ConstString.testCheatHideBg2_time, 1);
+u = App.storage.getItem(f.ConstString.testCheatHideBg2_timeProgress, 0);
+return [ 4, y.CmmUtils.awaitTime(r * u * 1e3) ];
+
+case 1:
+a.sent();
+a.label = 2;
+
+case 2:
 n && App.uiLoading.hide();
 Log.d("http_new :" + p);
 this.isJsonObject(p) || (p = s.default.simpleXorDecrypt(p, e.httpSecretKey));
-o = JSON.parse(p);
-Log.d("http_new :" + JSON.stringify(o));
-0 == o.ret && t && t(o);
-l(o);
+h = JSON.parse(p);
+Log.d("http_new :" + JSON.stringify(h));
+if (0 == h.ret) {
+t && t(h);
+0 != h.type && y.CmmUtils.popRetNoRet1(h, null);
+} else {
+Log.e("http_new_error:" + o.data.url + JSON.stringify(i));
+if (c == g.GlobalEnum.HttpUrlType.Game && !m.GlobalVar.isGameing) return [ 2 ];
+y.CmmUtils.popRet1(h, null);
+}
+l(h);
 return [ 2 ];
+}
 });
 });
 };
@@ -22119,7 +24149,7 @@ e = new Date().getTime();
 o = App.zLan.string_format_args("http://192.168.31.102/nh5/slots_time_test/{0}_time.json?ts={1}", t, e);
 Log.e("测试不应该出现在正式版本：" + o);
 this.fetchJSON(o, function(t, e) {
-if (t) console.error(t); else {
+if (t) Log.e(t); else {
 n.jsonObj = e;
 n.covertData();
 console.log("获取到的数据:", e);
@@ -24232,7 +26262,7 @@ return s(this, function() {
 return [ 2, new Promise(function(e, o) {
 var n = indexedDB.open(t.dbName, 1);
 n.onerror = function(t) {
-console.error("IndexedDB打开失败", t);
+Log.e("IndexedDB打开失败", t);
 o(t);
 };
 n.onsuccess = function() {
@@ -24270,11 +26300,11 @@ r.playMusicFromBlob(t);
 f.CmmUtils.sendGameEvent(h.GameEventName.event_change_local_bgm);
 };
 e.onerror = function(t) {
-console.error("保存新音乐失败", t);
+Log.e("保存新音乐失败", t);
 };
 };
 i.onerror = function(t) {
-console.error("删除旧音乐失败", t);
+Log.e("删除旧音乐失败", t);
 };
 return [ 2 ];
 }
@@ -24301,7 +26331,7 @@ i.playMusicFromBlob(t);
 } else console.log("没有保存的音乐");
 };
 n.onerror = function(t) {
-console.error("读取音乐失败", t);
+Log.e("读取音乐失败", t);
 };
 return [ 2 ];
 }
@@ -24315,7 +26345,7 @@ o.audioElement.src = e;
 o.audioElement.play().then(function() {
 console.log("音乐播放成功");
 }).catch(function(t) {
-console.error("音乐播放失败:", t);
+Log.e("音乐播放失败:", t);
 });
 o.isPlaying = !0;
 };
@@ -24670,7 +26700,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../common/config/GlobalVar"), s = t("../../common/config/User"), c = t("../../common/enum/GlobalEnum"), l = t("../../common/event/CommonEvent"), p = t("../../common/utils/UIUtils"), u = t("../../framework/core/ui/GameView"), d = t("../../framework/defines/Macros"), h = t("../../sdk/SdkManager"), f = t("../../vcode/scripts/mian/VertialRoot"), m = cc._decorator, _ = m.ccclass, g = (m.property, 
+var a = t("../../common/config/GlobalVar"), s = t("../../common/config/User"), c = t("../../common/enum/GlobalEnum"), l = t("../../common/event/CommonEvent"), p = t("../../common/utils/UIUtils"), u = t("../../framework/core/ui/GameView"), d = t("../../framework/defines/Macros"), h = t("../../sdk/SdkManager"), f = t("../../tableCommon/robot/BaseRobot"), m = t("../../tableCommon/robot/TableRobot"), _ = t("../../vcode/scripts/mian/VertialRoot"), g = cc._decorator, y = g.ccclass, v = (g.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -24697,6 +26727,8 @@ p.default.showChecatNode();
 this.vBg.active = !0;
 this.changeP();
 dispatch(l.SimpleEvent.Html5_view_loading, !0);
+m.default.clean();
+f.default.clean();
 }
 };
 e.prototype.addEvents = function() {
@@ -24719,7 +26751,7 @@ t.curNode = null;
 }
 t.curNode = cc.instantiate(e);
 t.node.addChild(t.curNode);
-t.verticalRoot = t.curNode.getComponent(f.default);
+t.verticalRoot = t.curNode.getComponent(_.default);
 dispatch(l.SimpleEvent.Html5_view_loading, !1);
 t.vBg.active = !1;
 dispatch(l.CommonEvent.OpenAndCloseActivity_Laba, !0);
@@ -24758,9 +26790,9 @@ this.verticalRoot && this.verticalRoot.showEventMask();
 var o;
 e.instance = null;
 e.isShowing = !1;
-return o = r([ _ ], e);
+return o = r([ y ], e);
 }(u.default));
-o.default = g;
+o.default = v;
 cc._RF.pop();
 }, {
 "../../common/config/GlobalVar": "GlobalVar",
@@ -24771,6 +26803,8 @@ cc._RF.pop();
 "../../framework/core/ui/GameView": "GameView",
 "../../framework/defines/Macros": "Macros",
 "../../sdk/SdkManager": "SdkManager",
+"../../tableCommon/robot/BaseRobot": "BaseRobot",
+"../../tableCommon/robot/TableRobot": "TableRobot",
 "../../vcode/scripts/mian/VertialRoot": "VertialRoot"
 } ],
 Macros: [ function(t, e, o) {
@@ -25134,6 +27168,112 @@ e.prototype.start = function() {};
 return r([ s ], e);
 }(cc.Component));
 o.default = c;
+cc._RF.pop();
+}, {} ],
+Mask_GGL: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "81c58AurnRHIb/KaDktyL7Q", "Mask_GGL");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.gglNode = null;
+e.figer_Node = null;
+e.myMask = null;
+e.positions = [ cc.v2(-100, 60), cc.v2(100, 60), cc.v2(100, 20), cc.v2(-100, 20), cc.v2(-100, -20), cc.v2(-100, -20), cc.v2(-110, -60), cc.v2(110, -60) ];
+e.size = 20;
+e.value = 40;
+e.positionProgress = null;
+e.callback_Over = null;
+return e;
+}
+e.prototype.onLoad = function() {};
+e.prototype.Init = function(t, e) {
+this.callback_Over = e;
+this.gglNode.active = t;
+if (t) {
+this.node.on(cc.Node.EventType.TOUCH_START, this._onTouchBegin, this);
+this.node.on(cc.Node.EventType.TOUCH_MOVE, this._onTouchMoved, this);
+this.node.on(cc.Node.EventType.TOUCH_END, this._onTouchEnd, this);
+this.positionProgress = new Array(this.positions.length);
+this.figer_Node.active = !0;
+}
+};
+e.prototype._onTouchBegin = function(t) {
+var e = t.touch.getLocation();
+e = this.node.convertToNodeSpaceAR(e);
+this._addCircle(e);
+this.figer_Node.active = !1;
+};
+e.prototype._onTouchMoved = function(t) {
+var e = t.touch.getLocation();
+e = this.node.convertToNodeSpaceAR(e);
+this._addCircle(e);
+};
+e.prototype._onTouchEnd = function(t) {
+var e = t.touch.getLocation();
+e = this.node.convertToNodeSpaceAR(e);
+this._addCircle(e);
+this._checkProgress();
+};
+e.prototype._addCircle = function(t) {
+console.log("point---", t);
+this.graphics = this.myMask.getComponent(cc.Mask)._graphics;
+this._checkPoint(t);
+this.graphics.circle(t.x, t.y, this.size);
+this.graphics.fill();
+};
+e.prototype._checkPoint = function(t) {
+for (var e = 0; e < this.positions.length; e++) {
+var o = this.positions[e];
+o.x + this.value > t.x && o.x - this.value < t.x && o.y + this.value > t.y && o.y - this.value < t.y && (this.positionProgress[e] = !0);
+}
+};
+e.prototype._checkProgress = function() {
+if (this.positionProgress.filter(function(t) {
+return t;
+}).length === this.positions.length) {
+this.myMask.children[0].active = !1;
+this.callback_Over(!0);
+} else this.callback_Over(!1);
+};
+r([ c(cc.Node) ], e.prototype, "gglNode", void 0);
+r([ c(cc.Node) ], e.prototype, "figer_Node", void 0);
+r([ c(cc.Node) ], e.prototype, "myMask", void 0);
+r([ c(cc.Vec2) ], e.prototype, "positions", void 0);
+r([ c({
+displayName: "刮卡路径大小",
+min: 10
+}) ], e.prototype, "size", void 0);
+r([ c({
+tooltip: "分片后阈值:\n结果判断会依赖此值",
+type: cc.Integer
+}) ], e.prototype, "value", void 0);
+return r([ s ], e);
+}(cc.Component);
+o.default = l;
 cc._RF.pop();
 }, {} ],
 Match_Ranking_Item: [ function(t, e, o) {
@@ -25646,7 +27786,7 @@ e.getPrefabUrl = function() {
 return "res_common/main/prefabs/offline/MerchantOfflineView";
 };
 e.prototype.onLoad = function() {
-console.error(this.args);
+Log.e(this.args);
 this.sender = App.senderManager.get(u.default);
 t.prototype.onLoad.call(this);
 this.initData();
@@ -25751,7 +27891,7 @@ this.curContainer = this.draw_btns;
 e.prototype.refresh = function() {
 this.total_b_value.string = c.GlobalVar.money_symbol + d.CmmUtils.NumberToHallString(l.default.self.data.money);
 var t = App.zLan.string_format_args("<on click = 'handler1' param='{0}'><u>{1}</u></on>", this.telegram, this.telegramName);
-console.error(t);
+Log.e(t);
 this.tipsLabel.string = App.zLan.getString(20013, "<img src='te'/>", t);
 this.customInput.placeholderLabel.string = App.zLan.getString(20009, c.GlobalVar.money_symbol + this.minMoney + "~" + c.GlobalVar.money_symbol + this.maxMoney);
 };
@@ -25919,11 +28059,11 @@ m.default.showBindCPFView(t.args.cpf);
 return;
 }
 t.sender.Send_payMoney3(t.payMoney, function(t) {
-console.error(t);
+Log.e(t);
 f.default.openUrl(t.data.ext_info);
 });
 } else t.sender.Send_payMoney3(t.payMoney, function(t) {
-console.error(t);
+Log.e(t);
 f.default.openUrl(t.data.ext_info);
 });
 });
@@ -26848,6 +28988,152 @@ cc._RF.pop();
 }, {
 "../../defines/Macros": "Macros"
 } ],
+NoticeItem: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "f5567UiB7JAP4vkOIW8l6M3", "NoticeItem");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/event/CommonEvent"), s = t("../../framework/componects/EventComponent"), c = t("../../framework/defines/Enums"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.titleTxt = null;
+e.timeTxt = null;
+e.emailBtn = null;
+e._holder = null;
+return e;
+}
+e.prototype.onLoad = function() {
+var t = this;
+this.onN(this.emailBtn, c.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+t.onClickPlay();
+});
+};
+e.prototype.show = function(t) {
+this._holder = t;
+this.titleTxt.string = this._holder.data.title;
+this.timeTxt.string = this._holder.data.day;
+};
+e.prototype.onClickPlay = function() {
+dispatch(a.ComponentGameEvent.Common_Scroll_Item_Click, this._holder.data);
+};
+r([ u(cc.Label) ], e.prototype, "titleTxt", void 0);
+r([ u(cc.Label) ], e.prototype, "timeTxt", void 0);
+r([ u(cc.Node) ], e.prototype, "emailBtn", void 0);
+return r([ p ], e);
+}(s.default);
+o.default = d;
+cc._RF.pop();
+}, {
+"../../common/event/CommonEvent": "CommonEvent",
+"../../framework/componects/EventComponent": "EventComponent",
+"../../framework/defines/Enums": "Enums"
+} ],
+NoticeScrollList: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "a1559+QMUpOfL+Jm+pJSQSi", "NoticeScrollList");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../zgameCommon/adapter/abstract/Holder"), s = t("../../zgameCommon/adapter/abstract/ScrollAdapter"), c = t("../../zgameCommon/adapter/abstract/View"), l = t("../../zgameCommon/adapter/define/enum"), p = t("./NoticeItem"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.bigPrefab = null;
+return e;
+}
+e.prototype.getPrefab = function() {
+return this.bigPrefab;
+};
+e.prototype.getView = function() {
+return new m(this);
+};
+e.prototype.getHolder = function(t, e) {
+return new _(t, e, this);
+};
+e.prototype.initElement = function(t) {
+t.wrapBeforeMode = l.WrapMode.Auto;
+};
+e.prototype.initList = function(t) {
+this.modelManager.clear();
+this.modelManager.insert(t);
+};
+r([ h(cc.Prefab) ], e.prototype, "bigPrefab", void 0);
+return r([ d ], e);
+}(s.ScrollAdapter);
+o.default = f;
+var m = function(t) {
+i(e, t);
+function e() {
+return null !== t && t.apply(this, arguments) || this;
+}
+e.prototype.onVisible = function() {};
+e.prototype.onDisable = function() {};
+return e;
+}(c.View), _ = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e._item = null;
+return e;
+}
+e.prototype.onCreated = function() {
+this._item = this.node.getComponent(p.default);
+};
+e.prototype.onVisible = function() {
+this._item.show(this);
+};
+e.prototype.onDisable = function() {};
+return e;
+}(a.Holder);
+cc._RF.pop();
+}, {
+"../../zgameCommon/adapter/abstract/Holder": "Holder",
+"../../zgameCommon/adapter/abstract/ScrollAdapter": "ScrollAdapter",
+"../../zgameCommon/adapter/abstract/View": "View",
+"../../zgameCommon/adapter/define/enum": "enum",
+"./NoticeItem": "NoticeItem"
+} ],
 OnlineView: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "f5482+gnVFAkqUN4yTzqCom", "OnlineView");
@@ -27512,6 +29798,91 @@ return r([ s ], e);
 o.default = l;
 cc._RF.pop();
 }, {} ],
+PoolModelForComponet_Bingo: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "ed5618YBelD/L2UqQy7iVmk", "PoolModelForComponet_Bingo");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.prefab = null;
+e.poolMaxCount = 0;
+e.componentName = "";
+e.poolList = [];
+return e;
+}
+e.prototype.wInstantiate = function(t) {
+void 0 === t && (t = null);
+var e = null;
+if (this.poolList.length <= 0) e = cc.instantiate(this.prefab).getComponent(this.componentName); else {
+e = this.poolList[0];
+this.poolList.splice(0, 1);
+}
+e.node.active = !0;
+null != t && e.node.setParent(t);
+return e;
+};
+e.prototype.wDestroy = function(t, e) {
+var o = this;
+void 0 === e && (e = 0);
+this.poolList.some(function(e) {
+return e == t;
+}) || (e > 0 ? setTimeout(function() {
+o.wDestroyNow(t);
+}, 1e3 * e) : this.wDestroyNow(t));
+};
+e.prototype.wDestroy_HideParentNode = function(t, e, o) {
+var n = this;
+void 0 === o && (o = 0);
+this.poolList.some(function(e) {
+return e == t;
+}) || (o > 0 ? setTimeout(function() {
+n.wDestroyNow(t, e);
+}, 1e3 * o) : this.wDestroyNow(t, e));
+};
+e.prototype.wDestroyNow = function(t, e) {
+void 0 === e && (e = null);
+if (this.poolList.some(function(e) {
+return e == t;
+})) {
+t.node.active = !1;
+null != e && t.node.setParent(e);
+} else if (this.poolList.length >= this.poolMaxCount) t.node.destroy(); else if (null != t) {
+t.node.active = !1;
+null != e && t.node.setParent(e);
+this.poolList.push(t);
+}
+};
+r([ c(cc.Prefab) ], e.prototype, "prefab", void 0);
+r([ c(cc.Integer) ], e.prototype, "poolMaxCount", void 0);
+r([ c ], e.prototype, "componentName", void 0);
+return r([ s ], e);
+}(cc.Component);
+o.default = l;
+cc._RF.pop();
+}, {} ],
 PortraitEditorBox: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "a474dOWaWhEDpqvNq8QG9kV", "PortraitEditorBox");
@@ -27975,6 +30346,31 @@ cc._RF.pop();
 "../Net": "Net",
 "./Message": "Message"
 } ],
+QRcodeUi: [ function(t, e) {
+"use strict";
+cc._RF.push(e, "0896d1pqTdMZYx9s9jHUAdn", "QRcodeUi");
+cc.Class({
+extends: cc.Component,
+properties: {},
+onLoad: function() {},
+init: function(t) {
+var e = this.node.addComponent(cc.Graphics);
+"string" == typeof t ? this.QRCreate(e, t) : console.log("url is not string", t);
+},
+QRCreate: function(t, e) {
+var o = new QRCode(-1, QRErrorCorrectLevel.H);
+o.addData(e);
+o.make();
+t.fillColor = cc.Color.BLACK;
+for (var n = this.node.width / o.getModuleCount(), i = this.node.height / o.getModuleCount(), r = 0; r < o.getModuleCount(); r++) for (var a = 0; a < o.getModuleCount(); a++) if (o.isDark(r, a)) {
+var s = Math.ceil((a + 1) * n) - Math.floor(a * n), c = Math.ceil((r + 1) * n) - Math.floor(r * n);
+t.rect(Math.round(a * n), Math.round(r * i), s, c);
+t.fill();
+}
+}
+});
+cc._RF.pop();
+}, {} ],
 RandomUtil: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "996c5TwPJpAnaKbmdQ6Dyco", "RandomUtil");
@@ -28180,7 +30576,7 @@ this.sender.Send_GiveRecord2(this.refreshEmailData.bind(this), this.curpage);
 };
 e.prototype.emailCreateFunc = function(t, e) {
 var o = this, n = e.data;
-console.error(n);
+Log.e(n);
 var i = cc.find("blueBg", t), r = cc.find("yellowSp", t), a = cc.find("titleLabel", t).getComponent(cc.Label), s = cc.find("timeLabel", t).getComponent(cc.Label), l = cc.find("emailBtn", t), p = cc.find("blueBg/gift", t);
 l.off(d.NodeEvent.click);
 l.on(d.NodeEvent.click, function() {
@@ -28555,7 +30951,7 @@ t.refreshPage();
 };
 e.prototype.type1CreateFunc = function(t, e) {
 var o = cc.find("time", t).getComponent(cc.Label), n = cc.find("amount", t).getComponent(cc.Label), i = cc.find("service", t).getComponent(cc.Label), r = cc.find("rec", t).getComponent(cc.Label), a = cc.find("id", t).getComponent(cc.Label);
-console.error(e.data);
+Log.e(e.data);
 o.string = e.data.createTime;
 n.string = s.GlobalVar.money_symbol + e.data.sendMoney;
 i.string = s.GlobalVar.money_symbol + e.data.fee;
@@ -28903,6 +31299,7 @@ this._resources = new Map();
 this._loadedCount = 0;
 this._loadedResource = new Map();
 this._isLoading = !1;
+this._isUnloading = !1;
 this._tag = null;
 }
 Object.defineProperty(t.prototype, "tag", {
@@ -28976,7 +31373,7 @@ this._unLoadResources();
 };
 t.prototype._unLoadResources = function() {
 var t = this;
-if (this._isLoading || this._resources.size <= 0) this._isLoading && Log.d("resources is loading , waiting for unload!!!"); else {
+this._isUnloading = !0;
 this._resources.size > 0 && this._resources.forEach(function(e) {
 if (e.url) {
 if (t._loadedResource.has(e.url)) {
@@ -28990,11 +31387,12 @@ t._loadedResource.delete(e.dir);
 }
 });
 this._isLoading = !1;
+this._isUnloading = !1;
 this._loadedCount = 0;
 this._resources.clear();
-}
 };
 t.prototype._onLoadResourceComplete = function(t) {
+if (!this._isUnloading) {
 this._loadedCount++;
 if (this._onLoadProgress) {
 this._loadedCount > this._resources.size && (this._loadedCount = this._resources.size);
@@ -29010,6 +31408,7 @@ App.asset.retainAsset(e);
 this._loadedResource.set(e.url, e);
 }
 this.checkLoadResourceComplete();
+}
 };
 t.prototype.checkLoadResourceComplete = function() {
 if (this.isLoadComplete()) {
@@ -29301,8 +31700,8 @@ r.default.areasTotalMoney[t] = e;
 }
 if (1 == e.players) {
 var o = r.default.areasTotalMoney;
-console.error(o);
-console.error(e);
+Log.e(o);
+Log.e(e);
 }
 e.players.has(this.id) || e.players.set(this.id, this);
 return e;
@@ -29454,7 +31853,7 @@ e.prototype.setDefault = function() {
 this.setState(this.defautl);
 };
 e.prototype.setState = function(t) {
-this.curElement ? this.curElement.show(t) : console.error("没有钙元素" + t);
+this.curElement ? this.curElement.show(t) : Log.e("没有钙元素" + t);
 };
 e.prototype.setRes = function(t) {
 for (var e = 0; e < this.elementIns.length; e++) this.elementIns[e].hide();
@@ -31340,7 +33739,11 @@ Log.d("Android To JS --\x3e UploadAppsFlyerInstallData---------------\x3e" + t);
 };
 t.prototype.ReportedActivateDataCallback = function(t) {
 Log.d("Android To JS --\x3e 安卓冷启动数据---------------\x3e" + t);
-App.senderManager.get(a.default).Send_Event(t);
+var e = App.storage.getItem(n.ConstString.coolData);
+if (e && "" != e) this.coolData = JSON.parse(e); else if (t && "" != t) {
+this.coolData = JSON.parse(t);
+App.storage.setItem(n.ConstString.coolData, t);
+}
 };
 t.prototype.SaveOnLinkInviteCode = function(t) {
 App.storage.setItem(n.ConstString.saveOneLinkInviteCode, t);
@@ -31431,6 +33834,13 @@ Log.d("========IOS获取设备数据:", t);
 }
 return t || "{}";
 };
+e.UploadInstallData = function() {
+Log.d("Js Call Android Prev: GetAdjust上报");
+if (s.default.isAndroid) {
+jsb.reflection.callStaticMethod(this.javaName_sdk, "ReportedActivateData", "(Ljava/lang/String;)V", s.default.getChannelId().toString());
+Log.d("Js Call Android After: GetAdjust上报");
+}
+};
 e.InitGoogleSignInManager = function(t) {
 Log.d("Js Call Android Prev: InitGoogleSignIn");
 if (s.default.isAndroid) {
@@ -31458,16 +33868,6 @@ t = jsb.reflection.callStaticMethod(this.javaName_sdk, "getCountryCode", "()Ljav
 App.storage.setItem(n.ConstString.simData, t);
 Log.d("Js Call Android After: getCountry = " + t);
 } else s.default.isIOS ? t = "" : cc.sys.isBrowser;
-return t;
-};
-e.getTimeZone = function() {
-var t = App.storage.getItem("defaultTimeZone", -9999);
-if (-9999 != t) return t;
-if (s.default.isAndroid) {
-t = jsb.reflection.callStaticMethod(this.javaName_sdk, "getTimeZone", "()I");
-Log.d("Js Call Android After: getTimeZone = " + t);
-} else s.default.isIOS || cc.sys.isBrowser;
-App.storage.setItem("defaultTimeZone", t);
 return t;
 };
 e.getDeviceId = function() {
@@ -31789,10 +34189,10 @@ Log.d("Js Call Android After: isIndiaTimeZone:" + t);
 } else s.default.isIOS;
 return "0" != t;
 };
-e.showSecurityErrorAndExit = function() {
+e.sendEvent = function(t) {
 if (s.default.isAndroid) {
-jsb.reflection.callStaticMethod(this.javaName_sdk, "showSecurityErrorAndExit", "()Ljava/lang/String;");
-Log.d("Js Call Android After: showSecurityErrorAndExit:");
+jsb.reflection.callStaticMethod(this.javaName_sdk, "sendDEvent", "(Ljava/lang/String;)V", t);
+Log.d("Js Call Android After: sendDEvent:");
 } else s.default.isIOS;
 };
 e.javaName_sdk = "org/cocos2dx/javascript/SDKManager";
@@ -35225,7 +37625,7 @@ e.prototype.show = function(e) {
 t.prototype.show.call(this, e);
 this.init();
 this.node.active = !0;
-console.error("播放动画:" + this.tAtlasPlay);
+Log.e("播放动画:" + this.tAtlasPlay);
 this.tAtlasPlay.playRun();
 };
 e.prototype.hide = function() {
@@ -38364,7 +40764,7 @@ this.initUIEvent();
 this.refresh();
 };
 e.prototype.initData = function() {
-console.error(JSON.stringify(this.args));
+Log.e(JSON.stringify(this.args));
 };
 e.prototype.initNode = function() {
 this.btnContainer = cc.find("Background/btnScroll/view/content", this.node).getComponent(a.default);
@@ -40241,6 +42641,112 @@ cc._RF.pop();
 "../../zgameCommon/VGameHelpView": "VGameHelpView",
 "../event/SlotsFrameEvent": "SlotsFrameEvent"
 } ],
+TopService_Bingo: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "f2460YP7J9G0qf4trU4C820", "TopService_Bingo");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/component/GrayMask"), s = t("../../common/event/CommonEvent"), c = t("../../framework/componects/EventComponent"), l = t("../../framework/defines/Macros"), p = t("../../slotsframewrodk/event/SlotsFrameEvent"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.grayMask_Exit = null;
+e.grayMask_ChooseRoom = null;
+e.grayMask_Menu = null;
+e.node_Demo = null;
+e.node_menuBg = null;
+e.pSetView = null;
+return e;
+}
+e.prototype.onLoad = function() {
+var t = this;
+if (null == this.grayMask_Menu && this.grayMask_Exit) {
+var e = this.grayMask_Exit.node.parent.getChildByName("menuBtn");
+e && (this.grayMask_Menu = e.getComponent(a.default));
+}
+this.onD(s.ComponentGameEvent.GrayBtns_Event, function(e, o) {
+if (e > 0) {
+t.grayMask_Exit.setGray(!0);
+t.grayMask_ChooseRoom && t.grayMask_ChooseRoom.setGray(!0);
+t.grayMask_Menu && t.grayMask_Menu.setGray(!0);
+} else {
+t.grayMask_Exit.setGray(!o);
+t.grayMask_ChooseRoom && t.grayMask_ChooseRoom.setGray(!o);
+t.grayMask_Menu && t.grayMask_Menu.setGray(!o);
+}
+});
+this.onD(p.SlotsEvent.slots_RefreshDemoState, function(e) {
+t.node_Demo && (t.node_Demo.active = e);
+});
+};
+e.prototype.start = function() {
+this.node_Demo && (this.node_Demo.active = !1);
+this.node_menuBg && this.SetShowMenuBg(!1);
+};
+e.prototype.getShowStr = function(t) {
+var e = "" + t;
+t < 10 && (e = "0" + t);
+return e;
+};
+e.prototype.ButtonClick_Exit = function() {
+dispatch(s.ComponentGameEvent.Game_Exit_Event);
+};
+e.prototype.ButtonClick_ChooseRoom = function() {
+App.globalAudio.playBundleEffect("slots_common/sounds/pg/menu_icon_press", l.Macro.BUNDLE_RESOURCES);
+dispatch(p.SlotsEvent.slots_ChooseRoom);
+};
+e.prototype.ButtonClick_OpenMenu = function() {
+App.globalAudio.playBundleEffect("slots_common/sounds/pg/menu_icon_press", l.Macro.BUNDLE_RESOURCES);
+this.SetShowMenuBg(!0);
+};
+e.prototype.ButtonClick_CloseMenu = function() {
+this.SetShowMenuBg(!1);
+};
+e.prototype.ButtonClick_Setting = function() {
+App.globalAudio.playBundleEffect("slots_common/sounds/pg/menu_icon_press", l.Macro.BUNDLE_RESOURCES);
+this.pSetView.active = !0;
+this.SetShowMenuBg(!1);
+};
+e.prototype.SetShowMenuBg = function(t) {
+this.node_menuBg.active = t;
+};
+r([ h(a.default) ], e.prototype, "grayMask_Exit", void 0);
+r([ h(a.default) ], e.prototype, "grayMask_ChooseRoom", void 0);
+r([ h(a.default) ], e.prototype, "grayMask_Menu", void 0);
+r([ h(cc.Node) ], e.prototype, "node_Demo", void 0);
+r([ h(cc.Node) ], e.prototype, "node_menuBg", void 0);
+r([ h(cc.Node) ], e.prototype, "pSetView", void 0);
+return r([ d ], e);
+}(c.default);
+o.default = f;
+cc._RF.pop();
+}, {
+"../../common/component/GrayMask": "GrayMask",
+"../../common/event/CommonEvent": "CommonEvent",
+"../../framework/componects/EventComponent": "EventComponent",
+"../../framework/defines/Macros": "Macros",
+"../../slotsframewrodk/event/SlotsFrameEvent": "SlotsFrameEvent"
+} ],
 UIContainer: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "d39cadhCYlFI5biU3GHNSKG", "UIContainer");
@@ -40522,7 +43028,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.UIManager = o.ViewDynamicLoadData = void 0;
-var n = t("../../../common/config/Config"), i = t("../../../common/config/GlobalVar"), r = t("../../../common/enum/GlobalEnum"), a = t("../../../common/event/CommonEvent"), s = t("../../defines/Enums"), c = t("../../defines/Macros"), l = t("../asset/Resource"), p = t("../../../common/net/CommonSender"), u = t("../../../common/utils/UIUtils"), d = t("../../../sdk/SdkManager"), h = "DYNAMIC_LOAD_GARBAGE", f = "DYNAMIC_LOAD_RETAIN_MEMORY", m = function() {
+var n = t("../../../common/config/Config"), i = t("../../../common/config/GlobalVar"), r = t("../../../common/enum/GlobalEnum"), a = t("../../../common/event/CommonEvent"), s = t("../../defines/Enums"), c = t("../../defines/Macros"), l = t("../asset/Resource"), p = "DYNAMIC_LOAD_GARBAGE", u = "DYNAMIC_LOAD_RETAIN_MEMORY", d = function() {
 function t(t) {
 void 0 === t && (t = null);
 this.local = new Map();
@@ -40532,7 +43038,7 @@ this.name = t;
 t.prototype.addLocal = function(t, e) {
 void 0 === e && (e = null);
 if (t && t.url) {
-this.name == h && Log.e("找不到资源持有者: " + t.url);
+this.name == p && Log.e("找不到资源持有者: " + t.url);
 if (!this.local.has(t.url)) {
 App.asset.retainAsset(t);
 this.local.set(t.url, t);
@@ -40542,13 +43048,13 @@ this.local.set(t.url, t);
 t.prototype.addRemote = function(t, e) {
 void 0 === e && (e = null);
 if (t && t.data && !this.remote.has(t.url)) {
-this.name == h && Log.e("找不到资源持有者 : " + t.url);
+this.name == p && Log.e("找不到资源持有者 : " + t.url);
 App.cache.remoteCaches.retainAsset(t);
 this.remote.set(t.url, t);
 }
 };
 t.prototype.clear = function() {
-if (this.name == h) {
+if (this.name == p) {
 (this.local.size > 0 || this.remote.size > 0) && Log.e("当前未能释放资源如下:");
 if (this.local && this.local.size > 0) {
 Log.e("-----------local-----------");
@@ -40579,8 +43085,8 @@ this.remote.clear();
 };
 return t;
 }();
-o.ViewDynamicLoadData = m;
-var _ = function() {
+o.ViewDynamicLoadData = d;
+var h = function() {
 function t() {
 this.isLoaded = !1;
 this.status = s.ViewStatus.WAITTING_NONE;
@@ -40592,7 +43098,7 @@ this.isPrefab = !0;
 this.info = null;
 this.viewType = null;
 this.bundle = null;
-this.loadData = new m();
+this.loadData = new d();
 this.node = null;
 }
 t.prototype.doGet = function(t) {
@@ -40614,14 +43120,14 @@ this.doFinish(t, e, o);
 this.doGet(t, e, o);
 };
 return t;
-}(), g = function() {
+}(), f = function() {
 function t() {
 this.isResident = !0;
 this.module = null;
 this.uiNameList = [];
 this._viewDatas = new Map();
-this.garbage = new m(h);
-this.retainMemory = new m(f);
+this.garbage = new d(p);
+this.retainMemory = new d(u);
 this._canvas = null;
 this._mainController = null;
 this._prefabs = null;
@@ -40701,7 +43207,7 @@ i.status = s.ViewStatus.WAITTING_NONE;
 t.preload || t.isRoot;
 i.finishCb.push(o);
 } else {
-(i = new _()).loadData.name = n;
+(i = new h()).loadData.name = n;
 var r = t.type.getPrefabUrl(), c = e.parsePrefabUrl(r);
 i.isPreload = t.preload;
 i.isPrefab = c.isPrefab;
@@ -40746,7 +43252,7 @@ i.doCallback(null, n, "打开界面异常");
 o(null);
 var a = "";
 t.name && (a = t.name);
-App.tips.show("Load " + a + " failed, please retry");
+App.tips.show("加载界面" + a + "失败，请重试");
 });
 } else {
 i.info = new l.Resource.Info();
@@ -40934,16 +43440,16 @@ t.prototype.removeListName = function(t) {
 if ("LoginView" != t) {
 var e = this.uiNameList.indexOf(t);
 -1 !== e && this.uiNameList.splice(e, 1);
-console.error(this.uiNameList);
-} else console.error("不删除loginview");
+Log.e(this.uiNameList);
+} else Log.e("不删除loginview");
 };
 t.prototype.pushListName = function(t) {
 this.uiNameList.includes(t) || this.uiNameList.push(t);
 };
 t.prototype.closeCurView = function() {
 var t = this;
-console.error(this.uiNameList);
-console.error(i.GlobalVar.moduleGame);
+Log.e(this.uiNameList);
+Log.e(i.GlobalVar.moduleGame);
 if (i.GlobalVar.moduleGame != r.GlobalEnum.HttpUrlType.Game && !i.GlobalVar.backCantUse && !App.alert.haveClose() && this.uiNameList.length > 0) {
 for (var e = 0; e < this.uiNameList.length; e++) if (this.uiNameList[e].includes("loading")) return;
 var o = this.uiNameList[this.uiNameList.length - 1];
@@ -40956,38 +43462,16 @@ t.close(o);
 });
 }
 };
-t.newGameTest = function() {
-var t = d.default.getTimeZone(), e = App.storage.getItem("configBlistValue", null);
-null == e ? App.senderManager.get(p.default).Send_CheckCks(function(o) {
-Log.e(o);
-if (o.data) {
-e = o.data.list;
-App.storage.setItem("configBlistValue", e);
-0 == e.length ? u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
-cc.audioEngine.stopMusic();
-}) : e.length > 0 && e.indexOf(t) >= 0 && u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
-cc.audioEngine.stopMusic();
-});
-}
-}) : 0 == e.length ? u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
-cc.audioEngine.stopMusic();
-}) : e.length > 0 && e.indexOf(t) >= 0 && u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
-cc.audioEngine.stopMusic();
-});
-};
 t.module = "【UI管理器】";
 return t;
 }();
-o.UIManager = g;
+o.UIManager = f;
 cc._RF.pop();
 }, {
 "../../../common/config/Config": "Config",
 "../../../common/config/GlobalVar": "GlobalVar",
 "../../../common/enum/GlobalEnum": "GlobalEnum",
 "../../../common/event/CommonEvent": "CommonEvent",
-"../../../common/net/CommonSender": "CommonSender",
-"../../../common/utils/UIUtils": "UIUtils",
-"../../../sdk/SdkManager": "SdkManager",
 "../../defines/Enums": "Enums",
 "../../defines/Macros": "Macros",
 "../asset/Resource": "Resource"
@@ -43753,7 +46237,7 @@ this.pageview.removeAllPages();
 var e = t.data.poster;
 e.push(e[0]);
 this.pagetCount = e.length;
-console.error(t);
+Log.e(t);
 for (var o = 0; o < e.length; o++) {
 var n = e[o], i = cc.instantiate(this.pageItem);
 this.pageview.addPage(i);
@@ -46214,7 +48698,7 @@ e.refresh(t);
 };
 e.prototype.refresh = function(t) {
 var e = this;
-console.error(this.args);
+Log.e(this.args);
 var o = this.args.tasks;
 t ? this.scheduleOnce(function() {
 e.list.initData(o, e.createrTaskFunc.bind(e), function() {
@@ -48635,7 +51119,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/SwitchBtnItem"), s = t("../../../../common/event/CommonEvent"), c = t("../../../../common/net/CommonSender"), l = t("../../../../framework/defines/Enums"), p = t("../../../../sdk/SdkManager"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+var a = t("../../../../common/component/SwitchBtnItem"), s = t("../../../../common/config/GlobalVar"), c = t("../../../../common/config/User"), l = t("../../../../common/event/CommonEvent"), p = t("../../../../common/net/CommonSender"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/view/CommonUIHelper"), h = t("../../../../sdk/SdkManager"), f = t("../../../../zgameCommon/GameCommonUIHelper"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -48663,12 +51147,12 @@ t.prototype.onLoad.call(this);
 };
 e.prototype.addEvents = function() {
 var t = this;
-this.onN(this.addCashBtn, l.NodeEvent.click, this.clickRecharge.bind(this));
-this.onN(this.getReward.node, l.NodeEvent.click, this.clickGetReward.bind(this));
-this.onN(this.codeBtn.node, l.NodeEvent.click, function() {
-p.default.setClipboardContent(t.data.code);
+this.onN(this.addCashBtn, u.NodeEvent.click, this.clickRecharge.bind(this));
+this.onN(this.getReward.node, u.NodeEvent.click, this.clickGetReward.bind(this));
+this.onN(this.codeBtn.node, u.NodeEvent.click, function() {
+h.default.setClipboardContent(t.data.code);
 });
-this.onD(s.CommonEvent.RefreshRechageList, function() {
+this.onD(l.CommonEvent.RefreshRechageList, function() {
 t.sender.Send_RebateInfo(function(e) {
 t.data = e.data;
 t.refreshInfo();
@@ -48682,7 +51166,7 @@ this.updateInfo(t);
 e.prototype.updateInfo = function(t) {
 var e = this;
 if (this.oneInit) {
-this.sender = App.senderManager.get(c.default);
+this.sender = App.senderManager.get(p.default);
 if (t && t.data) {
 this.data = t;
 this.refreshInfo();
@@ -48693,34 +51177,110 @@ e.refreshInfo();
 this.oneInit = !1;
 }
 };
-e.prototype.refreshInfo = function() {};
-e.prototype.clickRecharge = function() {};
-e.prototype.clickGetReward = function() {};
-r([ h(cc.Button) ], e.prototype, "getReward", void 0);
-r([ h(cc.Label) ], e.prototype, "rewardLabel", void 0);
-r([ h(cc.Button) ], e.prototype, "codeBtn", void 0);
-r([ h(cc.Node) ], e.prototype, "addCashBtn", void 0);
-r([ h(cc.Label) ], e.prototype, "addCashLabel", void 0);
-r([ h(cc.Label) ], e.prototype, "upValue", void 0);
-r([ h(cc.Label) ], e.prototype, "cashValue", void 0);
-r([ h(cc.Label) ], e.prototype, "returnValue", void 0);
-r([ h(cc.Label) ], e.prototype, "TotalGetValue", void 0);
-r([ h(cc.RichText) ], e.prototype, "tips1", void 0);
-r([ h(cc.RichText) ], e.prototype, "tips2", void 0);
-r([ h(cc.Label) ], e.prototype, "code", void 0);
-r([ h(cc.RichText) ], e.prototype, "tips_recharge", void 0);
-r([ h(cc.Node) ], e.prototype, "buy", void 0);
-r([ h(cc.Node) ], e.prototype, "hasBuy", void 0);
-return r([ d ], e);
+e.prototype.refreshInfo = function() {
+var t = this.data.returnCash + this.data.cash + this.data.returnCash2, e = this.data.returnCash2 + this.data.returnCash;
+this.upValue.string = Math.ceil(t / this.data.cash * 100) + "%";
+this.cashValue.string = s.GlobalVar.money_symbol + this.data.cash;
+this.returnValue.string = s.GlobalVar.money_symbol + e;
+this.TotalGetValue.string = s.GlobalVar.money_symbol + t;
+this.addCashLabel.string = s.GlobalVar.money_symbol + this.data.cash;
+this.tips1.string = App.zLan.getString(20127, s.GlobalVar.money_symbol + this.data.cash, s.GlobalVar.money_symbol + t);
+this.tips2.string = App.zLan.getString(20129, this.cashValue.string, this.returnValue.string, "VIP" + this.data.vip);
+var o = App.zLan.string_format_args("<color=#FDE377>" + s.GlobalVar.money_symbol + this.data.returnCash + "</c>"), n = App.zLan.string_format_args("<color=#FDE377>" + s.GlobalVar.money_symbol + this.data.returnCash2 + "</c>");
+if (this.data.code && "" != this.data.code || 0 != this.data.rebate) {
+this.code.string = this.data.code;
+this.buy.active = !1;
+this.hasBuy.active = !0;
+this.getReward.node.active = !0;
+this.codeBtn.node.active = !0;
+if (this.data.rebate > 0) {
+this.getReward.interactable = !0;
+this.rewardLabel.string = App.zLan.getString(1001);
+this.tips_recharge.string = App.zLan.getString(20159, o, n, "VIP" + this.data.vip);
+"" != this.data.code && this.data.code || (this.codeBtn.node.active = !1);
+} else if (0 == this.data.rebate) {
+this.getReward.interactable = !1;
+this.rewardLabel.string = App.zLan.getString(1001);
+if ("" != this.data.code && this.data.code) this.tips_recharge.string = App.zLan.getString(20130, o, n, "VIP" + this.data.vip); else {
+this.codeBtn.node.active = !1;
+this.tips_recharge.string = App.zLan.getString(20159, o, n, "VIP" + this.data.vip);
+}
+} else {
+this.codeBtn.node.active = !1;
+this.getReward.interactable = !1;
+this.rewardLabel.string = App.zLan.getString(20132);
+this.tips_recharge.string = App.zLan.getString(20131, "VIP" + this.data.vip);
+}
+} else {
+this.buy.active = !0;
+this.hasBuy.active = !1;
+this.getReward.node.active = !1;
+this.rewardLabel.string = s.GlobalVar.money_symbol + this.data.returnCash;
+}
+};
+e.prototype.clickRecharge = function() {
+var t = this;
+App.globalAudio.playButtonClick();
+if (c.default.self.isBindMobileBeforeRecharge) {
+var e = {
+useCodeFun: function(e) {
+t.sender.Send_payMoney2(t.data.id, e, t.data.mid, null);
+},
+skipCodeFun: function() {
+t.sender.Send_payMoney2(t.data.id, "", t.data.mid, null);
+}
+};
+e.vip = this.data.vip;
+d.default.showVUseGroupCodeView(e);
+} else d.default.showBindMobile();
+};
+e.prototype.clickGetReward = function() {
+var t = this;
+this.getReward.interactable = !1;
+this.sender.Send_ReceiveRebate(function() {
+var e = App.utils.localConvertWorldPointAR(t.getReward.node), o = [];
+o.push({
+type: 1,
+value: t.data.rebate,
+position: e
+});
+f.default.showHallReward({
+data: o,
+show: !0
+});
+t.data.rebate = -1;
+t.refreshInfo();
+});
+};
+r([ g(cc.Button) ], e.prototype, "getReward", void 0);
+r([ g(cc.Label) ], e.prototype, "rewardLabel", void 0);
+r([ g(cc.Button) ], e.prototype, "codeBtn", void 0);
+r([ g(cc.Node) ], e.prototype, "addCashBtn", void 0);
+r([ g(cc.Label) ], e.prototype, "addCashLabel", void 0);
+r([ g(cc.Label) ], e.prototype, "upValue", void 0);
+r([ g(cc.Label) ], e.prototype, "cashValue", void 0);
+r([ g(cc.Label) ], e.prototype, "returnValue", void 0);
+r([ g(cc.Label) ], e.prototype, "TotalGetValue", void 0);
+r([ g(cc.RichText) ], e.prototype, "tips1", void 0);
+r([ g(cc.RichText) ], e.prototype, "tips2", void 0);
+r([ g(cc.Label) ], e.prototype, "code", void 0);
+r([ g(cc.RichText) ], e.prototype, "tips_recharge", void 0);
+r([ g(cc.Node) ], e.prototype, "buy", void 0);
+r([ g(cc.Node) ], e.prototype, "hasBuy", void 0);
+return r([ _ ], e);
 }(a.default);
-o.default = f;
+o.default = y;
 cc._RF.pop();
 }, {
 "../../../../common/component/SwitchBtnItem": "SwitchBtnItem",
+"../../../../common/config/GlobalVar": "GlobalVar",
+"../../../../common/config/User": "User",
 "../../../../common/event/CommonEvent": "CommonEvent",
 "../../../../common/net/CommonSender": "CommonSender",
 "../../../../framework/defines/Enums": "Enums",
-"../../../../sdk/SdkManager": "SdkManager"
+"../../../../login/view/CommonUIHelper": "CommonUIHelper",
+"../../../../sdk/SdkManager": "SdkManager",
+"../../../../zgameCommon/GameCommonUIHelper": "GameCommonUIHelper"
 } ],
 VGroupChargeView: [ function(t, e, o) {
 "use strict";
@@ -49115,7 +51675,7 @@ break;
 case 3:
 this.Button_bindReward.active = !0;
 var d = s.default.self.getFreeAmount;
-console.error(d);
+Log.e(d);
 this.delayLabel.string = a.GlobalVar.money_symbol + c.CmmUtils.NumberToHallString(d);
 l = t.value / 5;
 r = App.utils.localConvertWorldPointAR(this.delayLabel.node);
@@ -49124,7 +51684,7 @@ n.closeBefore();
 s.default.self.updateFreeMoneyInfo();
 }, function(t) {
 d += l;
-console.error(d);
+Log.e(d);
 App.globalAudio.playHallMultipleEffect("all_audio/freecoin3");
 n.delayLabel.string = a.GlobalVar.money_symbol + c.CmmUtils.NumberToHallString(d);
 t.destroy();
@@ -51011,6 +53571,7 @@ e.tipsItem = null;
 e.saveBtn = null;
 e.bindInfo = null;
 e.isModify = !1;
+e.selectInput = null;
 return e;
 }
 e.getPrefabUrl = function() {
@@ -51069,6 +53630,7 @@ App.globalAudio.playButtonClick();
 if (t.isModify) App.tips.show(App.zLan.getString(20242)); else {
 t.bindInfo.bindBtn.interactable = !1;
 t.bindInfo.scroll.active = !0;
+t.selectInput && t.selectInput.LeaveBankStyle();
 }
 });
 this.onN(this.bindInfo.hideClick, u.NodeEvent.click, function() {
@@ -51106,8 +53668,9 @@ e.data.values ? this.createSelectItem(t, e) : this.createInputItem(t, e);
 e.prototype.createSelectItem = function(t, e) {
 var o = t.getComponent(h.default);
 o.initData(e.data);
+this.selectInput = o;
 cc.find("title", t).getComponent(cc.Label).string = e.data.name;
-o.input.placeholderLabel.string = "Enter Your " + e.data.name;
+o.input.placeholderLabel.string = e.data.enterTip;
 e.data.values && 1 == e.data.values.length ? o.input.string = e.data.values[0] : o.input.string = "";
 if (this.isModify) {
 var n = this.args.selectData[e.data.fieldName];
@@ -51118,7 +53681,7 @@ e.prototype.createInputItem = function(t, e) {
 var o = t.getComponent(f.default);
 o.initData(e.data);
 cc.find("title", t).getComponent(cc.Label).string = e.data.name;
-o.input.placeholderLabel.string = "Enter Your " + e.data.name;
+o.input.placeholderLabel.string = e.data.enterTip;
 o.input.string = "";
 if (this.isModify) {
 var n = this.args.selectData[e.data.fieldName];
@@ -51853,7 +54416,7 @@ u.default.setClipboardContent(t.args.ext_info.payData);
 });
 };
 e.prototype.refresh = function() {
-console.error(this.args);
+Log.e(this.args);
 if (this.args.tips) {
 this.tips.string = this.args.tips;
 this.tips.node.active = !0;
@@ -53415,9 +55978,9 @@ p.active = !0;
 }
 }
 this.onN(t, m.NodeEvent.click, function() {
-console.error(e.data);
+Log.e(e.data);
 o.sender.Send_getACT_17Reward(function(t) {
-console.error(t);
+Log.e(t);
 var n = App.utils.localConvertWorldPointAR(o.node), i = [];
 i.push({
 type: 1,
@@ -57853,6 +60416,178 @@ cc._RF.pop();
 "../../../sdk/AppInfo": "AppInfo",
 "../CommonUIHelper": "CommonUIHelper"
 } ],
+WithdrawRecordItem: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "0f963ya4dBJFZwn3Pcp1DXm", "WithdrawRecordItem");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../common/utils/CmmUtils"), s = t("../../common/utils/UIUtils"), c = t("../../framework/componects/EventComponent"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_type0 = null;
+e.node_type1 = null;
+e.sprite_Head = null;
+e.label_Name = null;
+e.label_time = null;
+e.richText_content = null;
+e.node_Success = null;
+e.label_Success = null;
+e.colorStr_Success = "<color=#E9DC0C>{0}</c>";
+e.colorStr_ID = "<color=#A7F06F>{0}</c>";
+e.colorStr_Gold = "<color=#E9B548>{0}</c>";
+e._holder = null;
+return e;
+}
+e.prototype.show = function(t) {
+this._holder = t;
+this.label_Name.string = this._holder.data.name;
+s.default.loadHead(this.sprite_Head, this._holder.data);
+this.label_time.string = this._holder.data.time;
+var e = String.format(this.colorStr_ID, this._holder.data.id), o = String.format(this.colorStr_Gold, a.CmmUtils.NumberForceAddCurrencyString(a.CmmUtils.saveDecimal(3, this._holder.data.money.toString(), !1)));
+if (0 == this._holder.data.type) {
+this.node_type0.active = !0;
+this.node_type1.active = !1;
+this.node_Success.active = !1;
+var n = App.zLan.getString(1151);
+this.richText_content.string = String.format(n, e, o);
+} else if (1 == this._holder.data.type) {
+this.node_type0.active = !0;
+this.node_type1.active = !1;
+this.node_Success.active = !1;
+n = App.zLan.getString(1152);
+this.richText_content.string = String.format(n, e, o);
+} else {
+this.node_type0.active = !1;
+this.node_type1.active = !0;
+this.node_Success.active = !0;
+n = App.zLan.getString(1153);
+this.richText_content.string = String.format(n, e, o);
+var i = App.zLan.getString(1154).split("{0}");
+this.label_Success.string = String.format(this.colorStr_Success, i[0]) + this._holder.data.success + String.format(this.colorStr_Success, i[1]);
+}
+};
+r([ u(cc.Node) ], e.prototype, "node_type0", void 0);
+r([ u(cc.Node) ], e.prototype, "node_type1", void 0);
+r([ u(cc.Sprite) ], e.prototype, "sprite_Head", void 0);
+r([ u(cc.Label) ], e.prototype, "label_Name", void 0);
+r([ u(cc.Label) ], e.prototype, "label_time", void 0);
+r([ u(cc.RichText) ], e.prototype, "richText_content", void 0);
+r([ u(cc.Node) ], e.prototype, "node_Success", void 0);
+r([ u(cc.RichText) ], e.prototype, "label_Success", void 0);
+return r([ p ], e);
+}(c.default);
+o.default = d;
+cc._RF.pop();
+}, {
+"../../common/utils/CmmUtils": "CmmUtils",
+"../../common/utils/UIUtils": "UIUtils",
+"../../framework/componects/EventComponent": "EventComponent"
+} ],
+WithdrawRecordList: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "53b63wHH3JJCbRlM6KMKL39", "WithdrawRecordList");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../zgameCommon/adapter/abstract/Holder"), s = t("../../zgameCommon/adapter/abstract/ScrollAdapter"), c = t("../../zgameCommon/adapter/abstract/View"), l = t("../../zgameCommon/adapter/define/enum"), p = t("./WithdrawRecordItem"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.bigPrefab = null;
+return e;
+}
+e.prototype.getPrefab = function() {
+return this.bigPrefab;
+};
+e.prototype.getView = function() {
+return new m(this);
+};
+e.prototype.getHolder = function(t, e) {
+return new _(t, e, this);
+};
+e.prototype.initElement = function(t) {
+t.wrapBeforeMode = l.WrapMode.Auto;
+};
+e.prototype.initList = function(t) {
+this.modelManager.clear();
+this.modelManager.insert(t);
+};
+r([ h(cc.Prefab) ], e.prototype, "bigPrefab", void 0);
+return r([ d ], e);
+}(s.ScrollAdapter);
+o.default = f;
+var m = function(t) {
+i(e, t);
+function e() {
+return null !== t && t.apply(this, arguments) || this;
+}
+e.prototype.onVisible = function() {};
+e.prototype.onDisable = function() {};
+return e;
+}(c.View), _ = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e._item = null;
+return e;
+}
+e.prototype.onCreated = function() {
+this._item = this.node.getComponent(p.default);
+};
+e.prototype.onVisible = function() {
+this._item.show(this);
+};
+e.prototype.onDisable = function() {};
+return e;
+}(a.Holder);
+cc._RF.pop();
+}, {
+"../../zgameCommon/adapter/abstract/Holder": "Holder",
+"../../zgameCommon/adapter/abstract/ScrollAdapter": "ScrollAdapter",
+"../../zgameCommon/adapter/abstract/View": "View",
+"../../zgameCommon/adapter/define/enum": "enum",
+"./WithdrawRecordItem": "WithdrawRecordItem"
+} ],
 ZLan: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "2357fbAkfVKroP3wy+m4L6m", "ZLan");
@@ -58043,7 +60778,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
+var a = t("console"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -58058,33 +60793,48 @@ return e;
 }
 e.prototype.progress = function(t) {
 t < 0 && (t = 0);
-t > 1 && (t = 1);
-this.node.active = !0;
+"percentr" == this.node.name && a.error(t);
+this.tweener && this.tweener.stop();
+if (0 == t) {
 this.tempValue = {
-value: t
+value: 0
 };
 this.setView();
+} else {
+this.node.active = !0;
+t > 1 && (t = 1);
+this.tweener = cc.tween(this.tempValue).to(.5, {
+value: t
+}, {
+onUpdate: this.setView.bind(this)
+}).start();
+}
 };
 e.prototype.setView = function() {
 if (this.tempValue) {
 var t = this.tempValue.value / 1;
 this.curValue = t;
 var e = this.totalLength * t;
-this.progressMask && this.progressMask.setContentSize(e, 65);
+if (this.progressMask) {
+this.progressMask.setContentSize(e, 65);
+"percentr" == this.node.name && a.error("xxxxxxxxxxxxx" + e);
+}
 this.labelValue && (this.labelValue.string = Math.ceil(100 * t) + "%");
 }
 };
 e.prototype.onDestroy = function() {
 this.tweener && this.tweener.stop();
 };
-r([ c ], e.prototype, "totalLength", void 0);
-r([ c(cc.Node) ], e.prototype, "progressMask", void 0);
-r([ c(cc.Label) ], e.prototype, "labelValue", void 0);
-return r([ s ], e);
+r([ l ], e.prototype, "totalLength", void 0);
+r([ l(cc.Node) ], e.prototype, "progressMask", void 0);
+r([ l(cc.Label) ], e.prototype, "labelValue", void 0);
+return r([ c ], e);
 }(cc.Component);
-o.default = l;
+o.default = p;
 cc._RF.pop();
-}, {} ],
+}, {
+console: 8
+} ],
 ZRollAction: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "d4c54KvmCNENKQscCCULmZ1", "ZRollAction");
@@ -58694,7 +61444,7 @@ e.prototype.setExtraFunction = function(t) {
 for (var e = 0; e < this.elementIns.length; e++) this.elementIns[e].setExtraFunction(t);
 };
 e.prototype.setState = function(t) {
-this.curElement ? this.curElement.show(t) : console.error("没有钙元素" + t);
+this.curElement ? this.curElement.show(t) : Log.e("没有钙元素" + t);
 this.extraState && (a.GlobalEnum.ElementState.Reward == t ? this.rollConfig.rewardExtraEffect && this.extraState.show() : this.extraState.hide());
 };
 e.prototype.setRes = function(t) {
@@ -58958,7 +61708,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/SwitchBtnItem"), s = t("../../../../common/component/UIContainer"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../common/utils/CmmUtils"), u = t("../../../../framework/defines/Enums"), d = t("./activity/vactivityItem"), h = cc._decorator, f = h.ccclass, m = (h.property, 
+var a = t("../../../../common/component/SwitchBtnItem"), s = t("../../../../common/component/UIContainer"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../common/utils/CmmUtils"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/activityList/ActiviryItem"), h = t("./activity/vactivityItem"), f = cc._decorator, m = f.ccclass, _ = (f.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -58989,11 +61739,12 @@ this.node.opacity = 255;
 this.activitylist = cc.find("scroll/view/content", this.node).getComponent(s.default);
 this.contentLayout = cc.find("scroll/view/content", this.node).getComponent(cc.Layout);
 this.back_btn = cc.find("bg/top/backBtn", this.node);
+d.default.sameClick = !0;
 this.refreshByServer();
 this.initEvent();
 this.firstInit = !1;
 } else this.refreshByServer();
-d.default.sameClick = !0;
+h.default.sameClick = !0;
 };
 e.prototype.refreshByServer = function() {
 this.curLanguage = App.zLan.getLanguage();
@@ -59012,7 +61763,7 @@ this.id = t;
 this.initFirst();
 };
 e.prototype.createList = function(t, e) {
-t.getComponent(d.default).show(e.data);
+t.getComponent(h.default).show(e.data);
 };
 e.prototype.createEnd = function() {
 this.updateLayout();
@@ -59027,7 +61778,7 @@ this.clearShouzhi();
 e.prototype.setGuideMaks = function() {
 if (this.id) {
 for (var t = this.activitylist.getNodes(), e = 0; e < t.length; e++) {
-var o = t[e].getComponent(d.default);
+var o = t[e].getComponent(h.default);
 o.id == this.id ? o.shouzhi.active = !0 : o.shouzhi.active = !1;
 }
 this.id = null;
@@ -59036,11 +61787,11 @@ this.id = null;
 e.prototype.clearShouzhi = function() {
 this.id = null;
 var t = this.activitylist.getNodes();
-if (t) for (var e = 0; e < t.length; e++) t[e].getComponent(d.default).shouzhi.active = !1;
+if (t) for (var e = 0; e < t.length; e++) t[e].getComponent(h.default).shouzhi.active = !1;
 };
-return r([ f ], e);
+return r([ m ], e);
 }(a.default));
-o.default = m;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../../../common/component/SwitchBtnItem": "SwitchBtnItem",
@@ -59049,6 +61800,7 @@ cc._RF.pop();
 "../../../../common/net/CommonSender": "CommonSender",
 "../../../../common/utils/CmmUtils": "CmmUtils",
 "../../../../framework/defines/Enums": "Enums",
+"../../../../login/activityList/ActiviryItem": "ActiviryItem",
 "./activity/vactivityItem": "vactivityItem"
 } ],
 activity_reward_event: [ function(t, e, o) {
@@ -59248,18 +62000,266 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/SwitchBtnItem"), s = cc._decorator, c = s.ccclass, l = (s.property, 
-function(t) {
+var a = t("../../../../common/component/SwitchBtnItem"), s = t("../../../../common/component/SwitchBtns"), c = t("../../../../common/component/UIContainer"), l = t("../../../../common/config/GlobalVar"), p = t("../../../../common/config/User"), u = t("../../../../common/event/CommonEvent"), d = t("../../../../common/net/CommonSender"), h = t("../../../../common/utils/CmmUtils"), f = t("../../../../framework/defines/Decorators"), m = t("../../../../framework/defines/Enums"), _ = t("../../../../framework/defines/Macros"), g = t("../../../../login/GGL/Mask_GGL"), y = t("../../../../login/other/BundleLoading"), v = t("../../../../login/view/CommonUIHelper"), b = t("../../../../sdk/SdkManager"), C = t("../other/VShareWithdrawRecordItem"), w = t("./agent/agentPage3_Rank"), S = cc._decorator, E = S.ccclass, R = S.property, O = function(t) {
 i(e, t);
 function e() {
-return null !== t && t.apply(this, arguments) || this;
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_GGLStyle = null;
+e.label_Time = null;
+e.maskGgl = null;
+e.inviteBtn = null;
+e.inviteBtnScale = null;
+e.label_Money = null;
+e.richText_needTip = null;
+e.richText_rule = null;
+e.node_parent_List = null;
+e.node_prefab_withdraw = null;
+e.node_LevelStyle = null;
+e.inviteBtn2 = null;
+e.inviteLabel = null;
+e.inviteeLabel = null;
+e.tips0 = null;
+e.levelInfo = null;
+e.node_RankStyle = null;
+e.node_RankStyle_code = null;
+e.flyBtn = null;
+e.switchBtns = null;
+e.loading = null;
+e.backBtn = null;
+e.lv11Percent = null;
+e.lvPercents = null;
+e.openDefaultPage = 0;
+e.tweenScale_btn = null;
+e.sender = App.senderManager.get(d.default);
+e.firstInit = !0;
+e.firstType0 = !0;
+e.firstType1 = !0;
+e.my_TimeOut = null;
+e.timeDown = 0;
+return e;
 }
-return r([ c ], e);
-}(a.default));
-o.default = l;
+e.prototype.initFirst = function() {
+if (this.firstInit) {
+this.node.opacity = 255;
+this.initNode();
+this.initUIEvent();
+this.enterRefresh();
+this.firstInit = !1;
+}
+};
+e.prototype.initNode = function() {
+this.lvPercents = this.levelInfo.getComponentsInChildren(cc.Label);
+this.lv11Percent = this.levelInfo.getComponentInChildren(cc.RichText);
+this.backBtn = cc.find("bg/top/backBtn", this.node);
+this.switchBtns = cc.find("bg/top/btns", this.node).getComponent(s.default);
+};
+e.prototype.enterRefresh = function() {
+this.args = {};
+l.GlobalVar.agentRank || this.switchBtns.hide(2);
+this.switchBtns.init(0, this.initShowStyle.bind(this), null, this.enterFunCB.bind(this));
+};
+e.prototype.initUIEvent = function() {
+var t = this;
+this.onN(this.inviteBtn, m.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+t.gotoAgent();
+});
+this.onN(this.backBtn, m.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+dispatch(u.CommonEvent.ChangeMainPage, 0);
+});
+this.onN(this.inviteBtn2, m.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+t.gotoAgent();
+});
+this.onN(this.flyBtn, m.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+t.gotFeiji();
+});
+this.onD(u.CommonEvent.Time_Second, this.refreshTimeDown);
+};
+e.prototype.enterFunCB = function(t) {
+if (0 != t) {
+if (p.default.self.isLoginFinish) return !0;
+v.default.showBindMobileBeforeFirstRechager();
+return !1;
+}
+return !0;
+};
+e.prototype.initShowStyle = function(t) {
+var e = this;
+Log.e(" selectIndex = " + t);
+if (1 == t) {
+this.node_GGLStyle.active = !1;
+this.node_RankStyle.active = !1;
+if (this.firstType1) {
+this.reqAgent(function() {
+e.node_LevelStyle.active = !0;
+});
+this.firstType1 = !1;
+} else this.node_LevelStyle.active = !0;
+this.openDefaultPage = 0;
+} else if (0 == t) {
+this.node_LevelStyle.active = !1;
+this.node_RankStyle.active = !1;
+if (this.firstType0) {
+this.reqPddAct(function() {
+e.node_GGLStyle.active = !0;
+});
+this.firstType0 = !1;
+} else this.node_GGLStyle.active = !0;
+this.openDefaultPage = 4;
+} else {
+this.node_GGLStyle.active = !1;
+this.node_LevelStyle.active = !1;
+this.node_RankStyle.active = !0;
+this.node_RankStyle_code.show(function() {});
+}
+};
+e.prototype.gotFeiji = function() {
+b.default.openUrl(l.GlobalVar.share_shareTele);
+};
+e.prototype.gotoAgent = function() {
+var t = this;
+if (p.default.self.isLoginFinish) {
+var e = function() {
+t.args.openDefaultPage = t.openDefaultPage;
+t.loading.startLoading(t.args);
+dispatch(u.ComponentGameEvent.EnterOtherBundleBefore);
+App.entryManager.enterBundle(_.Macro.BUNDLE_invite, t.args);
+};
+if (this.firstType1) {
+this.reqAgent(e);
+this.firstType1 = !1;
+} else e();
+} else v.default.showBindMobileBeforeFirstRechager();
+};
+e.prototype.refresh = function() {
+this.initFirst();
+};
+e.prototype.updatePanel = function(t) {
+this.args = t;
+this.callBack_ShareGiftInit(this.args);
+if (this.args.posterInfo) {
+this.tips0.string = App.zLan.getString(10283, String.format("<color=#FEA680>{0}</c>", App.zLan.getString(10243)));
+for (var e = 0; e < this.lvPercents.length; e++) p.default.self.isBozhu ? this.lvPercents[e].string = "" : this.lvPercents[e].string = 1 == e || 4 == e || 8 == e || 9 == e ? App.zLan.getString(10288, this.args.posterInfo[e]) : this.args.posterInfo[e];
+this.lv11Percent.string = App.zLan.getString(10283, String.format("<color=#FEA680>{0}</c>", this.args.posterInfo[10]));
+}
+};
+e.prototype.callBack_ShareGiftInit = function(t) {
+Log.e(JSON.stringify(t));
+l.GlobalVar.share_shareTele = t.groupUrl;
+if (p.default.self.isBozhu) {
+this.inviteLabel.string = "";
+this.inviteeLabel.string = "";
+} else {
+this.inviteLabel.string = App.zLan.getString(10289, l.GlobalVar.money_symbol + h.CmmUtils.NumberToHallString(t.basicReward));
+this.inviteeLabel.string = l.GlobalVar.money_symbol + h.CmmUtils.NumberToHallString(t.invitedReward);
+}
+};
+e.prototype.reqPddAct = function(t) {
+var e = this;
+this.sender.Send_ShareGiftPDDInit(function(o) {
+e.updateShareInfo(o, t);
+});
+};
+e.prototype.updateShareInfo = function(t, e) {
+var o = this;
+this.maskGgl.node.opacity = 255;
+this.label_Money.string = h.CmmUtils.NumberForceAddCurrencyString(h.CmmUtils.saveDecimal(3, t.data.amount.toString(), !1));
+var n = App.zLan.getString(1159);
+this.richText_needTip.string = String.format(n, "<color=#ECC44C>" + h.CmmUtils.NumberForceAddCurrencyString(h.CmmUtils.saveDecimal(3, t.data.diff.toString(), !1)) + "</c>");
+var i = App.zLan.getString(1160);
+this.richText_rule.string = String.format(i, "<color=#ECC44C>" + l.GlobalVar.money_symbol + h.CmmUtils.NumberToHallString(t.data.target) + "</c>");
+this.timeDown = t.data.leftTime;
+this.refreshTimeDown();
+this.node_parent_List.initData(t.data.records, this.createRecordItem.bind(this), function() {
+dispatch(u.ComponentGameEvent.UpdateLayoutUpdate);
+}, !0);
+var r = !0;
+0 != t.data.status && (r = !1);
+this.inviteBtn.getComponent(cc.Button).interactable = !r;
+if (r) {
+this.tweenScale_btn && this.tweenScale_btn.stop();
+this.inviteBtnScale.scale = 1;
+} else this.PlayAnimation_InviteBtn();
+this.maskGgl.Init(r, function(t) {
+if (t) {
+o.inviteBtn.getComponent(cc.Button).interactable = !0;
+o.PlayAnimation_InviteBtn();
+o.sender.Send_ShareGiftPDDGet(function(t) {
+Log.e("**********>>>>" + t);
+}, 0);
+}
+});
+e && e();
+};
+e.prototype.createRecordItem = function(t, e) {
+t.getComponent(C.default).show(e.data);
+};
+e.prototype.reqAgent = function(t) {
+var e = this;
+App.senderManager.get(d.default).Send_ShareGiftInit(function(o) {
+var n = o.data;
+e.updatePanel(n);
+t && t();
+});
+};
+e.prototype.PlayAnimation_InviteBtn = function() {
+this.tweenScale_btn && this.tweenScale_btn.stop();
+this.inviteBtnScale.scale = 1;
+this.tweenScale_btn = cc.tween(this.inviteBtnScale).to(.5, {
+scale: 1.15
+}).to(.5, {
+scale: 1
+}).union().repeatForever().start();
+};
+e.prototype.refreshTimeDown = function() {
+this.label_Time.string = h.CmmUtils.fromdate_00Hour(this.timeDown);
+this.timeDown--;
+};
+r([ f.inject("scroll/view/content/Page2_Share", cc.Node) ], e.prototype, "node_GGLStyle", void 0);
+r([ f.inject("scroll/view/content/Page2_Share/top/GglArea/layout/LabelTime", cc.Label) ], e.prototype, "label_Time", void 0);
+r([ f.inject("scroll/view/content/Page2_Share/top/GglArea", g.default) ], e.prototype, "maskGgl", void 0);
+r([ f.inject("scroll/view/content/Page2_Share/top/GglArea/inviteBtn", cc.Node) ], e.prototype, "inviteBtn", void 0);
+r([ f.inject("scroll/view/content/Page2_Share/top/GglArea/inviteBtn/inviteScale", cc.Node) ], e.prototype, "inviteBtnScale", void 0);
+r([ R(cc.Label) ], e.prototype, "label_Money", void 0);
+r([ f.inject("scroll/view/content/Page2_Share/top/GglArea/RichText_tip", cc.RichText) ], e.prototype, "richText_needTip", void 0);
+r([ f.inject("scroll/view/content/Page2_Share/bottom/RichText", cc.RichText) ], e.prototype, "richText_rule", void 0);
+r([ f.inject("scroll/view/content/Page2_Share/Record/ListParent", c.default) ], e.prototype, "node_parent_List", void 0);
+r([ f.inject("scroll/view/content/Page2_Share/Record/prefab/withdrawRecordItem", cc.Node) ], e.prototype, "node_prefab_withdraw", void 0);
+r([ f.inject("scroll/view/content/Page1_Agent", cc.Node) ], e.prototype, "node_LevelStyle", void 0);
+r([ f.inject("scroll/view/content/Page1_Agent/main/inviteBtn", cc.Node) ], e.prototype, "inviteBtn2", void 0);
+r([ f.inject("scroll/view/content/Page1_Agent/main/info/inviteLabel/layout/inviteLabel", cc.Label) ], e.prototype, "inviteLabel", void 0);
+r([ f.inject("scroll/view/content/Page1_Agent/main/info/invitee/layout/inviteeLabel", cc.Label) ], e.prototype, "inviteeLabel", void 0);
+r([ f.inject("scroll/view/content/Page1_Agent/main/fenji/des/tips0", cc.RichText) ], e.prototype, "tips0", void 0);
+r([ f.inject("scroll/view/content/Page1_Agent/main/fenji/levelInfo", cc.Node) ], e.prototype, "levelInfo", void 0);
+r([ f.inject("scroll/view/content/Page3_Rank", cc.Node) ], e.prototype, "node_RankStyle", void 0);
+r([ f.inject("scroll/view/content/Page3_Rank", w.default) ], e.prototype, "node_RankStyle_code", void 0);
+r([ f.inject("scroll/view/content/Page3_Rank/rank/bg/Total", cc.Label), f.inject("scroll/view/content/Page1_Agent/OtherBtn/flyBtn", cc.Node) ], e.prototype, "flyBtn", void 0);
+r([ R(y.default) ], e.prototype, "loading", void 0);
+return r([ E ], e);
+}(a.default);
+o.default = O;
 cc._RF.pop();
 }, {
-"../../../../common/component/SwitchBtnItem": "SwitchBtnItem"
+"../../../../common/component/SwitchBtnItem": "SwitchBtnItem",
+"../../../../common/component/SwitchBtns": "SwitchBtns",
+"../../../../common/component/UIContainer": "UIContainer",
+"../../../../common/config/GlobalVar": "GlobalVar",
+"../../../../common/config/User": "User",
+"../../../../common/event/CommonEvent": "CommonEvent",
+"../../../../common/net/CommonSender": "CommonSender",
+"../../../../common/utils/CmmUtils": "CmmUtils",
+"../../../../framework/defines/Decorators": "Decorators",
+"../../../../framework/defines/Enums": "Enums",
+"../../../../framework/defines/Macros": "Macros",
+"../../../../login/GGL/Mask_GGL": "Mask_GGL",
+"../../../../login/other/BundleLoading": "BundleLoading",
+"../../../../login/view/CommonUIHelper": "CommonUIHelper",
+"../../../../sdk/SdkManager": "SdkManager",
+"../other/VShareWithdrawRecordItem": "VShareWithdrawRecordItem",
+"./agent/agentPage3_Rank": "agentPage3_Rank"
 } ],
 agentPage3_Rank: [ function(t, e, o) {
 "use strict";
@@ -59538,7 +62538,7 @@ this.onN(this.rewardBtn.node, h.NodeEvent.click, this.getRankReward.bind(this));
 e.prototype.getRankReward = function() {
 var t = this;
 App.senderManager.get(c.default).Send_getRankingReward(function(e) {
-console.error(e.data);
+Log.e(e.data);
 p.CmmUtils.popTips(App.zLan.getString(20148) + "：" + p.CmmUtils.NumberToHallString(e.data.balance));
 t.updateBtn(e.data);
 dispatch(s.Hall_Event.update_last_week_state);
@@ -63573,7 +66573,7 @@ o.issendend = !1;
 (o.triggerTime > this.curLevelTime || o.triggerTime <= this.curLevelTime && this.curLevelTime < o.endtime - 5) && this.fishEventMap.set(t, o);
 }
 }
-console.error(this.fishEventMap);
+Log.e(this.fishEventMap);
 };
 t.prototype.updateTriggerFishEvent = function() {
 var t = this;
@@ -64595,7 +67595,7 @@ this.tips = cc.find("tips", this.pnode).getComponent(cc.Label);
 var n = e.gameIcons, i = e.loadingUrl;
 if (n && n.length > 0) {
 var r = App.zLan.string_format_args(i, e.gtype, e.gameId, App.zLan.getLanguage(), n[0]);
-App.asset.remote.loadImage_fixed(r, !0, 0).then(function(t) {
+App.asset.remote.loadImage_fixed(r, !0, 0, e.gameAlias).then(function(t) {
 null != t && (o.remoteSprite.spriteFrame = t.sprite);
 o.startStep();
 });
@@ -66293,7 +69293,7 @@ e.prototype.initData = function() {};
 e.prototype.initUIEvent = function() {};
 e.prototype.refresh = function() {
 var t = this;
-console.error(this.args);
+Log.e(this.args);
 App.SingleGame ? this.base_loading.showLoading(this.args) : this.scheduleOnce(function() {
 t.base_loading.showLoading(t.args);
 }, 2);
@@ -66708,6 +69708,9 @@ this.list = e.values;
 this.continer.initData(this.list, this.createItem.bind(this));
 this.bankList.setParent(this.parent);
 };
+e.prototype.LeaveBankStyle = function() {
+this.setBankFalse();
+};
 e.prototype.addEvents = function() {
 var t = this;
 this.onN(this.bankMask, l.NodeEvent.click, function() {
@@ -66893,8 +69896,8 @@ this.curGameData = e;
 this.curCount = 0;
 for (var n = e.gameIcons, i = e.loadingUrl, r = 0; r < n.length; r++) {
 var a = App.zLan.string_format_args(i, e.gtype, e.gameId, App.zLan.getLanguage(), n[r]);
-console.error(a);
-App.asset.remote.loadImage_fixed(a, !0, r).then(function(t) {
+Log.e(a);
+App.asset.remote.loadImage_fixed(a, !0, r, e.gameAlias).then(function(t) {
 o.remoteSprite[t.compare].spriteFrame = t.sprite;
 o.curCount++;
 o.curCount == n.length && o.startStep();
@@ -67127,7 +70130,7 @@ t.Button_close.active = !0;
 e.prototype.start = function() {
 var t = this;
 this.minLoading.active = !0;
-console.error(a.GlobalVar.singleGameRule);
+Log.e(a.GlobalVar.singleGameRule);
 var e = "object" == typeof a.GlobalVar.singleGameRule;
 this.ruleSprites = [];
 this.layout.node.destroyAllChildren();
@@ -67596,7 +70599,7 @@ this.list && this.list.length > 0 ? this.phoneListContiner.initData(this.list, t
 };
 e.prototype.createItemFun = function(t, e) {
 var o = this;
-console.error(e);
+Log.e(e);
 var n = cc.find("hor/icon", t).getComponent(cc.Sprite), i = cc.find("fgx", t), r = cc.find("hor/quhao", t).getComponent(cc.Label), a = cc.find("hor/phone", t).getComponent(cc.Label), s = e.data[1].country, l = e.data[0], p = c.GlobalVar.getPhoneInfoByCountry(s);
 p && (r.string = "+" + p.no);
 0 == e.index && (i.active = !1);
@@ -69697,4 +72700,4 @@ return n([ r ], t);
 o.default = a;
 cc._RF.pop();
 }, {} ]
-}, {}, [ "Application", "MainController", "HotVersion", "aesres", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "CameraShake", "CatmullRomCurve", "FishEvent", "PathManager", "UtilsBezier", "bulletFactory", "fishCollision", "fishCollisionMgr", "dyfishCommon", "fishBaseBullet", "fishBaseEffect", "fishChnageLevelAnim", "fishCommon", "fishCommonEvent", "fishFactory", "fishLoopAnim", "fishSpine", "fishTouchManager", "fishUV", "fishCommonCoin", "fishCommonCoin2", "FishTopBannerView", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "LoginEntry", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "CarouselAwardLineMgr", "LineModel_Base", "AutoService_Base1_Pg", "BetOptions_Base_Pg", "HoverBtnBg_Pg", "MaskSize_Pg", "PayTableService_Pg", "RuleTCService_Pg", "ScrollViewMovePos_Pg", "TopManager_Pg", "SlotsNewView", "TestA", "TipElementRate", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "free_enter_view", "other_win_view", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "SlotsFrameEvent", "FitWithPosition", "FitWithScalue", "BalanceService_Slots", "SlotsBet", "SlotsBetItem", "SlotsBetList", "SlotsMaxBetEffect", "SlotsSpin", "SlotsSpinState", "SlotsJackpot", "SlotsJackpotMgr", "SlotsSingleJackpot", "SlotsOperate", "TObjPoolService_Slots", "TPoolModelForComponet", "SlotsRewardMgr", "base_reward", "slots_base_reward", "slots_reward1", "slots_reward2", "slots_reward3", "slots_reward5", "TFenbianlv", "IntervalTime_Slots", "TGoldJumpModel_Slots", "TGoldJumpService_Slots", "TJP_Unlock_Slots", "TJackpotRunService_Slots", "TLightAnimation_Slots", "SlotsGameRoomView", "TopBannerView", "BarrageNode", "BetBaseController", "BetChipModel", "BetChipModel_Move", "CardHelp", "CardModel_Poke", "ChatView", "EmojiArea", "GameRoomView", "MenuController", "MenuPController", "OnlineView", "PoolModelForComponent_Table", "TableGameRoom_H", "TableGameRoom_V", "TimeDown_Bet", "WaitForNextGameService", "bet_action", "bet_area", "bet_area_new", "bet_my_seat", "bet_seat", "bet_seat_list", "blinkblink", "chat_item", "emoji", "CountDownLabel", "UpDownLabel", "BasePlayer", "BaseRobot", "Robot", "RobotEvent", "TableRobot", "tableCountTime", "CardModel_Tp", "EndShowAllPlayers", "SideShowOtherPlayers", "SideShowPlayers", "TeenGameController", "TeenPlayer", "WaitPlayer_Tp", "movie_clip", "TeenPattiCmd_Base", "TeenPattiEvent", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
+}, {}, [ "Application", "MainController", "QRcodeUi", "HotVersion", "aesres", "BLightAnimationManager_Bingo", "BingoDictoryTable", "BingoView", "AutoService_Base_Bingo", "BingoAutoSpinMenuService", "BingoBetService", "BingoButtonsService", "BingoOperate", "BingoPlayGameBtnService", "BingoWinService", "BingoGameController", "BingoDataUtil", "TopService_Bingo", "PoolModelForComponet_Bingo", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "CameraShake", "CatmullRomCurve", "FishEvent", "PathManager", "UtilsBezier", "bulletFactory", "fishCollision", "fishCollisionMgr", "dyfishCommon", "fishBaseBullet", "fishBaseEffect", "fishChnageLevelAnim", "fishCommon", "fishCommonEvent", "fishFactory", "fishLoopAnim", "fishSpine", "fishTouchManager", "fishUV", "fishCommonCoin", "fishCommonCoin2", "FishTopBannerView", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "Mask_GGL", "WithdrawRecordItem", "WithdrawRecordList", "LoginEntry", "ActiviryItem", "ActivityScrollList", "EmailItem", "EmailScrollList", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "NoticeItem", "NoticeScrollList", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "CarouselAwardLineMgr", "LineModel_Base", "AutoService_Base1_Pg", "BetOptions_Base_Pg", "HoverBtnBg_Pg", "MaskSize_Pg", "PayTableService_Pg", "RuleTCService_Pg", "ScrollViewMovePos_Pg", "TopManager_Pg", "SlotsNewView", "TestA", "TipElementRate", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "free_enter_view", "other_win_view", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "SlotsFrameEvent", "FitWithPosition", "FitWithScalue", "BalanceService_Slots", "SlotsBet", "SlotsBetItem", "SlotsBetList", "SlotsMaxBetEffect", "SlotsSpin", "SlotsSpinState", "SlotsJackpot", "SlotsJackpotMgr", "SlotsSingleJackpot", "SlotsOperate", "TObjPoolService_Slots", "TPoolModelForComponet", "SlotsRewardMgr", "base_reward", "slots_base_reward", "slots_reward1", "slots_reward2", "slots_reward3", "slots_reward5", "TFenbianlv", "IntervalTime_Slots", "TGoldJumpModel_Slots", "TGoldJumpService_Slots", "TJP_Unlock_Slots", "TJackpotRunService_Slots", "TLightAnimation_Slots", "SlotsGameRoomView", "TopBannerView", "BarrageNode", "BetBaseController", "BetChipModel", "BetChipModel_Move", "CardHelp", "CardModel_Poke", "ChatView", "EmojiArea", "GameRoomView", "MenuController", "MenuPController", "OnlineView", "PoolModelForComponent_Table", "TableGameRoom_H", "TableGameRoom_V", "TimeDown_Bet", "WaitForNextGameService", "bet_action", "bet_area", "bet_area_new", "bet_my_seat", "bet_seat", "bet_seat_list", "blinkblink", "chat_item", "emoji", "CountDownLabel", "UpDownLabel", "BasePlayer", "BaseRobot", "Robot", "RobotEvent", "TableRobot", "tableCountTime", "CardModel_Tp", "EndShowAllPlayers", "SideShowOtherPlayers", "SideShowPlayers", "TeenGameController", "TeenPlayer", "WaitPlayer_Tp", "movie_clip", "TeenPattiCmd_Base", "TeenPattiEvent", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
