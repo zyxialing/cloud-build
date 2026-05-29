@@ -1,0 +1,174 @@
+
+kuang_luiguang_lan.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+kuang_lan_00000
+  rotate: true
+  xy: 553, 24
+  size: 152, 179
+  orig: 173, 202
+  offset: 12, 12
+  index: -1
+kuang_lan_00001
+  rotate: false
+  xy: 769, 181
+  size: 150, 180
+  orig: 173, 202
+  offset: 15, 11
+  index: -1
+kuang_lan_00002
+  rotate: false
+  xy: 463, 178
+  size: 152, 180
+  orig: 173, 202
+  offset: 13, 12
+  index: -1
+kuang_lan_00003
+  rotate: true
+  xy: 158, 359
+  size: 153, 180
+  orig: 173, 202
+  offset: 12, 12
+  index: -1
+kuang_lan_00004
+  rotate: false
+  xy: 0, 149
+  size: 152, 182
+  orig: 173, 202
+  offset: 12, 13
+  index: -1
+kuang_lan_00005
+  rotate: true
+  xy: 734, 27
+  size: 151, 179
+  orig: 173, 202
+  offset: 12, 13
+  index: -1
+kuang_lan_00007
+  rotate: false
+  xy: 0, 333
+  size: 156, 179
+  orig: 173, 202
+  offset: 12, 12
+  index: -1
+kuang_lan_00008
+  rotate: false
+  xy: 308, 177
+  size: 153, 180
+  orig: 173, 202
+  offset: 11, 11
+  index: -1
+kuang_lan_00011
+  rotate: true
+  xy: 1074, 367
+  size: 145, 184
+  orig: 173, 202
+  offset: 16, 8
+  index: -1
+kuang_lan_00012
+  rotate: true
+  xy: 0, 0
+  size: 147, 184
+  orig: 173, 202
+  offset: 15, 10
+  index: -1
+kuang_lan_00013
+  rotate: false
+  xy: 1223, 183
+  size: 146, 182
+  orig: 173, 202
+  offset: 15, 12
+  index: -1
+kuang_lan_00014
+  rotate: true
+  xy: 186, 0
+  size: 147, 183
+  orig: 173, 202
+  offset: 15, 11
+  index: -1
+kuang_lan_00015
+  rotate: true
+  xy: 708, 363
+  size: 149, 181
+  orig: 173, 202
+  offset: 15, 10
+  index: -1
+kuang_lan_00016
+  rotate: false
+  xy: 1098, 2
+  size: 151, 177
+  orig: 173, 202
+  offset: 12, 12
+  index: -1
+kuang_lan_00017
+  rotate: true
+  xy: 891, 363
+  size: 149, 181
+  orig: 173, 202
+  offset: 14, 7
+  index: -1
+kuang_lan_00018
+  rotate: true
+  xy: 915, 30
+  size: 149, 181
+  orig: 173, 202
+  offset: 14, 7
+  index: -1
+kuang_lan_00019
+  rotate: true
+  xy: 523, 363
+  size: 149, 183
+  orig: 173, 202
+  offset: 14, 7
+  index: -1
+kuang_lan_00020
+  rotate: false
+  xy: 1251, 2
+  size: 148, 179
+  orig: 173, 202
+  offset: 14, 10
+  index: -1
+kuang_lan_00021
+  rotate: false
+  xy: 921, 181
+  size: 149, 180
+  orig: 173, 202
+  offset: 14, 7
+  index: -1
+kuang_lan_00022
+  rotate: false
+  xy: 1072, 181
+  size: 149, 180
+  orig: 173, 202
+  offset: 14, 7
+  index: -1
+kuang_lan_00023
+  rotate: false
+  xy: 154, 149
+  size: 152, 182
+  orig: 173, 202
+  offset: 12, 6
+  index: -1
+kuang_lan_00024
+  rotate: false
+  xy: 617, 180
+  size: 150, 181
+  orig: 173, 202
+  offset: 14, 7
+  index: -1
+kuang_lan_00027
+  rotate: true
+  xy: 340, 360
+  size: 152, 181
+  orig: 173, 202
+  offset: 11, 9
+  index: -1
+kuang_lan_00028
+  rotate: true
+  xy: 371, 23
+  size: 152, 180
+  orig: 173, 202
+  offset: 11, 9
+  index: -1

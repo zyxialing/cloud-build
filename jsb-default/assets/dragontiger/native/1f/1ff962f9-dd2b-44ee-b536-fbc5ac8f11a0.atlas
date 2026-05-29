@@ -1,0 +1,76 @@
+
+lhd_bg.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 1
+  rotate: false
+  xy: 254, 36
+  size: 63, 92
+  orig: 63, 92
+  offset: 0, 0
+  index: -1
+Layer 2
+  rotate: true
+  xy: 335, 48
+  size: 62, 102
+  orig: 62, 102
+  offset: 0, 0
+  index: -1
+P1
+  rotate: true
+  xy: 254, 130
+  size: 163, 95
+  orig: 163, 95
+  offset: 0, 0
+  index: -1
+P3
+  rotate: false
+  xy: 439, 50
+  size: 248, 60
+  orig: 248, 60
+  offset: 0, 0
+  index: -1
+S1
+  rotate: false
+  xy: 352, 376
+  size: 267, 267
+  orig: 267, 267
+  offset: 0, 0
+  index: -1
+S2
+  rotate: false
+  xy: 0, 295
+  size: 350, 348
+  orig: 350, 348
+  offset: 0, 0
+  index: -1
+ZI
+  rotate: true
+  xy: 352, 112
+  size: 262, 257
+  orig: 262, 258
+  offset: 0, 1
+  index: -1
+denglong
+  rotate: false
+  xy: 319, 100
+  size: 14, 28
+  orig: 14, 28
+  offset: 0, 0
+  index: -1
+dongluo
+  rotate: false
+  xy: 611, 340
+  size: 42, 34
+  orig: 42, 34
+  offset: 0, 0
+  index: -1
+guang
+  rotate: true
+  xy: 0, 0
+  size: 293, 252
+  orig: 293, 260
+  offset: 0, 8
+  index: -1
