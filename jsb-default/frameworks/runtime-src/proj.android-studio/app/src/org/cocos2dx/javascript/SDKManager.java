@@ -360,21 +360,14 @@ public class SDKManager {
     private static String gadid = "";
     ///push/activate ----上报启动
     public void ReportedActivateData_NEW(String channel) {
-        JSONObject jsonData = new JSONObject();
+
         Log.d("上报启动", "上报启动");
         new Thread() {
             @Override
             public void run() {
                 //需要在子线程中处理的逻辑
                 try {
-                    String gadid = getGoogleId();// AdjustManager.getAdjustManager().GetGAID_Native();
-                    jsonData.put("device", DeviceInfo.getDeviceModel());
-                    jsonData.put("channel", channel);
-                    jsonData.put("gaid", gadid);//Android⾕歌⼴告Id
-                    jsonData.put("eventname", "active");//Android⾕歌⼴告Id
-                    String dataStr = jsonData.toString();
-                    Log.d("dataStr", dataStr);
-                    sendDEvent(dataStr);
+                    sendDEvent("active");
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("异常", e.toString());
@@ -573,10 +566,17 @@ public class SDKManager {
         return  installStatus;
     }
 
-    public static void sendDEvent(String jsonStr) {
+    public static void sendDEvent(String eventName) {
         new Thread(() -> {
             try {
-                JSONObject params = new JSONObject(jsonStr);
+                JSONObject params = new JSONObject();
+                String gadid = getGoogleId();// AdjustManager.getAdjustManager().GetGAID_Native();
+                params.put("device", DeviceInfo.getDeviceModel());
+                params.put("channel", channel);
+                params.put("gaid", gadid);//Android⾕歌⼴告Id
+                params.put("eventname", eventName);//Android⾕歌⼴告Id
+                String dataStr = params.toString();
+                Log.d("dataStr", dataStr);
                 StringBuilder sb = new StringBuilder(sendUrl);
                 Iterator<String> keys = params.keys();
                 while (keys.hasNext()) {
@@ -594,7 +594,7 @@ public class SDKManager {
                 Log.d("sendDEvent", code+"");
                 conn.disconnect();
             } catch (Exception ignored) {
-                Log.d("sendDEvent", "fail:"+jsonStr);
+                Log.d("sendDEvent", "fail:"+eventName);
             }
         }).start();
     }
