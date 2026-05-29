@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="hotfiregame">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-05-29T11:32:04.902368900Z">
+        <DropdownSelection timestamp="2026-05-29T12:53:59.003085900Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=R9AQC695333" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=d1a9b17" />
             </handle>
           </Target>
         </DropdownSelection>
