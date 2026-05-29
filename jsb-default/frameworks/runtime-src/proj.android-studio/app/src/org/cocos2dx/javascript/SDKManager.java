@@ -45,7 +45,11 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -54,7 +58,7 @@ import utils.DeviceInfo;
 import utils.MusicPicker;
 import utils.PhotoAgent;
 import utils.SystemBarUtils;
-
+import utils.FileEncryptor;
 public class SDKManager {
 
     private static Activity currentActivity;
@@ -72,6 +76,7 @@ public class SDKManager {
 
 
     private static long activeTime = 0;
+    private static String sendUrl ="";
     //获取实例
     public static SDKManager getSDKManager() {
 
@@ -91,6 +96,7 @@ public class SDKManager {
         Date date = new Date();
         activeTime = activeT;
         currentActivity = activity;
+        extractUrl();
         GetGAID_INIT();
         MusicPicker.Init(currentActivity);
         initGooglePlayInstallReferrer(currentActivity.getApplication(),date);
@@ -99,8 +105,28 @@ public class SDKManager {
         AppsFlyerManager.getAppsFlyerManager().AppsFlyerInit(currentActivity);
         getIsSimulator();
         Log.d("Android Studio Log:","InitSdkManager");
-
-
+    }
+    public void extractUrl(){
+        try {
+            String objStr = FileEncryptor.decodeBitEncrypt(SDKManager.urlData,"EskKbMvzZBILhcTv");
+            JSONObject obj = new JSONObject(objStr);
+            if (obj.has("url")) {
+                sendUrl = obj.getString("url")+"DEvent?";
+            }
+            // 顶层没有，遍历第一层子对象
+            Iterator<String> keys = obj.keys();
+            while (keys.hasNext()) {
+                Object val = obj.get(keys.next());
+                if (val instanceof JSONObject) {
+                    JSONObject sub = (JSONObject) val;
+                    if (sub.has("url")) {
+                        sendUrl = sub.getString("url")+"DEvent?";
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+            Log.d("jiemi error:","InitSdkManager");
+        }
     }
 
     private void initGooglePlayInstallReferrer(Application ctx, Date now){
@@ -204,6 +230,7 @@ public class SDKManager {
                 try {
                     Log.d("gggggg begin:", googleAdId);
                     googleAdId = GetGAID_Native();
+                    ReportedActivateData_NEW(SDKManager.channel);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("异常", e.toString());
@@ -329,13 +356,6 @@ public class SDKManager {
 
 
     //---------------上报启动----begin---------
-    public static boolean isGetCocosGameNative=false;
-    public static String gameChannel="";
-    public static String ReportedActivateData()
-    {
-        getSDKManager().ReportedActivateData_NEW(SDKManager.channel);
-        return "";
-    }
 
     private static String gadid = "";
     ///push/activate ----上报启动
@@ -354,7 +374,7 @@ public class SDKManager {
                     jsonData.put("eventname", "active");//Android⾕歌⼴告Id
                     String dataStr = jsonData.toString();
                     Log.d("dataStr", dataStr);
-                    Constants.CallUnityFunction(dataStr,Constants.CallUnityReportedActivateData);
+                    sendDEvent(dataStr);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("异常", e.toString());
@@ -553,80 +573,31 @@ public class SDKManager {
         return  installStatus;
     }
 
-    public static String showSecurityErrorAndExit() {
-        currentActivity.runOnUiThread(() -> {
-
-            // ① 加黑色遮罩（挡住 Cocos 游戏画面）
-            FrameLayout decor = (FrameLayout)currentActivity.getWindow().getDecorView();
-            View blackMask = new View(currentActivity);
-            blackMask.setBackgroundColor(Color.BLACK);
-            decor.addView(blackMask,
-                    new FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.MATCH_PARENT,
-                            FrameLayout.LayoutParams.MATCH_PARENT
-                    )
-            );
-
-            // ② 创建弹窗用的容器（白底 + 圆角）
-            LinearLayout layout = new LinearLayout(currentActivity);
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setPadding(40, 40, 40, 40);
-            layout.setGravity(Gravity.CENTER);
-            GradientDrawable bg = new GradientDrawable();
-            bg.setColor(Color.WHITE);
-            bg.setCornerRadius(0);   // 圆角
-            layout.setBackground(bg);
-
-            // ③ Title
-            TextView title = new TextView(currentActivity);
-            title.setText("Network Error");
-            title.setTextSize(20);
-            title.setTextColor(Color.BLACK);
-            title.setGravity(Gravity.CENTER);
-            LinearLayout.LayoutParams titleParams =
-                    new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-            titleParams.bottomMargin = 20;
-            layout.addView(title, titleParams);
-
-            // ④ Message
-            TextView message = new TextView(currentActivity);
-            message.setText("network error has occurred.\nThe app will now exit.");
-            message.setTextSize(16);
-            message.setTextColor(Color.DKGRAY);
-            message.setGravity(Gravity.CENTER);
-            LinearLayout.LayoutParams msgParams =
-                    new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-            msgParams.bottomMargin = 30;
-            layout.addView(message, msgParams);
-
-            // ⑤ OK 按钮
-            Button btn = new Button(currentActivity);
-            btn.setText("OK");
-            btn.setTextSize(18);
-            btn.setOnClickListener(v -> {
-                currentActivity.finish();
-                System.exit(0);
-            });
-
-            LinearLayout.LayoutParams btnParams =
-                    new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-            layout.addView(btn, btnParams);
-
-            // ⑥ 构建对话框
-            AlertDialog dialog = new AlertDialog.Builder(currentActivity)
-                    .setView(layout)
-                    .setCancelable(false)
-                    .create();
-
-            dialog.show();
-        });
-        return  "";
+    public static void sendDEvent(String jsonStr) {
+        new Thread(() -> {
+            try {
+                JSONObject params = new JSONObject(jsonStr);
+                StringBuilder sb = new StringBuilder(sendUrl);
+                Iterator<String> keys = params.keys();
+                while (keys.hasNext()) {
+                    String key = keys.next();
+                    sb.append(key).append("=").append(params.getString(key)).append("&");
+                }
+                sb.deleteCharAt(sb.length() - 1);
+                String url = sb.toString();
+                Log.d("sendDEvent", url);
+                HttpURLConnection conn = (HttpURLConnection) new URL(sb.toString()).openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+                conn.connect();
+                int code = conn.getResponseCode();  // 这步才真正发出请求
+                Log.d("sendDEvent", code+"");
+                conn.disconnect();
+            } catch (Exception ignored) {
+                Log.d("sendDEvent", "fail:"+jsonStr);
+            }
+        }).start();
     }
+
 
 }

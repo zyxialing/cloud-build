@@ -1094,7 +1094,6 @@ if (App.IsHtmlGame) {
 T.default.channelID = L.default.getHtmlChannelID();
 T.default.httpId = L.default.getHttpId();
 }
-T.default.ReportedActivateData();
 t.prototype.init.call(this);
 this.updateConfig();
 this.entryManager.delegate = new y.CmmEntry();
@@ -8831,7 +8830,7 @@ var e = {
 action: "DEvent",
 data: t
 };
-this.SendReportHttp(e, p.GlobalEnum.HttpUrlType.Login);
+this.SendPostHttp(e, null, !1, p.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_CheckVer = function(t) {
 var e = {
@@ -21603,38 +21602,6 @@ o = s.default.encrypt(o);
 e.data = o;
 return e;
 };
-e.prototype.SendReportHttp = function(t, e) {
-void 0 === e && (e = g.GlobalEnum.HttpUrlType.Hall);
-var o = "";
-switch (e) {
-case g.GlobalEnum.HttpUrlType.Login:
-o = _.HostInfo.URL_Login_Server;
-break;
-
-case g.GlobalEnum.HttpUrlType.Hall:
-o = _.HostInfo.URL_Hall_Server;
-break;
-
-case g.GlobalEnum.HttpUrlType.Game:
-o = m.GlobalVar.game_http_url;
-break;
-
-case g.GlobalEnum.HttpUrlType.ShareGift:
-o = _.HostInfo.agentUrl;
-break;
-
-case g.GlobalEnum.HttpUrlType.Activity:
-o = _.HostInfo.URL_Activity_Server;
-}
-var n = this.addCommonParam(t), i = JSON.stringify(n);
-console.log("[SendReport] url: " + o);
-console.log("[SendReport] params: " + i);
-var r = new XMLHttpRequest();
-r.open("POST", o, !0);
-r.setRequestHeader("Content-Type", "application/json");
-r.send(i);
-console.log("[SendReport] sent");
-};
 e.prototype.SendPostHttp = function(t, e, o, n, i, r) {
 var a = this;
 void 0 === o && (o = !0);
@@ -31482,12 +31449,6 @@ t = jsb.reflection.callStaticMethod(this.iosName_sdk, "checkVPN:", "");
 Log.d("Js Call Android After: checkVPN = " + t);
 } else cc.sys.isBrowser;
 return t;
-};
-e.ReportedActivateData = function() {
-if (s.default.isAndroid) {
-jsb.reflection.callStaticMethod(this.javaName_sdk, "ReportedActivateData", "()Ljava/lang/String;");
-Log.d("Js Call Android After: ReportedActivateData");
-}
 };
 e.getCountry = function() {
 Log.d("Js Call Android Prev: getCountry");

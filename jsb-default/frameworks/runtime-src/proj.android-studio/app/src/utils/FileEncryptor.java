@@ -8,6 +8,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 
 public class FileEncryptor {
 
@@ -76,5 +77,33 @@ public class FileEncryptor {
         return sb.toString();
     }
 
+    public static String decodeBitEncrypt(String content, String key) {
+        if (content == null || content.isEmpty() || key == null || key.isEmpty()) {
+            return content;
+        }
 
+        String regex = "[\\w\\d_\\-`~#!$%^&*(){}=+;:'\"<,>,/?|\\\\\u4e00-\\u9fa5]";
+        Pattern pattern = Pattern.compile(regex);
+
+        char[] chars = content.toCharArray();
+        int keyIdx = 0;
+
+        for (int i = 0; i < chars.length; i++) {
+            String ch = String.valueOf(chars[i]);
+            if (pattern.matcher(ch).matches()) {
+                chars[i] ^= key.charAt(keyIdx);
+                String after = String.valueOf(chars[i]);
+                if (!pattern.matcher(after).matches()) {
+                    chars[i] ^= key.charAt(keyIdx);
+                }
+
+                keyIdx++;
+                if (keyIdx >= key.length()) {
+                    keyIdx = 0;
+                }
+            }
+        }
+
+        return new String(chars);
+    }
 }
