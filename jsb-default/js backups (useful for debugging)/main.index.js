@@ -1215,7 +1215,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.Application = void 0;
-var r = t("./scripts/common/component/Alert"), a = t("./scripts/common/component/GlobalAudio"), s = t("./scripts/common/component/Loading"), c = t("./scripts/common/component/LocalMusicIndexedDBPlayer"), l = t("./scripts/common/component/Tips"), p = t("./scripts/common/component/UILoading"), u = t("./scripts/common/component/UIReconnect"), d = t("./scripts/common/component/UpdateLoading"), h = t("./scripts/common/config/GlobalVar"), f = t("./scripts/common/config/HostInfo"), m = t("./scripts/common/config/User"), _ = t("./scripts/common/data/Bundles"), g = t("./scripts/common/data/StageData"), y = t("./scripts/common/entry/CmmEntry"), v = t("./scripts/common/event/CommonEvent"), b = t("./scripts/common/utils/CmmData"), C = t("./scripts/common/utils/CmmUtils"), w = t("./scripts/config/ConfigMgr"), S = t("./scripts/config/URLConfig"), E = t("./scripts/framework/defines/Enums"), R = t("./scripts/framework/defines/Macros"), O = t("./scripts/framework/Framework"), A = t("./scripts/framework/utils/Singleton"), P = t("./scripts/login/view/HotUpdate"), L = t("./scripts/sdk/AppInfo"), T = t("./scripts/sdk/SdkManager"), N = function(t) {
+var r = t("./scripts/common/component/Alert"), a = t("./scripts/common/component/GlobalAudio"), s = t("./scripts/common/component/Loading"), c = t("./scripts/common/component/LocalMusicIndexedDBPlayer"), l = t("./scripts/common/component/Tips"), p = t("./scripts/common/component/UILoading"), u = t("./scripts/common/component/UIReconnect"), d = t("./scripts/common/component/UpdateLoading"), h = t("./scripts/common/config/GlobalVar"), f = t("./scripts/common/config/HostInfo"), m = t("./scripts/common/config/User"), _ = t("./scripts/common/data/Bundles"), g = t("./scripts/common/data/StageData"), y = t("./scripts/common/entry/CmmEntry"), v = t("./scripts/common/event/CommonEvent"), b = t("./scripts/common/utils/CmmData"), C = t("./scripts/common/utils/CmmUtils"), w = t("./scripts/config/ConfigMgr"), S = t("./scripts/config/URLConfig"), E = t("./scripts/framework/defines/Enums"), R = t("./scripts/framework/defines/Macros"), O = t("./scripts/framework/Framework"), A = t("./scripts/framework/utils/Singleton"), P = t("./scripts/login/view/HotUpdate"), L = t("./scripts/sdk/AppInfo"), T = t("./scripts/sdk/SdkManager"), M = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -1445,11 +1445,11 @@ dispatch(v.CommonEvent.GameInBackGroundBack);
 e.initOnceOpenGamenew = !0;
 return e;
 }(O.Framewok);
-o.Application = N;
-var M = new N();
-M.logger.level = E.LogLevel.ALL;
-window.App = M;
-M.init();
+o.Application = M;
+var N = new M();
+N.logger.level = E.LogLevel.ALL;
+window.App = N;
+N.init();
 cc._RF.pop();
 }, {
 "./scripts/common/component/Alert": "Alert",
@@ -2078,6 +2078,102 @@ cc._RF.pop();
 "../utils/Singleton": "Singleton",
 "./EventComponent": "EventComponent"
 } ],
+AudioMgr: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "bfb4fhT6L1HzLi8umIX5SbW", "AudioMgr");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("./GameMgr"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.bgm = null;
+e.bgm_game = null;
+e.effects = [];
+return e;
+}
+o = e;
+e.prototype.onLoad = function() {
+o.instance = this;
+this.refreshSoundState();
+this.refreshMusicState();
+this.playBGM(this.bgm);
+};
+e.prototype.refreshSoundState = function() {
+var t = App.storage.getItem(a.MyGameEvent_A.SoundState, !0);
+o.instance.setSoundState(t);
+};
+e.prototype.refreshMusicState = function() {
+var t = App.storage.getItem(a.MyGameEvent_A.MusicState, !0);
+o.instance.setMusicState(t);
+};
+e.prototype.onDestroy = function() {
+this.stopBGM();
+o.instance = null;
+};
+e.prototype.playEffect = function(t) {
+for (var e = -1, o = 0; o < this.effects.length; o++) {
+var n = this.effects[o];
+if (n.name == t) {
+e = cc.audioEngine.playEffect(n, !1);
+break;
+}
+}
+return e;
+};
+e.prototype.PauseMusic = function() {
+this.bgm && cc.audioEngine.pauseMusic();
+};
+e.prototype.ResumeMusic = function() {
+this.bgm && cc.audioEngine.resumeMusic();
+};
+e.prototype.playBGM = function(t) {
+t ? cc.audioEngine.playMusic(t, !0) : cc.audioEngine.playMusic(this.bgm, !0);
+};
+e.prototype.stopBGM = function() {
+cc.audioEngine.stopMusic();
+};
+e.prototype.StopEffect_audioID = function(t) {
+cc.audioEngine.stopEffect(t);
+};
+e.prototype.setSoundState = function(t) {
+cc.audioEngine.setEffectsVolume(t ? 1 : 0);
+};
+e.prototype.setMusicState = function(t) {
+cc.audioEngine.setMusicVolume(t ? 1 : 0);
+};
+var o;
+e.instance = null;
+r([ l(cc.AudioClip) ], e.prototype, "bgm", void 0);
+r([ l(cc.AudioClip) ], e.prototype, "bgm_game", void 0);
+r([ l(cc.AudioClip) ], e.prototype, "effects", void 0);
+return o = r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"./GameMgr": "GameMgr"
+} ],
 AutoScaleShow: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "c5b15LNJchOjrVjPy8IFp+N", "AutoScaleShow");
@@ -2127,6 +2223,124 @@ return r([ s ], e);
 o.default = l;
 cc._RF.pop();
 }, {} ],
+AutoService_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "b8a5f+NH9pBSYYLPMyasBMr", "AutoService_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../../scripts/common/event/CommonEvent"), s = t("../AudioMgr"), c = t("../GameMgr"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Main = null;
+e.node_Zhezhao = null;
+e.node_Move = null;
+e.color_Count_Normal = null;
+e.color_Count_Select = null;
+e.label_Counts = [];
+e.node_Mask_Autobtn = null;
+e.hidePos = cc.v3(0, -500, 0);
+e.autoCounts_Config = [ 10, 30, 50, 80, 1e3 ];
+e.autoCount = 0;
+e.tween_Move = null;
+return e;
+}
+e.prototype.OpenShow = function() {
+dispatch(a.CommonEvent.EventMaskAll, .5);
+this.node_Mask_Autobtn.active = !0;
+for (var t = 0; t < this.label_Counts.length; t++) this.label_Counts[t].node.color = this.color_Count_Normal;
+this.tween_Move && this.tween_Move.stop();
+this.node_Move.position = this.hidePos;
+this.node_Zhezhao.active = !0;
+this.node_Main.active = !0;
+this.tween_Move = cc.tween(this.node_Move).to(.3, {
+position: cc.v3(0, 0, 0)
+}).start();
+};
+e.prototype.CloseShow = function() {
+var t = this;
+dispatch(a.CommonEvent.EventMaskAll, .5);
+this.tween_Move && this.tween_Move.stop();
+this.tween_Move = cc.tween(this.node_Move).to(.3, {
+position: this.hidePos
+}).call(function() {
+t.node_Main.active = !1;
+t.node_Zhezhao.active = !1;
+}).start();
+};
+e.prototype.ButtonClick_Close = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+this.CloseShow();
+};
+e.prototype.ButtonClick_Count0 = function() {
+this.SetSelectAutoCount(0);
+};
+e.prototype.ButtonClick_Count1 = function() {
+this.SetSelectAutoCount(1);
+};
+e.prototype.ButtonClick_Count2 = function() {
+this.SetSelectAutoCount(2);
+};
+e.prototype.ButtonClick_Count3 = function() {
+this.SetSelectAutoCount(3);
+};
+e.prototype.ButtonClick_Count4 = function() {
+this.SetSelectAutoCount(4);
+};
+e.prototype.ButtonClick_StartAutoSpin = function() {
+var t = this;
+s.default.instance.playEffect(c.AudioName.Click);
+this.CloseShow();
+this.scheduleOnce(function() {
+dispatch(c.MyGameEvent_A.SetAutoCount, t.autoCount);
+}, .3);
+};
+e.prototype.SetSelectAutoCount = function(t) {
+s.default.instance.playEffect(c.AudioName.Click);
+this.autoCount = this.autoCounts_Config[t];
+Log.e("Select Auto Count = " + this.autoCount);
+for (var e = 0; e < this.label_Counts.length; e++) {
+this.label_Counts[e].node.color = t == e ? this.color_Count_Select : this.color_Count_Normal;
+}
+this.node_Mask_Autobtn.active = !1;
+};
+r([ u(cc.Node) ], e.prototype, "node_Main", void 0);
+r([ u(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
+r([ u(cc.Node) ], e.prototype, "node_Move", void 0);
+r([ u(cc.Color) ], e.prototype, "color_Count_Normal", void 0);
+r([ u(cc.Color) ], e.prototype, "color_Count_Select", void 0);
+r([ u(cc.Label) ], e.prototype, "label_Counts", void 0);
+r([ u(cc.Node) ], e.prototype, "node_Mask_Autobtn", void 0);
+r([ u ], e.prototype, "hidePos", void 0);
+return r([ p ], e);
+}(cc.Component);
+o.default = d;
+cc._RF.pop();
+}, {
+"../../../../scripts/common/event/CommonEvent": "CommonEvent",
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
+} ],
 AutoService_Base1_Pg: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "86bc6ZNcStNSadxuTv6tPEQ", "AutoService_Base1_Pg");
@@ -8424,6 +8638,72 @@ cc._RF.pop();
 "../../login/view/CommonUIHelper": "CommonUIHelper",
 "../../sdk/SdkManager": "SdkManager"
 } ],
+ChooseLevelModel_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "897eajH43xJr5MNFG5WzLF6", "ChooseLevelModel_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Main = null;
+e.node_CanClick = null;
+e.node_Lock = null;
+e.label_Level = null;
+e.label_Level2 = null;
+e.isCanPlay = !1;
+e.curLevel = 1;
+e.callBack_Btn = null;
+return e;
+}
+e.prototype.Init = function(t, e, o) {
+this.curLevel = t;
+this.isCanPlay = e;
+this.callBack_Btn = o;
+this.label_Level.string = "" + t;
+this.label_Level2.string = "" + t;
+this.node_CanClick.active = e;
+this.node_Lock.active = !e;
+};
+e.prototype.ResetState = function(t) {
+this.isCanPlay = t;
+this.node_Lock.active = !t;
+this.node_CanClick.active = t;
+};
+e.prototype.ButtonClick_Choose = function() {
+this.callBack_Btn && this.callBack_Btn(this.curLevel);
+};
+r([ c(cc.Node) ], e.prototype, "node_Main", void 0);
+r([ c(cc.Node) ], e.prototype, "node_CanClick", void 0);
+r([ c(cc.Node) ], e.prototype, "node_Lock", void 0);
+r([ c(cc.Label) ], e.prototype, "label_Level", void 0);
+r([ c(cc.Label) ], e.prototype, "label_Level2", void 0);
+return r([ s ], e);
+}(cc.Component);
+o.default = l;
+cc._RF.pop();
+}, {} ],
 CmdConfig: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "f7ecb37+gFCb4nV3AYSD2s7", "CmdConfig");
@@ -11345,7 +11625,6 @@ type: e
 this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_Act_15 = function(t) {
-Log.e("Send_Act_15");
 var e = {
 action: "Act_15.page"
 };
@@ -11793,6 +12072,11 @@ eventName: t
 h.CmmUtils.isNull(e) || (o.args = e);
 this.SendPostHttp(o, null, !1, p.GlobalEnum.HttpUrlType.Hall);
 };
+e.prototype.Send_CheckCks = function(t) {
+this.SendPostHttp({
+action: "Cks"
+}, t, !1, p.GlobalEnum.HttpUrlType.Login);
+};
 e.module = "CommonSender";
 return e;
 }(r.default);
@@ -11928,7 +12212,7 @@ cc._RF.push(e, "0c91aF8q+tMCpJHoa5RPmTf", "CommonUIHelper");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var n = t("../../common/config/Config"), i = t("../../common/config/GlobalVar"), r = t("../../common/config/User"), a = t("../../common/net/CommonSender"), s = t("../../framework/defines/Macros"), c = t("../../sdk/AppInfo"), l = t("../../vcode/scripts/mian/view/VBindCPFView"), p = t("../../vcode/scripts/mian/view/VBindForgotPhoneView"), u = t("../../vcode/scripts/mian/view/VBindKycView"), d = t("../../vcode/scripts/mian/view/VChangeAvatarView"), h = t("../../vcode/scripts/mian/view/VChangeNameView"), f = t("../../vcode/scripts/mian/view/VDailySignInView"), m = t("../../vcode/scripts/mian/view/VEmailView"), _ = t("../../vcode/scripts/mian/view/VHtmlDownView"), g = t("../../vcode/scripts/mian/view/VIosOpenView"), y = t("../../vcode/scripts/mian/view/VNoticeView"), v = t("../../vcode/scripts/mian/view/VPayCardInfoView"), b = t("../../vcode/scripts/mian/view/VRechargeRecordsWebView"), C = t("../../vcode/scripts/mian/view/VRedeemCodeView"), w = t("../../vcode/scripts/mian/view/VResetPasswordView"), S = t("../../vcode/scripts/mian/view/VSettingView"), E = t("../../vcode/scripts/mian/view/VVipUpgradeNoticeView"), R = t("../../vcode/scripts/mian/view/VWithdrawView"), O = t("../../vcode/scripts/mian/view/VWithdrawVipInfo"), A = t("../../vcode/scripts/mian/view/activitys/VThreeSoneView"), P = t("../../zgameCommon/GameCheatView"), L = t("./loading/common_loadingView"), T = t("./loading/loading_gameView"), N = t("./offline/RecordsOfflineView"), M = t("./offline/TaskOfflineView"), I = t("../../vcode/scripts/mian/view/VBaxipaiZhaoView"), B = t("../../vcode/scripts/mian/view/VQRView"), k = t("../../vcode/scripts/mian/view/VShareView"), U = t("../../vcode/scripts/mian/view/VPurTipsView"), V = t("../../vcode/scripts/mian/view/VPiggyBankView"), D = t("../../vcode/scripts/mian/view/VVipInfoView"), G = t("../../vcode/scripts/mian/view/VRegisterInView"), j = t("../../vcode/scripts/mian/view/VGameChooseTCView"), x = t("../../vcode/scripts/mian/view/VUseCouponView"), F = t("../../vcode/scripts/mian/view/VAccountSecurityView"), H = t("../../vcode/scripts/mian/view/VIconTipsView"), z = t("./InviteWithdrawRecordsWebView"), W = t("../../vcode/scripts/mian/view/VUseGroupCodeView"), J = t("../../vcode/scripts/mian/view/VLaBaInfoView"), Y = t("../../vcode/scripts/mian/view/VChargeView"), Z = t("../../vcode/scripts/mian/view/VFirstChargeView"), Q = t("../../vcode/scripts/mian/view/VGroupChargeView"), K = t("../../vcode/scripts/mian/view/VMonthCardView"), q = t("../../vcode/scripts/mian/view/VWithdrawVipInfo2"), X = t("../../vcode/scripts/mian/view/VDailyTaskView"), $ = t("../../vcode/scripts/mian/view/VTradeView"), tt = t("../../vcode/scripts/mian/view/VWithdrawVipInfo3"), et = t("../../vcode/scripts/mian/view/VSendRecordView"), ot = t("../../vcode/scripts/mian/view/VXS2XXView"), nt = function() {
+var n = t("../../common/config/Config"), i = t("../../common/config/GlobalVar"), r = t("../../common/config/User"), a = t("../../common/net/CommonSender"), s = t("../../framework/defines/Macros"), c = t("../../sdk/AppInfo"), l = t("../../vcode/scripts/mian/view/VBindCPFView"), p = t("../../vcode/scripts/mian/view/VBindForgotPhoneView"), u = t("../../vcode/scripts/mian/view/VBindKycView"), d = t("../../vcode/scripts/mian/view/VChangeAvatarView"), h = t("../../vcode/scripts/mian/view/VChangeNameView"), f = t("../../vcode/scripts/mian/view/VDailySignInView"), m = t("../../vcode/scripts/mian/view/VEmailView"), _ = t("../../vcode/scripts/mian/view/VHtmlDownView"), g = t("../../vcode/scripts/mian/view/VIosOpenView"), y = t("../../vcode/scripts/mian/view/VNoticeView"), v = t("../../vcode/scripts/mian/view/VPayCardInfoView"), b = t("../../vcode/scripts/mian/view/VRechargeRecordsWebView"), C = t("../../vcode/scripts/mian/view/VRedeemCodeView"), w = t("../../vcode/scripts/mian/view/VResetPasswordView"), S = t("../../vcode/scripts/mian/view/VSettingView"), E = t("../../vcode/scripts/mian/view/VVipUpgradeNoticeView"), R = t("../../vcode/scripts/mian/view/VWithdrawView"), O = t("../../vcode/scripts/mian/view/VWithdrawVipInfo"), A = t("../../vcode/scripts/mian/view/activitys/VThreeSoneView"), P = t("../../zgameCommon/GameCheatView"), L = t("./loading/common_loadingView"), T = t("./loading/loading_gameView"), M = t("./offline/RecordsOfflineView"), N = t("./offline/TaskOfflineView"), I = t("../../vcode/scripts/mian/view/VBaxipaiZhaoView"), B = t("../../vcode/scripts/mian/view/VQRView"), k = t("../../vcode/scripts/mian/view/VShareView"), U = t("../../vcode/scripts/mian/view/VPurTipsView"), V = t("../../vcode/scripts/mian/view/VPiggyBankView"), D = t("../../vcode/scripts/mian/view/VVipInfoView"), G = t("../../vcode/scripts/mian/view/VRegisterInView"), j = t("../../vcode/scripts/mian/view/VGameChooseTCView"), x = t("../../vcode/scripts/mian/view/VUseCouponView"), F = t("../../vcode/scripts/mian/view/VAccountSecurityView"), H = t("../../vcode/scripts/mian/view/VIconTipsView"), z = t("./InviteWithdrawRecordsWebView"), W = t("../../vcode/scripts/mian/view/VUseGroupCodeView"), J = t("../../vcode/scripts/mian/view/VLaBaInfoView"), Z = t("../../vcode/scripts/mian/view/VChargeView"), Y = t("../../vcode/scripts/mian/view/VFirstChargeView"), K = t("../../vcode/scripts/mian/view/VGroupChargeView"), Q = t("../../vcode/scripts/mian/view/VMonthCardView"), q = t("../../vcode/scripts/mian/view/VWithdrawVipInfo2"), X = t("../../vcode/scripts/mian/view/VDailyTaskView"), $ = t("../../vcode/scripts/mian/view/VTradeView"), tt = t("../../vcode/scripts/mian/view/VWithdrawVipInfo3"), et = t("../../vcode/scripts/mian/view/VSendRecordView"), ot = t("../../vcode/scripts/mian/view/VXS2XXView"), nt = function() {
 function t() {}
 t.showVVipInfoView = function(t) {
 r.default.self.isLoginFinish ? App.uiManager.open({
@@ -12134,7 +12418,7 @@ args: t
 t.showOfflineTaskInfo = function() {
 r.default.self.isLoginFinish ? App.senderManager.get(a.default).Send_InitTaskInfo(function(t) {
 App.uiManager.open({
-type: M.default,
+type: N.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI,
 args: t.data
@@ -12265,7 +12549,7 @@ args: t
 };
 t.showRecordsOfflineView = function(t) {
 App.uiManager.open({
-type: N.default,
+type: M.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI,
 args: t
@@ -12273,7 +12557,7 @@ args: t
 };
 t.showVRechargeView = function() {
 r.default.self.isBindMobileBeforeRecharge ? App.uiManager.open({
-type: Y.default,
+type: Z.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 }) : this.showBindMobileBeforeFirstRechager();
@@ -12282,7 +12566,7 @@ t.showVFirstChargeView = function() {
 if (!r.default.self.isFinishAllBigSale) {
 i.GlobalVar.gameBackToHall = !1;
 App.uiManager.open({
-type: Z.default,
+type: Y.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -12292,7 +12576,7 @@ t.showVGroupChargeView = function() {
 if (r.default.self.isLoginFinish) {
 App.globalAudio.playButtonClick();
 App.uiManager.open({
-type: Q.default,
+type: K.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -12303,7 +12587,7 @@ Log.e("9999999999999999");
 if (r.default.self.isLoginFinish) {
 App.globalAudio.playButtonClick();
 App.uiManager.open({
-type: K.default,
+type: Q.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -12900,6 +13184,7 @@ TIPS: "TIPS"
 t.isSkipCheckUpdate = !1;
 t.HOT_UPDATE_URL = "http://192.168.1.5:3000/bulidUpdate";
 t.USE_AUTO_VERSION = !0;
+t.ONLY_BUNDLE_HOT_UPDATE = !0;
 t.LOADING_TIME_OUT = 30;
 t.HTTP_TIME_OUT = 10;
 t.LOADING_CONTENT_CHANGE_INTERVAL = 3;
@@ -14176,7 +14461,7 @@ function h(t) {
 return "[" + Error.prototype.toString.call(t) + "]";
 }
 function f(t, e, o, n, i) {
-for (var r = [], a = 0, s = e.length; a < s; ++a) M(e, String(a)) ? r.push(m(t, e, o, n, String(a), !0)) : r.push("");
+for (var r = [], a = 0, s = e.length; a < s; ++a) N(e, String(a)) ? r.push(m(t, e, o, n, String(a), !0)) : r.push("");
 i.forEach(function(i) {
 i.match(/^\d+$/) || r.push(m(t, e, o, n, i, !0));
 });
@@ -14187,7 +14472,7 @@ var a, s, c;
 (c = Object.getOwnPropertyDescriptor(e, i) || {
 value: e[i]
 }).get ? s = c.set ? t.stylize("[Getter/Setter]", "special") : t.stylize("[Getter]", "special") : c.set && (s = t.stylize("[Setter]", "special"));
-M(n, i) || (a = "[" + i + "]");
+N(n, i) || (a = "[" + i + "]");
 s || (t.seen.indexOf(c.value) < 0 ? (s = v(o) ? u(t, c.value, null) : u(t, c.value, o - 1)).indexOf("\n") > -1 && (s = r ? s.split("\n").map(function(t) {
 return "  " + t;
 }).join("\n").substr(2) : "\n" + s.split("\n").map(function(t) {
@@ -14272,12 +14557,12 @@ function L(t) {
 return t < 10 ? "0" + t.toString(10) : t.toString(10);
 }
 var T = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-function N() {
+function M() {
 var t = new Date(), e = [ L(t.getHours()), L(t.getMinutes()), L(t.getSeconds()) ].join(":");
 return [ t.getDate(), T[t.getMonth()], e ].join(" ");
 }
 o.log = function() {
-console.log("%s - %s", N(), o.format.apply(o, arguments));
+console.log("%s - %s", M(), o.format.apply(o, arguments));
 };
 o.inherits = t("inherits");
 o._extend = function(t, e) {
@@ -14285,7 +14570,7 @@ if (!e || !E(e)) return t;
 for (var o = Object.keys(e), n = o.length; n--; ) t[o[n]] = e[o[n]];
 return t;
 };
-function M(t, e) {
+function N(t, e) {
 return Object.prototype.hasOwnProperty.call(t, e);
 }
 }).call(this, t("_process"), "undefined" != typeof global ? global : "undefined" != typeof self ? self : "undefined" != typeof window ? window : {});
@@ -14544,7 +14829,7 @@ return o;
 case "utf8":
 case "utf-8":
 case void 0:
-return Y(t).length;
+return Z(t).length;
 
 case "ucs2":
 case "ucs-2":
@@ -14556,10 +14841,10 @@ case "hex":
 return o >>> 1;
 
 case "base64":
-return K(t).length;
+return Q(t).length;
 
 default:
-if (n) return Y(t).length;
+if (n) return Z(t).length;
 e = ("" + e).toLowerCase();
 n = !0;
 }
@@ -14750,19 +15035,19 @@ t[o + a] = s;
 return a;
 }
 function E(t, e, o, n) {
-return q(Y(e, t.length - o), t, o, n);
+return q(Z(e, t.length - o), t, o, n);
 }
 function R(t, e, o, n) {
-return q(Z(e), t, o, n);
+return q(Y(e), t, o, n);
 }
 function O(t, e, o, n) {
 return R(t, e, o, n);
 }
 function A(t, e, o, n) {
-return q(K(e), t, o, n);
+return q(Q(e), t, o, n);
 }
 function P(t, e, o, n) {
-return q(Q(e, t.length - o), t, o, n);
+return q(K(e, t.length - o), t, o, n);
 }
 c.prototype.write = function(t, e, o, n) {
 if (void 0 === e) {
@@ -14866,13 +15151,13 @@ a = 56320 | 1023 & a;
 n.push(a);
 i += s;
 }
-return M(n);
+return N(n);
 }
-var N = 4096;
-function M(t) {
+var M = 4096;
+function N(t) {
 var e = t.length;
-if (e <= N) return String.fromCharCode.apply(String, t);
-for (var o = "", n = 0; n < e; ) o += String.fromCharCode.apply(String, t.slice(n, n += N));
+if (e <= M) return String.fromCharCode.apply(String, t);
+for (var o = "", n = 0; n < e; ) o += String.fromCharCode.apply(String, t.slice(n, n += M));
 return o;
 }
 function I(t, e, o) {
@@ -15238,7 +15523,7 @@ o = void 0 === o ? this.length : o >>> 0;
 t || (t = 0);
 var r;
 if ("number" == typeof t) for (r = e; r < o; ++r) this[r] = t; else {
-var a = c.isBuffer(t) ? t : Y(new c(t, n).toString()), s = a.length;
+var a = c.isBuffer(t) ? t : Z(new c(t, n).toString()), s = a.length;
 for (r = 0; r < o - e; ++r) this[r + e] = a[r % s];
 }
 return this;
@@ -15252,7 +15537,7 @@ return t;
 function J(t) {
 return t.trim ? t.trim() : t.replace(/^\s+|\s+$/g, "");
 }
-function Y(t, e) {
+function Z(t, e) {
 e = e || Infinity;
 for (var o, n = t.length, i = null, r = [], a = 0; a < n; ++a) {
 if ((o = t.charCodeAt(a)) > 55295 && o < 57344) {
@@ -15293,11 +15578,11 @@ r.push(o >> 18 | 240, o >> 12 & 63 | 128, o >> 6 & 63 | 128, 63 & o | 128);
 }
 return r;
 }
-function Z(t) {
+function Y(t) {
 for (var e = [], o = 0; o < t.length; ++o) e.push(255 & t.charCodeAt(o));
 return e;
 }
-function Q(t, e) {
+function K(t, e) {
 for (var o, n, i, r = [], a = 0; a < t.length && !((e -= 2) < 0); ++a) {
 n = (o = t.charCodeAt(a)) >> 8;
 i = o % 256;
@@ -15306,7 +15591,7 @@ r.push(n);
 }
 return r;
 }
-function K(t) {
+function Q(t) {
 return n.toByteArray(W(t));
 }
 function q(t, e, o, n) {
@@ -15560,6 +15845,195 @@ arguments[4][4][0].apply(o, arguments);
 _process: 10,
 dup: 4,
 inherits: 11
+} ],
+14: [ function(t, e) {
+var o = {
+utf8: {
+stringToBytes: function(t) {
+return o.bin.stringToBytes(unescape(encodeURIComponent(t)));
+},
+bytesToString: function(t) {
+return decodeURIComponent(escape(o.bin.bytesToString(t)));
+}
+},
+bin: {
+stringToBytes: function(t) {
+for (var e = [], o = 0; o < t.length; o++) e.push(255 & t.charCodeAt(o));
+return e;
+},
+bytesToString: function(t) {
+for (var e = [], o = 0; o < t.length; o++) e.push(String.fromCharCode(t[o]));
+return e.join("");
+}
+}
+};
+e.exports = o;
+}, {} ],
+15: [ function(t, e) {
+o = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", n = {
+rotl: function(t, e) {
+return t << e | t >>> 32 - e;
+},
+rotr: function(t, e) {
+return t << 32 - e | t >>> e;
+},
+endian: function(t) {
+if (t.constructor == Number) return 16711935 & n.rotl(t, 8) | 4278255360 & n.rotl(t, 24);
+for (var e = 0; e < t.length; e++) t[e] = n.endian(t[e]);
+return t;
+},
+randomBytes: function(t) {
+for (var e = []; t > 0; t--) e.push(Math.floor(256 * Math.random()));
+return e;
+},
+bytesToWords: function(t) {
+for (var e = [], o = 0, n = 0; o < t.length; o++, n += 8) e[n >>> 5] |= t[o] << 24 - n % 32;
+return e;
+},
+wordsToBytes: function(t) {
+for (var e = [], o = 0; o < 32 * t.length; o += 8) e.push(t[o >>> 5] >>> 24 - o % 32 & 255);
+return e;
+},
+bytesToHex: function(t) {
+for (var e = [], o = 0; o < t.length; o++) {
+e.push((t[o] >>> 4).toString(16));
+e.push((15 & t[o]).toString(16));
+}
+return e.join("");
+},
+hexToBytes: function(t) {
+for (var e = [], o = 0; o < t.length; o += 2) e.push(parseInt(t.substr(o, 2), 16));
+return e;
+},
+bytesToBase64: function(t) {
+for (var e = [], n = 0; n < t.length; n += 3) for (var i = t[n] << 16 | t[n + 1] << 8 | t[n + 2], r = 0; r < 4; r++) 8 * n + 6 * r <= 8 * t.length ? e.push(o.charAt(i >>> 6 * (3 - r) & 63)) : e.push("=");
+return e.join("");
+},
+base64ToBytes: function(t) {
+t = t.replace(/[^A-Z0-9+\/]/gi, "");
+for (var e = [], n = 0, i = 0; n < t.length; i = ++n % 4) 0 != i && e.push((o.indexOf(t.charAt(n - 1)) & Math.pow(2, -2 * i + 8) - 1) << 2 * i | o.indexOf(t.charAt(n)) >>> 6 - 2 * i);
+return e;
+}
+}, e.exports = n;
+var o, n;
+}, {} ],
+16: [ function(t, e) {
+e.exports = function(t) {
+return null != t && (o(t) || n(t) || !!t._isBuffer);
+};
+function o(t) {
+return !!t.constructor && "function" == typeof t.constructor.isBuffer && t.constructor.isBuffer(t);
+}
+function n(t) {
+return "function" == typeof t.readFloatLE && "function" == typeof t.slice && o(t.slice(0, 0));
+}
+}, {} ],
+17: [ function(t, e) {
+(function() {
+var o = t("crypt"), n = t("charenc").utf8, i = t("is-buffer"), r = t("charenc").bin, a = function(t, e) {
+t.constructor == String ? t = e && "binary" === e.encoding ? r.stringToBytes(t) : n.stringToBytes(t) : i(t) ? t = Array.prototype.slice.call(t, 0) : Array.isArray(t) || t.constructor === Uint8Array || (t = t.toString());
+for (var s = o.bytesToWords(t), c = 8 * t.length, l = 1732584193, p = -271733879, u = -1732584194, d = 271733878, h = 0; h < s.length; h++) s[h] = 16711935 & (s[h] << 8 | s[h] >>> 24) | 4278255360 & (s[h] << 24 | s[h] >>> 8);
+s[c >>> 5] |= 128 << c % 32;
+s[14 + (c + 64 >>> 9 << 4)] = c;
+var f = a._ff, m = a._gg, _ = a._hh, g = a._ii;
+for (h = 0; h < s.length; h += 16) {
+var y = l, v = p, b = u, C = d;
+l = f(l, p, u, d, s[h + 0], 7, -680876936);
+d = f(d, l, p, u, s[h + 1], 12, -389564586);
+u = f(u, d, l, p, s[h + 2], 17, 606105819);
+p = f(p, u, d, l, s[h + 3], 22, -1044525330);
+l = f(l, p, u, d, s[h + 4], 7, -176418897);
+d = f(d, l, p, u, s[h + 5], 12, 1200080426);
+u = f(u, d, l, p, s[h + 6], 17, -1473231341);
+p = f(p, u, d, l, s[h + 7], 22, -45705983);
+l = f(l, p, u, d, s[h + 8], 7, 1770035416);
+d = f(d, l, p, u, s[h + 9], 12, -1958414417);
+u = f(u, d, l, p, s[h + 10], 17, -42063);
+p = f(p, u, d, l, s[h + 11], 22, -1990404162);
+l = f(l, p, u, d, s[h + 12], 7, 1804603682);
+d = f(d, l, p, u, s[h + 13], 12, -40341101);
+u = f(u, d, l, p, s[h + 14], 17, -1502002290);
+l = m(l, p = f(p, u, d, l, s[h + 15], 22, 1236535329), u, d, s[h + 1], 5, -165796510);
+d = m(d, l, p, u, s[h + 6], 9, -1069501632);
+u = m(u, d, l, p, s[h + 11], 14, 643717713);
+p = m(p, u, d, l, s[h + 0], 20, -373897302);
+l = m(l, p, u, d, s[h + 5], 5, -701558691);
+d = m(d, l, p, u, s[h + 10], 9, 38016083);
+u = m(u, d, l, p, s[h + 15], 14, -660478335);
+p = m(p, u, d, l, s[h + 4], 20, -405537848);
+l = m(l, p, u, d, s[h + 9], 5, 568446438);
+d = m(d, l, p, u, s[h + 14], 9, -1019803690);
+u = m(u, d, l, p, s[h + 3], 14, -187363961);
+p = m(p, u, d, l, s[h + 8], 20, 1163531501);
+l = m(l, p, u, d, s[h + 13], 5, -1444681467);
+d = m(d, l, p, u, s[h + 2], 9, -51403784);
+u = m(u, d, l, p, s[h + 7], 14, 1735328473);
+l = _(l, p = m(p, u, d, l, s[h + 12], 20, -1926607734), u, d, s[h + 5], 4, -378558);
+d = _(d, l, p, u, s[h + 8], 11, -2022574463);
+u = _(u, d, l, p, s[h + 11], 16, 1839030562);
+p = _(p, u, d, l, s[h + 14], 23, -35309556);
+l = _(l, p, u, d, s[h + 1], 4, -1530992060);
+d = _(d, l, p, u, s[h + 4], 11, 1272893353);
+u = _(u, d, l, p, s[h + 7], 16, -155497632);
+p = _(p, u, d, l, s[h + 10], 23, -1094730640);
+l = _(l, p, u, d, s[h + 13], 4, 681279174);
+d = _(d, l, p, u, s[h + 0], 11, -358537222);
+u = _(u, d, l, p, s[h + 3], 16, -722521979);
+p = _(p, u, d, l, s[h + 6], 23, 76029189);
+l = _(l, p, u, d, s[h + 9], 4, -640364487);
+d = _(d, l, p, u, s[h + 12], 11, -421815835);
+u = _(u, d, l, p, s[h + 15], 16, 530742520);
+l = g(l, p = _(p, u, d, l, s[h + 2], 23, -995338651), u, d, s[h + 0], 6, -198630844);
+d = g(d, l, p, u, s[h + 7], 10, 1126891415);
+u = g(u, d, l, p, s[h + 14], 15, -1416354905);
+p = g(p, u, d, l, s[h + 5], 21, -57434055);
+l = g(l, p, u, d, s[h + 12], 6, 1700485571);
+d = g(d, l, p, u, s[h + 3], 10, -1894986606);
+u = g(u, d, l, p, s[h + 10], 15, -1051523);
+p = g(p, u, d, l, s[h + 1], 21, -2054922799);
+l = g(l, p, u, d, s[h + 8], 6, 1873313359);
+d = g(d, l, p, u, s[h + 15], 10, -30611744);
+u = g(u, d, l, p, s[h + 6], 15, -1560198380);
+p = g(p, u, d, l, s[h + 13], 21, 1309151649);
+l = g(l, p, u, d, s[h + 4], 6, -145523070);
+d = g(d, l, p, u, s[h + 11], 10, -1120210379);
+u = g(u, d, l, p, s[h + 2], 15, 718787259);
+p = g(p, u, d, l, s[h + 9], 21, -343485551);
+l = l + y >>> 0;
+p = p + v >>> 0;
+u = u + b >>> 0;
+d = d + C >>> 0;
+}
+return o.endian([ l, p, u, d ]);
+};
+a._ff = function(t, e, o, n, i, r, a) {
+var s = t + (e & o | ~e & n) + (i >>> 0) + a;
+return (s << r | s >>> 32 - r) + e;
+};
+a._gg = function(t, e, o, n, i, r, a) {
+var s = t + (e & n | o & ~n) + (i >>> 0) + a;
+return (s << r | s >>> 32 - r) + e;
+};
+a._hh = function(t, e, o, n, i, r, a) {
+var s = t + (e ^ o ^ n) + (i >>> 0) + a;
+return (s << r | s >>> 32 - r) + e;
+};
+a._ii = function(t, e, o, n, i, r, a) {
+var s = t + (o ^ (e | ~n)) + (i >>> 0) + a;
+return (s << r | s >>> 32 - r) + e;
+};
+a._blocksize = 16;
+a._digestsize = 16;
+e.exports = function(t, e) {
+if (null == t) throw new Error("Illegal argument " + t);
+var n = o.wordsToBytes(a(t, e));
+return e && e.asBytes ? n : e && e.asString ? r.bytesToString(n) : o.bytesToHex(n);
+};
+})();
+}, {
+charenc: 14,
+crypt: 15,
+"is-buffer": 16
 } ],
 DataCenter: [ function(t, e, o) {
 "use strict";
@@ -18456,6 +18930,447 @@ cc._RF.pop();
 "../framework/defines/Enums": "Enums",
 "../login/other/howtoplay_item": "howtoplay_item"
 } ],
+GameMgr: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "fc7edWM57dHLbakB/Az/sIi", "GameMgr");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+o.AudioName = o.VideoType_A = o.MyGameEvent_A = void 0;
+var a, s, c, l = t("console"), p = t("../../../scripts/common/enum/GlobalEnum"), u = t("../../../scripts/common/utils/RandomUtil"), d = t("../../../scripts/framework/componects/EventComponent"), h = t("./AudioMgr"), f = t("./slotsOperate"), m = t("./Service/HomeTipTCService_A"), _ = t("./Service/LoadingGameService_A"), g = t("./RulePanel"), y = t("./PayTabelPanel"), v = t("./PayLinesPanel"), b = t("../../../scripts/common/event/CommonEvent"), C = t("./Service/Reward_YouWin_A"), w = t("../../../scripts/sdk/SdkManager"), S = t("./Service/AutoService_A"), E = t("./Service/TaskService"), R = t("./Service/LevelManager_A"), O = t("../../../scripts/slotsframewrodk/core/newRoll/ZRollControler");
+(function(t) {
+t.ChooseLevel = "ChoseLevel_1";
+t.LevelFinish = "LevelFinish_1";
+t.PlayGame_LevelTipTC = "PlayGame_LevelTipTC_1";
+t.OpenRuleTC = "OpenRuleTC_1";
+t.OpenPayTabelTC = "OpenPayTableTC_1";
+t.OpenPayLineTC = "OpenPayLineTC_1";
+t.SetAutoCount = "SetAutoCount_1";
+t.SoundState = "SoundState_1";
+t.MusicState = "MusicState_1";
+t.Coin = "Coin_Flower";
+})(a = o.MyGameEvent_A || (o.MyGameEvent_A = {}));
+(function(t) {
+t.AddMoney = "1";
+t.Bigwin = "2";
+t.LevelReward = "3";
+})(s = o.VideoType_A || (o.VideoType_A = {}));
+(function(t) {
+t.Bigwin = "yx_Bigwin";
+t.BigwinEnd = "yx_bigwinEnd";
+t.Click = "yx_click";
+t.levelReward = "yx_levelReward";
+t.rewardFinish = "yx_rewardFinish";
+t.spin = "yx_spin";
+t.stop = "yx_stop";
+t.ele_award = "ele_award";
+})(c = o.AudioName || (o.AudioName = {}));
+var A = cc._decorator, P = A.ccclass, L = A.property, T = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.mainRollConfig = null;
+e.operateData = null;
+e.operate = null;
+e.controler = null;
+e.node_SetPanel = null;
+e.homeTipTC = null;
+e.loadingService = null;
+e.reward_YouWin = null;
+e.node_NotCanClick = null;
+e.taskService = null;
+e.rulePanel = null;
+e.payTablePanel = null;
+e.payLinesPanel = null;
+e.autoService = null;
+e.label_CurLevel = null;
+e.spriteFrames = [];
+e.curLevelData = null;
+e.curCollectCount = 0;
+e.curTime = 0;
+e.beginTime_Delay = 0;
+e.delayTimeToClick = 0;
+e.isDelayToCanClick = !1;
+e.curSpinTime = 0;
+e.oneClick = !1;
+e.isGetReward = !1;
+e.curEleRange_Weights = [];
+return e;
+}
+e.prototype.onLoad = function() {
+this.initNode();
+t.prototype.onLoad.call(this);
+this.initEvent();
+};
+e.prototype.initNode = function() {
+this.operate = cc.find("operate", this.node).getComponent(f.default);
+};
+e.prototype.initEvent = function() {
+var t = this;
+this.onD(a.ChooseLevel, function(e) {
+t.refresh(e);
+});
+this.onD(a.OpenRuleTC, function() {
+t.rulePanel.OpenShow();
+});
+this.onD(a.OpenPayTabelTC, function() {
+t.payTablePanel.OpenShow();
+});
+this.onD(a.OpenPayLineTC, function() {
+t.payLinesPanel.OpenShow();
+});
+this.onD(b.SdkEvent.SdkEvent_finish_video_back, function(e) {
+Log.d("激励视频播放完成，发放奖励");
+var o = JSON.parse(e);
+Log.e(o);
+o.rewardType == s.AddMoney ? o.isCanAward && t.operate.updateCoins(1e3) : o.rewardType == s.Bigwin && t.reward_YouWin.SetRewardX2(o.isCanAward);
+});
+this.onD(b.CommonEvent.EventMaskAll, function(e) {
+t.beginTime_Delay = t.curTime;
+t.delayTimeToClick = e;
+t.node_NotCanClick.active = !0;
+t.isDelayToCanClick = !0;
+});
+this.onD(a.SetAutoCount, function(e) {
+t.operate.SetAutoState(e);
+t.scheduleOnce(function() {
+t.operate.ButtonClick_Spin();
+}, .1);
+});
+};
+e.prototype.ButtonClick_Setting = function() {
+h.default.instance.playEffect(c.Click);
+this.node_SetPanel.active = !0;
+};
+e.prototype.ButtonClick_Home = function() {
+h.default.instance.playEffect(c.Click);
+this.homeTipTC.OpenShow(function(t) {
+if (t) {
+cc.director.loadScene("login");
+w.default.showInterstitial();
+h.default.instance.playBGM(h.default.instance.bgm);
+}
+});
+};
+e.prototype.ButtonClick_Rule = function() {
+h.default.instance.playEffect(c.Click);
+dispatch(a.OpenRuleTC);
+};
+e.prototype.ButtonClick_Auto = function() {
+h.default.instance.playEffect(c.Click);
+this.autoService.OpenShow();
+};
+e.prototype.refresh = function(t) {
+this.curLevelData = t;
+this.curCollectCount = 0;
+this.label_CurLevel.string = this.curLevelData.id + "";
+this.taskService.SetTask(this.curLevelData.maxLive);
+h.default.instance.playBGM(h.default.instance.bgm_game);
+this.rulePanel.InitData(this.curLevelData);
+this.payLinesPanel.InitData(this.curLevelData);
+this.payTablePanel.InitData(this.curLevelData, this.spriteFrames);
+this.curEleRange_Weights = [];
+for (var e = 0; e < this.curLevelData.ele.length; e++) for (var o = this.curLevelData.ele[e], n = this.curLevelData.dropWeights[e], i = 0; i < n; i++) this.curEleRange_Weights.push(o);
+var r = [];
+for (e = 0; e < this.curLevelData.reel[0]; e++) r.push(this.curLevelData.ele);
+this.mainRollConfig = {
+speed: 3e3,
+accelerate: 3e3,
+lineCount: this.curLevelData.lines.length,
+numY: this.curLevelData.reel[1],
+easeTime: .3,
+elementCount: this.curLevelData.ele.length,
+name: "roll",
+interval: .24,
+turnType: 1,
+inEase: 0,
+stopTime: 1.5,
+rewardExtraEffect: 1,
+elementRange_Init: r,
+elementRange_Run: r,
+elementRangeRate: this.curLevelData.dropWeights,
+rollStartCB: this.rollStartCB.bind(this),
+rollFinishCB: this.rollFinishCB.bind(this),
+rollAccelerateStartCB: this.rollAccelerateStartCB.bind(this),
+gameFinishEndCB: this.gameFinishEndCB.bind(this)
+};
+this.operateData = {
+betValues: [ 1 ],
+curBetIndex: 0,
+betType: 1,
+autoValues: [ 500, 200, 100, 20 ],
+spinCallBack: this.spinCallBack.bind(this),
+stopCallBack: this.stopCallBack.bind(this)
+};
+this.controler.initData(this.mainRollConfig);
+this.operate.init(this.operateData);
+this.operate.setBtnState(!0);
+};
+e.prototype.start = function() {};
+e.prototype.spinCallBack = function() {
+if (this.operate.isCanSpin()) {
+if (this.operate.autoCount > 0) {
+this.operate.autoCount--;
+this.operate.SetAutoState(this.operate.autoCount);
+}
+this.operate.setBtnState(!1);
+this.controler.startRoll(0);
+} else l.error("余额不足，请充值");
+};
+e.prototype.stopCallBack = function() {
+if (this.oneClick) {
+this.controler.quickStopRoll();
+this.oneClick = !1;
+}
+};
+e.prototype.update = function(t) {
+if (this.oneClick) {
+this.curSpinTime += t;
+if (this.curSpinTime > this.mainRollConfig.stopTime && this.isGetReward) {
+this.updateAutoStop();
+this.oneClick = !1;
+return;
+}
+}
+this.curTime += t;
+if (this.isDelayToCanClick && this.beginTime_Delay + this.delayTimeToClick <= this.curTime) {
+this.isDelayToCanClick = !1;
+this.node_NotCanClick.active = !1;
+}
+};
+e.prototype.updateReward = function() {
+this.serverReslut = this.GetResult();
+console.error(this.serverReslut);
+for (var t = [], e = 0; e < this.curLevelData.reel[0]; e++) {
+for (var o = [], n = 0; n < this.curLevelData.reel[1]; n++) {
+var i = this.serverReslut.value[e][n];
+o.push({
+index: i - 1,
+value: i,
+isEmpty: !1
+});
+}
+t.push(o);
+}
+this.controler.results = t;
+this.isGetReward = !0;
+};
+e.prototype.updateAutoStop = function() {
+this.controler.stopRoll();
+};
+e.prototype.rollStartCB = function() {
+this.operate.showWin(0);
+this.oneClick = !0;
+this.curSpinTime = 0;
+this.isGetReward = !1;
+this.updateReward();
+this.curSpinIndex = -1;
+this.chiliElements = [];
+this.operate.spinUpadateCoin();
+};
+e.prototype.rollAccelerateStartCB = function() {};
+e.prototype.rollFinishCB = function(t, e) {
+this.curSpinIndex = e;
+var o = e == this.controler.getUnlockedCount() - 1;
+t ? o && h.default.instance.playEffect(c.stop) : h.default.instance.playEffect(c.stop);
+};
+e.prototype.gameFinishEndCB = function(t) {
+if (t == this.controler.getUnlockedCount() - 1) {
+dispatch(b.CommonEvent.EventMaskAll, 10);
+this.playResultAni();
+}
+};
+e.prototype.playResultAni = function() {
+var t = this;
+this.controler.resetAllElementState();
+if (this.serverReslut.awardResult.awardType > 0) {
+for (var e = this.serverReslut.awardResult.awardPos, o = this.serverReslut.value[0], n = [], i = 0; i < o.length; i++) {
+var r = o[i];
+e.indexOf(i) >= 0 && n.indexOf(r) < 0 && n.push(r);
+}
+h.default.instance.playEffect(c.ele_award);
+this.controler.playEndAnim(this.serverReslut.awardResult.awardPos, this.getStates());
+this.scheduleOnce(function() {
+t.PlayBigWin(function() {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+t.endfunc();
+});
+}, 1);
+} else {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+this.operate.showWin(0);
+this.endfunc();
+}
+};
+e.prototype.PlayBigWin = function(t) {
+var e = this;
+if (this.serverReslut.awardResult.awardType >= 2) {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+this.reward_YouWin.OpenShow(this.serverReslut.awardResult.score, this.serverReslut.awardResult.awardType, function(o) {
+e.operate.showWin(o);
+e.operate.updateCoins(o);
+e.CheckCollectTarEle(t);
+});
+} else {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+this.operate.showWin(this.serverReslut.awardResult.score);
+this.operate.updateCoins(this.serverReslut.awardResult.score);
+this.CheckCollectTarEle(t);
+}
+};
+e.prototype.CheckCollectTarEle = function(t) {
+var e = this;
+dispatch(b.CommonEvent.EventMaskAll, 10);
+for (var o = this.controler.getEndNodes(), n = this.curLevelData.targetId, i = this.serverReslut.awardResult.awardPos, r = 0, a = 0; a < i.length; a++) {
+var s = o[i[a]];
+n.indexOf(s.elementValue) >= 0 && r++;
+}
+if (0 == r) {
+dispatch(b.CommonEvent.EventMaskAll, 0);
+t && t();
+} else {
+dispatch(b.CommonEvent.EventMaskAll, 10);
+this.taskService.PlayAni_Collect();
+this.curCollectCount += r;
+if (this.curCollectCount >= this.curLevelData.maxLive) {
+R.default.instance.SetFinishLevel(this.curLevelData.id);
+this.scheduleOnce(function() {
+t && t();
+R.default.instance.OpenShow(function(t) {
+e.operate.showWin(t);
+e.operate.updateCoins(t);
+});
+}, .5);
+} else this.scheduleOnce(function() {
+t && t();
+}, .5);
+}
+};
+e.prototype.getStates = function() {
+for (var t = [], e = this.serverReslut.awardResult.awardPos, o = 0; o < e.length; o++) t.push(p.GlobalEnum.ElementState.Reward);
+return t;
+};
+e.prototype.endfunc = function() {
+var t = this;
+dispatch(b.CommonEvent.EventMaskAll, 0);
+this.operate.autoCount > 0 ? this.scheduleOnce(function() {
+t.operate.ButtonClick_Spin();
+}, .5) : this.operate.setBtnState(!0);
+};
+e.prototype.GetResult = function() {
+for (var t = this, e = {
+awardline: [],
+awardPos: [],
+awardType: 0,
+score: 0
+}, o = [], n = 0; n < this.curLevelData.reel[0]; n++) {
+for (var i = [], r = 0; r < this.curLevelData.reel[1]; r++) {
+var a = u.RandomUtil.randomRange(0, this.curEleRange_Weights.length);
+i.push(this.curEleRange_Weights[a]);
+}
+o.push(i);
+}
+var s = new Set();
+if (this.curLevelData.lines.length > 0) for (n = 0; n < this.curLevelData.lines.length; n++) {
+var c = this.curLevelData.lines[n], l = c.map(function(e) {
+return t.getSymbol(o, e);
+}), p = l[0], d = 1;
+for (r = 1; r < l.length && l[r] === p; r++) d++;
+if (d >= 3) {
+e.awardline.push(n);
+for (var h = 0; h < d; h++) s.add(c[h]);
+var f = this.curLevelData.ele.indexOf(p), m = this.curLevelData.betRate[f][d - 3];
+e.score += this.operate.betValue / this.curLevelData.lines.length * m;
+}
+} else for (n = 0; n < this.curLevelData.ele.length; n++) {
+for (var _ = [], g = 0; g < this.curLevelData.reel[0]; g++) {
+d = 0;
+for (var y = 0; y < this.curLevelData.reel[1]; y++) o[g][y] === n + 1 && d++;
+if (0 === d) break;
+_.push(d);
+}
+if (_.length >= 3) {
+for (h = 0; h < _.length; h++) for (y = 0; y < this.curLevelData.reel[1]; y++) if (o[h][y] === n + 1) {
+var v = h * this.curLevelData.reel[1] + y;
+s.add(v);
+}
+for (var b = 1, C = 0, w = _; C < w.length; C++) b *= w[C];
+var S = _.length, E = b * this.curLevelData.betRate[n][S - 3] * this.operate.betValue / 50;
+e.score += E;
+}
+}
+if (e.score > 0) {
+var R = e.score / this.operate.betValue;
+e.awardType = R < 3 ? 1 : R < 8 ? 2 : 3;
+} else e.awardType = 0;
+e.awardPos = Array.from(s).sort(function(t, e) {
+return t - e;
+});
+return {
+awardResult: e,
+value: o
+};
+};
+e.prototype.getSymbol = function(t, e) {
+var o = Math.floor(e / this.curLevelData.reel[1]), n = e % this.curLevelData.reel[1];
+return t[o][n];
+};
+r([ L(O.default) ], e.prototype, "controler", void 0);
+r([ L(cc.Node) ], e.prototype, "node_SetPanel", void 0);
+r([ L(m.default) ], e.prototype, "homeTipTC", void 0);
+r([ L(_.default) ], e.prototype, "loadingService", void 0);
+r([ L(C.default) ], e.prototype, "reward_YouWin", void 0);
+r([ L(cc.Node) ], e.prototype, "node_NotCanClick", void 0);
+r([ L(E.default) ], e.prototype, "taskService", void 0);
+r([ L(g.default) ], e.prototype, "rulePanel", void 0);
+r([ L(y.default) ], e.prototype, "payTablePanel", void 0);
+r([ L(v.default) ], e.prototype, "payLinesPanel", void 0);
+r([ L(S.default) ], e.prototype, "autoService", void 0);
+r([ L(cc.Label) ], e.prototype, "label_CurLevel", void 0);
+r([ L(cc.SpriteFrame) ], e.prototype, "spriteFrames", void 0);
+return r([ P ], e);
+}(d.default);
+o.default = T;
+cc._RF.pop();
+}, {
+"../../../scripts/common/enum/GlobalEnum": "GlobalEnum",
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"../../../scripts/common/utils/RandomUtil": "RandomUtil",
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"../../../scripts/sdk/SdkManager": "SdkManager",
+"../../../scripts/slotsframewrodk/core/newRoll/ZRollControler": "ZRollControler",
+"./AudioMgr": "AudioMgr",
+"./PayLinesPanel": "PayLinesPanel",
+"./PayTabelPanel": "PayTabelPanel",
+"./RulePanel": "RulePanel",
+"./Service/AutoService_A": "AutoService_A",
+"./Service/HomeTipTCService_A": "HomeTipTCService_A",
+"./Service/LevelManager_A": "LevelManager_A",
+"./Service/LoadingGameService_A": "LoadingGameService_A",
+"./Service/Reward_YouWin_A": "Reward_YouWin_A",
+"./Service/TaskService": "TaskService",
+"./slotsOperate": "slotsOperate",
+console: 8
+} ],
 GameNativeConfig: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "ee161Sx8Y9EFalxLFeZ7Mbl", "GameNativeConfig");
@@ -21067,195 +21982,6 @@ cc._RF.pop();
 }, {
 "../define/enum": "enum"
 } ],
-14: [ function(t, e) {
-var o = {
-utf8: {
-stringToBytes: function(t) {
-return o.bin.stringToBytes(unescape(encodeURIComponent(t)));
-},
-bytesToString: function(t) {
-return decodeURIComponent(escape(o.bin.bytesToString(t)));
-}
-},
-bin: {
-stringToBytes: function(t) {
-for (var e = [], o = 0; o < t.length; o++) e.push(255 & t.charCodeAt(o));
-return e;
-},
-bytesToString: function(t) {
-for (var e = [], o = 0; o < t.length; o++) e.push(String.fromCharCode(t[o]));
-return e.join("");
-}
-}
-};
-e.exports = o;
-}, {} ],
-15: [ function(t, e) {
-o = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", n = {
-rotl: function(t, e) {
-return t << e | t >>> 32 - e;
-},
-rotr: function(t, e) {
-return t << 32 - e | t >>> e;
-},
-endian: function(t) {
-if (t.constructor == Number) return 16711935 & n.rotl(t, 8) | 4278255360 & n.rotl(t, 24);
-for (var e = 0; e < t.length; e++) t[e] = n.endian(t[e]);
-return t;
-},
-randomBytes: function(t) {
-for (var e = []; t > 0; t--) e.push(Math.floor(256 * Math.random()));
-return e;
-},
-bytesToWords: function(t) {
-for (var e = [], o = 0, n = 0; o < t.length; o++, n += 8) e[n >>> 5] |= t[o] << 24 - n % 32;
-return e;
-},
-wordsToBytes: function(t) {
-for (var e = [], o = 0; o < 32 * t.length; o += 8) e.push(t[o >>> 5] >>> 24 - o % 32 & 255);
-return e;
-},
-bytesToHex: function(t) {
-for (var e = [], o = 0; o < t.length; o++) {
-e.push((t[o] >>> 4).toString(16));
-e.push((15 & t[o]).toString(16));
-}
-return e.join("");
-},
-hexToBytes: function(t) {
-for (var e = [], o = 0; o < t.length; o += 2) e.push(parseInt(t.substr(o, 2), 16));
-return e;
-},
-bytesToBase64: function(t) {
-for (var e = [], n = 0; n < t.length; n += 3) for (var i = t[n] << 16 | t[n + 1] << 8 | t[n + 2], r = 0; r < 4; r++) 8 * n + 6 * r <= 8 * t.length ? e.push(o.charAt(i >>> 6 * (3 - r) & 63)) : e.push("=");
-return e.join("");
-},
-base64ToBytes: function(t) {
-t = t.replace(/[^A-Z0-9+\/]/gi, "");
-for (var e = [], n = 0, i = 0; n < t.length; i = ++n % 4) 0 != i && e.push((o.indexOf(t.charAt(n - 1)) & Math.pow(2, -2 * i + 8) - 1) << 2 * i | o.indexOf(t.charAt(n)) >>> 6 - 2 * i);
-return e;
-}
-}, e.exports = n;
-var o, n;
-}, {} ],
-16: [ function(t, e) {
-e.exports = function(t) {
-return null != t && (o(t) || n(t) || !!t._isBuffer);
-};
-function o(t) {
-return !!t.constructor && "function" == typeof t.constructor.isBuffer && t.constructor.isBuffer(t);
-}
-function n(t) {
-return "function" == typeof t.readFloatLE && "function" == typeof t.slice && o(t.slice(0, 0));
-}
-}, {} ],
-17: [ function(t, e) {
-(function() {
-var o = t("crypt"), n = t("charenc").utf8, i = t("is-buffer"), r = t("charenc").bin, a = function(t, e) {
-t.constructor == String ? t = e && "binary" === e.encoding ? r.stringToBytes(t) : n.stringToBytes(t) : i(t) ? t = Array.prototype.slice.call(t, 0) : Array.isArray(t) || t.constructor === Uint8Array || (t = t.toString());
-for (var s = o.bytesToWords(t), c = 8 * t.length, l = 1732584193, p = -271733879, u = -1732584194, d = 271733878, h = 0; h < s.length; h++) s[h] = 16711935 & (s[h] << 8 | s[h] >>> 24) | 4278255360 & (s[h] << 24 | s[h] >>> 8);
-s[c >>> 5] |= 128 << c % 32;
-s[14 + (c + 64 >>> 9 << 4)] = c;
-var f = a._ff, m = a._gg, _ = a._hh, g = a._ii;
-for (h = 0; h < s.length; h += 16) {
-var y = l, v = p, b = u, C = d;
-l = f(l, p, u, d, s[h + 0], 7, -680876936);
-d = f(d, l, p, u, s[h + 1], 12, -389564586);
-u = f(u, d, l, p, s[h + 2], 17, 606105819);
-p = f(p, u, d, l, s[h + 3], 22, -1044525330);
-l = f(l, p, u, d, s[h + 4], 7, -176418897);
-d = f(d, l, p, u, s[h + 5], 12, 1200080426);
-u = f(u, d, l, p, s[h + 6], 17, -1473231341);
-p = f(p, u, d, l, s[h + 7], 22, -45705983);
-l = f(l, p, u, d, s[h + 8], 7, 1770035416);
-d = f(d, l, p, u, s[h + 9], 12, -1958414417);
-u = f(u, d, l, p, s[h + 10], 17, -42063);
-p = f(p, u, d, l, s[h + 11], 22, -1990404162);
-l = f(l, p, u, d, s[h + 12], 7, 1804603682);
-d = f(d, l, p, u, s[h + 13], 12, -40341101);
-u = f(u, d, l, p, s[h + 14], 17, -1502002290);
-l = m(l, p = f(p, u, d, l, s[h + 15], 22, 1236535329), u, d, s[h + 1], 5, -165796510);
-d = m(d, l, p, u, s[h + 6], 9, -1069501632);
-u = m(u, d, l, p, s[h + 11], 14, 643717713);
-p = m(p, u, d, l, s[h + 0], 20, -373897302);
-l = m(l, p, u, d, s[h + 5], 5, -701558691);
-d = m(d, l, p, u, s[h + 10], 9, 38016083);
-u = m(u, d, l, p, s[h + 15], 14, -660478335);
-p = m(p, u, d, l, s[h + 4], 20, -405537848);
-l = m(l, p, u, d, s[h + 9], 5, 568446438);
-d = m(d, l, p, u, s[h + 14], 9, -1019803690);
-u = m(u, d, l, p, s[h + 3], 14, -187363961);
-p = m(p, u, d, l, s[h + 8], 20, 1163531501);
-l = m(l, p, u, d, s[h + 13], 5, -1444681467);
-d = m(d, l, p, u, s[h + 2], 9, -51403784);
-u = m(u, d, l, p, s[h + 7], 14, 1735328473);
-l = _(l, p = m(p, u, d, l, s[h + 12], 20, -1926607734), u, d, s[h + 5], 4, -378558);
-d = _(d, l, p, u, s[h + 8], 11, -2022574463);
-u = _(u, d, l, p, s[h + 11], 16, 1839030562);
-p = _(p, u, d, l, s[h + 14], 23, -35309556);
-l = _(l, p, u, d, s[h + 1], 4, -1530992060);
-d = _(d, l, p, u, s[h + 4], 11, 1272893353);
-u = _(u, d, l, p, s[h + 7], 16, -155497632);
-p = _(p, u, d, l, s[h + 10], 23, -1094730640);
-l = _(l, p, u, d, s[h + 13], 4, 681279174);
-d = _(d, l, p, u, s[h + 0], 11, -358537222);
-u = _(u, d, l, p, s[h + 3], 16, -722521979);
-p = _(p, u, d, l, s[h + 6], 23, 76029189);
-l = _(l, p, u, d, s[h + 9], 4, -640364487);
-d = _(d, l, p, u, s[h + 12], 11, -421815835);
-u = _(u, d, l, p, s[h + 15], 16, 530742520);
-l = g(l, p = _(p, u, d, l, s[h + 2], 23, -995338651), u, d, s[h + 0], 6, -198630844);
-d = g(d, l, p, u, s[h + 7], 10, 1126891415);
-u = g(u, d, l, p, s[h + 14], 15, -1416354905);
-p = g(p, u, d, l, s[h + 5], 21, -57434055);
-l = g(l, p, u, d, s[h + 12], 6, 1700485571);
-d = g(d, l, p, u, s[h + 3], 10, -1894986606);
-u = g(u, d, l, p, s[h + 10], 15, -1051523);
-p = g(p, u, d, l, s[h + 1], 21, -2054922799);
-l = g(l, p, u, d, s[h + 8], 6, 1873313359);
-d = g(d, l, p, u, s[h + 15], 10, -30611744);
-u = g(u, d, l, p, s[h + 6], 15, -1560198380);
-p = g(p, u, d, l, s[h + 13], 21, 1309151649);
-l = g(l, p, u, d, s[h + 4], 6, -145523070);
-d = g(d, l, p, u, s[h + 11], 10, -1120210379);
-u = g(u, d, l, p, s[h + 2], 15, 718787259);
-p = g(p, u, d, l, s[h + 9], 21, -343485551);
-l = l + y >>> 0;
-p = p + v >>> 0;
-u = u + b >>> 0;
-d = d + C >>> 0;
-}
-return o.endian([ l, p, u, d ]);
-};
-a._ff = function(t, e, o, n, i, r, a) {
-var s = t + (e & o | ~e & n) + (i >>> 0) + a;
-return (s << r | s >>> 32 - r) + e;
-};
-a._gg = function(t, e, o, n, i, r, a) {
-var s = t + (e & n | o & ~n) + (i >>> 0) + a;
-return (s << r | s >>> 32 - r) + e;
-};
-a._hh = function(t, e, o, n, i, r, a) {
-var s = t + (e ^ o ^ n) + (i >>> 0) + a;
-return (s << r | s >>> 32 - r) + e;
-};
-a._ii = function(t, e, o, n, i, r, a) {
-var s = t + (o ^ (e | ~n)) + (i >>> 0) + a;
-return (s << r | s >>> 32 - r) + e;
-};
-a._blocksize = 16;
-a._digestsize = 16;
-e.exports = function(t, e) {
-if (null == t) throw new Error("Illegal argument " + t);
-var n = o.wordsToBytes(a(t, e));
-return e && e.asBytes ? n : e && e.asString ? r.bytesToString(n) : o.bytesToHex(n);
-};
-})();
-}, {
-charenc: 14,
-crypt: 15,
-"is-buffer": 16
-} ],
 HallHandler: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "9ea20awrx9LiIfsU1Z5aSu+", "HallHandler");
@@ -22040,6 +22766,109 @@ cc._RF.pop();
 "../help/helper": "helper",
 "../manager/ModelManager": "ModelManager"
 } ],
+HomeTipTCService_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "5a3a8rJqKNG67D5Ajzxghu5", "HomeTipTCService_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../AudioMgr"), s = t("../GameMgr"), c = cc._decorator, l = c.ccclass, p = c.property, u = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Main = null;
+e.node_Zhezhao = null;
+e.clickType = 0;
+e.isCanClick = !1;
+e.callback_Over = null;
+e.tween_main = null;
+e.tween_Zhezhao = null;
+return e;
+}
+e.prototype.onDestroy = function() {
+this.ClearTween();
+};
+e.prototype.OpenShow = function(t) {
+var e = this;
+this.ClearTween();
+this.isCanClick = !1;
+this.callback_Over = t;
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+this.node_Zhezhao.opacity = 0;
+this.node_Main.scale = 0;
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).to(.3, {
+opacity: 200
+}).start();
+this.tween_main = cc.tween(this.node_Main).delay(.3).to(.35, {
+scale: 1
+}, cc.easeBackOut()).call(function() {
+e.isCanClick = !0;
+}).start();
+};
+e.prototype.ButtonClick_Home = function() {
+if (this.isCanClick) {
+this.isCanClick = !1;
+a.default.instance.playEffect(s.AudioName.Click);
+this.clickType = 1;
+this.CloseShow();
+}
+};
+e.prototype.ButtonClick_Close = function() {
+if (this.isCanClick) {
+this.isCanClick = !1;
+a.default.instance.playEffect(s.AudioName.Click);
+this.clickType = 0;
+this.CloseShow();
+}
+};
+e.prototype.CloseShow = function() {
+var t = this;
+this.ClearTween();
+this.tween_main = cc.tween(this.node_Main).to(.3, {
+scale: 0
+}, cc.easeBackIn()).start();
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).delay(.2).to(.3, {
+opacity: 0
+}).delay(.1).call(function() {
+t.callback_Over && t.callback_Over(t.clickType);
+t.node_Main.active = !1;
+t.node_Zhezhao.active = !1;
+}).start();
+};
+e.prototype.ClearTween = function() {
+this.tween_Zhezhao && this.tween_Zhezhao.stop();
+this.tween_main && this.tween_main.stop();
+};
+r([ p(cc.Node) ], e.prototype, "node_Main", void 0);
+r([ p(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
+return r([ l ], e);
+}(cc.Component);
+o.default = u;
+cc._RF.pop();
+}, {
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
+} ],
 HostInfo: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "40cf2uJ++pNW4yKdnZgB1wI", "HostInfo");
@@ -22213,7 +23042,7 @@ done: !0
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var c = t("../../common/component/ZProgressbar"), l = t("../../common/config/Config"), p = t("../../common/config/ConstString"), u = t("../../common/config/GlobalVar"), d = t("../../common/config/HostInfo"), h = t("../../common/config/User"), f = t("../../common/event/CommonEvent"), m = t("../../common/net/CommonSender"), _ = t("../../common/net/HttpSender"), g = t("../../common/protocol/HeartbetJson"), y = t("../../common/utils/CmmUtils"), v = t("../../framework/componects/EventComponent"), b = t("../../framework/core/update/Update"), C = t("../../framework/defines/Enums"), w = t("../../framework/defines/Macros"), S = t("../../sdk/AppInfo"), E = t("../../sdk/GameNativeConfig"), R = t("../../sdk/SdkManager"), O = t("../net/HallHandler"), A = t("../net/LobbyService"), P = t("./CommonUIHelper"), L = cc._decorator, T = L.ccclass, N = L.property, M = function(t) {
+var c = t("../../common/component/ZProgressbar"), l = t("../../common/config/Config"), p = t("../../common/config/ConstString"), u = t("../../common/config/GlobalVar"), d = t("../../common/config/HostInfo"), h = t("../../common/config/User"), f = t("../../common/event/CommonEvent"), m = t("../../common/net/CommonSender"), _ = t("../../common/net/HttpSender"), g = t("../../common/protocol/HeartbetJson"), y = t("../../common/utils/CmmUtils"), v = t("../../framework/componects/EventComponent"), b = t("../../framework/core/update/Update"), C = t("../../framework/defines/Enums"), w = t("../../framework/defines/Macros"), S = t("../../sdk/AppInfo"), E = t("../../sdk/GameNativeConfig"), R = t("../../sdk/SdkManager"), O = t("../net/HallHandler"), A = t("../net/LobbyService"), P = t("./CommonUIHelper"), L = cc._decorator, T = L.ccclass, M = L.property, N = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -22333,6 +23162,7 @@ u.GlobalVar.hotUpdateUrl = App.updateManager.hotUpdateUrl;
 u.GlobalVar.gameIconPath = t.updateUrl + p.ConstString.gameIconPath;
 u.GlobalVar.hallFoceUpdateStatus = 0;
 Log.e("更新热更地址：" + App.updateManager.hotUpdateUrl);
+App.updateManager.isOnlyBundleHotUpdate = l.Config.ONLY_BUNDLE_HOT_UPDATE;
 if (0 == t.update.updateStatus) App.updateManager.isSkipCheckUpdate = !0; else if (1 == t.update.updateStatus) App.updateManager.isSkipCheckUpdate = !1; else if (2 == t.update.updateStatus) {
 App.updateManager.isSkipCheckUpdate = !1;
 u.GlobalVar.forceUpdateUrl = t.webUrl;
@@ -22482,7 +23312,6 @@ this.cRoot2 && (this.cRoot2.active = h.default.self.isMerchantPlayer);
 e.LoingCallBack = function(t) {
 var e = this;
 this.SetCountryCode(t.country);
-R.default.sendEvent("hall");
 u.GlobalVar.setPhonePwtoken(t.phone, t.pwdtoken, t.country);
 u.GlobalVar.firstLeaveTip = 0 != t.leaveTip;
 Log.w(JSON.stringify(t));
@@ -22553,13 +23382,13 @@ dispatch(f.CommonEvent.Show_Hall);
 var o;
 e.sender = null;
 e.initIndex = 0;
-r([ N(cc.Node) ], e.prototype, "wRoot1", void 0);
-r([ N(cc.Node) ], e.prototype, "wRoot2", void 0);
-r([ N(cc.Node) ], e.prototype, "cRoot1", void 0);
-r([ N(cc.Node) ], e.prototype, "cRoot2", void 0);
+r([ M(cc.Node) ], e.prototype, "wRoot1", void 0);
+r([ M(cc.Node) ], e.prototype, "wRoot2", void 0);
+r([ M(cc.Node) ], e.prototype, "cRoot1", void 0);
+r([ M(cc.Node) ], e.prototype, "cRoot2", void 0);
 return o = r([ T ], e);
 }(v.default);
-o.default = M;
+o.default = N;
 cc._RF.pop();
 }, {
 "../../common/component/ZProgressbar": "ZProgressbar",
@@ -24900,12 +25729,12 @@ L > 0 && (0 == this._getTotalFlexibleSize(t, e) ? A = this._getStartOffset(t, e,
 var T = 0;
 this._getTotalMinSize(t, e) != this._getTotalPreferredSize(t, e) && (T = l.Helper.clamp01((n - this._getTotalMinSize(t, e)) / (this._getTotalPreferredSize(t, e) - this._getTotalMinSize(t, e))));
 for (g = d; this.reverseArrangement ? g >= h : g < h; g += f) {
-var N = p[g], M = this._getChildSizes(N, e, i, a), I = (b = M.min, C = M.preferred, 
-w = M.flexible, S = r ? N.scale[m] : 1, l.Helper.lerp(b, C, T));
+var M = p[g], N = this._getChildSizes(M, e, i, a), I = (b = N.min, C = N.preferred, 
+w = N.flexible, S = r ? M.scale[m] : 1, l.Helper.lerp(b, C, T));
 I += w * P;
-if (i) this._setChildAlongAxisWithScale(t, N, e, A, S, I); else {
-O = (I - N.size[m]) * s;
-this._setChildAlongAxisWithScale(t, N, e, A + O, S);
+if (i) this._setChildAlongAxisWithScale(t, M, e, A, S, I); else {
+O = (I - M.size[m]) * s;
+this._setChildAlongAxisWithScale(t, M, e, A + O, S);
 }
 A += I * S + this.spacing;
 }
@@ -25127,6 +25956,305 @@ cc._RF.pop();
 }, {
 "../../framework/componects/EventComponent": "EventComponent",
 "../event/CommonEvent": "CommonEvent"
+} ],
+LevelLayoutMgr_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "9809548KpRLzqsfTUIa1gX0", "LevelLayoutMgr_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../Model/LevelModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.prefab_levels = [];
+return e;
+}
+e.prototype.CreateLevel = function(t) {
+this.node.destroyAllChildren();
+var e = cc.instantiate(this.prefab_levels[t]);
+e.parent = this.node;
+return e.getComponent(a.default).controler;
+};
+r([ l(cc.Prefab) ], e.prototype, "prefab_levels", void 0);
+return r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"../Model/LevelModel_A": "LevelModel_A"
+} ],
+LevelManager_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "188fdN13iBM0IxMRQdbxi6s", "LevelManager_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../GameMgr"), s = t("../Model/ChooseLevelModel_A"), c = cc._decorator, l = c.ccclass, p = c.property, u = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Main = null;
+e.node_Zhezhao = null;
+e.node_Level = null;
+e.node_Reward = null;
+e.label_Reward = null;
+e.btn_Claim = null;
+e.btn_Close = null;
+e.configData = null;
+e.curPlayLevel = 1;
+e.finishLevel = 0;
+e.tween_Level = null;
+e.tween_Reward = null;
+e.callback_Claim = null;
+e.chooseLevelModels = [];
+return e;
+}
+o = e;
+e.prototype.onDestroy = function() {
+this.ClearTween();
+};
+e.prototype.onLoad = function() {
+var t = this;
+o.instance = this;
+this.InitConfigData();
+this.finishLevel = 0;
+this.Callback_ChooseLevel(1);
+for (var e = 0; e < this.chooseLevelModels.length; e++) {
+var n = this.chooseLevelModels[e], i = this.configData.levels[e], r = e <= this.finishLevel;
+n.Init(i.id, r, function(e) {
+t.PlayNextLevel(e);
+});
+}
+};
+e.prototype.start = function() {};
+e.prototype.OpenShow = function(t) {
+this.ClearTween();
+this.callback_Claim = t;
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+this.btn_Close.interactable = !1;
+this.btn_Claim.interactable = !0;
+this.btn_Claim.node.scale = 1;
+this.node_Level.scale = 0;
+this.node_Reward.scale = 1;
+this.label_Reward.string = "" + this.configData.levels[this.finishLevel].reward;
+};
+e.prototype.SetFinishLevel = function(t) {
+if (t > this.finishLevel) {
+this.finishLevel = t;
+for (var e = 0; e < this.chooseLevelModels.length; e++) {
+var o = this.chooseLevelModels[e], n = e <= this.finishLevel;
+o.ResetState(n);
+}
+}
+};
+e.prototype.PlayNextLevel = function(t) {
+this.Callback_ChooseLevel(t);
+};
+e.prototype.Callback_ChooseLevel = function(t) {
+this.curPlayLevel = t;
+var e = this.configData.levels[t - 1];
+this.node_Main.active = !1;
+this.node_Zhezhao.active = !1;
+dispatch(a.MyGameEvent_A.ChooseLevel, e);
+};
+e.prototype.ButtonClick_Close = function() {
+6 == this.finishLevel ? this.Callback_ChooseLevel(6) : this.Callback_ChooseLevel(this.finishLevel + 1);
+};
+e.prototype.ButtonClick_Claim = function() {
+var t = this;
+this.btn_Claim.interactable = !1;
+this.btn_Close.interactable = !1;
+this.callback_Claim && this.callback_Claim(this.configData.levels[this.finishLevel].reward);
+this.tween_Reward = cc.tween(this.node_Reward).to(.5, {
+scale: 0
+}).call(function() {
+t.btn_Claim.node.scale = 0;
+}).start();
+this.tween_Level = cc.tween(this.node_Level).delay(.5).to(.5, {
+scale: 1
+}).call(function() {
+t.btn_Close.interactable = !0;
+}).start();
+};
+e.prototype.ClearTween = function() {
+this.tween_Level && this.tween_Level.stop();
+this.tween_Reward && this.tween_Reward.stop();
+};
+e.prototype.InitConfigData = function() {
+this.configData = {
+levels: [ {
+id: 1,
+reelId: 2,
+reel: [ 5, 5 ],
+targetId: [ 9 ],
+maxLive: 20,
+reward: 50,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+dropWeights: [ 1, 1, 1, 3, 3, 4, 4, 5, 6 ],
+lines: [],
+betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
+}, {
+id: 2,
+reelId: 2,
+reel: [ 5, 5 ],
+targetId: [ 9 ],
+maxLive: 100,
+reward: 300,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+dropWeights: [ 1, 1, 2, 2, 3, 3, 4, 5, 6 ],
+lines: [],
+betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
+}, {
+id: 3,
+reelId: 2,
+reel: [ 5, 5 ],
+targetId: [ 9 ],
+maxLive: 500,
+reward: 1e3,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+dropWeights: [ 1, 2, 2, 3, 3, 3, 4, 4, 5 ],
+lines: [],
+betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
+}, {
+id: 4,
+reelId: 2,
+reel: [ 5, 5 ],
+targetId: [ 9 ],
+maxLive: 1e3,
+reward: 2e3,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+dropWeights: [ 1, 2, 2, 3, 3, 3, 4, 4, 5 ],
+lines: [],
+betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
+}, {
+id: 5,
+reelId: 2,
+reel: [ 5, 5 ],
+targetId: [ 9 ],
+maxLive: 5e3,
+reward: 2e4,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+dropWeights: [ 1, 1, 2, 2, 3, 3, 4, 4, 5 ],
+lines: [],
+betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
+}, {
+id: 6,
+reelId: 2,
+reel: [ 5, 5 ],
+targetId: [ 9 ],
+maxLive: 1e4,
+reward: 1e5,
+ele: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+dropWeights: [ 1, 1, 2, 2, 3, 3, 4, 4, 5 ],
+lines: [],
+betRate: [ [ 80, 160, 400 ], [ 50, 100, 200 ], [ 20, 40, 80 ], [ 10, 20, 40 ], [ 8, 16, 32 ], [ 5, 10, 20 ], [ 4, 8, 16 ], [ 2, 4, 8 ], [ 1, 2, 4 ] ]
+} ]
+};
+};
+var o;
+e.instance = null;
+r([ p(cc.Node) ], e.prototype, "node_Main", void 0);
+r([ p(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
+r([ p(cc.Node) ], e.prototype, "node_Level", void 0);
+r([ p(cc.Node) ], e.prototype, "node_Reward", void 0);
+r([ p(cc.Label) ], e.prototype, "label_Reward", void 0);
+r([ p(cc.Button) ], e.prototype, "btn_Claim", void 0);
+r([ p(cc.Button) ], e.prototype, "btn_Close", void 0);
+r([ p(s.default) ], e.prototype, "chooseLevelModels", void 0);
+return o = r([ l ], e);
+}(cc.Component);
+o.default = u;
+cc._RF.pop();
+}, {
+"../GameMgr": "GameMgr",
+"../Model/ChooseLevelModel_A": "ChooseLevelModel_A"
+} ],
+LevelModel_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "125a2+T3fxMUb7nXpCFgYYt", "LevelModel_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../../scripts/slotsframewrodk/core/newRoll/ZRollControler"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.controler = null;
+e.node_LinePrenet = null;
+e.node_LineModel = null;
+e.sizeX = 154;
+e.sizeY = 168;
+return e;
+}
+e.prototype.Init = function() {};
+r([ l(a.default) ], e.prototype, "controler", void 0);
+r([ l(cc.Node) ], e.prototype, "node_LinePrenet", void 0);
+r([ l(cc.Node) ], e.prototype, "node_LineModel", void 0);
+return r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"../../../../scripts/slotsframewrodk/core/newRoll/ZRollControler": "ZRollControler"
 } ],
 LineItemSize: [ function(t, e, o) {
 "use strict";
@@ -25852,6 +26980,65 @@ cc._RF.pop();
 }, {
 "./ItemRender": "ItemRender"
 } ],
+LoadingGameService_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "14289zEH8dOPIQOxhX3C2Cg", "LoadingGameService_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_main = null;
+e.node_zhezhao = null;
+e.sprite_Progress = null;
+e.tween_Progress = null;
+return e;
+}
+e.prototype.OpenShow = function() {
+var t = this;
+this.tween_Progress && this.tween_Progress.stop();
+this.sprite_Progress.fillRange = 0;
+this.node_main.active = !0;
+this.node_zhezhao.active = !0;
+this.tween_Progress = cc.tween(this.sprite_Progress).to(2, {
+fillRange: 1
+}).call(function() {
+t.CloseShow();
+}).start();
+};
+e.prototype.CloseShow = function() {
+this.node_main.active = !1;
+this.node_zhezhao.active = !1;
+};
+r([ c(cc.Node) ], e.prototype, "node_main", void 0);
+r([ c(cc.Node) ], e.prototype, "node_zhezhao", void 0);
+r([ c(cc.Sprite) ], e.prototype, "sprite_Progress", void 0);
+return r([ s ], e);
+}(cc.Component);
+o.default = l;
+cc._RF.pop();
+}, {} ],
 Loading: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "bb305D9F5lGI6TgHkSWfCvt", "Loading");
@@ -26771,6 +27958,72 @@ cc._RF.pop();
 "../../tableCommon/robot/BaseRobot": "BaseRobot",
 "../../tableCommon/robot/TableRobot": "TableRobot",
 "../../vcode/scripts/mian/VertialRoot": "VertialRoot"
+} ],
+Login: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "1bc65AnotxDTr4x34sIE3ah", "Login");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../scripts/common/utils/RandomUtil"), s = t("../../../scripts/framework/componects/EventComponent"), c = t("../../../scripts/framework/core/ui/UIManager"), l = t("../../../scripts/framework/defines/Enums"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.play = null;
+e.progress = null;
+e.bar = null;
+return e;
+}
+e.prototype.addEvents = function() {
+var t = this;
+this.onN(this.play, l.NodeEvent.click, function() {
+t.loading();
+});
+c.UIManager.newGameTest();
+};
+e.prototype.loading = function() {
+var t = this;
+this.play.active = !1;
+this.progress.active = !0;
+this.bar.fillRange = 0;
+cc.tween(this.bar).to(a.RandomUtil.randomFRange(1, 2), {
+fillRange: 1
+}).call(function() {
+t.progress.active = !1;
+cc.director.loadScene("slots");
+}).start();
+};
+r([ d(cc.Node) ], e.prototype, "play", void 0);
+r([ d(cc.Node) ], e.prototype, "progress", void 0);
+r([ d(cc.Sprite) ], e.prototype, "bar", void 0);
+return r([ u ], e);
+}(s.default);
+o.default = h;
+cc._RF.pop();
+}, {
+"../../../scripts/common/utils/RandomUtil": "RandomUtil",
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"../../../scripts/framework/core/ui/UIManager": "UIManager",
+"../../../scripts/framework/defines/Enums": "Enums"
 } ],
 Macros: [ function(t, e, o) {
 "use strict";
@@ -29477,6 +30730,471 @@ return t;
 o.PathManager = n;
 cc._RF.pop();
 }, {} ],
+PayLineItem_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "f7308k6JiVPGIGULOa3rxVf", "PayLineItem_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("./PayLineModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.layout_ = null;
+e.payLineModel = [];
+return e;
+}
+e.prototype.Init = function(t, e, o, n, i, r, a) {
+this.layout_.spacingX = t;
+for (var s = 0; s < this.payLineModel.length; s++) {
+var c = this.payLineModel[s];
+if (s < a.length) {
+c.node.active = !0;
+c.Init(n[s], i, r[s], e, o, a[s]);
+} else c.node.active = !1;
+}
+};
+r([ l(cc.Layout) ], e.prototype, "layout_", void 0);
+r([ l(a.default) ], e.prototype, "payLineModel", void 0);
+return r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"./PayLineModel_A": "PayLineModel_A"
+} ],
+PayLineModel_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "d8b2eljvrlJW4OprZuaiISs", "PayLineModel_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.label_Id = null;
+e.node_GeziPre = null;
+e.node_GeziLayout = null;
+e.normalSize = 58;
+return e;
+}
+e.prototype.Init = function(t, e, o, n, i, r) {
+this.label_Id.string = t + "";
+this.node_GeziLayout.height = 20 * (i[1] - 3) + this.normalSize;
+this.node_GeziLayout.destroyAllChildren();
+for (var a = 0; a < n; a++) {
+var s = cc.instantiate(this.node_GeziPre);
+s.parent = this.node_GeziLayout;
+r.indexOf(a) >= 0 ? s.color = o : s.color = e;
+}
+};
+r([ c(cc.Label) ], e.prototype, "label_Id", void 0);
+r([ c(cc.Node) ], e.prototype, "node_GeziPre", void 0);
+r([ c(cc.Node) ], e.prototype, "node_GeziLayout", void 0);
+return r([ s ], e);
+}(cc.Component);
+o.default = l;
+cc._RF.pop();
+}, {} ],
+PayLinesPanel: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "20ed6sPKsxOV4j9X5zJHjU2", "PayLinesPanel");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../scripts/common/event/CommonEvent"), s = t("./AudioMgr"), c = t("./GameMgr"), l = t("./Model/PayLineItem_A"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Zhezhao = null;
+e.node_main = null;
+e.node_CloseBtn = null;
+e.node_Grid = null;
+e.node_Item = null;
+e.label_LineCountTip = null;
+e.color_Di = null;
+e.color_Lines = [];
+e.config_jianju = [ 66, 36, 10 ];
+e.tween_Move = null;
+return e;
+}
+e.prototype.InitData = function(t) {
+this.node_Grid.destroyAllChildren();
+var e = t.lines.length, o = this.config_jianju[0], n = t.reel[0] * t.reel[1];
+this.label_LineCountTip.string = "There are " + e + " fixed paylines.";
+if (3 == e) {
+o = this.config_jianju[0];
+var i = [ 1, 2, 3 ], r = [ this.color_Lines[0], this.color_Lines[1], this.color_Lines[2] ];
+(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
+(s = h.getComponent(l.default)).Init(o, n, t.reel, i, this.color_Di, r, t.lines);
+} else if (7 == e) {
+o = this.config_jianju[1];
+for (var a = 0; a < 2; a++) {
+(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
+var s = h.getComponent(l.default);
+if (0 == a) {
+i = [ 1, 2, 3 ], r = [ this.color_Lines[0], this.color_Lines[1], this.color_Lines[2] ];
+var c = [ t.lines[0], t.lines[1], t.lines[2] ];
+s.Init(o, n, t.reel, i, this.color_Di, r, c);
+} else {
+i = [ 4, 5, 6, 7 ], r = [ this.color_Lines[3], this.color_Lines[4], this.color_Lines[5], this.color_Lines[6] ], 
+c = [ t.lines[3], t.lines[4], t.lines[5], t.lines[6] ];
+s.Init(o, n, t.reel, i, this.color_Di, r, c);
+}
+}
+} else if (9 == e) {
+o = this.config_jianju[0];
+var p = 0;
+for (a = 0; a < 3; a++) {
+(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
+s = h.getComponent(l.default), i = [], r = [], c = [];
+for (var u = 0; u < 3; u++) {
+i.push(p + 1);
+r.push(this.color_Lines[p]);
+c.push(t.lines[p]);
+p++;
+}
+s.Init(o, n, t.reel, i, this.color_Di, r, c);
+}
+} else {
+o = this.config_jianju[2];
+var d = e / 5;
+for (p = 0, a = 0; a < d; a++) {
+var h;
+(h = cc.instantiate(this.node_Item)).parent = this.node_Grid;
+for (s = h.getComponent(l.default), i = [], r = [], c = [], u = 0; u < 5; u++) {
+i.push(p + 1);
+r.push(this.color_Lines[p % this.color_Lines.length]);
+c.push(t.lines[p]);
+p++;
+}
+s.Init(o, n, t.reel, i, this.color_Di, r, c);
+}
+}
+};
+e.prototype.OpenShow = function() {
+var t = this;
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.node_main.height = this.node.height;
+this.node_CloseBtn.active = !1;
+this.node_Zhezhao.active = !0;
+this.node_main.active = !0;
+this.node_main.position = cc.v3(0, -this.node_main.height, 0);
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, 0, 0)
+}).delay(.2).call(function() {
+t.node_CloseBtn.active = !0;
+}).start();
+};
+e.prototype.CloseShow = function() {
+this.node_Zhezhao.active = !1;
+this.node_main.active = !1;
+};
+e.prototype.ButtonClick_Close = function() {
+var t = this;
+s.default.instance.playEffect(c.AudioName.Click);
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, -this.node_main.height, 0)
+}).call(function() {
+t.CloseShow();
+}).start();
+};
+r([ d(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
+r([ d(cc.Node) ], e.prototype, "node_main", void 0);
+r([ d(cc.Node) ], e.prototype, "node_CloseBtn", void 0);
+r([ d(cc.Node) ], e.prototype, "node_Grid", void 0);
+r([ d(cc.Node) ], e.prototype, "node_Item", void 0);
+r([ d(cc.Label) ], e.prototype, "label_LineCountTip", void 0);
+r([ d(cc.Color) ], e.prototype, "color_Di", void 0);
+r([ d(cc.Color) ], e.prototype, "color_Lines", void 0);
+return r([ u ], e);
+}(cc.Component);
+o.default = h;
+cc._RF.pop();
+}, {
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"./AudioMgr": "AudioMgr",
+"./GameMgr": "GameMgr",
+"./Model/PayLineItem_A": "PayLineItem_A"
+} ],
+PayTabelPanel: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "e416fJrPw5IarwlJYlcLyMl", "PayTabelPanel");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../scripts/common/event/CommonEvent"), s = t("./AudioMgr"), c = t("./GameMgr"), l = t("./Model/PayTableItem_A"), p = cc._decorator, u = p.ccclass, d = p.property, h = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Zhezhao = null;
+e.node_main = null;
+e.node_CloseBtn = null;
+e.node_Parent = null;
+e.node_PayTabelItem = null;
+e.tween_Move = null;
+return e;
+}
+e.prototype.start = function() {};
+e.prototype.InitData = function(t, e) {
+this.node_Parent.destroyAllChildren();
+var o = Math.floor(t.ele.length / 2), n = !1;
+if (t.ele.length % 2 == 1) {
+o += 1;
+n = !0;
+}
+for (var i = 0, r = 0; r < o; r++) {
+var a = cc.instantiate(this.node_PayTabelItem);
+a.parent = this.node_Parent;
+var s = a.getComponent(l.default), c = [], p = [];
+if (0 == r) if (n) {
+c.push(e[t.ele[i] - 1]);
+p.push(t.betRate[i]);
+i++;
+} else {
+c.push(e[t.ele[i] - 1]);
+p.push(t.betRate[i]);
+i++;
+c.push(e[t.ele[i] - 1]);
+p.push(t.betRate[i]);
+i++;
+} else {
+c.push(e[t.ele[i] - 1]);
+p.push(t.betRate[i]);
+i++;
+c.push(e[t.ele[i] - 1]);
+p.push(t.betRate[i]);
+i++;
+}
+s.SetData(c, p);
+}
+};
+e.prototype.OpenShow = function() {
+var t = this;
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.node_main.height = this.node.height;
+this.node_CloseBtn.active = !1;
+this.node_Zhezhao.active = !0;
+this.node_main.active = !0;
+this.node_main.position = cc.v3(0, -this.node_main.height, 0);
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, 0, 0)
+}).delay(.2).call(function() {
+t.node_CloseBtn.active = !0;
+}).start();
+};
+e.prototype.CloseShow = function() {
+this.node_Zhezhao.active = !1;
+this.node_main.active = !1;
+};
+e.prototype.ButtonClick_Close = function() {
+var t = this;
+s.default.instance.playEffect(c.AudioName.Click);
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, -this.node_main.height, 0)
+}).call(function() {
+t.CloseShow();
+}).start();
+};
+r([ d(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
+r([ d(cc.Node) ], e.prototype, "node_main", void 0);
+r([ d(cc.Node) ], e.prototype, "node_CloseBtn", void 0);
+r([ d(cc.Node) ], e.prototype, "node_Parent", void 0);
+r([ d(cc.Node) ], e.prototype, "node_PayTabelItem", void 0);
+return r([ u ], e);
+}(cc.Component);
+o.default = h;
+cc._RF.pop();
+}, {
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"./AudioMgr": "AudioMgr",
+"./GameMgr": "GameMgr",
+"./Model/PayTableItem_A": "PayTableItem_A"
+} ],
+PayTableItem_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "c6365uTDu5PtKKYvnHcCLto", "PayTableItem_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("./PayTableModel_A"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.payTabelModels = [];
+return e;
+}
+e.prototype.SetData = function(t, e) {
+for (var o = 0; o < this.payTabelModels.length; o++) {
+var n = this.payTabelModels[o];
+if (o < t.length) {
+n.node.active = !0;
+n.SetData(t[o], e[o]);
+} else n.node.active = !1;
+}
+};
+r([ l(a.default) ], e.prototype, "payTabelModels", void 0);
+return r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"./PayTableModel_A": "PayTableModel_A"
+} ],
+PayTableModel_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "d2be94Qtw1J74kvz/VkJ3Zd", "PayTableModel_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Muls = [];
+e.label_Muls = [];
+e.sprite_Icon = null;
+return e;
+}
+e.prototype.SetData = function(t, e) {
+this.sprite_Icon.spriteFrame = t;
+for (var o = 0; o < this.node_Muls.length; o++) {
+this.node_Muls[o];
+if (o < e.length) {
+this.node_Muls[o].active = !0;
+this.label_Muls[o].string = e[o] + "";
+} else this.node_Muls[o].active = !1;
+}
+};
+r([ c(cc.Node) ], e.prototype, "node_Muls", void 0);
+r([ c(cc.Label) ], e.prototype, "label_Muls", void 0);
+r([ c(cc.Sprite) ], e.prototype, "sprite_Icon", void 0);
+return r([ s ], e);
+}(cc.Component);
+o.default = l;
+cc._RF.pop();
+}, {} ],
 PayTableService_Pg: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "9d7afVy3vpBwoU+DBOgtCCE", "PayTableService_Pg");
@@ -31455,6 +33173,202 @@ t.CacheData = i;
 })(o.Resource || (o.Resource = {}));
 cc._RF.pop();
 }, {} ],
+Reward_YouWin_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "a70e1Mi76RFbavGaEKRdbAA", "Reward_YouWin_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../../scripts/common/utils/CmmUtils"), s = t("../AudioMgr"), c = t("../GameMgr"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Main = null;
+e.node_Zhezhao = null;
+e.label_Score = null;
+e.ani_Guang = null;
+e.node_Btn_Claim = null;
+e.node_Btn_Skip = null;
+e.curShowGold = 0;
+e.curTarReward = 0;
+e.callback_Over = null;
+e.audioID_bigwin = -1;
+e.tween_Main = null;
+e.tween_Zhezhao = null;
+e.tween_Gold = null;
+e.tween_ClaimBtn = null;
+e.tween_RewardX2Btn = null;
+e.tween_DelayShowBtn = null;
+return e;
+}
+e.prototype.onDestroy = function() {
+this.ClearTween();
+};
+e.prototype.OpenShow = function(t, e, o) {
+var n = this;
+s.default.instance.PauseMusic();
+this.audioID_bigwin = s.default.instance.playEffect(c.AudioName.Bigwin);
+this.ClearTween();
+this.callback_Over = o;
+this.curTarReward = t;
+this.goldInfo = {
+gold: 0
+};
+this.label_Score.string = "0";
+this.node_Main.active = !0;
+this.node_Zhezhao.active = !0;
+this.node_Main.scale = 0;
+this.node_Zhezhao.opacity = 0;
+this.node_Btn_Claim.active = !1;
+this.node_Btn_Claim.scale = 0;
+this.node_Btn_Skip.active = !1;
+this.ani_Guang && this.ani_Guang.stop();
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).to(.3, {
+opacity: 150
+}).start();
+this.tween_Main = cc.tween(this.node_Main).delay(.3).to(.3, {
+scale: 1
+}, cc.easeBackOut()).call(function() {
+n.ani_Guang && n.ani_Guang.play();
+n.node_Btn_Skip.active = !0;
+}).start();
+var i = 4;
+e > 2 && (i = 6);
+this.tween_Gold = cc.tween(this.goldInfo).delay(.6).to(i, {
+gold: t
+}, {
+onUpdate: function() {
+n.curShowGold = n.goldInfo.gold;
+n.ShowGold();
+}
+}).call(function() {
+n.curShowGold = n.curTarReward;
+n.ShowGold();
+s.default.instance.StopEffect_audioID(n.audioID_bigwin);
+s.default.instance.playEffect(c.AudioName.BigwinEnd);
+n.node_Btn_Skip.active = !1;
+}).delay(.5).call(function() {
+n.ShowClaimBtn();
+}).start();
+};
+e.prototype.SetRewardX2 = function(t) {
+var e = this;
+this.tween_DelayShowBtn && this.tween_DelayShowBtn.stop();
+if (t) {
+this.goldInfo = {
+gold: this.curTarReward
+};
+var o = 2 * this.curTarReward;
+this.tween_Gold = cc.tween(this.goldInfo).delay(.4).to(2, {
+gold: o
+}, {
+onUpdate: function() {
+e.curShowGold = e.goldInfo.gold;
+e.ShowGold();
+}
+}).call(function() {
+e.curShowGold = o;
+e.curTarReward = o;
+e.ShowGold();
+}).delay(3).call(function() {
+e.PlayHideAni();
+}).start();
+} else App.tips.show("Failed to claim. The advertisement viewing time is insufficient.");
+};
+e.prototype.ButtonClick_Skip = function() {
+this.ClearTween();
+this.node_Btn_Skip.active = !1;
+s.default.instance.StopEffect_audioID(this.audioID_bigwin);
+s.default.instance.playEffect(c.AudioName.BigwinEnd);
+this.curShowGold = this.curTarReward;
+this.ShowGold();
+this.ShowClaimBtn();
+};
+e.prototype.ButtonClick_Claim = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+s.default.instance.StopEffect_audioID(this.audioID_bigwin);
+this.PlayHideAni();
+};
+e.prototype.ButtonClick_RewardX2 = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+s.default.instance.StopEffect_audioID(this.audioID_bigwin);
+this.tween_DelayShowBtn && this.tween_DelayShowBtn.stop();
+this.delayToShowBtn = {
+value: 0
+};
+};
+e.prototype.CloseShow = function() {
+this.node_Main.active = !1;
+this.node_Zhezhao.active = !1;
+};
+e.prototype.PlayHideAni = function() {
+var t = this;
+this.ClearTween();
+this.tween_Main = cc.tween(this.node_Main).to(.35, {
+scale: 0
+}, cc.easeBackIn()).start();
+this.tween_Zhezhao = cc.tween(this.node_Zhezhao).delay(.2).to(.3, {
+opacity: 0
+}).delay(.2).call(function() {
+s.default.instance.ResumeMusic();
+if (t.callback_Over) {
+t.callback_Over(t.curShowGold);
+t.callback_Over = null;
+}
+t.CloseShow();
+}).start();
+};
+e.prototype.ShowClaimBtn = function() {
+this.node_Btn_Claim.active = !0;
+this.tween_ClaimBtn = cc.tween(this.node_Btn_Claim).to(.3, {
+scale: 1
+}, cc.easeBackOut()).start();
+};
+e.prototype.ShowRewardX2Btn = function() {};
+e.prototype.ShowGold = function() {
+this.label_Score.string = a.CmmUtils.NumberToHallString(this.curShowGold, !0);
+};
+e.prototype.ClearTween = function() {
+this.tween_Main && this.tween_Main.stop();
+this.tween_Zhezhao && this.tween_Zhezhao.stop();
+this.tween_Gold && this.tween_Gold.stop();
+this.tween_ClaimBtn && this.tween_ClaimBtn.stop();
+this.tween_RewardX2Btn && this.tween_RewardX2Btn.stop();
+};
+r([ u(cc.Node) ], e.prototype, "node_Main", void 0);
+r([ u(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
+r([ u(cc.Label) ], e.prototype, "label_Score", void 0);
+r([ u(cc.Animation) ], e.prototype, "ani_Guang", void 0);
+r([ u(cc.Node) ], e.prototype, "node_Btn_Claim", void 0);
+r([ u(cc.Node) ], e.prototype, "node_Btn_Skip", void 0);
+return r([ p ], e);
+}(cc.Component);
+o.default = d;
+cc._RF.pop();
+}, {
+"../../../../scripts/common/utils/CmmUtils": "CmmUtils",
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
+} ],
 RichTxtHander: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "c3145fymDhP6bmlOBKsTcBi", "RichTxtHander");
@@ -31835,6 +33749,105 @@ cc._RF.pop();
 }, {
 "../../common/enum/GlobalEnum": "GlobalEnum",
 "./ElementState/ElementState": "ElementState"
+} ],
+RulePanel: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "c54fd1ga11KxKTz83xjE9b4", "RulePanel");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../scripts/common/event/CommonEvent"), s = t("./AudioMgr"), c = t("./GameMgr"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Zhezhao = null;
+e.node_main = null;
+e.node_CloseBtn = null;
+e.label_Layout = null;
+e.label_PayLines = null;
+e.label_Symbols = null;
+e.label_BetType = null;
+e.tween_Move = null;
+return e;
+}
+e.prototype.start = function() {};
+e.prototype.InitData = function(t) {
+this.label_Layout.string = "Layout: " + t.reel[0] + " reels x " + t.reel[1] + " rows";
+if (t.lines.length > 0) {
+this.label_PayLines.string = "Paylines: Fixed " + t.lines.length + " lines";
+this.label_BetType.node.active = !0;
+this.label_BetType.string = "Bet Type: TotalBet = Line Bet x " + t.lines.length;
+} else {
+for (var e = 1, o = 0; o < t.reel[1]; o++) e *= t.reel[0];
+this.label_PayLines.string = "Paylines: Fixed " + e + " lines";
+this.label_BetType.node.active = !1;
+}
+this.label_Symbols.string = "Symbols: " + t.ele.length + " regular symbols (no wild or scatter)";
+};
+e.prototype.OpenShow = function() {
+var t = this;
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.node_main.height = this.node.height;
+this.node_CloseBtn.active = !1;
+this.node_Zhezhao.active = !0;
+this.node_main.active = !0;
+this.node_main.position = cc.v3(0, -this.node_main.height, 0);
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, 0, 0)
+}).delay(.2).call(function() {
+t.node_CloseBtn.active = !0;
+}).start();
+};
+e.prototype.CloseShow = function() {
+this.node_Zhezhao.active = !1;
+this.node_main.active = !1;
+};
+e.prototype.ButtonClick_Close = function() {
+var t = this;
+s.default.instance.playEffect(c.AudioName.Click);
+dispatch(a.CommonEvent.EventMaskAll, 1);
+this.tween_Move && this.tween_Move.stop();
+this.tween_Move = cc.tween(this.node_main).to(.3, {
+position: cc.v3(0, -this.node_main.height, 0)
+}).call(function() {
+t.CloseShow();
+}).start();
+};
+r([ u(cc.Node) ], e.prototype, "node_Zhezhao", void 0);
+r([ u(cc.Node) ], e.prototype, "node_main", void 0);
+r([ u(cc.Node) ], e.prototype, "node_CloseBtn", void 0);
+r([ u(cc.Label) ], e.prototype, "label_Layout", void 0);
+r([ u(cc.Label) ], e.prototype, "label_PayLines", void 0);
+r([ u(cc.Label) ], e.prototype, "label_Symbols", void 0);
+r([ u(cc.Label) ], e.prototype, "label_BetType", void 0);
+return r([ p ], e);
+}(cc.Component);
+o.default = d;
+cc._RF.pop();
+}, {
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"./AudioMgr": "AudioMgr",
+"./GameMgr": "GameMgr"
 } ],
 RuleTCService_Pg: [ function(t, e, o) {
 "use strict";
@@ -33835,6 +35848,16 @@ Log.d("Js Call Android After: getCountry = " + t);
 } else s.default.isIOS ? t = "" : cc.sys.isBrowser;
 return t;
 };
+e.getTimeZone = function() {
+var t = App.storage.getItem("defaultTimeZone", -9999);
+if (-9999 != t) return t;
+if (s.default.isAndroid) {
+t = jsb.reflection.callStaticMethod(this.javaName_sdk, "getTimeZone", "()I");
+Log.d("Js Call Android After: getTimeZone = " + t);
+} else s.default.isIOS || cc.sys.isBrowser;
+App.storage.setItem("defaultTimeZone", t);
+return t;
+};
 e.getDeviceId = function() {
 var e = App.storage.getItem(n.ConstString.deviceIdKey), o = this.getGoogleID();
 if (o) {
@@ -34155,10 +36178,13 @@ Log.d("Js Call Android After: isIndiaTimeZone:" + t);
 return "0" != t;
 };
 e.sendEvent = function(t) {
+if (this.onceSend) {
+this.onceSend = !1;
 if (s.default.isAndroid) {
 jsb.reflection.callStaticMethod(this.javaName_sdk, "sendDEvent", "(Ljava/lang/String;)V", t);
 Log.d("Js Call Android After: sendDEvent:");
-} else s.default.isIOS;
+} else s.default.isIOS || Log.d("send Test Event:" + t);
+}
 };
 e.javaName_sdk = "org/cocos2dx/javascript/SDKManager";
 e.iosName_sdk = "SdkManager";
@@ -34171,6 +36197,7 @@ e._adjustAdid = "";
 e._afid = "";
 e._idfa = "";
 e.isP = !0;
+e.onceSend = !0;
 return e;
 }();
 o.default = p;
@@ -34693,6 +36720,244 @@ cc._RF.pop();
 "../Net": "Net",
 "../socket/ServerConnector": "ServerConnector",
 "./Process": "Process"
+} ],
+SetPanel: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "b4715CRKXZCuoj6+RORRMjq", "SetPanel");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../scripts/framework/componects/EventComponent"), s = t("../../../scripts/framework/defines/Enums"), c = t("./AudioMgr"), l = t("./GameMgr"), p = t("./PayLinesPanel"), u = t("./PayTabelPanel"), d = t("./RulePanel"), h = cc._decorator, f = h.ccclass, m = h.property, _ = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_main = null;
+e.close = null;
+e.soundOpne = null;
+e.soudnclose = null;
+e.exit = null;
+e.soundBtn = null;
+e.musicBtn = null;
+e.musicOpne = null;
+e.musicClose = null;
+e.ruleBtn = null;
+e.payTableBtn = null;
+e.payLinesBtn = null;
+e.rulePanel = null;
+e.payTablePanel = null;
+e.payLinesPanel = null;
+return e;
+}
+e.prototype.onEnable = function() {
+this.node_main.scale = 0;
+cc.tween(this.node_main).to(.5, {
+scale: 1
+}, {
+easing: "backOut"
+}).start();
+};
+e.prototype.addEvents = function() {
+var t = this;
+this.onN(this.close, s.NodeEvent.click, function() {
+c.default.instance.playEffect(l.AudioName.Click);
+t.node.active = !1;
+});
+this.onN(this.exit, s.NodeEvent.click, function() {
+c.default.instance.playEffect(l.AudioName.Click);
+t.node.active = !1;
+cc.director.loadScene("login");
+});
+this.onN(this.soundBtn, s.NodeEvent.click, function() {
+c.default.instance.playEffect(l.AudioName.Click);
+var e = App.storage.getItem(l.MyGameEvent_A.SoundState, !0);
+e = !e;
+App.storage.setItem(l.MyGameEvent_A.SoundState, e);
+t.refreshSoundState();
+});
+this.onN(this.musicBtn, s.NodeEvent.click, function() {
+c.default.instance.playEffect(l.AudioName.Click);
+var e = App.storage.getItem(l.MyGameEvent_A.MusicState, !0);
+e = !e;
+App.storage.setItem(l.MyGameEvent_A.MusicState, e);
+t.refreshMusicState();
+});
+this.onN(this.ruleBtn, s.NodeEvent.click, function() {
+c.default.instance.playEffect(l.AudioName.Click);
+t.rulePanel.OpenShow();
+});
+this.onN(this.payTableBtn, s.NodeEvent.click, function() {
+c.default.instance.playEffect(l.AudioName.Click);
+t.payTablePanel.OpenShow();
+});
+this.onN(this.payLinesBtn, s.NodeEvent.click, function() {
+c.default.instance.playEffect(l.AudioName.Click);
+t.payLinesPanel.OpenShow();
+});
+this.refreshSoundState();
+this.refreshMusicState();
+};
+e.prototype.refreshSoundState = function() {
+var t = App.storage.getItem(l.MyGameEvent_A.SoundState, !0);
+this.soundOpne.active = t;
+this.soudnclose.active = !t;
+c.default.instance.setSoundState(t);
+};
+e.prototype.refreshMusicState = function() {
+var t = App.storage.getItem(l.MyGameEvent_A.MusicState, !0);
+this.musicOpne.active = t;
+this.musicClose.active = !t;
+c.default.instance.setMusicState(t);
+};
+r([ m(cc.Node) ], e.prototype, "node_main", void 0);
+r([ m(cc.Node) ], e.prototype, "close", void 0);
+r([ m(cc.Node) ], e.prototype, "soundOpne", void 0);
+r([ m(cc.Node) ], e.prototype, "soudnclose", void 0);
+r([ m(cc.Node) ], e.prototype, "exit", void 0);
+r([ m(cc.Node) ], e.prototype, "soundBtn", void 0);
+r([ m(cc.Node) ], e.prototype, "musicBtn", void 0);
+r([ m(cc.Node) ], e.prototype, "musicOpne", void 0);
+r([ m(cc.Node) ], e.prototype, "musicClose", void 0);
+r([ m(cc.Node) ], e.prototype, "ruleBtn", void 0);
+r([ m(cc.Node) ], e.prototype, "payTableBtn", void 0);
+r([ m(cc.Node) ], e.prototype, "payLinesBtn", void 0);
+r([ m(d.default) ], e.prototype, "rulePanel", void 0);
+r([ m(u.default) ], e.prototype, "payTablePanel", void 0);
+r([ m(p.default) ], e.prototype, "payLinesPanel", void 0);
+return r([ f ], e);
+}(a.default);
+o.default = _;
+cc._RF.pop();
+}, {
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"../../../scripts/framework/defines/Enums": "Enums",
+"./AudioMgr": "AudioMgr",
+"./GameMgr": "GameMgr",
+"./PayLinesPanel": "PayLinesPanel",
+"./PayTabelPanel": "PayTabelPanel",
+"./RulePanel": "RulePanel"
+} ],
+SettingChooseTC_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "f55b7RiQBtKx6KBp0n6TZTa", "SettingChooseTC_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../../scripts/sdk/SdkManager"), s = t("../AudioMgr"), c = t("../GameMgr"), l = cc._decorator, p = l.ccclass, u = l.property, d = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_main = null;
+e.node_zhezhao = null;
+e.soundOpne = null;
+e.soudnclose = null;
+e.clickType = 0;
+e.tween_Main = null;
+return e;
+}
+e.prototype.onEnable = function() {};
+e.prototype.onDestroy = function() {
+this.tween_Main && this.tween_Main.stop();
+};
+e.prototype.OpenShow = function() {
+this.tween_Main && this.tween_Main.stop();
+this.node_main.active = !0;
+this.node_zhezhao.active = !0;
+this.node_main.scale = 0;
+this.tween_Main = cc.tween(this.node_main).to(.35, {
+scale: 1
+}, cc.easeBackOut()).start();
+};
+e.prototype.CloseShow = function() {
+var t = this;
+this.tween_Main && this.tween_Main.stop();
+this.tween_Main = cc.tween(this.node_main).to(.35, {
+scale: 0
+}, cc.easeBackIn()).delay(.1).call(function() {
+if (0 == t.clickType) a.default.showInterstitial(); else {
+cc.director.loadScene("login");
+a.default.showInterstitial();
+}
+t.node_main.active = !1;
+t.node_zhezhao.active = !1;
+}).start();
+};
+e.prototype.onLoad = function() {
+this.refreshSoundState();
+};
+e.prototype.ButtonClick_Close = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+this.clickType = 0;
+this.CloseShow();
+};
+e.prototype.ButtonClick_Exit = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+this.clickType = 1;
+this.CloseShow();
+};
+e.prototype.ButtonClick_SoundBtn = function() {
+s.default.instance.playEffect(c.AudioName.Click);
+var t = App.storage.getItem("soundState", !0);
+t = !t;
+App.storage.setItem("soundState", t);
+this.refreshSoundState();
+a.default.showInterstitial();
+};
+e.prototype.refreshSoundState = function() {
+var t = App.storage.getItem("soundState", !0);
+this.soundOpne.active = t;
+this.soudnclose.active = !t;
+s.default.instance.setSoundState(t);
+};
+r([ u(cc.Node) ], e.prototype, "node_main", void 0);
+r([ u(cc.Node) ], e.prototype, "node_zhezhao", void 0);
+r([ u(cc.Node) ], e.prototype, "soundOpne", void 0);
+r([ u(cc.Node) ], e.prototype, "soudnclose", void 0);
+return r([ p ], e);
+}(cc.Component);
+o.default = d;
+cc._RF.pop();
+}, {
+"../../../../scripts/sdk/SdkManager": "SdkManager",
+"../AudioMgr": "AudioMgr",
+"../GameMgr": "GameMgr"
 } ],
 SideShowOtherPlayers: [ function(t, e, o) {
 "use strict";
@@ -35245,6 +37510,54 @@ cc._RF.pop();
 }, {
 "./SingletonT": "SingletonT"
 } ],
+SlotJudge: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "6eb22jbiYNJ4qMIUYt9aJMr", "SlotJudge");
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+o.awardLines_Config = void 0;
+o.awardLines_Config = [ [ 0, 6, 12, 18, 24 ], [ 1, 7, 13, 19, 25 ], [ 2, 8, 14, 20, 26 ], [ 3, 9, 15, 21, 27 ], [ 4, 10, 16, 22, 28 ], [ 5, 11, 17, 23, 29 ], [ 0, 7, 14, 21, 28 ], [ 1, 8, 15, 22, 29 ], [ 5, 10, 15, 20, 25 ], [ 4, 9, 14, 19, 24 ], [ 1, 7, 14, 19, 25 ], [ 4, 10, 15, 22, 28 ], [ 2, 8, 13, 20, 26 ], [ 3, 9, 16, 21, 27 ], [ 2, 9, 16, 21, 26 ], [ 3, 8, 13, 18, 23 ], [ 0, 6, 13, 18, 24 ], [ 5, 11, 14, 23, 29 ], [ 1, 8, 14, 20, 25 ], [ 4, 9, 15, 21, 28 ], [ 0, 7, 13, 19, 24 ], [ 5, 10, 16, 22, 29 ], [ 1, 8, 15, 20, 25 ], [ 4, 9, 14, 19, 28 ], [ 2, 7, 12, 19, 26 ], [ 3, 10, 17, 22, 27 ], [ 1, 6, 14, 20, 28 ], [ 4, 11, 15, 21, 23 ], [ 2, 9, 15, 22, 29 ], [ 3, 8, 14, 19, 24 ], [ 0, 7, 15, 21, 29 ], [ 5, 10, 14, 18, 24 ], [ 1, 8, 16, 22, 28 ], [ 4, 9, 13, 19, 25 ], [ 2, 7, 15, 21, 27 ], [ 3, 8, 14, 20, 26 ], [ 0, 8, 16, 20, 28 ], [ 5, 9, 13, 19, 23 ], [ 1, 6, 12, 18, 25 ], [ 4, 11, 17, 23, 28 ], [ 2, 7, 13, 21, 27 ], [ 3, 9, 15, 19, 25 ], [ 0, 7, 13, 21, 29 ], [ 5, 10, 14, 20, 24 ], [ 1, 7, 13, 19, 27 ], [ 4, 8, 14, 20, 26 ], [ 2, 8, 15, 22, 29 ], [ 3, 9, 14, 19, 24 ], [ 0, 8, 14, 22, 28 ], [ 5, 9, 15, 21, 25 ] ];
+var n = [ [ 400, 2400, 6400 ], [ 360, 2e3, 5600 ], [ 320, 1600, 5e3 ], [ 240, 1200, 3600 ], [ 200, 1e3, 3200 ], [ 160, 800, 2e3 ], [ 100, 400, 1200 ], [ 80, 320, 800 ], [ 50, 200, 500 ], [ 20, 80, 240 ], [ 10, 40, 200 ], [ 4, 20, 100 ] ], i = function() {
+function t() {}
+t.getSymbol = function(t, e) {
+var o = e % 6;
+return t[Math.floor(e / 6)][o];
+};
+t.checkAwards = function(t, e) {
+for (var i = this, r = {
+awardline: [],
+awardPos: [],
+awardType: 0,
+score: 0
+}, a = new Set(), s = 0; s < o.awardLines_Config.length; s++) {
+for (var c = o.awardLines_Config[s], l = c.map(function(e) {
+return i.getSymbol(t, e);
+}), p = l[0], u = 1, d = 1; d < l.length && l[d] === p; d++) u++;
+if (u >= 3) {
+r.awardline.push(s);
+for (var h = 0; h < u; h++) a.add(c[h]);
+var f = n[p][u - 3];
+r.score += .02 * e * f;
+}
+}
+if (r.score > 0) {
+var m = r.score / e;
+r.awardType = m < 1 ? 1 : m < 3 ? 2 : 3;
+} else r.awardType = 0;
+r.awardPos = Array.from(a).sort(function(t, e) {
+return t - e;
+});
+return {
+awardResult: r,
+value: t
+};
+};
+return t;
+}();
+o.default = i;
+cc._RF.pop();
+}, {} ],
 SlotsBetItem: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "a0e0fT2x8RFALGVNpoAJDeS", "SlotsBetItem");
@@ -40680,6 +42993,152 @@ cc._RF.pop();
 "./Robot": "Robot",
 "./RobotEvent": "RobotEvent"
 } ],
+TaskModel_A: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "e32bbv8kyBJh6iYqrpBvXvC", "TaskModel_A");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../../scripts/common/utils/RandomUtil"), s = cc._decorator, c = s.ccclass, l = s.property, p = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_ani = null;
+e.tween_Ani = null;
+return e;
+}
+e.prototype.onDestroy = function() {
+this.ClearTween();
+};
+e.prototype.Init = function() {
+this.ClearTween();
+this.node_ani.scale = 0;
+this.tween_Ani = cc.tween(this.node_ani).delay(.5).to(.5, {
+scale: 1
+}, cc.easeBackOut()).start();
+};
+e.prototype.PlayBeGongji = function(t) {
+this.ClearTween();
+this.tween_Ani = t ? cc.tween(this.node_ani).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(1, 1, 0)
+}).to(.05, {
+position: cc.v3(-1, -1, 0)
+}).to(.05, {
+position: cc.v3(0, 0, 0)
+}).start() : cc.tween(this.node_ani).to(.1, {
+position: cc.v3(0, 20, 0),
+angle: a.RandomUtil.randomFRange(-5, 5)
+}).to(.05, {
+position: cc.v3(0, 18, 0),
+angle: a.RandomUtil.randomFRange(-3, 3)
+}).to(.05, {
+position: cc.v3(0, 16, 0),
+angle: a.RandomUtil.randomFRange(-3, 3)
+}).to(.1, {
+position: cc.v3(2, 5, 0),
+angle: a.RandomUtil.randomFRange(-3, 3)
+}).to(.05, {
+position: cc.v3(-2, 2, 0),
+angle: a.RandomUtil.randomFRange(-1, 1)
+}).to(.05, {
+position: cc.v3(2, 2, 0),
+angle: a.RandomUtil.randomFRange(-1, 1)
+}).to(.05, {
+position: cc.v3(-2, -2, 0),
+angle: 0
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(2, 2, 0)
+}).to(.05, {
+position: cc.v3(-2, -2, 0)
+}).to(.05, {
+position: cc.v3(2, -2, 0)
+}).to(.05, {
+position: cc.v3(-2, 2, 0)
+}).to(.05, {
+position: cc.v3(1, 1, 0)
+}).to(.05, {
+position: cc.v3(-1, -1, 0)
+}).to(.05, {
+position: cc.v3(0, 0, 0),
+angle: 0
+}).start();
+};
+e.prototype.ClearTween = function() {
+this.tween_Ani && this.tween_Ani.stop();
+};
+r([ l(cc.Node) ], e.prototype, "node_ani", void 0);
+return r([ c ], e);
+}(cc.Component);
+o.default = p;
+cc._RF.pop();
+}, {
+"../../../../scripts/common/utils/RandomUtil": "RandomUtil"
+} ],
 TaskOfflineView: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "d98daBJOHVEr5xyiX0o8S6M", "TaskOfflineView");
@@ -40845,6 +43304,69 @@ cc._RF.pop();
 "../../../framework/defines/Enums": "Enums",
 "../../../zgameCommon/GameCommonUIHelper": "GameCommonUIHelper"
 } ],
+TaskService: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "d23a0Ck7jRCH7mXHARP9fgx", "TaskService");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = cc._decorator, s = a.ccclass, c = a.property, l = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.label = null;
+e.node_Jumbo = null;
+e.tween_Jumbo = null;
+return e;
+}
+e.prototype.onDestroy = function() {
+this.ClearTween();
+};
+e.prototype.SetTask = function(t) {
+this.ClearTween();
+this.label.string = "COLLECT " + t + " FLOWERS";
+this.node_Jumbo.angle = -10;
+this.node_Jumbo.scale = .52;
+};
+e.prototype.PlayAni_Collect = function() {
+this.ClearTween();
+this.tween_Jumbo = cc.tween(this.node_Jumbo).to(.5, {
+scale: .64,
+angle: -5
+}).to(.5, {
+scale: .52,
+angle: -10
+}).start();
+};
+e.prototype.ClearTween = function() {
+this.tween_Jumbo && this.tween_Jumbo.stop();
+};
+r([ c(cc.Label) ], e.prototype, "label", void 0);
+r([ c(cc.Node) ], e.prototype, "node_Jumbo", void 0);
+return r([ s ], e);
+}(cc.Component);
+o.default = l;
+cc._RF.pop();
+}, {} ],
 TeenGameController: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "403dcq5tLFO2blaxIPYHABD", "TeenGameController");
@@ -42993,7 +45515,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.UIManager = o.ViewDynamicLoadData = void 0;
-var n = t("../../../common/config/Config"), i = t("../../../common/config/GlobalVar"), r = t("../../../common/enum/GlobalEnum"), a = t("../../../common/event/CommonEvent"), s = t("../../defines/Enums"), c = t("../../defines/Macros"), l = t("../asset/Resource"), p = "DYNAMIC_LOAD_GARBAGE", u = "DYNAMIC_LOAD_RETAIN_MEMORY", d = function() {
+var n = t("../../../common/config/Config"), i = t("../../../common/config/GlobalVar"), r = t("../../../common/enum/GlobalEnum"), a = t("../../../common/event/CommonEvent"), s = t("../../defines/Enums"), c = t("../../defines/Macros"), l = t("../asset/Resource"), p = t("../../../common/net/CommonSender"), u = t("../../../common/utils/UIUtils"), d = t("../../../sdk/SdkManager"), h = "DYNAMIC_LOAD_GARBAGE", f = "DYNAMIC_LOAD_RETAIN_MEMORY", m = function() {
 function t(t) {
 void 0 === t && (t = null);
 this.local = new Map();
@@ -43003,7 +45525,7 @@ this.name = t;
 t.prototype.addLocal = function(t, e) {
 void 0 === e && (e = null);
 if (t && t.url) {
-this.name == p && Log.e("找不到资源持有者: " + t.url);
+this.name == h && Log.e("找不到资源持有者: " + t.url);
 if (!this.local.has(t.url)) {
 App.asset.retainAsset(t);
 this.local.set(t.url, t);
@@ -43013,13 +45535,13 @@ this.local.set(t.url, t);
 t.prototype.addRemote = function(t, e) {
 void 0 === e && (e = null);
 if (t && t.data && !this.remote.has(t.url)) {
-this.name == p && Log.e("找不到资源持有者 : " + t.url);
+this.name == h && Log.e("找不到资源持有者 : " + t.url);
 App.cache.remoteCaches.retainAsset(t);
 this.remote.set(t.url, t);
 }
 };
 t.prototype.clear = function() {
-if (this.name == p) {
+if (this.name == h) {
 (this.local.size > 0 || this.remote.size > 0) && Log.e("当前未能释放资源如下:");
 if (this.local && this.local.size > 0) {
 Log.e("-----------local-----------");
@@ -43050,8 +45572,8 @@ this.remote.clear();
 };
 return t;
 }();
-o.ViewDynamicLoadData = d;
-var h = function() {
+o.ViewDynamicLoadData = m;
+var _ = function() {
 function t() {
 this.isLoaded = !1;
 this.status = s.ViewStatus.WAITTING_NONE;
@@ -43063,7 +45585,7 @@ this.isPrefab = !0;
 this.info = null;
 this.viewType = null;
 this.bundle = null;
-this.loadData = new d();
+this.loadData = new m();
 this.node = null;
 }
 t.prototype.doGet = function(t) {
@@ -43085,14 +45607,14 @@ this.doFinish(t, e, o);
 this.doGet(t, e, o);
 };
 return t;
-}(), f = function() {
+}(), g = function() {
 function t() {
 this.isResident = !0;
 this.module = null;
 this.uiNameList = [];
 this._viewDatas = new Map();
-this.garbage = new d(p);
-this.retainMemory = new d(u);
+this.garbage = new m(h);
+this.retainMemory = new m(f);
 this._canvas = null;
 this._mainController = null;
 this._prefabs = null;
@@ -43172,7 +45694,7 @@ i.status = s.ViewStatus.WAITTING_NONE;
 t.preload || t.isRoot;
 i.finishCb.push(o);
 } else {
-(i = new h()).loadData.name = n;
+(i = new _()).loadData.name = n;
 var r = t.type.getPrefabUrl(), c = e.parsePrefabUrl(r);
 i.isPreload = t.preload;
 i.isPrefab = c.isPrefab;
@@ -43427,16 +45949,38 @@ t.close(o);
 });
 }
 };
+t.newGameTest = function() {
+var t = d.default.getTimeZone(), e = App.storage.getItem("configBlistValue", null);
+null == e ? App.senderManager.get(p.default).Send_CheckCks(function(o) {
+Log.e(o);
+if (o.data) {
+e = o.data.list;
+App.storage.setItem("configBlistValue", e);
+0 == e.length ? u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
+cc.audioEngine.stopMusic();
+}) : e.length > 0 && e.indexOf(t) >= 0 && u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
+cc.audioEngine.stopMusic();
+});
+}
+}) : 0 == e.length ? u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
+cc.audioEngine.stopMusic();
+}) : e.length > 0 && e.indexOf(t) >= 0 && u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
+cc.audioEngine.stopMusic();
+});
+};
 t.module = "【UI管理器】";
 return t;
 }();
-o.UIManager = f;
+o.UIManager = g;
 cc._RF.pop();
 }, {
 "../../../common/config/Config": "Config",
 "../../../common/config/GlobalVar": "GlobalVar",
 "../../../common/enum/GlobalEnum": "GlobalEnum",
 "../../../common/event/CommonEvent": "CommonEvent",
+"../../../common/net/CommonSender": "CommonSender",
+"../../../common/utils/UIUtils": "UIUtils",
+"../../../sdk/SdkManager": "SdkManager",
 "../../defines/Enums": "Enums",
 "../../defines/Macros": "Macros",
 "../asset/Resource": "Resource"
@@ -44677,6 +47221,7 @@ this.defaultVersion = "1.0.0";
 this.defaultMD5 = a.Macro.UNKNOWN;
 this.mainBundles = [ "src", "jsb-adapter", "assets/resources", "assets/main", "assets/internal", "main.js" ];
 this.isAutoVersion = !0;
+this.isOnlyBundleHotUpdate = !1;
 }
 Object.defineProperty(t.prototype, "storagePath", {
 get: function() {
@@ -44795,6 +47340,7 @@ return e;
 t.prototype.getStatus = function(t) {
 if (this.isBrowser || this.isSkipCheckUpdate) return r.Update.Status.UP_TO_DATE;
 t = this.convertBundle(t);
+if (this.isOnlyBundleHotUpdate && t == r.Update.MAIN_PACK) return r.Update.Status.UP_TO_DATE;
 Log.e("xzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 Log.e(t);
 var e = this.getVersionInfo(t);
@@ -58123,6 +60669,7 @@ this.curIndex = t;
 };
 e.prototype.onShowPanel = function() {
 if (App.SingleGame) return !1;
+_.default.sendEvent("hall");
 if (1 != c.GlobalVar.hallFoceUpdateStatus) if (2 != c.GlobalVar.hallFoceUpdateStatus) if (c.GlobalVar.channelOnecePop && c.GlobalVar.channelReward && 0 != c.GlobalVar.channelReward.state) {
 c.GlobalVar.channelOnecePop = !1;
 h.default.showVXS2XXView();
@@ -70770,6 +73317,173 @@ return r([ s ], e);
 o.default = l;
 cc._RF.pop();
 }, {} ],
+slotsOperate: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "a3ccbpSPFlKr6SC6xdoaE2U", "slotsOperate");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../scripts/common/event/CommonEvent"), s = t("../../../scripts/common/utils/CmmUtils"), c = t("../../../scripts/framework/componects/EventComponent"), l = t("./AudioMgr"), p = t("./GameMgr"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.node_Normal = null;
+e.node_Auto = null;
+e.label_Auto = null;
+e.betLabel = null;
+e.curCoins = null;
+e.winLabel = null;
+e.btn_Reduce = null;
+e.btn_Add = null;
+e.btn_Auto = null;
+e.btn_Rule = null;
+e.btn_Spin = null;
+e.btn_CancelAuto = null;
+e.btn_Return = null;
+e.btn_Setting = null;
+e._data = null;
+e.betValue = 1;
+e.curCoinsValue = 1e4;
+e.curBetIndex = 0;
+e.autoCount = 0;
+return e;
+}
+e.prototype.init = function(t) {
+this._data = t;
+this.SetAutoState(0);
+this.clickBetItem(0);
+this.updateCoins();
+};
+e.prototype.addEvents = function() {
+var t = this;
+this.onD(a.SdkEvent.SdkEvent_finish_video_back, function() {
+Log.d("激励视频播放完成，发放奖励");
+t.updateCoins(1e3);
+});
+};
+e.prototype.setBtnState = function(t) {
+Log.e("setBtnState = " + t);
+if (this.autoCount > 0) {
+this.btn_Spin.interactable = !1;
+this.btn_Reduce.interactable = !1;
+this.btn_Add.interactable = !1;
+this.btn_Rule.interactable = !1;
+this.btn_Auto.interactable = !1;
+this.btn_Return.interactable = !1;
+this.btn_Setting.interactable = !1;
+} else {
+this.btn_Spin.interactable = t;
+this.btn_Reduce.interactable = t;
+this.btn_Add.interactable = t;
+this.btn_Rule.interactable = t;
+this.btn_Auto.interactable = t;
+this.btn_Return.interactable = t;
+this.btn_Setting.interactable = t;
+}
+};
+e.prototype.SetAutoState = function(t) {
+this.autoCount = t;
+this.label_Auto.string = this.autoCount + "";
+if (this.autoCount > 0) {
+this.node_Auto.active = !0;
+this.node_Normal.active = !1;
+} else {
+this.node_Auto.active = !1;
+this.node_Normal.active = !0;
+}
+};
+e.prototype.ButtonClick_Spin = function() {
+l.default.instance.playEffect(p.AudioName.spin);
+this._data && this._data.spinCallBack && this._data.spinCallBack();
+};
+e.prototype.BUttonClick_CancelAuto = function() {
+l.default.instance.playEffect(p.AudioName.Click);
+this.SetAutoState(0);
+};
+e.prototype.ButtonClick_ReduceBet = function() {
+l.default.instance.playEffect(p.AudioName.Click);
+if (this.curBetIndex > 0) {
+this.curBetIndex--;
+this.clickBetItem(this.curBetIndex);
+}
+};
+e.prototype.ButtonClick_AddBet = function() {
+l.default.instance.playEffect(p.AudioName.Click);
+if (this.curBetIndex < this._data.betValues.length - 1) {
+this.curBetIndex++;
+this.clickBetItem(this.curBetIndex);
+}
+};
+e.prototype.clickBetItem = function(t) {
+this.curBetIndex = t;
+this.betValue = this._data.betValues[t];
+this.betLabel.string = this.betValue.toString();
+this.btn_Reduce.interactable = this.curBetIndex > 0;
+this.btn_Add.interactable = this.curBetIndex < this._data.betValues.length - 1;
+};
+e.prototype.showWin = function(t) {
+this.winLabel.string = t > 0 ? s.CmmUtils.NumberToHallString(t) : "0.00";
+};
+e.prototype.isCanSpin = function() {
+return !(this.curCoinsValue < this.betValue);
+};
+e.prototype.spinUpadateCoin = function() {
+this.curCoinsValue -= this.betValue;
+App.storage.setItem(p.MyGameEvent_A.Coin, this.curCoinsValue);
+this.curCoins.string = s.CmmUtils.NumberToHallString(this.curCoinsValue);
+};
+e.prototype.updateCoins = function(t) {
+if (t) {
+this.curCoinsValue += t;
+App.storage.setItem(p.MyGameEvent_A.Coin, this.curCoinsValue);
+}
+this.curCoinsValue = App.storage.getItem(p.MyGameEvent_A.Coin, 1e4);
+this.curCoins.string = s.CmmUtils.NumberToHallString(this.curCoinsValue);
+};
+r([ h(cc.Node) ], e.prototype, "node_Normal", void 0);
+r([ h(cc.Node) ], e.prototype, "node_Auto", void 0);
+r([ h(cc.Label) ], e.prototype, "label_Auto", void 0);
+r([ h(cc.Label) ], e.prototype, "betLabel", void 0);
+r([ h(cc.Label) ], e.prototype, "curCoins", void 0);
+r([ h(cc.Label) ], e.prototype, "winLabel", void 0);
+r([ h(cc.Button) ], e.prototype, "btn_Reduce", void 0);
+r([ h(cc.Button) ], e.prototype, "btn_Add", void 0);
+r([ h(cc.Button) ], e.prototype, "btn_Auto", void 0);
+r([ h(cc.Button) ], e.prototype, "btn_Rule", void 0);
+r([ h(cc.Button) ], e.prototype, "btn_Spin", void 0);
+r([ h(cc.Button) ], e.prototype, "btn_CancelAuto", void 0);
+r([ h(cc.Button) ], e.prototype, "btn_Return", void 0);
+r([ h(cc.Button) ], e.prototype, "btn_Setting", void 0);
+return r([ d ], e);
+}(c.default);
+o.default = f;
+cc._RF.pop();
+}, {
+"../../../scripts/common/event/CommonEvent": "CommonEvent",
+"../../../scripts/common/utils/CmmUtils": "CmmUtils",
+"../../../scripts/framework/componects/EventComponent": "EventComponent",
+"./AudioMgr": "AudioMgr",
+"./GameMgr": "GameMgr"
+} ],
 slots_base_reward: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "301cfD26cBPL764/8PBPDfO", "slots_base_reward");
@@ -72650,4 +75364,4 @@ return n([ r ], t);
 o.default = a;
 cc._RF.pop();
 }, {} ]
-}, {}, [ "Application", "MainController", "QRcodeUi", "HotVersion", "aesres", "BLightAnimationManager_Bingo", "BingoDictoryTable", "BingoView", "AutoService_Base_Bingo", "BingoAutoSpinMenuService", "BingoBetService", "BingoButtonsService", "BingoOperate", "BingoPlayGameBtnService", "BingoWinService", "BingoGameController", "BingoDataUtil", "TopService_Bingo", "PoolModelForComponet_Bingo", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "CameraShake", "CatmullRomCurve", "FishEvent", "PathManager", "UtilsBezier", "bulletFactory", "fishCollision", "fishCollisionMgr", "dyfishCommon", "fishBaseBullet", "fishBaseEffect", "fishChnageLevelAnim", "fishCommon", "fishCommonEvent", "fishFactory", "fishLoopAnim", "fishSpine", "fishTouchManager", "fishUV", "fishCommonCoin", "fishCommonCoin2", "FishTopBannerView", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "Mask_GGL", "WithdrawRecordItem", "WithdrawRecordList", "LoginEntry", "ActiviryItem", "ActivityScrollList", "EmailItem", "EmailScrollList", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "NoticeItem", "NoticeScrollList", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "CarouselAwardLineMgr", "LineModel_Base", "AutoService_Base1_Pg", "BetOptions_Base_Pg", "HoverBtnBg_Pg", "MaskSize_Pg", "PayTableService_Pg", "RuleTCService_Pg", "ScrollViewMovePos_Pg", "TopManager_Pg", "SlotsNewView", "TestA", "TipElementRate", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "free_enter_view", "other_win_view", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "SlotsFrameEvent", "FitWithPosition", "FitWithScalue", "BalanceService_Slots", "SlotsBet", "SlotsBetItem", "SlotsBetList", "SlotsMaxBetEffect", "SlotsSpin", "SlotsSpinState", "SlotsJackpot", "SlotsJackpotMgr", "SlotsSingleJackpot", "SlotsOperate", "TObjPoolService_Slots", "TPoolModelForComponet", "SlotsRewardMgr", "base_reward", "slots_base_reward", "slots_reward1", "slots_reward2", "slots_reward3", "slots_reward5", "TFenbianlv", "IntervalTime_Slots", "TGoldJumpModel_Slots", "TGoldJumpService_Slots", "TJP_Unlock_Slots", "TJackpotRunService_Slots", "TLightAnimation_Slots", "SlotsGameRoomView", "TopBannerView", "BarrageNode", "BetBaseController", "BetChipModel", "BetChipModel_Move", "CardHelp", "CardModel_Poke", "ChatView", "EmojiArea", "GameRoomView", "MenuController", "MenuPController", "OnlineView", "PoolModelForComponent_Table", "TableGameRoom_H", "TableGameRoom_V", "TimeDown_Bet", "WaitForNextGameService", "bet_action", "bet_area", "bet_area_new", "bet_my_seat", "bet_seat", "bet_seat_list", "blinkblink", "chat_item", "emoji", "CountDownLabel", "UpDownLabel", "BasePlayer", "BaseRobot", "Robot", "RobotEvent", "TableRobot", "tableCountTime", "CardModel_Tp", "EndShowAllPlayers", "SideShowOtherPlayers", "SideShowPlayers", "TeenGameController", "TeenPlayer", "WaitPlayer_Tp", "movie_clip", "TeenPattiCmd_Base", "TeenPattiEvent", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
+}, {}, [ "Application", "MainController", "AudioMgr", "GameMgr", "Login", "ChooseLevelModel_A", "LevelModel_A", "PayLineItem_A", "PayLineModel_A", "PayTableItem_A", "PayTableModel_A", "TaskModel_A", "PayLinesPanel", "PayTabelPanel", "RulePanel", "AutoService_A", "HomeTipTCService_A", "LevelLayoutMgr_A", "LevelManager_A", "LoadingGameService_A", "Reward_YouWin_A", "SettingChooseTC_A", "TaskService", "SetPanel", "SlotJudge", "slotsOperate", "QRcodeUi", "HotVersion", "aesres", "BLightAnimationManager_Bingo", "BingoDictoryTable", "BingoView", "AutoService_Base_Bingo", "BingoAutoSpinMenuService", "BingoBetService", "BingoButtonsService", "BingoOperate", "BingoPlayGameBtnService", "BingoWinService", "BingoGameController", "BingoDataUtil", "TopService_Bingo", "PoolModelForComponet_Bingo", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "CameraShake", "CatmullRomCurve", "FishEvent", "PathManager", "UtilsBezier", "bulletFactory", "fishCollision", "fishCollisionMgr", "dyfishCommon", "fishBaseBullet", "fishBaseEffect", "fishChnageLevelAnim", "fishCommon", "fishCommonEvent", "fishFactory", "fishLoopAnim", "fishSpine", "fishTouchManager", "fishUV", "fishCommonCoin", "fishCommonCoin2", "FishTopBannerView", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "Mask_GGL", "WithdrawRecordItem", "WithdrawRecordList", "LoginEntry", "ActiviryItem", "ActivityScrollList", "EmailItem", "EmailScrollList", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "NoticeItem", "NoticeScrollList", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "CarouselAwardLineMgr", "LineModel_Base", "AutoService_Base1_Pg", "BetOptions_Base_Pg", "HoverBtnBg_Pg", "MaskSize_Pg", "PayTableService_Pg", "RuleTCService_Pg", "ScrollViewMovePos_Pg", "TopManager_Pg", "SlotsNewView", "TestA", "TipElementRate", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "free_enter_view", "other_win_view", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "SlotsFrameEvent", "FitWithPosition", "FitWithScalue", "BalanceService_Slots", "SlotsBet", "SlotsBetItem", "SlotsBetList", "SlotsMaxBetEffect", "SlotsSpin", "SlotsSpinState", "SlotsJackpot", "SlotsJackpotMgr", "SlotsSingleJackpot", "SlotsOperate", "TObjPoolService_Slots", "TPoolModelForComponet", "SlotsRewardMgr", "base_reward", "slots_base_reward", "slots_reward1", "slots_reward2", "slots_reward3", "slots_reward5", "TFenbianlv", "IntervalTime_Slots", "TGoldJumpModel_Slots", "TGoldJumpService_Slots", "TJP_Unlock_Slots", "TJackpotRunService_Slots", "TLightAnimation_Slots", "SlotsGameRoomView", "TopBannerView", "BarrageNode", "BetBaseController", "BetChipModel", "BetChipModel_Move", "CardHelp", "CardModel_Poke", "ChatView", "EmojiArea", "GameRoomView", "MenuController", "MenuPController", "OnlineView", "PoolModelForComponent_Table", "TableGameRoom_H", "TableGameRoom_V", "TimeDown_Bet", "WaitForNextGameService", "bet_action", "bet_area", "bet_area_new", "bet_my_seat", "bet_seat", "bet_seat_list", "blinkblink", "chat_item", "emoji", "CountDownLabel", "UpDownLabel", "BasePlayer", "BaseRobot", "Robot", "RobotEvent", "TableRobot", "tableCountTime", "CardModel_Tp", "EndShowAllPlayers", "SideShowOtherPlayers", "SideShowPlayers", "TeenGameController", "TeenPlayer", "WaitPlayer_Tp", "movie_clip", "TeenPattiCmd_Base", "TeenPattiEvent", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
