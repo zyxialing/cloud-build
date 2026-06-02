@@ -3,7 +3,7 @@
 -dontwarn org.cocos2dx.javascript.SDKConfig
 -dontwarn org.cocos2dx.javascript.SDKManager
 -dontwarn org.cocos2dx.javascript.Constants
--dontwarn win.CoMainActivity
+-dontwarn ali.GameMainActivity
 
 # Gson (used in CoMainActivity)
 -keep class com.google.gson.** { *; }
