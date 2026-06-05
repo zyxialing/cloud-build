@@ -75,268 +75,6 @@ cc._RF.pop();
 "../../sdk/AppInfo": "AppInfo",
 "./EventComponent": "EventComponent"
 } ],
-ActiviryItem: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "bbdceGN2CxFgLf8QWboMcdg", "ActiviryItem");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../common/component/RedPointComponent"), s = t("../../common/config/GlobalVar"), c = t("../../common/config/User"), l = t("../../common/event/CommonEvent"), p = t("../../common/utils/CmmUtils"), u = t("../../framework/componects/EventComponent"), d = t("../../framework/core/update/Update"), h = t("../../framework/defines/Enums"), f = t("../view/CommonUIHelper"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.redParent = null;
-e.loading = null;
-e.more = null;
-e.activityIcon = null;
-e.tips = null;
-e.updateNode = null;
-e.updateProgressNode = null;
-e.redSys = null;
-e.progressFiLL = null;
-e.progressTxt = null;
-e.btn = null;
-e._holder = null;
-return e;
-}
-o = e;
-e.prototype.onLoad = function() {
-t.prototype.onLoad.call(this);
-this.onD(l.HotEvent.DownProgress, this.updateProgress);
-this.onD(l.HotEvent.DownComplete, this.updateComplete);
-this.onD(l.HotEvent.DownGameFail, this.downFreshFail);
-};
-e.prototype.addEvents = function() {
-var t = this;
-this.btn = this.node.getComponent(cc.Button);
-this.onN(this.node, h.NodeEvent.click, this.onClick.bind(this));
-this.onD(l.Hall_Event.acitvity_mask_name, function(e) {
-e && e == t._holder.data.alias && t.scheduleOnce(function() {
-var e = App.utils.localConvertWorldPointAR(t.node);
-dispatch(l.Hall_Event.acitvity_mask_name2, e);
-}, .22);
-});
-};
-e.prototype.show = function(t) {
-var e = this;
-this._holder = t;
-var o = this._holder.data.actImg;
-this.redSys.refreshModule("act_" + this._holder.data.id);
-this.redParent.active = !1;
-if (o) {
-this.redParent.active = !0;
-this.btn.interactable = !0;
-this.more.active = !1;
-this._curPath = o;
-this.loading.active = !0;
-App.asset.remote.loadImage_fixed(o, !0).then(function(t) {
-if (t && e.activityIcon && e._curPath == t.url) {
-e.activityIcon.spriteFrame = t.sprite;
-e.loading.active = !1;
-}
-});
-if (1 != this._holder.data.actType) {
-this.initHotUpdateView();
-return;
-}
-this.updateNode.active = !1;
-} else {
-this.more.active = !0;
-this.updateNode.active = !1;
-}
-};
-e.prototype.initHotUpdateView = function() {
-if (this.updateNode) if (App.updateManager.getStatus(this._holder.data.alias) == d.Update.Status.UP_TO_DATE) {
-this.updateNode.active = !1;
-this.updateProgressNode.active = !1;
-this.tips.active = !0;
-} else {
-this.updateNode.active = !0;
-this.updateProgressNode.active = !1;
-this.tips.active = !0;
-}
-};
-e.prototype.onClick = function() {
-if (o.sameClick && this._holder.data.alias) if (1 != this._holder.data.actType) {
-o.sameClick = !1;
-this.scheduleOnce(function() {
-o.sameClick = !0;
-}, .5);
-App.globalAudio.playButtonClick();
-if (App.updateManager.getStatus(this._holder.data.alias) == d.Update.Status.UP_TO_DATE) this._holder.data.vip > c.default.self.data.viplevel ? App.tips.show(App.zLan.getString(10192, this._holder.data.vip)) : App.entryManager.enterBundle(this._holder.data.alias); else {
-this.updateNode.active = !0;
-this.updateProgressNode.active = !0;
-this.progressTxt.string = p.CmmUtils.precentString(0);
-this.progressFiLL.fillRange = 0;
-this.curprogress = 0;
-this.tips.active = !1;
-if (!s.GlobalVar.downList.has(this._holder.data.alias)) {
-s.GlobalVar.downList.set(this._holder.data.alias, 0);
-if (s.GlobalVar.downList.size <= s.GlobalVar.maxDown) {
-s.GlobalVar.downList.set(this._holder.data.alias, 1);
-App.entryManager.enterBundle(this._holder.data.alias);
-}
-}
-this.btn && (this.btn.interactable = !1);
-}
-} else {
-App.globalAudio.playButtonClick();
-f.default.showActivityId(this._holder.data.id, function() {
-dispatch(l.Hall_Event.activity_close);
-});
-}
-};
-e.prototype.updateProgress = function(t) {
-var e = t.bundle;
-if (e == this._holder.data.alias) {
-var o = t.info.progress;
-this.curprogress > o ? o = this.curprogress : this.curprogress = o;
-if (this._holder.data.alias == e) {
-this.updateNode.active = !0;
-this.tips.active = !1;
-this.updateProgressNode.active = !0;
-this.progressTxt.string = p.CmmUtils.precentString(o);
-this.progressFiLL.fillRange = -o;
-}
-}
-};
-e.prototype.updateComplete = function(t) {
-if (this._holder.data.alias == t) {
-this.updateProgressNode.active = !1;
-this.updateNode.active = !1;
-this.btn && (this.btn.interactable = !0);
-}
-};
-e.prototype.downFreshFail = function(t) {
-this._holder.data.alias == t && this.show(this._holder);
-};
-var o;
-e.sameClick = !0;
-r([ g(cc.Node) ], e.prototype, "redParent", void 0);
-r([ g(cc.Node) ], e.prototype, "loading", void 0);
-r([ g(cc.Node) ], e.prototype, "more", void 0);
-r([ g(cc.Sprite) ], e.prototype, "activityIcon", void 0);
-r([ g(cc.Node) ], e.prototype, "tips", void 0);
-r([ g(cc.Node) ], e.prototype, "updateNode", void 0);
-r([ g(cc.Node) ], e.prototype, "updateProgressNode", void 0);
-r([ g(a.default) ], e.prototype, "redSys", void 0);
-r([ g(cc.Sprite) ], e.prototype, "progressFiLL", void 0);
-r([ g(cc.Label) ], e.prototype, "progressTxt", void 0);
-return o = r([ _ ], e);
-}(u.default);
-o.default = y;
-cc._RF.pop();
-}, {
-"../../common/component/RedPointComponent": "RedPointComponent",
-"../../common/config/GlobalVar": "GlobalVar",
-"../../common/config/User": "User",
-"../../common/event/CommonEvent": "CommonEvent",
-"../../common/utils/CmmUtils": "CmmUtils",
-"../../framework/componects/EventComponent": "EventComponent",
-"../../framework/core/update/Update": "Update",
-"../../framework/defines/Enums": "Enums",
-"../view/CommonUIHelper": "CommonUIHelper"
-} ],
-ActivityScrollList: [ function(t, e, o) {
-"use strict";
-cc._RF.push(e, "555259Bg0lMO6Z4anGKChly", "ActivityScrollList");
-var n, i = this && this.__extends || (n = function(t, e) {
-return (n = Object.setPrototypeOf || {
-__proto__: []
-} instanceof Array && function(t, e) {
-t.__proto__ = e;
-} || function(t, e) {
-for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
-})(t, e);
-}, function(t, e) {
-n(t, e);
-function o() {
-this.constructor = t;
-}
-t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
-}), r = this && this.__decorate || function(t, e, o, n) {
-var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
-if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
-return r > 3 && a && Object.defineProperty(e, o, a), a;
-};
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = t("../../common/event/CommonEvent"), s = t("../../zgameCommon/adapter/abstract/Holder"), c = t("../../zgameCommon/adapter/abstract/ScrollAdapter"), l = t("../../zgameCommon/adapter/abstract/View"), p = t("./ActiviryItem"), u = cc._decorator, d = u.ccclass, h = u.property, f = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e.bigPrefab = null;
-return e;
-}
-e.prototype.getPrefab = function() {
-return this.bigPrefab;
-};
-e.prototype.getView = function() {
-return new m(this);
-};
-e.prototype.getHolder = function(t, e) {
-return new _(t, e, this);
-};
-e.prototype.initList = function(t, e) {
-this.modelManager.insert(t);
-dispatch(a.Hall_Event.acitvity_mask_name, e);
-};
-r([ h(cc.Node) ], e.prototype, "bigPrefab", void 0);
-return r([ d ], e);
-}(c.ScrollAdapter);
-o.default = f;
-var m = function(t) {
-i(e, t);
-function e() {
-return null !== t && t.apply(this, arguments) || this;
-}
-e.prototype.onVisible = function() {};
-e.prototype.onDisable = function() {};
-return e;
-}(l.View), _ = function(t) {
-i(e, t);
-function e() {
-var e = null !== t && t.apply(this, arguments) || this;
-e._item = null;
-return e;
-}
-e.prototype.onCreated = function() {
-this._item = this.node.getComponent(p.default);
-};
-e.prototype.onVisible = function() {
-this._item.show(this);
-};
-e.prototype.onDisable = function() {};
-return e;
-}(s.Holder);
-cc._RF.pop();
-}, {
-"../../common/event/CommonEvent": "CommonEvent",
-"../../zgameCommon/adapter/abstract/Holder": "Holder",
-"../../zgameCommon/adapter/abstract/ScrollAdapter": "ScrollAdapter",
-"../../zgameCommon/adapter/abstract/View": "View",
-"./ActiviryItem": "ActiviryItem"
-} ],
 Alert: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "78052U/SxxKbaWY5cjj8G5p", "Alert");
@@ -5655,7 +5393,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.BundleUpdateHandlerImpl = void 0;
-var n = t("../event/CommonEvent"), i = function() {
+var n = t("../../login/view/LoginView"), i = t("../config/GlobalVar"), r = t("../event/CommonEvent"), a = function() {
 function t() {
 this.module = null;
 this.isResident = !0;
@@ -5664,7 +5402,9 @@ t.prototype.onNewVersionFund = function(t) {
 t.doUpdate();
 };
 t.prototype.onUpdateFailed = function(t) {
-dispatch(n.HotEvent.DownGameFail, t);
+this._retryOrGiveUp(t.bundle, function() {
+dispatch(r.HotEvent.DownGameFail, t);
+});
 };
 t.prototype.onPreVersionFailed = function(t) {
 this.onUpdateFailed(t);
@@ -5682,7 +5422,9 @@ cc.game.restart();
 };
 t.prototype.onOther = function() {};
 t.prototype.onDownloading = function(t, e) {
-dispatch(n.HotEvent.DownProgress, {
+var o = i.GlobalVar.downloadInfos.get(t.bundle);
+o && (o.realProgress = e.percent);
+dispatch(r.HotEvent.DownProgress, {
 bundle: t.bundle,
 info: e
 });
@@ -5702,7 +5444,55 @@ t.prototype.onLoadBundle = function(t) {
 App.bundleManager.loadBundle(t);
 };
 t.prototype.onDownloadComplete = function(t) {
-dispatch(n.HotEvent.DownComplete, t.bundle);
+i.GlobalVar.downList.delete(t.bundle);
+i.GlobalVar.downloadInfos.delete(t.bundle);
+this._processQueue();
+dispatch(r.HotEvent.DownComplete, t.bundle);
+};
+t.prototype._retryOrGiveUp = function(t, e) {
+var o = i.GlobalVar.downList.get(t) || 1;
+if (o < 3) {
+o++;
+i.GlobalVar.downList.set(t, o);
+(r = App.updateManager.getItem({
+bundle: t,
+name: ""
+})) && r.reset();
+App.entryManager.enterBundle(t);
+} else {
+var r;
+(r = App.updateManager.getItem({
+bundle: t,
+name: ""
+})) && r.reset();
+i.GlobalVar.downList.delete(t);
+i.GlobalVar.downloadInfos.delete(t);
+i.GlobalVar.downloadInfos.forEach(function(e, o) {
+if (e.loadingAlias == t) {
+i.GlobalVar.downList.delete(o);
+i.GlobalVar.downloadInfos.delete(o);
+}
+});
+this._processQueue();
+n.default.isShowing && App.tips.show(App.zLan.getString(1124, t));
+e();
+}
+};
+t.prototype._processQueue = function() {
+var t = 0;
+i.GlobalVar.downList.forEach(function(e) {
+e > 0 && t++;
+});
+if (!(t >= i.GlobalVar.maxDown)) {
+var e = null;
+i.GlobalVar.downList.forEach(function(t, o) {
+0 !== t || e || (e = o);
+});
+if (e) {
+i.GlobalVar.downList.set(e, 1);
+App.entryManager.enterBundle(e);
+}
+}
 };
 t.prototype.onNeedRestartApp = function(t, e) {
 var o = App.zLan.getString(1123, t.name);
@@ -5716,9 +5506,11 @@ e(!1, !0);
 t.module = "【Bundle热更新】";
 return t;
 }();
-o.BundleUpdateHandlerImpl = i;
+o.BundleUpdateHandlerImpl = a;
 cc._RF.pop();
 }, {
+"../../login/view/LoginView": "LoginView",
+"../config/GlobalVar": "GlobalVar",
 "../event/CommonEvent": "CommonEvent"
 } ],
 Bundles: [ function(t, e, o) {
@@ -10484,6 +10276,7 @@ t.SdkEvent_finish_video_back = "SdkEvent_finish_video_back__";
 (function(t) {
 t.event_change_avatar = "event_change_avatar";
 t.event_change_local_bgm = "event_change_local_bgm";
+t.event_change_whatapp_btn = "event_change_whatapp_btn";
 })(o.GameEventName || (o.GameEventName = {}));
 (function(t) {
 t.ClickEvent_PlayerHead = "ClickEvent_PlayerHead_Emoji";
@@ -10617,7 +10410,7 @@ t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o(
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var r = t("../../common/net/HttpSender"), a = t("../../common/config/User"), s = t("../../sdk/AppInfo"), c = t("../../sdk/GameNativeConfig"), l = t("../config/GlobalVar"), p = t("../enum/GlobalEnum"), u = t("../../sdk/SdkManager"), d = t("../../sdk/SdkCallBack"), h = t("../utils/CmmUtils"), f = t("../../login/view/CommonUIHelper"), m = function(t) {
+var r = t("../../common/net/HttpSender"), a = t("../../common/config/User"), s = t("../../sdk/AppInfo"), c = t("../../sdk/GameNativeConfig"), l = t("../config/GlobalVar"), p = t("../event/CommonEvent"), u = t("../enum/GlobalEnum"), d = t("../../sdk/SdkManager"), h = t("../../sdk/SdkCallBack"), f = t("../utils/CmmUtils"), m = t("../../login/view/CommonUIHelper"), _ = function(t) {
 i(e, t);
 function e() {
 return null !== t && t.apply(this, arguments) || this;
@@ -10635,13 +10428,13 @@ network: s.default.appData.network || "",
 clickLabel: s.default.appData.clickLabel || "",
 adjust_ts: s.default.appData.adjust_ts || 0,
 is_simulator: s.default.isSimulator(),
-installReferrer: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer_ts : "",
-sim: u.default.getCountry(),
-vpn: u.default.checkVPN(),
-zone: u.default.isIndiaTimeZone()
+installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
+sim: d.default.getCountry(),
+vpn: d.default.checkVPN(),
+zone: d.default.isIndiaTimeZone()
 };
-this.SendPostHttp(e, t, !0, p.GlobalEnum.HttpUrlType.Login);
+this.SendPostHttp(e, t, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_InitData = function(t) {
 var e = {
@@ -10656,25 +10449,25 @@ network: s.default.appData.network || "",
 clickLabel: s.default.appData.clickLabel || "",
 adjust_ts: s.default.appData.adjust_ts || 0,
 is_simulator: s.default.isSimulator(),
-installReferrer: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer_ts : "",
-sim: u.default.getCountry(),
-vpn: u.default.checkVPN(),
-zone: u.default.isIndiaTimeZone()
+installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
+sim: d.default.getCountry(),
+vpn: d.default.checkVPN(),
+zone: d.default.isIndiaTimeZone()
 };
-this.SendPostHttp(e, t, !0, p.GlobalEnum.HttpUrlType.Login);
+this.SendPostHttp(e, t, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_GameUrl = function(t) {
 var e = {
 action: "GameUrl",
 gameId: l.GlobalVar.curGameId
 };
-return this.SendPostHttp(e, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+return this.SendPostHttp(e, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_GetHost = function(t) {
 this.SendPostHttp({
 action: "GetHost"
-}, t, !0, p.GlobalEnum.HttpUrlType.Login);
+}, t, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_Login = function(t, e) {
 var o = {
@@ -10691,18 +10484,18 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 m_model: s.default.getMobileModel(),
-vpn: u.default.checkVPN(),
+vpn: d.default.checkVPN(),
 third_info: s.default.getThridInfo(),
 os_device: s.default.getDeviceInfo(),
 pwdtoken: t,
 firebaseId: s.default.getFireBaseAppInstanceID(),
 is_simulator: s.default.isSimulator(),
 ver_uid: s.default.getYcn(),
-installReferrer: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer_ts : "",
-sim: u.default.getCountry()
+installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
+sim: d.default.getCountry()
 };
-return this.SendPostHttp(o, e, !0, p.GlobalEnum.HttpUrlType.Login);
+return this.SendPostHttp(o, e, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_AutoRegister = function(t) {
 var e = {
@@ -10720,18 +10513,18 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 m_model: s.default.getMobileModel(),
-vpn: u.default.checkVPN(),
+vpn: d.default.checkVPN(),
 ver_uid: s.default.getYcn(),
 third_info: s.default.getThridInfo(),
 os_device: s.default.getDeviceInfo(),
 firebaseId: s.default.getFireBaseAppInstanceID(),
 is_simulator: s.default.isSimulator(),
-installReferrer: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer_ts : "",
-sim: u.default.getCountry()
+installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
+sim: d.default.getCountry()
 };
 Log.d("登录数据:", e);
-return this.SendPostHttp(e, t, !0, p.GlobalEnum.HttpUrlType.Login);
+return this.SendPostHttp(e, t, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_ResetPswd = function(t, e, o, n) {
 var i = {
@@ -10740,7 +10533,7 @@ tel_no: e,
 code: o,
 pswd: n
 };
-return this.SendPostHttp(i, t, !0, p.GlobalEnum.HttpUrlType.Login);
+return this.SendPostHttp(i, t, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_PhoneLogin_byGoogle = function(t, e) {
 var o = {
@@ -10758,17 +10551,17 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 m_model: s.default.getMobileModel(),
-vpn: u.default.checkVPN(),
+vpn: d.default.checkVPN(),
 ver_uid: s.default.getYcn(),
 third_info: s.default.getThridInfo(),
 os_device: s.default.getDeviceInfo(),
 firebaseId: s.default.getFireBaseAppInstanceID(),
 is_simulator: s.default.isSimulator(),
-installReferrer: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer_ts : "",
-sim: u.default.getCountry()
+installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
+sim: d.default.getCountry()
 };
-return this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Login);
+return this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_PhoneLogin_byMobile = function(t, e, o) {
 var n = {
@@ -10787,17 +10580,17 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 m_model: s.default.getMobileModel(),
-vpn: u.default.checkVPN(),
+vpn: d.default.checkVPN(),
 ver_uid: s.default.getYcn(),
 third_info: s.default.getThridInfo(),
 os_device: s.default.getDeviceInfo(),
 firebaseId: s.default.getFireBaseAppInstanceID(),
 is_simulator: s.default.isSimulator(),
-installReferrer: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer_ts : "",
-sim: u.default.getCountry()
+installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
+sim: d.default.getCountry()
 };
-return this.SendPostHttp(n, t, !0, p.GlobalEnum.HttpUrlType.Login);
+return this.SendPostHttp(n, t, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_PhoneLogin_byPassward = function(t, e, o, n, i, r, a) {
 var l = {
@@ -10819,19 +10612,19 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 m_model: s.default.getMobileModel(),
-vpn: u.default.checkVPN(),
+vpn: d.default.checkVPN(),
 third_info: s.default.getThridInfo(),
 os_device: s.default.getDeviceInfo(),
 firebaseId: s.default.getFireBaseAppInstanceID(),
 is_simulator: s.default.isSimulator(),
-installReferrer: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer_ts : "",
-sim: u.default.getCountry()
+installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
+sim: d.default.getCountry()
 };
 a && (l.tel_no = a);
 r && (l.name = r);
 i && (l.cpf = i);
-return this.SendPostHttp(l, t, !0, p.GlobalEnum.HttpUrlType.Login);
+return this.SendPostHttp(l, t, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_Register_ptype = function(t, e, o, n) {
 var i = {
@@ -10852,16 +10645,16 @@ gaid: s.default.getGoogleAdId(),
 adid: s.default.getAdjust_Adid(),
 afid: s.default.getAppflyId(),
 m_model: s.default.getMobileModel(),
-vpn: u.default.checkVPN(),
+vpn: d.default.checkVPN(),
 third_info: s.default.getThridInfo(),
 os_device: s.default.getDeviceInfo(),
 firebaseId: s.default.getFireBaseAppInstanceID(),
 is_simulator: s.default.isSimulator(),
-installReferrer: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer : "",
-installReferrer_ts: d.default.getInstance().coolData ? d.default.getInstance().coolData.installReferrer_ts : "",
-sim: u.default.getCountry()
+installReferrer: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer : "",
+installReferrer_ts: h.default.getInstance().coolData ? h.default.getInstance().coolData.installReferrer_ts : "",
+sim: d.default.getCountry()
 };
-return this.SendPostHttp(i, t, !0, p.GlobalEnum.HttpUrlType.Login);
+return this.SendPostHttp(i, t, !0, u.GlobalEnum.HttpUrlType.Login);
 };
 e.prototype.Send_RedPoint = function(t) {
 this.SendPostHttp({
@@ -10944,14 +10737,14 @@ this.SendPostHttp(n, o);
 e.prototype.Send_NShopGetDayfree = function(t) {
 return this.SendPostHttp({
 action: "ShopDayFree"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_Redeemcode = function(t, e) {
 var o = {
 action: "CDKey",
 cdkey: e
 };
-return this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+return this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_RebateInfo = function(t) {
 return this.SendPostHttp({
@@ -10972,12 +10765,12 @@ var s = {
 action: "PayOrderGet",
 mid: r.mid
 };
-h.CmmUtils.isNull(t) || (s.id = t);
-h.CmmUtils.isNull(e) || (s.rebateCode = e);
+f.CmmUtils.isNull(t) || (s.id = t);
+f.CmmUtils.isNull(e) || (s.rebateCode = e);
 if (0 != r.realName) if (a.default.self.isFinishIdCardBind()) {
 this.sendPayParam(s);
 n && n();
-} else f.default.showBindKycView({
+} else m.default.showBindKycView({
 realName: r.realName,
 callBack: function() {
 i.sendPayParam(s);
@@ -10987,7 +10780,7 @@ n && n();
 this.sendPayParam(s);
 n && n();
 }
-} else f.default.showBindMobile();
+} else m.default.showBindMobile();
 };
 e.prototype.Send_payMoney4 = function(t, e, o, n) {
 var i = this;
@@ -10998,12 +10791,12 @@ var s = {
 action: "PayOrderGet",
 mid: r.mid
 };
-h.CmmUtils.isNull(t) || (s.id = t);
-h.CmmUtils.isNull(e) || (s.couponId = e);
+f.CmmUtils.isNull(t) || (s.id = t);
+f.CmmUtils.isNull(e) || (s.couponId = e);
 if (0 != r.realName) if (a.default.self.isFinishIdCardBind()) {
 this.sendPayParam(s);
 n && n();
-} else f.default.showBindKycView({
+} else m.default.showBindKycView({
 realName: r.realName,
 callBack: function() {
 i.sendPayParam(s);
@@ -11013,7 +10806,7 @@ n && n();
 this.sendPayParam(s);
 n && n();
 }
-} else f.default.showBindMobile();
+} else m.default.showBindMobile();
 };
 e.prototype.Send_payMoney = function(t, e, o, n) {
 var i = this;
@@ -11024,12 +10817,12 @@ var s = {
 action: "PayOrderGet",
 mid: r.mid
 };
-h.CmmUtils.isNull(t) || (s.id = t);
-h.CmmUtils.isNull(e) || (s.amount = e);
+f.CmmUtils.isNull(t) || (s.id = t);
+f.CmmUtils.isNull(e) || (s.amount = e);
 if (0 != r.realName) if (a.default.self.isFinishIdCardBind()) {
 this.sendPayParam(s);
 n && n();
-} else f.default.showBindKycView({
+} else m.default.showBindKycView({
 realName: r.realName,
 callBack: function() {
 i.sendPayParam(s);
@@ -11039,7 +10832,7 @@ n && n();
 this.sendPayParam(s);
 n && n();
 }
-} else f.default.showBindMobile();
+} else m.default.showBindMobile();
 };
 e.prototype.sendPayParam = function(t) {
 var e = this;
@@ -11048,7 +10841,7 @@ if (0 == t.ret) {
 var o = t.data;
 e.openURL(o);
 }
-}, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+}, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_payMoney3 = function(t, e) {
 var o = {
@@ -11062,16 +10855,16 @@ Log.d("open pay url:", t);
 if (t.openType) switch (t.openType) {
 case 1:
 case 2:
-u.default.openUrl(t.ext_info);
+d.default.openUrl(t.ext_info);
 break;
 
 case 3:
-f.default.showQRView(t);
+m.default.showQRView(t);
 break;
 
 default:
-u.default.openUrl(t.ext_info);
-} else u.default.openUrl(t.ext_info);
+d.default.openUrl(t.ext_info);
+} else d.default.openUrl(t.ext_info);
 };
 e.prototype.Send_InitDayTask = function(t) {
 this.SendPostHttp({
@@ -11242,7 +11035,7 @@ action: "TransferInfoV2"
 e.prototype.Send_WithdrawConfig_Share = function(t) {
 this.SendPostHttp({
 action: "WithdrawConfig"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_DelTransfer = function(t, e) {
 var o = {
@@ -11260,7 +11053,7 @@ this.SendPostHttp(o, t);
 };
 e.prototype.Send_WithdrawApis = function(t, e) {
 e.action = "WithdrawApis";
-return this.SendPostHttp(e, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+return this.SendPostHttp(e, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_AddTransfer = function(t, e) {
 var o = {
@@ -11273,12 +11066,12 @@ email: e.email,
 accType: e.accType,
 bankName: e.bankName
 };
-h.CmmUtils.isNull(e.iban) || (o.iban = e.iban);
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+f.CmmUtils.isNull(e.iban) || (o.iban = e.iban);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_AddTransferv2 = function(t, e) {
 e.action = "AddTransferV2";
-this.SendPostHttp(e, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+this.SendPostHttp(e, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_WheelInfo = function(t) {
 this.SendPostHttp({
@@ -11335,14 +11128,14 @@ a.default.self.updateMoneyInfo();
 e.prototype.Send_Act_Get16 = function(t) {
 this.SendPostHttp({
 action: "Act_16.Get"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_Act_TestCash = function(t, e) {
 var o = {
 action: "TestCash",
 type: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_Act_15 = function(t) {
 var e = {
@@ -11364,36 +11157,36 @@ this.SendPostHttp(e, null, !1);
 e.prototype.Send_InitSignin = function(t) {
 this.SendPostHttp({
 action: "InitSignin"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_Signin = function(t, e) {
 var o = {
 action: "Signin",
 type: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_InitSignin_V = function(t) {
 this.SendPostHttp({
 action: "InitSigninNew"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_Signin_V = function(t, e) {
 var o = {
 action: "SigninNew",
 day: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_InitDailyReward = function(t) {
 this.SendPostHttp({
 action: "InitDailyReward"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_DailyReward = function(t) {
 this.SendPostHttp({
 action: "DailyReward"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall, null, !0);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall, null, !0);
 };
 e.prototype.Send_ChangeName = function(t, e) {
 var o = {
@@ -11478,85 +11271,102 @@ this.SendPostHttp(o, t);
 e.prototype.Send_getRankingList = function(t) {
 this.SendPostHttp({
 action: "getRankingList"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_getPreviousRankList = function(t) {
 this.SendPostHttp({
 action: "getPreviousRankList"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_getRankingReward = function(t) {
 this.SendPostHttp({
 action: "getRankingReward"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_ShareGiftInit = function(t) {
 this.SendPostHttp({
 action: "playerInfo"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift).then(function(t) {
+if (t && 0 == t.ret) {
+a.default.self.initSharePlayerInfo(t.data);
+dispatch(p.GameEventName.event_change_whatapp_btn, t.data);
+}
+});
+};
+e.prototype.Send_ShareGiftInit_noLogin = function(t) {
+var e = {
+action: "shareInfo",
+country: l.GlobalVar.country
+};
+this.SendPostHttp(e, t, !0, u.GlobalEnum.HttpUrlType.ShareGift).then(function(t) {
+if (t && 0 == t.ret) {
+a.default.self.initSharePlayerInfo(t.data);
+dispatch(p.GameEventName.event_change_whatapp_btn, t.data);
+}
+});
 };
 e.prototype.Send_ShareGetLockGold = function(t) {
 this.SendPostHttp({
 action: "claimLockGold"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_ShareExtend1 = function(t) {
 this.SendPostHttp({
 action: "extend1"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_AgentInfo = function(t, e) {
 var o = {
 action: "agentInfo",
 page: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_Claim = function(t, e) {
 var o = {
 action: "claim",
 page: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_PDDInit = function(t) {
 this.SendPostHttp({
 action: "pddInit"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_PDDSpin = function(t, e) {
 var o = {
 action: "pddSpin",
 type: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_ShareGiftPDDInit = function(t) {
 this.SendPostHttp({
 action: "act2"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_SharePDDInitData = function(t) {
 this.SendPostHttp({
 action: "act2_init"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_ShareGiftPDDGet = function(t, e) {
 var o = {
 action: "act2_Lottery",
 type: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_ShareGiftPDDWithdraw = function(t) {
 this.SendPostHttp({
 action: "act2_Claim"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_ShareTreeInitData = function(t) {
 this.SendPostHttp({
 action: "act3_init"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_ShareTreeGet = function(t, e, o) {
 void 0 === o && (o = -1);
@@ -11565,7 +11375,7 @@ action: "act3",
 type: e,
 index: o
 };
-this.SendPostHttp(n, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(n, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_AddTransfer_share = function(t, e) {
 var o = e.bankCode;
@@ -11584,7 +11394,7 @@ bankCode: o,
 cnic: e.cnic,
 iban: n
 };
-this.SendPostHttp(i, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(i, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_WithdrawRecord2_share = function(t, e) {
 void 0 === e && (e = 1);
@@ -11592,7 +11402,7 @@ var o = {
 action: "WithdrawRecord",
 page: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_ChargeRecord_share = function(t, e) {
 void 0 === e && (e = 1);
@@ -11600,117 +11410,117 @@ var o = {
 action: "ChargeRecord",
 page: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_Transfers = function(t) {
 this.SendPostHttp({
 action: "Transfers"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_Withdraw_share = function(t) {
 this.SendPostHttp({
 action: "WithdrawPageV2"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_WithdrawApis_share = function(t, e) {
 e.action = "WithdrawApis";
-this.SendPostHttp(e, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(e, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_ChangeToGame = function(t, e) {
 var o = {
 action: "exchange",
 value: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_MoneyInfo_share = function(t) {
 this.SendPostHttp({
 action: "MoneyInfo"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_Act1 = function(t) {
 this.SendPostHttp({
 action: "act1"
-}, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+}, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_GetAct1 = function(t, e) {
 var o = {
 action: "act1Receive",
 index: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.ShareGift);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.ShareGift);
 };
 e.prototype.Send_InitAdCoins = function(t) {
 this.SendPostHttp({
 action: "InitAdCoins"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_GetAdCoins = function(t) {
 this.SendPostHttp({
 action: "GetAdCoins"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_InitHallPoster = function(t) {
 this.SendPostHttp({
 action: "HallPoster"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_WithdrawDelayReward = function(t, e) {
 var o = {
 action: "WithdrawDelayReward",
 orderId: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_AddCPF = function(t, e) {
 var o = {
 action: "AddCPF",
 cpf: t
 };
-this.SendPostHttp(o, e, !0, p.GlobalEnum.HttpUrlType.Hall);
+this.SendPostHttp(o, e, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_InitSpinTask = function(t) {
 this.SendPostHttp({
 action: "InitSpinTask"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_GetTaskPoints = function(t, e) {
 var o = {
 action: "GetTaskPoints",
 taskId: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_TaskSpin = function(t, e) {
 var o = {
 action: "TaskSpin",
 table: e
 };
-return this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+return this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_InitSendMoney = function(t) {
 this.SendPostHttp({
 action: "InitSendMoney"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_SendMoneyRecord = function(t, e) {
 var o = {
 action: "SendMoneyRecord",
 page: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_PlayerMode_offline = function(t, e) {
 var o = {
 action: "PlayerMode",
 sendid: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_RechargePage = function(t) {
 this.SendPostHttp({
 action: "RechargePage"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_SendMoney = function(t, e, o) {
 var n = {
@@ -11718,7 +11528,7 @@ action: "SendMoney",
 toId: e,
 money: o
 };
-this.SendPostHttp(n, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+this.SendPostHttp(n, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_GiveRecord1 = function(t, e) {
 var o = {
@@ -11726,7 +11536,7 @@ action: "GiveRecord",
 type: 1,
 page: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_GiveRecord2 = function(t, e) {
 var o = {
@@ -11734,14 +11544,14 @@ action: "GiveRecord",
 type: 2,
 page: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_RecvMoney = function(t, e) {
 var o = {
 action: "RecvMoney",
 id: e
 };
-this.SendPostHttp(o, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+this.SendPostHttp(o, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_ShareInfo = function(t) {
 this.SendPostHttp({
@@ -11751,19 +11561,19 @@ action: "ShareInfo"
 e.prototype.Send_ActivityList = function(t) {
 this.SendPostHttp({
 action: "ActivityList"
-}, t, !0, p.GlobalEnum.HttpUrlType.Activity);
+}, t, !0, u.GlobalEnum.HttpUrlType.Activity);
 };
 e.prototype.Send_ActivityListNew = function(t) {
 this.SendPostHttp({
 action: "ActivityListNew"
-}, t, !0, p.GlobalEnum.HttpUrlType.Activity);
+}, t, !0, u.GlobalEnum.HttpUrlType.Activity);
 };
 e.prototype.Send_InitActivity = function(t, e) {
 var o = {
 action: "InitActivity",
 actId: t
 };
-this.SendPostHttp(o, e, !0, p.GlobalEnum.HttpUrlType.Activity);
+this.SendPostHttp(o, e, !0, u.GlobalEnum.HttpUrlType.Activity);
 };
 e.prototype.Send_Activity10100Req = function(t, e, o) {
 var n = {
@@ -11772,35 +11582,30 @@ actId: 10100,
 type: e
 };
 if (o) {
-h.CmmUtils.isNull(o.page) || (n.page = o.page);
-h.CmmUtils.isNull(o.index) || (n.index = o.index);
-h.CmmUtils.isNull(o.useCash) || (n.useCash = o.useCash);
-h.CmmUtils.isNull(o.delay) || o.delay;
+f.CmmUtils.isNull(o.page) || (n.page = o.page);
+f.CmmUtils.isNull(o.index) || (n.index = o.index);
+f.CmmUtils.isNull(o.useCash) || (n.useCash = o.useCash);
+f.CmmUtils.isNull(o.delay) || o.delay;
 }
-this.SendPostHttp(n, t, !0, p.GlobalEnum.HttpUrlType.Activity);
+this.SendPostHttp(n, t, !0, u.GlobalEnum.HttpUrlType.Activity);
 };
 e.prototype.Send_ReceiveChannelReward = function(t) {
 this.SendPostHttp({
 action: "ReceiveChannelReward"
-}, t, !0, p.GlobalEnum.HttpUrlType.Hall);
+}, t, !0, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.prototype.Send_GameEvent = function(t, e) {
 var o = {
 action: "HallEvent",
 eventName: t
 };
-h.CmmUtils.isNull(e) || (o.args = e);
-this.SendPostHttp(o, null, !1, p.GlobalEnum.HttpUrlType.Hall);
-};
-e.prototype.Send_CheckCks = function(t) {
-this.SendPostHttp({
-action: "Cks"
-}, t, !1, p.GlobalEnum.HttpUrlType.Login);
+f.CmmUtils.isNull(e) || (o.args = e);
+this.SendPostHttp(o, null, !1, u.GlobalEnum.HttpUrlType.Hall);
 };
 e.module = "CommonSender";
 return e;
 }(r.default);
-o.default = m;
+o.default = _;
 cc._RF.pop();
 }, {
 "../../common/config/User": "User",
@@ -11812,6 +11617,7 @@ cc._RF.pop();
 "../../sdk/SdkManager": "SdkManager",
 "../config/GlobalVar": "GlobalVar",
 "../enum/GlobalEnum": "GlobalEnum",
+"../event/CommonEvent": "CommonEvent",
 "../utils/CmmUtils": "CmmUtils"
 } ],
 CommonService: [ function(t, e, o) {
@@ -11932,7 +11738,7 @@ cc._RF.push(e, "0c91aF8q+tMCpJHoa5RPmTf", "CommonUIHelper");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var n = t("../../common/config/Config"), i = t("../../common/config/GlobalVar"), r = t("../../common/config/User"), a = t("../../common/net/CommonSender"), s = t("../../framework/defines/Macros"), c = t("../../sdk/AppInfo"), l = t("../../vcode/scripts/mian/view/VBindCPFView"), p = t("../../vcode/scripts/mian/view/VBindForgotPhoneView"), u = t("../../vcode/scripts/mian/view/VBindKycView"), d = t("../../vcode/scripts/mian/view/VChangeAvatarView"), h = t("../../vcode/scripts/mian/view/VChangeNameView"), f = t("../../vcode/scripts/mian/view/VDailySignInView"), m = t("../../vcode/scripts/mian/view/VEmailView"), _ = t("../../vcode/scripts/mian/view/VHtmlDownView"), g = t("../../vcode/scripts/mian/view/VIosOpenView"), y = t("../../vcode/scripts/mian/view/VNoticeView"), v = t("../../vcode/scripts/mian/view/VPayCardInfoView"), b = t("../../vcode/scripts/mian/view/VRechargeRecordsWebView"), C = t("../../vcode/scripts/mian/view/VRedeemCodeView"), w = t("../../vcode/scripts/mian/view/VResetPasswordView"), S = t("../../vcode/scripts/mian/view/VSettingView"), E = t("../../vcode/scripts/mian/view/VVipUpgradeNoticeView"), R = t("../../vcode/scripts/mian/view/VWithdrawView"), O = t("../../vcode/scripts/mian/view/VWithdrawVipInfo"), A = t("../../vcode/scripts/mian/view/activitys/VThreeSoneView"), P = t("../../zgameCommon/GameCheatView"), L = t("./loading/common_loadingView"), T = t("./loading/loading_gameView"), N = t("./offline/RecordsOfflineView"), M = t("./offline/TaskOfflineView"), I = t("../../vcode/scripts/mian/view/VBaxipaiZhaoView"), B = t("../../vcode/scripts/mian/view/VQRView"), k = t("../../vcode/scripts/mian/view/VShareView"), U = t("../../vcode/scripts/mian/view/VPurTipsView"), V = t("../../vcode/scripts/mian/view/VPiggyBankView"), D = t("../../vcode/scripts/mian/view/VVipInfoView"), G = t("../../vcode/scripts/mian/view/VRegisterInView"), j = t("../../vcode/scripts/mian/view/VGameChooseTCView"), x = t("../../vcode/scripts/mian/view/VUseCouponView"), F = t("../../vcode/scripts/mian/view/VAccountSecurityView"), H = t("../../vcode/scripts/mian/view/VIconTipsView"), z = t("./InviteWithdrawRecordsWebView"), W = t("../../vcode/scripts/mian/view/VUseGroupCodeView"), J = t("../../vcode/scripts/mian/view/VLaBaInfoView"), Y = t("../../vcode/scripts/mian/view/VChargeView"), Z = t("../../vcode/scripts/mian/view/VFirstChargeView"), K = t("../../vcode/scripts/mian/view/VGroupChargeView"), Q = t("../../vcode/scripts/mian/view/VMonthCardView"), q = t("../../vcode/scripts/mian/view/VWithdrawVipInfo2"), X = t("../../vcode/scripts/mian/view/VDailyTaskView"), $ = t("../../vcode/scripts/mian/view/VTradeView"), tt = t("../../vcode/scripts/mian/view/VWithdrawVipInfo3"), et = t("../../vcode/scripts/mian/view/VSendRecordView"), ot = t("../../vcode/scripts/mian/view/VXS2XXView"), nt = function() {
+var n = t("../../common/config/Config"), i = t("../../common/config/GlobalVar"), r = t("../../common/config/User"), a = t("../../common/net/CommonSender"), s = t("../../framework/defines/Macros"), c = t("../../sdk/AppInfo"), l = t("../../vcode/scripts/mian/view/VBindCPFView"), p = t("../../vcode/scripts/mian/view/VBindForgotPhoneView"), u = t("../../vcode/scripts/mian/view/VBindKycView"), d = t("../../vcode/scripts/mian/view/VChangeAvatarView"), h = t("../../vcode/scripts/mian/view/VChangeNameView"), f = t("../../vcode/scripts/mian/view/VDailySignInView"), m = t("../../vcode/scripts/mian/view/VEmailView"), _ = t("../../vcode/scripts/mian/view/VHtmlDownView"), g = t("../../vcode/scripts/mian/view/VIosOpenView"), y = t("../../vcode/scripts/mian/view/VNoticeView"), v = t("../../vcode/scripts/mian/view/VPayCardInfoView"), b = t("../../vcode/scripts/mian/view/VRechargeRecordsWebView"), C = t("../../vcode/scripts/mian/view/VRedeemCodeView"), w = t("../../vcode/scripts/mian/view/VResetPasswordView"), S = t("../../vcode/scripts/mian/view/VSettingView"), E = t("../../vcode/scripts/mian/view/VVipUpgradeNoticeView"), R = t("../../vcode/scripts/mian/view/VWithdrawView"), O = t("../../vcode/scripts/mian/view/VWithdrawVipInfo"), A = t("../../vcode/scripts/mian/view/activitys/VThreeSoneView"), P = t("../../zgameCommon/GameCheatView"), L = t("./loading/common_loadingView"), T = t("./loading/loading_gameView"), N = t("./offline/RecordsOfflineView"), M = t("./offline/TaskOfflineView"), I = t("../../vcode/scripts/mian/view/VBaxipaiZhaoView"), B = t("../../vcode/scripts/mian/view/VQRView"), k = t("../../vcode/scripts/mian/view/VShareView"), U = t("../../vcode/scripts/mian/view/VPurTipsView"), V = t("../../vcode/scripts/mian/view/VPiggyBankView"), D = t("../../vcode/scripts/mian/view/VVipInfoView"), G = t("../../vcode/scripts/mian/view/VRegisterInView"), j = t("../../vcode/scripts/mian/view/VGameChooseTCView"), x = t("../../vcode/scripts/mian/view/VUseCouponView"), F = t("../../vcode/scripts/mian/view/VAccountSecurityView"), H = t("../../vcode/scripts/mian/view/VIconTipsView"), z = t("./InviteWithdrawRecordsWebView"), W = t("../../vcode/scripts/mian/view/VUseGroupCodeView"), J = t("../../vcode/scripts/mian/view/VLaBaInfoView"), Y = t("../../vcode/scripts/mian/view/VChargeView"), Z = t("../../vcode/scripts/mian/view/VFirstChargeView"), Q = t("../../vcode/scripts/mian/view/VGroupChargeView"), K = t("../../vcode/scripts/mian/view/VMonthCardView"), q = t("../../vcode/scripts/mian/view/VWithdrawVipInfo2"), X = t("../../vcode/scripts/mian/view/VDailyTaskView"), $ = t("../../vcode/scripts/mian/view/VTradeView"), tt = t("../../vcode/scripts/mian/view/VWithdrawVipInfo3"), et = t("../../vcode/scripts/mian/view/VSendRecordView"), ot = t("../../vcode/scripts/mian/view/VXS2XXView"), nt = function() {
 function t() {}
 t.showVVipInfoView = function(t) {
 r.default.self.isLoginFinish ? App.uiManager.open({
@@ -12296,7 +12102,7 @@ t.showVGroupChargeView = function() {
 if (r.default.self.isLoginFinish) {
 App.globalAudio.playButtonClick();
 App.uiManager.open({
-type: K.default,
+type: Q.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -12307,7 +12113,7 @@ Log.e("9999999999999999");
 if (r.default.self.isLoginFinish) {
 App.globalAudio.playButtonClick();
 App.uiManager.open({
-type: Q.default,
+type: K.default,
 bundle: s.Macro.BUNDLE_RESOURCES,
 zIndex: n.ViewZOrder.UI
 });
@@ -14561,7 +14367,7 @@ case "hex":
 return o >>> 1;
 
 case "base64":
-return Q(t).length;
+return K(t).length;
 
 default:
 if (n) return Y(t).length;
@@ -14764,10 +14570,10 @@ function O(t, e, o, n) {
 return R(t, e, o, n);
 }
 function A(t, e, o, n) {
-return q(Q(e), t, o, n);
+return q(K(e), t, o, n);
 }
 function P(t, e, o, n) {
-return q(K(e, t.length - o), t, o, n);
+return q(Q(e, t.length - o), t, o, n);
 }
 c.prototype.write = function(t, e, o, n) {
 if (void 0 === e) {
@@ -15302,7 +15108,7 @@ function Z(t) {
 for (var e = [], o = 0; o < t.length; ++o) e.push(255 & t.charCodeAt(o));
 return e;
 }
-function K(t, e) {
+function Q(t, e) {
 for (var o, n, i, r = [], a = 0; a < t.length && !((e -= 2) < 0); ++a) {
 n = (o = t.charCodeAt(a)) >> 8;
 i = o % 256;
@@ -15311,7 +15117,7 @@ r.push(n);
 }
 return r;
 }
-function Q(t) {
+function K(t) {
 return n.toByteArray(W(t));
 }
 function q(t, e, o, n) {
@@ -20556,10 +20362,7 @@ t.forceUpdateUrl = "";
 t.forceUpdateTips = "";
 t.backCantUse = !1;
 t.channelOnecePop = !0;
-t.whatsapp_url_Pre = "https://api.whatsapp.com/send?phone=";
-t.telegram_url_Pre = "https://t.me/";
-t.share_shareTele = "";
-t.whatsapp_TeenpattiPrivate = "https://wa.me/?text=";
+t.whatsappUrl = "";
 t.kycUrl = "";
 t.shareLinkUrl = null;
 t.shareLinkPath = null;
@@ -20596,6 +20399,7 @@ t.tempVipTime = 0;
 t.stayLeftTime = 0;
 t.downList = new Map();
 t.maxDown = 3;
+t.downloadInfos = new Map();
 t.wildJoker = 0;
 t.costMoney_Symbol = "$";
 t.costUsdt_Symbol = "$";
@@ -22245,7 +22049,10 @@ this.precentLabel = cc.find("updateNode/precent/label", this.node).getComponent(
 l.Config.alertTitlePath.TIPS = App.zLan.getString(20223);
 };
 e.prototype.enterGame = function() {
-App.OfflineMode || o.sender.Send_Act_15();
+if (!App.OfflineMode) {
+o.sender.Send_Act_15();
+o.sender.Send_ShareGiftInit_noLogin(null);
+}
 this.mainUpdateNode.active = !1;
 this.enterFun();
 o.autoLogin();
@@ -22528,24 +22335,23 @@ this.sender.Send_getNotice(function(t) {
 Log.e("-Notice----\x3e" + JSON.stringify(t.data));
 t.data.list && t.data.list.length > 0 && (u.GlobalVar.noticeData = t.data.list.reverse());
 }, 1);
-App.OfflineMode || this.sender.Send_VipConfig(function(t) {
-h.default.self.initVipConfig(t.data);
-e.initIndex++;
-});
-App.OfflineMode || this.sender.Send_VipConfig(function() {
-u.GlobalVar.poster && u.GlobalVar.poster.list && u.GlobalVar.poster.list.length > 0 ? e.initIndex++ : e.sender.Send_ActivityList(function(t) {
+u.GlobalVar.poster && u.GlobalVar.poster.list && u.GlobalVar.poster.list.length > 0 ? this.initIndex++ : this.sender.Send_ActivityList(function(t) {
 u.GlobalVar.poster = t.data.poster;
 u.GlobalVar.poster && u.GlobalVar.poster.list && u.GlobalVar.poster.list.reverse();
 e.initIndex++;
 });
+this.sender.Send_ShareGiftInit_noLogin(null);
+App.OfflineMode || this.sender.Send_VipConfig(function(t) {
+h.default.self.initVipConfig(t.data);
+e.initIndex++;
 });
 h.default.self.checkPlayer();
 this.initHallSocket();
 };
 e.prototype.update = function() {
 if (App.OfflineMode) {
-if (4 == o.initIndex) {
-o.initIndex = 5;
+if (5 == o.initIndex) {
+o.initIndex = 6;
 dispatch(f.CommonEvent.EventMaskAll, 0);
 dispatch(f.CommonEvent.Show_Hall);
 }
@@ -22597,7 +22403,7 @@ value: !0
 });
 var n = function() {
 function t() {}
-t.hot_version = "4.0.8";
+t.hot_version = "4.0.9";
 return t;
 }();
 o.default = n;
@@ -33840,16 +33646,6 @@ Log.d("Js Call Android After: getCountry = " + t);
 } else s.default.isIOS ? t = "" : cc.sys.isBrowser;
 return t;
 };
-e.getTimeZone = function() {
-var t = App.storage.getItem("defaultTimeZone", -9999);
-if (-9999 != t) return t;
-if (s.default.isAndroid) {
-t = jsb.reflection.callStaticMethod(this.javaName_sdk, "getTimeZone", "()I");
-Log.d("Js Call Android After: getTimeZone = " + t);
-} else s.default.isIOS || cc.sys.isBrowser;
-App.storage.setItem("defaultTimeZone", t);
-return t;
-};
 e.getDeviceId = function() {
 var e = App.storage.getItem(n.ConstString.deviceIdKey), o = this.getGoogleID();
 if (o) {
@@ -43012,7 +42808,7 @@ Object.defineProperty(o, "__esModule", {
 value: !0
 });
 o.UIManager = o.ViewDynamicLoadData = void 0;
-var n = t("../../../common/config/Config"), i = t("../../../common/config/GlobalVar"), r = t("../../../common/enum/GlobalEnum"), a = t("../../../common/event/CommonEvent"), s = t("../../defines/Enums"), c = t("../../defines/Macros"), l = t("../asset/Resource"), p = t("../../../common/net/CommonSender"), u = t("../../../common/utils/UIUtils"), d = t("../../../sdk/SdkManager"), h = "DYNAMIC_LOAD_GARBAGE", f = "DYNAMIC_LOAD_RETAIN_MEMORY", m = function() {
+var n = t("../../../common/config/Config"), i = t("../../../common/config/GlobalVar"), r = t("../../../common/enum/GlobalEnum"), a = t("../../../common/event/CommonEvent"), s = t("../../defines/Enums"), c = t("../../defines/Macros"), l = t("../asset/Resource"), p = "DYNAMIC_LOAD_GARBAGE", u = "DYNAMIC_LOAD_RETAIN_MEMORY", d = function() {
 function t(t) {
 void 0 === t && (t = null);
 this.local = new Map();
@@ -43022,7 +42818,7 @@ this.name = t;
 t.prototype.addLocal = function(t, e) {
 void 0 === e && (e = null);
 if (t && t.url) {
-this.name == h && Log.e("找不到资源持有者: " + t.url);
+this.name == p && Log.e("找不到资源持有者: " + t.url);
 if (!this.local.has(t.url)) {
 App.asset.retainAsset(t);
 this.local.set(t.url, t);
@@ -43032,13 +42828,13 @@ this.local.set(t.url, t);
 t.prototype.addRemote = function(t, e) {
 void 0 === e && (e = null);
 if (t && t.data && !this.remote.has(t.url)) {
-this.name == h && Log.e("找不到资源持有者 : " + t.url);
+this.name == p && Log.e("找不到资源持有者 : " + t.url);
 App.cache.remoteCaches.retainAsset(t);
 this.remote.set(t.url, t);
 }
 };
 t.prototype.clear = function() {
-if (this.name == h) {
+if (this.name == p) {
 (this.local.size > 0 || this.remote.size > 0) && Log.e("当前未能释放资源如下:");
 if (this.local && this.local.size > 0) {
 Log.e("-----------local-----------");
@@ -43069,8 +42865,8 @@ this.remote.clear();
 };
 return t;
 }();
-o.ViewDynamicLoadData = m;
-var _ = function() {
+o.ViewDynamicLoadData = d;
+var h = function() {
 function t() {
 this.isLoaded = !1;
 this.status = s.ViewStatus.WAITTING_NONE;
@@ -43082,7 +42878,7 @@ this.isPrefab = !0;
 this.info = null;
 this.viewType = null;
 this.bundle = null;
-this.loadData = new m();
+this.loadData = new d();
 this.node = null;
 }
 t.prototype.doGet = function(t) {
@@ -43104,14 +42900,14 @@ this.doFinish(t, e, o);
 this.doGet(t, e, o);
 };
 return t;
-}(), g = function() {
+}(), f = function() {
 function t() {
 this.isResident = !0;
 this.module = null;
 this.uiNameList = [];
 this._viewDatas = new Map();
-this.garbage = new m(h);
-this.retainMemory = new m(f);
+this.garbage = new d(p);
+this.retainMemory = new d(u);
 this._canvas = null;
 this._mainController = null;
 this._prefabs = null;
@@ -43191,7 +42987,7 @@ i.status = s.ViewStatus.WAITTING_NONE;
 t.preload || t.isRoot;
 i.finishCb.push(o);
 } else {
-(i = new _()).loadData.name = n;
+(i = new h()).loadData.name = n;
 var r = t.type.getPrefabUrl(), c = e.parsePrefabUrl(r);
 i.isPreload = t.preload;
 i.isPrefab = c.isPrefab;
@@ -43446,38 +43242,16 @@ t.close(o);
 });
 }
 };
-t.newGameTest = function() {
-var t = d.default.getTimeZone(), e = App.storage.getItem("configBlistValue", null);
-null == e ? App.senderManager.get(p.default).Send_CheckCks(function(o) {
-Log.e(o);
-if (o.data) {
-e = o.data.list;
-App.storage.setItem("configBlistValue", e);
-0 == e.length ? u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
-cc.audioEngine.stopMusic();
-}) : e.length > 0 && e.indexOf(t) >= 0 && u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
-cc.audioEngine.stopMusic();
-});
-}
-}) : 0 == e.length ? u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
-cc.audioEngine.stopMusic();
-}) : e.length > 0 && e.indexOf(t) >= 0 && u.default.getScene(c.Macro.BUNDLE_RESOURCES, "Main", function() {
-cc.audioEngine.stopMusic();
-});
-};
 t.module = "【UI管理器】";
 return t;
 }();
-o.UIManager = g;
+o.UIManager = f;
 cc._RF.pop();
 }, {
 "../../../common/config/Config": "Config",
 "../../../common/config/GlobalVar": "GlobalVar",
 "../../../common/enum/GlobalEnum": "GlobalEnum",
 "../../../common/event/CommonEvent": "CommonEvent",
-"../../../common/net/CommonSender": "CommonSender",
-"../../../common/utils/UIUtils": "UIUtils",
-"../../../sdk/SdkManager": "SdkManager",
 "../../defines/Enums": "Enums",
 "../../defines/Macros": "Macros",
 "../asset/Resource": "Resource"
@@ -44465,6 +44239,7 @@ break;
 
 case i.Update.Code.UPDATE_FAILED:
 Log.d(this.bundle + " Update failed. " + t.getMessage());
+n = !0;
 break;
 
 case i.Update.Code.ERROR_UPDATING:
@@ -44473,6 +44248,7 @@ break;
 
 case i.Update.Code.ERROR_DECOMPRESS:
 Log.d(this.bundle + " " + t.getMessage());
+n = !0;
 }
 n && this.assetsManager.manager.setEventCallback(null);
 var c = !1;
@@ -44508,7 +44284,7 @@ if (l.code == i.Update.Code.UPDATE_FINISHED) {
 l.progress = 1.1;
 this.handler.onDownloading(this, l);
 } else if (l.code == i.Update.Code.UPDATE_PROGRESSION) {
-l.totalBytes <= 0 ? l.progress = 0 : l.progress = l.percent == Number.NaN ? 0 : l.percent;
+l.totalBytes <= 0 ? l.progress = 0 : l.progress = isNaN(l.percent) ? 0 : l.percent;
 this.handler.onDownloading(this, l);
 } else if (l.code == i.Update.Code.ALREADY_UP_TO_DATE) {
 l.progress = 1;
@@ -45380,6 +45156,7 @@ this.vwithdrawview_data = null;
 this.vchargeview_data = null;
 this.vtradeview_data = null;
 this._loginTb = {};
+this._sharePlayerInfo = {};
 this._notClearData = null;
 this.redPoints = new Map();
 this._mySaveKeys = {};
@@ -45434,6 +45211,13 @@ configurable: !0
 Object.defineProperty(t.prototype, "data", {
 get: function() {
 return this._loginTb;
+},
+enumerable: !1,
+configurable: !0
+});
+Object.defineProperty(t.prototype, "shareData", {
+get: function() {
+return this._sharePlayerInfo;
 },
 enumerable: !1,
 configurable: !0
@@ -45889,6 +45673,10 @@ App.storage.setItem(this.uid + "." + t, e);
 };
 t.prototype.getLocalValue = function(t, e) {
 return App.storage.getItem(this.uid + "." + t, e);
+};
+t.prototype.initSharePlayerInfo = function(t) {
+a.GlobalVar.whatsappUrl = t.whatsappUrl;
+this._sharePlayerInfo = t;
 };
 t.prototype.checkDay = function(t) {
 if (this._mySaveKeys[t]) return !1;
@@ -50469,7 +50257,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/componects/UpdatePosFollows"), d = t("../../../../login/gamelist/GamePlayerCount"), h = t("../../../../login/view/CommonUIHelper"), f = cc._decorator, m = f.ccclass, _ = f.property, g = function(t) {
+var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/utils/CmmUtils"), p = t("../../../../framework/componects/EventComponent"), u = t("../../../../framework/componects/UpdatePosFollows"), d = t("../../../../framework/core/update/Update"), h = t("../../../../login/gamelist/GamePlayerCount"), f = t("../../../../login/view/CommonUIHelper"), m = cc._decorator, _ = m.ccclass, g = m.property, y = function(t) {
 i(e, t);
 function e() {
 var e = null !== t && t.apply(this, arguments) || this;
@@ -50490,10 +50278,14 @@ e.volatilityLabel = null;
 e.gameName = null;
 e.nameFlollow = null;
 e.gamePlayerCount = null;
-e.curIconPath = "";
+e.updateNode = null;
+e.tips = null;
+e.updateProgressNode = null;
+e.updateProgressBar = null;
 e.data = null;
 e.index = 0;
 e.disable = !0;
+e._isDownloading = !1;
 e.iconIndex = 0;
 e.giconIndex = 0;
 e.intervalTime = .1;
@@ -50502,7 +50294,11 @@ return e;
 }
 o = e;
 e.prototype.addEvents = function() {
-var t = this, e = null;
+var t = this;
+this.onD(c.HotEvent.DownProgress, this.updateProgress);
+this.onD(c.HotEvent.DownComplete, this.updateComplete);
+this.onD(c.HotEvent.DownGameFail, this.downFreshFail);
+var e = null;
 this.snode.on(cc.Node.EventType.TOUCH_START, function(t) {
 e = t.getLocation();
 });
@@ -50535,7 +50331,7 @@ this.snode.scale = 1;
 };
 e.prototype.onClick = function() {
 if (this.disable && o.oneClick) {
-if (0 == this.data.isGame) h.default.showGameChooseTC(this.data); else {
+if (0 == this.data.isGame) f.default.showGameChooseTC(this.data); else {
 if (this.notopen.active) {
 App.tips.show(App.zLan.getString(20089));
 return;
@@ -50544,6 +50340,7 @@ if (this.comingsoon.active) {
 App.tips.show(App.zLan.getString(20088));
 return;
 }
+if (!this.isNewVersion()) return;
 a.GlobalVar.gotoGame(this.data, this.appEnterGame.bind(this));
 }
 o.oneClick = !1;
@@ -50555,7 +50352,7 @@ o.oneClick = !0;
 e.prototype.appEnterGame = function(t) {
 if (!s.default.self.isMerchantPlayer && 0 != this.data.status && 2 != this.data.status) {
 App.IsHtmlGame || dispatch(c.CommonEvent.Close_Panel);
-h.default.showCommon_loadingView(t);
+f.default.showCommon_loadingView(t);
 }
 };
 e.prototype.refresh_GamePlayerCount = function() {
@@ -50597,11 +50394,11 @@ this.volatilityBg.position = cc.v3(11.964, o / 20 * 57, 0);
 this.gameIcon.spriteFrame = null;
 this.iconIndex++;
 var n = a.GlobalVar.gameListIconPath + App.zLan.string_format_args(this.data.icon, "v1");
-this.curIconPath = n;
 App.asset.remote.loadImage_fixed(n, !0, this.iconIndex).then(function(t) {
 e.iconIndex == t.compare && t && e.gameIcon && (e.gameIcon.spriteFrame = t.sprite);
 });
 this.initJackPot();
+this.initHotUpdateView();
 };
 e.prototype.initJackPot = function() {
 this.jackpot1 && (this.jackpotVer.active = !1);
@@ -50616,6 +50413,7 @@ this.snode.active = !0;
 this.intervalTotalTime += t;
 if (!(this.intervalTotalTime < this.intervalTime)) {
 this.intervalTotalTime = 0;
+this._isDownloading && this.data && this.data.gameAlias && (this.updateProgressBar.fillRange = this._getDisplayProgress(this.data.gameAlias));
 if (this._jackPoints && this._jackPoints.length > 0 && this.data && 1 == this.data.status && this._jackPoints.length > 0 && this.jackpot1) {
 this.jackpotVer.active = !0;
 this.jackpot1.string = l.CmmUtils.NumberToHallString(this._jackPoints[0].jackpot, null, !0);
@@ -50624,28 +50422,150 @@ this.jackpot1.string = l.CmmUtils.NumberToHallString(this._jackPoints[0].jackpot
 }
 }
 };
+e.prototype._getDisplayProgress = function(t) {
+var e = a.GlobalVar.downloadInfos.get(t);
+if (!e) return 0;
+if (e.loadingAlias) {
+var o = a.GlobalVar.downloadInfos.get(e.loadingAlias), n = o ? Math.max(o.realProgress, Math.min(o.fakeTarget * ((Date.now() - o.fakeStartTime) / 1e3 / 30), o.fakeTarget)) : 1, i = Math.max(e.realProgress, Math.min(e.fakeTarget * ((Date.now() - e.fakeStartTime) / 1e3 / 30), e.fakeTarget));
+return .1 * Math.min(n, 1) + .9 * Math.min(i, 1);
+}
+return Math.max(e.realProgress, Math.min(e.fakeTarget * ((Date.now() - e.fakeStartTime) / 1e3 / 30), e.fakeTarget));
+};
+e.prototype._enterDownloadingState = function() {
+this._isDownloading = !0;
+this.updateNode.active = !0;
+this.updateProgressNode.active = !0;
+this.tips.active = !1;
+this.btn && (this.btn.interactable = !1);
+};
+e.prototype._getLoadingAlias = function(t) {
+var e = t + "_loading";
+return App.stageData.getEntry(e) && App.updateManager.getStatus(e) != d.Update.Status.UP_TO_DATE ? e : null;
+};
+e.prototype._ensureDownloadInfo = function(t) {
+if (!a.GlobalVar.downloadInfos.has(t)) {
+var e = {
+attempt: 1,
+realProgress: 0,
+fakeTarget: .95 + .04 * Math.random(),
+fakeStartTime: Date.now()
+}, o = this._getLoadingAlias(t);
+if (o) {
+e.loadingAlias = o;
+a.GlobalVar.downloadInfos.set(o, {
+attempt: 1,
+realProgress: 0,
+fakeTarget: .9 + .1 * Math.random(),
+fakeStartTime: Date.now()
+});
+}
+a.GlobalVar.downloadInfos.set(t, e);
+}
+};
+e.prototype.isNewVersion = function() {
+Log.e(this.data.gameAlias + "+++++++++++++++++++++++++++++++++");
+if (App.updateManager.getStatus(this.data.gameAlias) != d.Update.Status.UP_TO_DATE) {
+this._enterDownloadingState();
+this.updateProgressBar.fillRange = 0;
+if (!a.GlobalVar.downList.has(this.data.gameAlias)) {
+a.GlobalVar.downList.set(this.data.gameAlias, 0);
+if (a.GlobalVar.downList.size <= a.GlobalVar.maxDown) {
+a.GlobalVar.downList.set(this.data.gameAlias, 1);
+this._ensureDownloadInfo(this.data.gameAlias);
+var t = a.GlobalVar.downloadInfos.get(this.data.gameAlias);
+t && t.loadingAlias ? App.entryManager.enterBundle(t.loadingAlias) : App.entryManager.enterBundle(this.data.gameAlias);
+}
+}
+this.btn && (this.btn.interactable = !1);
+return !1;
+}
+return !0;
+};
+e.prototype.initHotUpdateView = function() {
+if (this.updateNode) {
+var t = this.data.gameAlias;
+if (App.updateManager.getStatus(t) == d.Update.Status.UP_TO_DATE) {
+this.updateNode.active = !1;
+this.updateProgressNode.active = !1;
+this.tips.active = !1;
+} else if (a.GlobalVar.downloadInfos.get(t) || App.stageData.getEntry(t + "_loading") && a.GlobalVar.downloadInfos.has(t + "_loading")) {
+this._enterDownloadingState();
+this.updateProgressBar.fillRange = this._getDisplayProgress(t);
+} else {
+this.updateNode.active = !0;
+this.updateProgressNode.active = !1;
+this.tips.active = !0;
+this.btn && (this.btn.interactable = !0);
+}
+}
+};
+e.prototype.updateProgress = function(t) {
+Log.e(t.bundle + "+++++++++++++++++++++++");
+var e = t.bundle, o = a.GlobalVar.downloadInfos.has(this.data.gameAlias);
+if (e == this.data.gameAlias) {
+var n = t.info;
+(r = a.GlobalVar.downloadInfos.get(e)) && (r.realProgress = n.percent || 0);
+if (!o) return;
+this._enterDownloadingState();
+this.updateProgressBar.fillRange = this._getDisplayProgress(e);
+}
+var i = a.GlobalVar.downloadInfos.get(this.data.gameAlias);
+if (i && i.loadingAlias && e == i.loadingAlias) {
+var r;
+n = t.info;
+(r = a.GlobalVar.downloadInfos.get(e)) && (r.realProgress = n.percent || 0);
+if (!o) return;
+this._enterDownloadingState();
+this.updateProgressBar.fillRange = this._getDisplayProgress(this.data.gameAlias);
+}
+};
+e.prototype.updateComplete = function(t) {
+if (this.data.gameAlias != t) {
+var e = a.GlobalVar.downloadInfos.get(this.data.gameAlias);
+if (e && e.loadingAlias && t == e.loadingAlias) {
+a.GlobalVar.downloadInfos.delete(t);
+a.GlobalVar.downList.has(this.data.gameAlias) && App.entryManager.enterBundle(this.data.gameAlias);
+}
+} else {
+this._isDownloading = !1;
+this.updateProgressNode.active = !1;
+this.updateNode.active = !1;
+this.btn && (this.btn.interactable = !0);
+}
+};
+e.prototype.downFreshFail = function(t) {
+var e = "string" == typeof t ? t : t.bundle;
+if (this.data.gameAlias == e || this.data.gameAlias + "_loading" == e) {
+this._isDownloading = !1;
+this.initHotUpdateView();
+}
+};
 var o;
 e.oneClick = !0;
-r([ _(cc.SpriteFrame) ], e.prototype, "defaultSpriteLoading", void 0);
-r([ _(cc.Sprite) ], e.prototype, "changshang", void 0);
-r([ _(cc.Node) ], e.prototype, "snode", void 0);
-r([ _(cc.Node) ], e.prototype, "hot", void 0);
-r([ _(cc.Node) ], e.prototype, "new", void 0);
-r([ _(cc.Node) ], e.prototype, "notopen", void 0);
-r([ _(cc.Node) ], e.prototype, "comingsoon", void 0);
-r([ _(cc.Sprite) ], e.prototype, "gameIcon", void 0);
-r([ _(cc.Button) ], e.prototype, "btn", void 0);
-r([ _(cc.Label) ], e.prototype, "jackpot1", void 0);
-r([ _(cc.Node) ], e.prototype, "jackpotVer", void 0);
-r([ _(cc.Node) ], e.prototype, "volatility", void 0);
-r([ _(cc.Node) ], e.prototype, "volatilityBg", void 0);
-r([ _(cc.Label) ], e.prototype, "volatilityLabel", void 0);
-r([ _(cc.Label) ], e.prototype, "gameName", void 0);
-r([ _(u.default) ], e.prototype, "nameFlollow", void 0);
-r([ _(d.default) ], e.prototype, "gamePlayerCount", void 0);
-return o = r([ m ], e);
+r([ g(cc.SpriteFrame) ], e.prototype, "defaultSpriteLoading", void 0);
+r([ g(cc.Sprite) ], e.prototype, "changshang", void 0);
+r([ g(cc.Node) ], e.prototype, "snode", void 0);
+r([ g(cc.Node) ], e.prototype, "hot", void 0);
+r([ g(cc.Node) ], e.prototype, "new", void 0);
+r([ g(cc.Node) ], e.prototype, "notopen", void 0);
+r([ g(cc.Node) ], e.prototype, "comingsoon", void 0);
+r([ g(cc.Sprite) ], e.prototype, "gameIcon", void 0);
+r([ g(cc.Button) ], e.prototype, "btn", void 0);
+r([ g(cc.Label) ], e.prototype, "jackpot1", void 0);
+r([ g(cc.Node) ], e.prototype, "jackpotVer", void 0);
+r([ g(cc.Node) ], e.prototype, "volatility", void 0);
+r([ g(cc.Node) ], e.prototype, "volatilityBg", void 0);
+r([ g(cc.Label) ], e.prototype, "volatilityLabel", void 0);
+r([ g(cc.Label) ], e.prototype, "gameName", void 0);
+r([ g(u.default) ], e.prototype, "nameFlollow", void 0);
+r([ g(h.default) ], e.prototype, "gamePlayerCount", void 0);
+r([ g(cc.Node) ], e.prototype, "updateNode", void 0);
+r([ g(cc.Node) ], e.prototype, "tips", void 0);
+r([ g(cc.Node) ], e.prototype, "updateProgressNode", void 0);
+r([ g(cc.Sprite) ], e.prototype, "updateProgressBar", void 0);
+return o = r([ _ ], e);
 }(p.default);
-o.default = g;
+o.default = y;
 cc._RF.pop();
 }, {
 "../../../../common/config/GlobalVar": "GlobalVar",
@@ -50654,6 +50574,7 @@ cc._RF.pop();
 "../../../../common/utils/CmmUtils": "CmmUtils",
 "../../../../framework/componects/EventComponent": "EventComponent",
 "../../../../framework/componects/UpdatePosFollows": "UpdatePosFollows",
+"../../../../framework/core/update/Update": "Update",
 "../../../../login/gamelist/GamePlayerCount": "GamePlayerCount",
 "../../../../login/view/CommonUIHelper": "CommonUIHelper"
 } ],
@@ -55625,6 +55546,84 @@ cc._RF.pop();
 "../../../../framework/defines/Enums": "Enums",
 "../../../../sdk/SdkManager": "SdkManager"
 } ],
+VShareWhatAppBtn: [ function(t, e, o) {
+"use strict";
+cc._RF.push(e, "83fd90M9IlOM6kZr2k8LWcD", "VShareWhatAppBtn");
+var n, i = this && this.__extends || (n = function(t, e) {
+return (n = Object.setPrototypeOf || {
+__proto__: []
+} instanceof Array && function(t, e) {
+t.__proto__ = e;
+} || function(t, e) {
+for (var o in e) Object.prototype.hasOwnProperty.call(e, o) && (t[o] = e[o]);
+})(t, e);
+}, function(t, e) {
+n(t, e);
+function o() {
+this.constructor = t;
+}
+t.prototype = null === e ? Object.create(e) : (o.prototype = e.prototype, new o());
+}), r = this && this.__decorate || function(t, e, o, n) {
+var i, r = arguments.length, a = r < 3 ? e : null === n ? n = Object.getOwnPropertyDescriptor(e, o) : n;
+if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, o, n); else for (var s = t.length - 1; s >= 0; s--) (i = t[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(e, o, a) : i(e, o)) || a);
+return r > 3 && a && Object.defineProperty(e, o, a), a;
+};
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var a = t("../../../../common/config/GlobalVar"), s = t("../../../../common/config/User"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../framework/componects/EventComponent"), p = t("../../../../framework/defines/Enums"), u = t("../../../../login/view/CommonUIHelper"), d = t("../../../../sdk/SdkManager"), h = cc._decorator, f = h.ccclass, m = h.property, _ = function(t) {
+i(e, t);
+function e() {
+var e = null !== t && t.apply(this, arguments) || this;
+e.allNode = null;
+e.openState = null;
+e.closeState = null;
+e.closeBtn = null;
+return e;
+}
+e.prototype.addEvents = function() {
+var t = this;
+this.onN(this.closeBtn, p.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+t.openState.active = !1;
+t.closeState.active = !0;
+});
+this.onN(this.closeState, p.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+t.openState.active = !0;
+t.closeState.active = !1;
+});
+this.onN(this.openState, p.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+if (!s.default.self.isLoginFinish) {
+u.default.showBindMobileBeforeFirstRechager();
+return !1;
+}
+d.default.openUrl(a.GlobalVar.whatsappUrl);
+});
+this.onD(c.GameEventName.event_change_whatapp_btn, this.updateBtn.bind(this));
+this.updateBtn();
+};
+e.prototype.updateBtn = function() {
+this.allNode.active = !!a.GlobalVar.whatsappUrl;
+};
+r([ m(cc.Node) ], e.prototype, "allNode", void 0);
+r([ m(cc.Node) ], e.prototype, "openState", void 0);
+r([ m(cc.Node) ], e.prototype, "closeState", void 0);
+r([ m(cc.Node) ], e.prototype, "closeBtn", void 0);
+return r([ f ], e);
+}(l.default);
+o.default = _;
+cc._RF.pop();
+}, {
+"../../../../common/config/GlobalVar": "GlobalVar",
+"../../../../common/config/User": "User",
+"../../../../common/event/CommonEvent": "CommonEvent",
+"../../../../framework/componects/EventComponent": "EventComponent",
+"../../../../framework/defines/Enums": "Enums",
+"../../../../login/view/CommonUIHelper": "CommonUIHelper",
+"../../../../sdk/SdkManager": "SdkManager"
+} ],
 VShareWithdrawRecordItem: [ function(t, e, o) {
 "use strict";
 cc._RF.push(e, "4a12aIsDgJJuYe744D0WO1n", "VShareWithdrawRecordItem");
@@ -58177,19 +58176,6 @@ h.default.showNoticeView();
 return;
 }
 l.default.self.updateServerRedPoint();
-if (c.GlobalVar.gameBackToHall && !l.default.self.isFinishAllBigSale) {
-if (!l.default.self.isPay) {
-c.GlobalVar.gameBackToHall = !1;
-h.default.showVFirstChargeView();
-c.GlobalVar.isPaiedShowFirstCharge = !1;
-return;
-}
-if (c.GlobalVar.isPaiedShowFirstCharge) {
-h.default.showVFirstChargeView();
-c.GlobalVar.isPaiedShowFirstCharge = !1;
-return;
-}
-}
 c.GlobalVar.firstSortAddCash && (c.GlobalVar.firstSortAddCash = !1);
 if (c.GlobalVar.firstDailySign) {
 c.GlobalVar.firstDailySign = !1;
@@ -61702,7 +61688,7 @@ return r > 3 && a && Object.defineProperty(e, o, a), a;
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = t("../../../../common/component/SwitchBtnItem"), s = t("../../../../common/component/UIContainer"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../common/utils/CmmUtils"), u = t("../../../../framework/defines/Enums"), d = t("../../../../login/activityList/ActiviryItem"), h = t("./activity/vactivityItem"), f = cc._decorator, m = f.ccclass, _ = (f.property, 
+var a = t("../../../../common/component/SwitchBtnItem"), s = t("../../../../common/component/UIContainer"), c = t("../../../../common/event/CommonEvent"), l = t("../../../../common/net/CommonSender"), p = t("../../../../common/utils/CmmUtils"), u = t("../../../../framework/defines/Enums"), d = t("./activity/vactivityItem"), h = cc._decorator, f = h.ccclass, m = (h.property, 
 function(t) {
 i(e, t);
 function e() {
@@ -61733,12 +61719,11 @@ this.node.opacity = 255;
 this.activitylist = cc.find("scroll/view/content", this.node).getComponent(s.default);
 this.contentLayout = cc.find("scroll/view/content", this.node).getComponent(cc.Layout);
 this.back_btn = cc.find("bg/top/backBtn", this.node);
-d.default.sameClick = !0;
 this.refreshByServer();
 this.initEvent();
 this.firstInit = !1;
 } else this.refreshByServer();
-h.default.sameClick = !0;
+d.default.sameClick = !0;
 };
 e.prototype.refreshByServer = function() {
 this.curLanguage = App.zLan.getLanguage();
@@ -61757,7 +61742,7 @@ this.id = t;
 this.initFirst();
 };
 e.prototype.createList = function(t, e) {
-t.getComponent(h.default).show(e.data);
+t.getComponent(d.default).show(e.data);
 };
 e.prototype.createEnd = function() {
 this.updateLayout();
@@ -61772,7 +61757,7 @@ this.clearShouzhi();
 e.prototype.setGuideMaks = function() {
 if (this.id) {
 for (var t = this.activitylist.getNodes(), e = 0; e < t.length; e++) {
-var o = t[e].getComponent(h.default);
+var o = t[e].getComponent(d.default);
 o.id == this.id ? o.shouzhi.active = !0 : o.shouzhi.active = !1;
 }
 this.id = null;
@@ -61781,11 +61766,11 @@ this.id = null;
 e.prototype.clearShouzhi = function() {
 this.id = null;
 var t = this.activitylist.getNodes();
-if (t) for (var e = 0; e < t.length; e++) t[e].getComponent(h.default).shouzhi.active = !1;
+if (t) for (var e = 0; e < t.length; e++) t[e].getComponent(d.default).shouzhi.active = !1;
 };
-return r([ m ], e);
+return r([ f ], e);
 }(a.default));
-o.default = _;
+o.default = m;
 cc._RF.pop();
 }, {
 "../../../../common/component/SwitchBtnItem": "SwitchBtnItem",
@@ -61794,7 +61779,6 @@ cc._RF.pop();
 "../../../../common/net/CommonSender": "CommonSender",
 "../../../../common/utils/CmmUtils": "CmmUtils",
 "../../../../framework/defines/Enums": "Enums",
-"../../../../login/activityList/ActiviryItem": "ActiviryItem",
 "./activity/vactivityItem": "vactivityItem"
 } ],
 activity_reward_event: [ function(t, e, o) {
@@ -62016,7 +62000,8 @@ e.tips0 = null;
 e.levelInfo = null;
 e.node_RankStyle = null;
 e.node_RankStyle_code = null;
-e.flyBtn = null;
+e.otherNode = null;
+e.otherLayout = null;
 e.switchBtns = null;
 e.loading = null;
 e.backBtn = null;
@@ -62028,7 +62013,12 @@ e.sender = App.senderManager.get(d.default);
 e.firstInit = !0;
 e.firstType0 = !0;
 e.firstType1 = !0;
+e.Button_CopyAndSend = null;
+e.Button_WhatsApp = null;
+e.Button_Facebook = null;
+e.Button_Tel = null;
 e.my_TimeOut = null;
+e.sharePlayerInfo = null;
 e.timeDown = 0;
 return e;
 }
@@ -62046,11 +62036,16 @@ this.lvPercents = this.levelInfo.getComponentsInChildren(cc.Label);
 this.lv11Percent = this.levelInfo.getComponentInChildren(cc.RichText);
 this.backBtn = cc.find("bg/top/backBtn", this.node);
 this.switchBtns = cc.find("bg/top/btns", this.node).getComponent(s.default);
+this.otherLayout = this.otherNode.getComponent(cc.Layout);
+this.Button_CopyAndSend = cc.find("Button_CopyAndSend", this.otherNode);
+this.Button_WhatsApp = cc.find("Button_WhatsApp", this.otherNode);
+this.Button_Facebook = cc.find("Button_Facebook", this.otherNode);
+this.Button_Tel = cc.find("Button_Tel", this.otherNode);
 };
 e.prototype.enterRefresh = function() {
 this.args = {};
 l.GlobalVar.agentRank || this.switchBtns.hide(2);
-this.switchBtns.init(0, this.initShowStyle.bind(this), null, this.enterFunCB.bind(this));
+this.switchBtns.init(1, this.initShowStyle.bind(this), null, this.enterFunCB.bind(this));
 };
 e.prototype.initUIEvent = function() {
 var t = this;
@@ -62066,14 +62061,43 @@ this.onN(this.inviteBtn2, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
 t.gotoAgent();
 });
-this.onN(this.flyBtn, m.NodeEvent.click, function() {
+this.onN(this.Button_CopyAndSend, m.NodeEvent.click, function() {
 App.globalAudio.playButtonClick();
-t.gotFeiji();
+if (!p.default.self.isLoginFinish) {
+v.default.showBindMobileBeforeFirstRechager();
+return !1;
+}
+b.default.setClipboardContent(t.args.copyAndSendUrl);
+});
+this.onN(this.Button_WhatsApp, m.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+if (!p.default.self.isLoginFinish) {
+v.default.showBindMobileBeforeFirstRechager();
+return !1;
+}
+b.default.openUrl(t.args.whatsappUrl);
+});
+this.onN(this.Button_Facebook, m.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+if (!p.default.self.isLoginFinish) {
+v.default.showBindMobileBeforeFirstRechager();
+return !1;
+}
+b.default.shareFacebook(t.args.facebookUrl);
+});
+this.onN(this.Button_Tel, m.NodeEvent.click, function() {
+App.globalAudio.playButtonClick();
+if (!p.default.self.isLoginFinish) {
+v.default.showBindMobileBeforeFirstRechager();
+return !1;
+}
+b.default.openUrl(t.args.telegramUrl);
 });
 this.onD(u.CommonEvent.Time_Second, this.refreshTimeDown);
+this.onD(u.GameEventName.event_change_whatapp_btn, this.updateByLogin.bind(this));
 };
 e.prototype.enterFunCB = function(t) {
-if (0 != t) {
+if (2 == t) {
 if (p.default.self.isLoginFinish) return !0;
 v.default.showBindMobileBeforeFirstRechager();
 return !1;
@@ -62086,12 +62110,8 @@ Log.e(" selectIndex = " + t);
 if (1 == t) {
 this.node_GGLStyle.active = !1;
 this.node_RankStyle.active = !1;
-if (this.firstType1) {
-this.reqAgent(function() {
-e.node_LevelStyle.active = !0;
-});
-this.firstType1 = !1;
-} else this.node_LevelStyle.active = !0;
+this.updatePanel();
+this.node_LevelStyle.active = !0;
 this.openDefaultPage = 0;
 } else if (0 == t) {
 this.node_LevelStyle.active = !1;
@@ -62110,39 +62130,38 @@ this.node_RankStyle.active = !0;
 this.node_RankStyle_code.show(function() {});
 }
 };
-e.prototype.gotFeiji = function() {
-b.default.openUrl(l.GlobalVar.share_shareTele);
-};
 e.prototype.gotoAgent = function() {
 var t = this;
 if (p.default.self.isLoginFinish) {
-var e = function() {
-t.args.openDefaultPage = t.openDefaultPage;
-t.loading.startLoading(t.args);
+var e = function(e) {
+e.openDefaultPage = t.openDefaultPage;
+t.loading.startLoading(e);
 dispatch(u.ComponentGameEvent.EnterOtherBundleBefore);
-App.entryManager.enterBundle(_.Macro.BUNDLE_invite, t.args);
+App.entryManager.enterBundle(_.Macro.BUNDLE_invite, e);
 };
-if (this.firstType1) {
-this.reqAgent(e);
-this.firstType1 = !1;
-} else e();
+this.sharePlayerInfo ? e(this.sharePlayerInfo) : this.reqAgent(e);
 } else v.default.showBindMobileBeforeFirstRechager();
 };
 e.prototype.refresh = function() {
 this.initFirst();
 };
-e.prototype.updatePanel = function(t) {
-this.args = t;
+e.prototype.updatePanel = function() {
+this.args = p.default.self.shareData;
 this.callBack_ShareGiftInit(this.args);
 if (this.args.posterInfo) {
 this.tips0.string = App.zLan.getString(10283, String.format("<color=#FEA680>{0}</c>", App.zLan.getString(10243)));
-for (var e = 0; e < this.lvPercents.length; e++) p.default.self.isBozhu ? this.lvPercents[e].string = "" : this.lvPercents[e].string = 1 == e || 4 == e || 8 == e || 9 == e ? App.zLan.getString(10288, this.args.posterInfo[e]) : this.args.posterInfo[e];
+for (var t = 0; t < this.lvPercents.length; t++) p.default.self.isBozhu ? this.lvPercents[t].string = "" : this.lvPercents[t].string = 1 == t || 4 == t || 8 == t || 9 == t ? App.zLan.getString(10288, this.args.posterInfo[t]) : this.args.posterInfo[t];
 this.lv11Percent.string = App.zLan.getString(10283, String.format("<color=#FEA680>{0}</c>", this.args.posterInfo[10]));
 }
+this.Button_CopyAndSend.active = !!this.args.copyAndSendUrl;
+this.Button_WhatsApp.active = !!this.args.whatsappUrl;
+this.Button_Facebook.active = !!this.args.facebookUrl;
+this.Button_Tel.active = !!this.args.telegramUrl;
+this.otherLayout.node.active = this.Button_CopyAndSend.active || this.Button_WhatsApp.active || this.Button_Facebook.active || this.Button_Tel.active;
+this.otherLayout.updateLayout();
 };
 e.prototype.callBack_ShareGiftInit = function(t) {
 Log.e(JSON.stringify(t));
-l.GlobalVar.share_shareTele = t.groupUrl;
 if (p.default.self.isBozhu) {
 this.inviteLabel.string = "";
 this.inviteeLabel.string = "";
@@ -62156,6 +62175,9 @@ var e = this;
 this.sender.Send_ShareGiftPDDInit(function(o) {
 e.updateShareInfo(o, t);
 });
+};
+e.prototype.updateByLogin = function() {
+this.updatePanel();
 };
 e.prototype.updateShareInfo = function(t, e) {
 var o = this;
@@ -62195,8 +62217,8 @@ e.prototype.reqAgent = function(t) {
 var e = this;
 App.senderManager.get(d.default).Send_ShareGiftInit(function(o) {
 var n = o.data;
-e.updatePanel(n);
-t && t();
+e.sharePlayerInfo = n;
+t && t(e.sharePlayerInfo);
 });
 };
 e.prototype.PlayAnimation_InviteBtn = function() {
@@ -62230,7 +62252,7 @@ r([ f.inject("scroll/view/content/Page1_Agent/main/fenji/des/tips0", cc.RichText
 r([ f.inject("scroll/view/content/Page1_Agent/main/fenji/levelInfo", cc.Node) ], e.prototype, "levelInfo", void 0);
 r([ f.inject("scroll/view/content/Page3_Rank", cc.Node) ], e.prototype, "node_RankStyle", void 0);
 r([ f.inject("scroll/view/content/Page3_Rank", w.default) ], e.prototype, "node_RankStyle_code", void 0);
-r([ f.inject("scroll/view/content/Page3_Rank/rank/bg/Total", cc.Label), f.inject("scroll/view/content/Page1_Agent/OtherBtn/flyBtn", cc.Node) ], e.prototype, "flyBtn", void 0);
+r([ f.inject("scroll/view/content/Page3_Rank/rank/bg/Total", cc.Label), f.inject("scroll/view/content/Page1_Agent/OtherBtn", cc.Node) ], e.prototype, "otherNode", void 0);
 r([ R(y.default) ], e.prototype, "loading", void 0);
 return r([ E ], e);
 }(a.default);
@@ -71840,6 +71862,7 @@ e.updateProgressNode = null;
 e.redSys = null;
 e.progressFiLL = null;
 e.btn = null;
+e._isDownloading = !1;
 e._holder = null;
 e.id = null;
 return e;
@@ -71895,16 +71918,46 @@ this.loading.active = !1;
 this.activityIcon.spriteFrame = this.icon;
 }
 };
+e.prototype._getDisplayProgress = function(t) {
+var e = c.GlobalVar.downloadInfos.get(t);
+if (!e) return 0;
+var o = (Date.now() - e.fakeStartTime) / 1e3, n = Math.min(e.fakeTarget * (o / 30), e.fakeTarget);
+return Math.max(e.realProgress, n);
+};
+e.prototype._enterDownloadingState = function() {
+this._isDownloading = !0;
+this.updateNode.active = !0;
+this.updateProgressNode.active = !0;
+this.tips.active = !1;
+this.btn && (this.btn.interactable = !1);
+};
+e.prototype._ensureDownloadInfo = function(t) {
+c.GlobalVar.downloadInfos.has(t) || c.GlobalVar.downloadInfos.set(t, {
+attempt: 1,
+realProgress: 0,
+fakeTarget: .95 + .04 * Math.random(),
+fakeStartTime: Date.now()
+});
+};
 e.prototype.initHotUpdateView = function() {
-if (this.updateNode) if (App.updateManager.getStatus(this._holder.alias) == d.Update.Status.UP_TO_DATE) {
+if (this.updateNode) {
+var t = this._holder.alias;
+if (App.updateManager.getStatus(t) == d.Update.Status.UP_TO_DATE) {
 this.updateNode.active = !1;
 this.updateProgressNode.active = !1;
 this.tips.active = !0;
+} else if (c.GlobalVar.downloadInfos.get(t)) {
+this._enterDownloadingState();
+this.progressFiLL.progress(this._getDisplayProgress(t));
 } else {
 this.updateNode.active = !0;
 this.updateProgressNode.active = !1;
 this.tips.active = !0;
 }
+}
+};
+e.prototype._refreshProgress = function() {
+this._isDownloading && this._holder && this._holder.alias && this.progressFiLL.progress(this._getDisplayProgress(this._holder.alias));
 };
 e.prototype.onClick = function() {
 App.globalAudio.playButtonClick();
@@ -71922,15 +71975,13 @@ return;
 dispatch(p.ComponentGameEvent.EnterOtherBundleBefore);
 App.entryManager.enterBundle(this._holder.alias);
 } else f.default.showBindMobileBeforeFirstRechager(); else {
-this.updateNode.active = !0;
-this.updateProgressNode.active = !0;
+this._enterDownloadingState();
 this.progressFiLL.progress(0);
-this.curprogress = 0;
-this.tips.active = !1;
 if (!c.GlobalVar.downList.has(this._holder.alias)) {
 c.GlobalVar.downList.set(this._holder.alias, 0);
 if (c.GlobalVar.downList.size <= c.GlobalVar.maxDown) {
 c.GlobalVar.downList.set(this._holder.alias, 1);
+this._ensureDownloadInfo(this._holder.alias);
 App.entryManager.enterBundle(this._holder.alias);
 }
 }
@@ -71940,28 +71991,30 @@ this.btn && (this.btn.interactable = !1);
 dispatch(p.Hall_Event.activity_close);
 });
 };
+e.prototype.update = function() {
+this._refreshProgress();
+};
 e.prototype.updateProgress = function(t) {
 var e = t.bundle;
 if (e == this._holder.alias) {
-var o = t.info.progress;
-this.curprogress > o ? o = this.curprogress : this.curprogress = o;
-if (this._holder.alias == e) {
-this.updateNode.active = !0;
-this.tips.active = !1;
-this.updateProgressNode.active = !0;
-this.progressFiLL.progress(o);
-}
+var o = t.info, n = c.GlobalVar.downloadInfos.get(e);
+n && (n.realProgress = o.percent || 0);
+if (!c.GlobalVar.downloadInfos.has(e)) return;
+this._enterDownloadingState();
+this.progressFiLL.progress(this._getDisplayProgress(e));
 }
 };
 e.prototype.updateComplete = function(t) {
 if (this._holder.alias == t) {
+this._isDownloading = !1;
 this.updateProgressNode.active = !1;
 this.updateNode.active = !1;
 this.btn && (this.btn.interactable = !0);
 }
 };
 e.prototype.downFreshFail = function(t) {
-this._holder.alias == t && this.show(this._holder);
+var e = "string" == typeof t ? t : t.bundle;
+this._holder.alias == e && this.show(this._holder);
 };
 var o;
 e.sameClick = !0;
@@ -72159,6 +72212,7 @@ e.vadPage = null;
 e.playerMessage = null;
 e.loginNode = null;
 e.firstInit = !0;
+e.shareInfo = {};
 e.onlyFirstReturn = !0;
 e._startTouchPos = null;
 e._startButtonPos = null;
@@ -72192,6 +72246,10 @@ this.agent_btn = cc.find("bottom/hor/agent_btn", this.node);
 this.task_btn = cc.find("bottom/hor/task_btn", this.node);
 this.account_btn = cc.find("bottom/hor/account_btn", this.node);
 this.deposit_btn = cc.find("bottom/hor/deposit_btn", this.node);
+this.shareInfo = {};
+this.shareInfo.obj = cc.find("bottom/share_btn", this.node);
+this.shareInfo.on = cc.find("bottom/share_btn/on", this.node);
+this.shareInfo.close = cc.find("bottom/share_btn/close", this.node);
 this.moreNode = cc.find("moreNode", this.node).getComponent(cc.Animation);
 this.moreNode_btn = cc.find("moreNode/morebtn", this.node);
 this.moreNode_switch = cc.find("moreNode/morebtn/icon", this.node);
@@ -72694,4 +72752,4 @@ return n([ r ], t);
 o.default = a;
 cc._RF.pop();
 }, {} ]
-}, {}, [ "Application", "MainController", "QRcodeUi", "HotVersion", "aesres", "BLightAnimationManager_Bingo", "BingoDictoryTable", "BingoView", "AutoService_Base_Bingo", "BingoAutoSpinMenuService", "BingoBetService", "BingoButtonsService", "BingoOperate", "BingoPlayGameBtnService", "BingoWinService", "BingoGameController", "BingoDataUtil", "TopService_Bingo", "PoolModelForComponet_Bingo", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "CameraShake", "CatmullRomCurve", "FishEvent", "PathManager", "UtilsBezier", "bulletFactory", "fishCollision", "fishCollisionMgr", "dyfishCommon", "fishBaseBullet", "fishBaseEffect", "fishChnageLevelAnim", "fishCommon", "fishCommonEvent", "fishFactory", "fishLoopAnim", "fishSpine", "fishTouchManager", "fishUV", "fishCommonCoin", "fishCommonCoin2", "FishTopBannerView", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "Mask_GGL", "WithdrawRecordItem", "WithdrawRecordList", "LoginEntry", "ActiviryItem", "ActivityScrollList", "EmailItem", "EmailScrollList", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "NoticeItem", "NoticeScrollList", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "CarouselAwardLineMgr", "LineModel_Base", "AutoService_Base1_Pg", "BetOptions_Base_Pg", "HoverBtnBg_Pg", "MaskSize_Pg", "PayTableService_Pg", "RuleTCService_Pg", "ScrollViewMovePos_Pg", "TopManager_Pg", "SlotsNewView", "TestA", "TipElementRate", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "free_enter_view", "other_win_view", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "SlotsFrameEvent", "FitWithPosition", "FitWithScalue", "BalanceService_Slots", "SlotsBet", "SlotsBetItem", "SlotsBetList", "SlotsMaxBetEffect", "SlotsSpin", "SlotsSpinState", "SlotsJackpot", "SlotsJackpotMgr", "SlotsSingleJackpot", "SlotsOperate", "TObjPoolService_Slots", "TPoolModelForComponet", "SlotsRewardMgr", "base_reward", "slots_base_reward", "slots_reward1", "slots_reward2", "slots_reward3", "slots_reward5", "TFenbianlv", "IntervalTime_Slots", "TGoldJumpModel_Slots", "TGoldJumpService_Slots", "TJP_Unlock_Slots", "TJackpotRunService_Slots", "TLightAnimation_Slots", "SlotsGameRoomView", "TopBannerView", "BarrageNode", "BetBaseController", "BetChipModel", "BetChipModel_Move", "CardHelp", "CardModel_Poke", "ChatView", "EmojiArea", "GameRoomView", "MenuController", "MenuPController", "OnlineView", "PoolModelForComponent_Table", "TableGameRoom_H", "TableGameRoom_V", "TimeDown_Bet", "WaitForNextGameService", "bet_action", "bet_area", "bet_area_new", "bet_my_seat", "bet_seat", "bet_seat_list", "blinkblink", "chat_item", "emoji", "CountDownLabel", "UpDownLabel", "BasePlayer", "BaseRobot", "Robot", "RobotEvent", "TableRobot", "tableCountTime", "CardModel_Tp", "EndShowAllPlayers", "SideShowOtherPlayers", "SideShowPlayers", "TeenGameController", "TeenPlayer", "WaitPlayer_Tp", "movie_clip", "TeenPattiCmd_Base", "TeenPattiEvent", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
+}, {}, [ "Application", "MainController", "QRcodeUi", "HotVersion", "aesres", "BLightAnimationManager_Bingo", "BingoDictoryTable", "BingoView", "AutoService_Base_Bingo", "BingoAutoSpinMenuService", "BingoBetService", "BingoButtonsService", "BingoOperate", "BingoPlayGameBtnService", "BingoWinService", "BingoGameController", "BingoDataUtil", "TopService_Bingo", "PoolModelForComponet_Bingo", "Animation_Nodes", "TAtlasPlay", "TAtlasPlay_Init", "TUVPlay", "TUVPlay_Init", "Alert", "AllLayoutUpdate", "AutoScaleShow", "AutoUpdateScaleShow", "ButtonClickCD", "ButtonClickCDNoTips", "CurTimeStamp", "EditorBoxEvent", "FllowPosition", "FllowTarget", "GlobalAudio", "GrayBtn", "GrayLabelColor", "GrayMask", "GrayMat", "GrayNodeColor", "GrayNodeColors", "GraySprites", "LayoutUpdate", "ItemRender", "List", "Loading", "LocalMusicIndexedDBPlayer", "MobileScale", "RedPointComponent", "RichTxtHander", "SmoothScrollView", "SwitchBtnItem", "SwitchBtns", "TColorAssembler2D", "TUpdateColorAssembler2D", "Tips", "UIContainer", "UIFitBy", "UILoading", "UIReconnect", "UpdateLoading", "WidthProgress", "ZProgressbar", "ZProgressbarNoMask", "gameLoading", "CmdConfig", "Config", "ConstString", "GlobalVar", "HostInfo", "User", "Country_Active", "Country_Currency_Label", "Country_Labels", "Country_Phone_Label", "Country_Position", "Country_Scale", "Country_Sprite", "Country_Values", "Country_RejectNodes", "Country_RejectPositions", "Country_RejectSizes", "Country_RejectSprites", "Country_Bond", "Country_Chip", "Country_Coin", "Country_DCoin", "Country_GameCoin", "Bundles", "StageData", "BundleUpdateHandlerImpl", "CmmEntry", "MainUpdateHandlerImpl", "GlobalEnum", "CommonEvent", "FBL_VerticalScreen", "ChatService", "CmdDefines", "CommonGameJson", "CommonSender", "CommonService", "GameSender", "GameService", "GetCmdKey", "HttpSender", "ReconnectHandler", "ws_protocol", "HeartbetJson", "CmmAction", "CmmAudio", "CmmData", "CmmIcon", "CmmUtils", "GamePool", "MathUtils", "RandomUtil", "StorageUtils", "UIUtils", "ZLan", "lan_bundle_img_item", "lan_bundle_label_item", "lan_bundle_richtxt_item", "lan_bundle_spritePath_item", "lan_fixed_bundle_label_item", "country_label_item", "country_richtxt_item", "lan_hall_img_item", "lan_img_item", "lan_main_img_item", "lan_label_extra_item", "lan_label_item", "lan_label_replace_item", "lan_label_replace_n_item", "lan_node_position", "lan_richtxt_item", "lan_richtxt_item_args", "ConfigMgr", "URLConfig", "EffectLight", "alpha_show_line", "forever_round", "move_show_backout", "popup_show_backout", "slots_win_jitter", "CameraShake", "CatmullRomCurve", "FishEvent", "PathManager", "UtilsBezier", "bulletFactory", "fishCollision", "fishCollisionMgr", "dyfishCommon", "fishBaseBullet", "fishBaseEffect", "fishChnageLevelAnim", "fishCommon", "fishCommonEvent", "fishFactory", "fishLoopAnim", "fishSpine", "fishTouchManager", "fishUV", "fishCommonCoin", "fishCommonCoin2", "FishTopBannerView", "Framework", "AORBFullFit", "AudioComponent", "EventComponent", "FitLabel", "GameDesignBlackTopFit", "GameDesignSizeTopFit", "UVTransformAnimation", "UpdatePosDyFollows", "UpdatePosFollow", "UpdatePosFollows", "VerGameFit", "sprite_frame_button", "AssetManager", "BundleManager", "CacheManager", "Resource", "ResourceLoader", "Entry", "EntryDelegate", "EntryManager", "Dispatcher", "EventProcessor", "Logger", "Net", "Http", "HttpClient", "BinaryStreamMessage", "DefaultCodec", "JsonMessage", "Message", "ProtoMessage", "Handler", "HandlerManager", "Process", "ProtoManager", "Sender", "SenderManager", "Service", "ServiceManager", "ServerConnector", "WebSocketClient", "NodePoolManager", "LocalStorage", "GameView", "UIManager", "UIView", "Update", "UpdateItem", "UpdateManager", "DataCenter", "GameData", "Decorators", "Enums", "Macros", "BitEncrypt", "ByteArray", "CanvasHelper", "Singleton", "SingletonT", "Utils", "Html_hide", "Html_preObjs", "Html_remote_sprite", "Html_sender", "Html_staticImgs", "Html_viewLoading", "Html_webNode", "Mask_GGL", "WithdrawRecordItem", "WithdrawRecordList", "LoginEntry", "EmailItem", "EmailScrollList", "GamePlayerCount", "Gametype", "Gametypeitem", "laba_item", "laba_notice_panel", "HallHandler", "HallSender", "LobbyCmd", "LobbyService", "TestJsonMessage", "NoticeItem", "NoticeScrollList", "BankItem", "BundleLoading", "Match_Ranking_Item", "PhoneQuhao_Item", "Vip6Tel", "Vip6WhatsApp", "WheelGame", "activity_reward_event", "change_avatar_item", "coin_label_item", "draw_record_item", "draw_record_item_old", "drawcash_item", "exchange_Item", "free_chips_button", "howtoplay_item", "month_coin_label_item", "recharge_item", "select_toggle", "task_anim_labels", "task_progress", "topup_record_item", "vip2_item", "vip_item", "CommonUIHelper", "HotUpdate", "InviteWithdrawRecordsWebView", "LoginView", "bind_verification_item", "register_account_item", "baseBundleLoading", "baseGameLoading", "base_first_loading", "common_loadingView", "hf_first_loading", "hf_game_loading", "jili_first_loading", "jili_game_loading", "pg_first_loading", "pg_game_loading", "loading_gameView", "MerchantOfflineView", "MerchantRechargeView", "MerchantWithdrawView", "PosterOfflineView", "RechargeOfflineView", "RecordsOfflineView", "TaskOfflineView", "WithdrawOfflineView", "withdrawEditorEvent1", "VIPInfoNode", "AppInfo", "GameNativeConfig", "SdkCallBack", "SdkManager", "CarouselAwardLineMgr", "LineModel_Base", "AutoService_Base1_Pg", "BetOptions_Base_Pg", "HoverBtnBg_Pg", "MaskSize_Pg", "PayTableService_Pg", "RuleTCService_Pg", "ScrollViewMovePos_Pg", "TopManager_Pg", "SlotsNewView", "TestA", "TipElementRate", "SlotsDataUtil", "AnimationPlayState", "BaseAnimState", "DragonPlayState", "SpinePlayState", "SpritePlayState", "TAtlasPlayState", "TUVPlayState", "ElementState", "ExtraState", "free_enter_view", "other_win_view", "BaseLineItem ", "BaseLineMgr", "LineItem", "LineItemSize", "LineMgr", "SimpleLineMgr", "RollElement", "ZRollAction", "ZRollControler", "ZRollElement", "ZRollMgr", "SlotsFrameEvent", "FitWithPosition", "FitWithScalue", "BalanceService_Slots", "SlotsBet", "SlotsBetItem", "SlotsBetList", "SlotsMaxBetEffect", "SlotsSpin", "SlotsSpinState", "SlotsJackpot", "SlotsJackpotMgr", "SlotsSingleJackpot", "SlotsOperate", "TObjPoolService_Slots", "TPoolModelForComponet", "SlotsRewardMgr", "base_reward", "slots_base_reward", "slots_reward1", "slots_reward2", "slots_reward3", "slots_reward5", "TFenbianlv", "IntervalTime_Slots", "TGoldJumpModel_Slots", "TGoldJumpService_Slots", "TJP_Unlock_Slots", "TJackpotRunService_Slots", "TLightAnimation_Slots", "SlotsGameRoomView", "TopBannerView", "BarrageNode", "BetBaseController", "BetChipModel", "BetChipModel_Move", "CardHelp", "CardModel_Poke", "ChatView", "EmojiArea", "GameRoomView", "MenuController", "MenuPController", "OnlineView", "PoolModelForComponent_Table", "TableGameRoom_H", "TableGameRoom_V", "TimeDown_Bet", "WaitForNextGameService", "bet_action", "bet_area", "bet_area_new", "bet_my_seat", "bet_seat", "bet_seat_list", "blinkblink", "chat_item", "emoji", "CountDownLabel", "UpDownLabel", "BasePlayer", "BaseRobot", "Robot", "RobotEvent", "TableRobot", "tableCountTime", "CardModel_Tp", "EndShowAllPlayers", "SideShowOtherPlayers", "SideShowPlayers", "TeenGameController", "TeenPlayer", "WaitPlayer_Tp", "movie_clip", "TeenPattiCmd_Base", "TeenPattiEvent", "VertialRoot", "VEmailItem", "VEmailScrollList", "VNoticeItem", "VNoticeScrollList", "VGameType", "VGameitem", "VGamelist", "VGamemain", "VGametypeitem", "VMainEvent", "VMoreGame", "VgameTypeNameItem", "VloadMore_btn", "VLaba", "activityMain", "vactivityItem", "agentMain", "agentPage3_Rank", "agent_self_rank", "playInfoMain", "verticalMain", "VADPage", "VActivity_reward_event", "VBindingCardItem", "VDailyTaskWheel", "VFirstCharge", "VFreeCoin", "VGroupBuying", "VMatch_Ranking_Item", "VMonth", "VMoreBtns", "VPageItem", "VPlayerMessage", "VShareWhatAppBtn", "VShareWithdrawRecordItem", "VTask_progress", "Vvip2_item", "paycard_input_item", "paycard_select_item", "VAccountSecurityView", "VBaxipaiZhaoView", "VBindCPFView", "VBindForgotPhoneView", "VBindKycView", "VChangeAvatarView", "VChangeNameView", "VChargeView", "VDailySignInView", "VDailyTaskView", "VEmailView", "VFirstChargeView", "VGameChooseTCView", "VGroupChargeView", "VHallRewardView", "VHtmlDownView", "VIconTipsView", "VIosOpenView", "VLaBaInfoView", "VMonthCardView", "VNoticeView", "VPayCardInfoView", "VPiggyBankView", "VPurTipsView", "VQRView", "VRechargeRecordsWebView", "VRedeemCodeView", "VRegisterInView", "VResetPasswordView", "VSendRecordView", "VSettingView", "VShareView", "VTradeView", "VUseCouponView", "VUseGroupCodeView", "VVipInfoView", "VVipUpgradeNoticeView", "VWithdrawView", "VWithdrawVipInfo", "VWithdrawVipInfo2", "VWithdrawVipInfo3", "VXS2XXView", "VThreeSoneView", "VPlayerInfoNode", "VVIPInfoNode", "GameCheatView", "GameCommonUIHelper", "GameHelpView", "GameSettingView", "HallRewardView", "VGameHelpView", "Group", "Holder", "Manager", "ScrollAdapter", "View", "Indicator", "Scrollbar", "debug", "enum", "interface", "helper", "index", "CenterManager", "LayoutManager", "ModelManager", "PageViewManager", "ReleaseManager", "ScrollManager", "ViewManager", "CheatNode", "phelpview", "psetview", "CommonExitBtn", "PortraitEditorBox" ]);
